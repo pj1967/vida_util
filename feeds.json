@@ -1,9 +1,17 @@
 {
   "sitio": {
     "titulo": "Vida Útil",
-    "subtitulo": "Del taller a los datos · Ingeniería y datos en castellano",
-    "dias_portada": 10,
-    "max_por_tema_portada": 12
+    "lema": "Del taller a los datos",
+    "subtitulo": "Ingeniería e inteligencia artificial en castellano",
+    "autor": "Pedro José de la Rosa",
+    "acerca": [
+      "Soy Pedro José de la Rosa. Aprendo y comparto, en castellano, cómo se aplican los datos y la inteligencia artificial al mantenimiento y a la ingeniería.",
+      "Esta web reúne noticias que se actualizan solas (solo titulares y enlaces a la fuente original) y, poco a poco, mis proyectos explicados paso a paso.",
+      "Mis proyectos usan datos abiertos, y en cada uno indico siempre de dónde salen los datos y cuáles son sus límites."
+    ],
+    "dias_portada": 7,
+    "max_por_tema_portada": 5,
+    "max_por_fuente_portada": 2
   },
   "temas": {
     "ia": "Inteligencia artificial",

@@ -34,7 +34,7 @@ except Exception:  # pragma: no cover
 
 RAIZ = Path(__file__).resolve().parent
 USER_AGENT = "VidaUtil/1.0 (+lector RSS personal)"
-MAX_POR_FEED_DEFECTO = 25
+MAX_POR_FEED_DEFECTO = 10
 
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
          "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
@@ -166,47 +166,67 @@ def descargar(config, articulos):
 
 # ----------------------------------------------------------------- HTML
 CSS = """
-:root{--tinta:#1a1a1a;--suave:#5a5a5a;--linea:#d9d9d9;--fondo:#ffffff;--acento:#0b3d6b;--tarjeta:#f6f8fa}
+:root{--tinta:#1b1f24;--suave:#5f6b7a;--linea:#e3e8ee;--fondo:#ffffff;--acento:#0b3d6b;--tarjeta:#f7f9fb}
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{margin:0;background:var(--fondo);color:var(--tinta);
- font:16px/1.5 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+ font:16px/1.55 Inter,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
 a{color:var(--acento);text-decoration:none}
 a:hover{text-decoration:underline}
-.contenedor{max-width:880px;margin:0 auto;padding:0 16px}
-header.sitio{border-bottom:3px solid var(--acento);padding:18px 0 10px}
-header.sitio h1{margin:0;font:700 1.6rem/1.2 Georgia,"Times New Roman",serif;color:var(--acento)}
-header.sitio p{margin:4px 0 10px;color:var(--suave);font-size:.95rem}
-nav.menu{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.95rem}
-nav.menu a{padding:4px 0;border-bottom:2px solid transparent}
-nav.menu a.activo{border-bottom-color:var(--acento);font-weight:600}
-main{padding:18px 0 40px}
-h2{font:700 1.25rem/1.3 Georgia,serif;margin:28px 0 8px;padding-left:10px;border-left:5px solid var(--c,var(--acento))}
-h2 small{font:400 .85rem sans-serif;color:var(--suave);margin-left:6px}
+.contenedor{max-width:1040px;margin:0 auto;padding:0 18px}
+header.sitio{padding:28px 0 0}
+.marca h1{margin:0;font-size:2.1rem;line-height:1.05;font-weight:800;letter-spacing:-.02em}
+.marca h1 a{color:var(--tinta);text-decoration:none}
+.marca h1 span{color:var(--acento)}
+.lema{margin:8px 0 0;font-size:1.08rem;font-weight:600;color:var(--acento)}
+.subtitulo{margin:2px 0 0;color:var(--suave);font-size:.95rem}
+.autor{margin:8px 0 0;color:var(--suave);font-size:.85rem}
+nav.menu{display:flex;gap:8px;overflow-x:auto;padding:18px 0 16px;border-bottom:1px solid var(--linea);scrollbar-width:thin}
+nav.menu a{white-space:nowrap;padding:6px 13px;border:1px solid var(--linea);border-radius:999px;
+ color:var(--tinta);font-size:.9rem;background:#fff}
+nav.menu a:hover{background:var(--tarjeta);text-decoration:none}
+nav.menu a.activo{background:#eaf1f8;border-color:#bcd0e4;color:var(--acento);font-weight:600}
+main{padding:8px 0 44px}
+.intro{margin:24px 0 14px;font-size:1.35rem;font-weight:700;letter-spacing:-.01em}
+.intro small{display:block;margin-top:2px;font-size:.88rem;font-weight:400;color:var(--suave)}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px}
+.tema-card{border:1px solid var(--linea);border-top:4px solid var(--c,var(--acento));border-radius:12px;
+ padding:14px 16px 6px;background:#fff;box-shadow:0 1px 3px rgba(16,24,40,.06)}
+.tema-card header{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:2px}
+.tema-card h2{margin:0;padding:0;border:0;font-size:1.05rem;font-weight:700;color:var(--c,var(--acento))}
+.tema-card header a{font-size:.82rem;white-space:nowrap}
+h2{font-size:1.25rem;line-height:1.3;font-weight:700;margin:28px 0 8px;padding-left:12px;
+ border-left:5px solid var(--c,var(--acento))}
+h2 small{font-size:.85rem;font-weight:400;color:var(--suave);margin-left:6px}
 h3{font-size:1rem;margin:18px 0 4px;color:var(--suave);font-weight:600}
 ul.lista{list-style:none;margin:0;padding:0}
-li.item{padding:9px 0;border-bottom:1px solid var(--linea)}
-li.item a.titular{font-weight:600;color:var(--tinta)}
+li.item{padding:10px 0;border-bottom:1px solid var(--linea)}
+li.item:last-child{border-bottom:0}
+li.item a.titular{font-weight:600;color:var(--tinta);line-height:1.35}
 li.item a.titular:hover{color:var(--acento)}
-.meta{display:block;font-size:.82rem;color:var(--suave);margin-top:2px}
-.nuevo{display:inline-block;margin-left:6px;padding:0 6px;border:1px solid var(--c,var(--acento));
- border-radius:8px;font-size:.7rem;color:var(--c,var(--acento));font-weight:600}
+.meta{display:block;font-size:.8rem;color:var(--suave);margin-top:3px}
+.nuevo{display:inline-block;margin-left:6px;padding:0 7px;border:1px solid var(--c,var(--acento));
+ border-radius:8px;font-size:.68rem;color:var(--c,var(--acento));font-weight:600}
 .etiqueta{color:var(--c,var(--acento));font-weight:600}
-.buscador{margin:14px 0 4px}
-.buscador input{width:100%;padding:10px 12px;font-size:1rem;border:1px solid var(--linea);border-radius:8px}
+.buscador{margin:16px 0 0}
+.buscador input{width:100%;padding:10px 14px;font-size:1rem;border:1px solid var(--linea);border-radius:10px;background:#fff}
+.buscador input:focus{outline:2px solid #bcd0e4;border-color:var(--acento)}
 .fichas{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:12px 0}
-.ficha{display:block;padding:12px;border:1px solid var(--linea);border-left:5px solid var(--c,var(--acento));
- border-radius:8px;background:var(--tarjeta);color:var(--tinta)}
+.ficha{display:block;padding:12px 14px;border:1px solid var(--linea);border-left:5px solid var(--c,var(--acento));
+ border-radius:10px;background:var(--tarjeta);color:var(--tinta)}
 .ficha b{display:block}
 .ficha span{color:var(--suave);font-size:.85rem}
 .vacio{color:var(--suave);font-style:italic}
-footer.pie{border-top:1px solid var(--linea);padding:14px 0 30px;color:var(--suave);font-size:.82rem}
+main p{max-width:68ch}
+footer.pie{border-top:1px solid var(--linea);padding:16px 0 32px;color:var(--suave);font-size:.82rem}
 .oculto{display:none!important}
+@media (max-width:520px){.marca h1{font-size:1.75rem}.rejilla{grid-template-columns:1fr}}
 @media print{
- nav.menu,.buscador,footer.pie .no-imprimir{display:none}
+ nav.menu,.buscador{display:none}
  body{font-size:11pt}
  a{color:#000}
- header.sitio{border-bottom:1px solid #000}
+ .rejilla{display:block}
+ .tema-card{box-shadow:none;break-inside:avoid;margin-bottom:12px}
  li.item{break-inside:avoid}
 }
 """
@@ -236,6 +256,8 @@ class Sitio:
         self.temas = config["temas"]
         self.titulo = config["sitio"]["titulo"]
         self.subtitulo = config["sitio"].get("subtitulo", "")
+        self.lema = config["sitio"].get("lema", "")
+        self.autor = config["sitio"].get("autor", "")
         self.articulos = sorted(articulos, key=lambda a: a["fecha"], reverse=True)
         self.salida = salida
         self.ahora = datetime.now(timezone.utc)
@@ -256,14 +278,22 @@ class Sitio:
                    ("archivo", "Archivo", f"{raiz}archivo/index.html")]
         for clave, nombre in self.temas.items():
             enlaces.append((clave, nombre, f"{raiz}tema/{clave}.html"))
+        enlaces.append(("acerca", "Acerca de", f"{raiz}acerca.html"))
         menu = "".join(
             f'<a href="{u}"{" class=activo" if k == activo else ""}>{esc(n)}</a>'
             for k, n, u in enlaces)
         caja = ('<div class="buscador"><input id="buscar" type="search" '
                 'placeholder="Buscar en los titulares de esta página…" '
                 'autocomplete="off"></div>') if buscador else ""
-        actualizado = fecha_corta(self.ahora.astimezone(ZONA)) + \
-            self.ahora.astimezone(ZONA).strftime(", %H:%M")
+        partes = self.titulo.rsplit(" ", 1)
+        marca = (f'{esc(partes[0])} <span>{esc(partes[1])}</span>'
+                 if len(partes) == 2 else esc(self.titulo))
+        lema = f'<p class="lema">{esc(self.lema)}</p>' if self.lema else ""
+        sub = f'<p class="subtitulo">{esc(self.subtitulo)}</p>' if self.subtitulo else ""
+        autor = f'<p class="autor">por {esc(self.autor)}</p>' if self.autor else ""
+        ahora_l = self.ahora.astimezone(ZONA)
+        actualizado = fecha_corta(ahora_l) + ahora_l.strftime(", %H:%M")
+        pie_autor = f"{esc(self.titulo)} · {esc(self.autor)} · " if self.autor else ""
         return f"""<!doctype html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -271,8 +301,8 @@ class Sitio:
 <link rel="stylesheet" href="{raiz}estilo.css">
 </head><body>
 <header class="sitio"><div class="contenedor">
-<h1><a href="{raiz}index.html" style="color:inherit">{esc(self.titulo)}</a></h1>
-<p>{esc(self.subtitulo)}</p>
+<div class="marca"><h1><a href="{raiz}index.html">{marca}</a></h1></div>
+{lema}{sub}{autor}
 <nav class="menu">{menu}</nav>
 </div></header>
 <main><div class="contenedor">
@@ -280,7 +310,7 @@ class Sitio:
 {cuerpo}
 </div></main>
 <footer class="pie"><div class="contenedor">
-Actualizado automáticamente: {actualizado}. Solo se muestran titulares y enlaces; el contenido
+{pie_autor}Actualizado automáticamente: {actualizado}. Solo se muestran titulares y enlaces; el contenido
 pertenece a cada fuente original.
 </div></footer>
 {JS_BUSCADOR if buscador else ""}
@@ -317,31 +347,57 @@ pertenece a cada fuente original.
         return "".join(salida) or '<p class="vacio">Sin noticias.</p>'
 
     # -- páginas
-    def portada(self):
-        dias = self.cfg["sitio"].get("dias_portada", 10)
-        maximo = self.cfg["sitio"].get("max_por_tema_portada", 12)
+    def seleccion_portada(self, propios, dias, maximo, max_fuente):
+        """Las más recientes del tema, con tope por fuente para que haya variedad."""
         limite = self.ahora - timedelta(days=dias)
-        fichas, bloques = [], []
+        elegidos, por_fuente = [], defaultdict(int)
+        for a in propios:  # ya vienen ordenadas de más nueva a más antigua
+            if datetime.fromisoformat(a["fecha"]) < limite:
+                break
+            if por_fuente[a["fuente"]] >= max_fuente:
+                continue
+            elegidos.append(a)
+            por_fuente[a["fuente"]] += 1
+            if len(elegidos) >= maximo:
+                break
+        if len(elegidos) < 3:  # pocas recientes: completar con lo último guardado
+            for a in propios:
+                if a not in elegidos:
+                    elegidos.append(a)
+                if len(elegidos) >= 3:
+                    break
+        return elegidos
+
+    def portada(self):
+        sitio = self.cfg["sitio"]
+        dias = sitio.get("dias_portada", 7)
+        maximo = sitio.get("max_por_tema_portada", 5)
+        max_fuente = sitio.get("max_por_fuente_portada", 2)
+        tarjetas = []
         for clave, nombre in self.temas.items():
             propios = [a for a in self.articulos if a["tema"] == clave]
-            recientes = [a for a in propios
-                         if datetime.fromisoformat(a["fecha"]) >= limite][:maximo]
-            if len(recientes) < 5:
-                recientes = propios[:5]
-            fichas.append(
-                f'<a class="ficha" style="--c:{self.color(clave)}" href="#{clave}">'
-                f'<b>{esc(nombre)}</b><span>{len(propios)} titulares guardados</span></a>')
-            if recientes:
-                cuerpo = '<ul class="lista">' + "".join(self.item(a) for a in recientes) + "</ul>"
+            elegidos = self.seleccion_portada(propios, dias, maximo, max_fuente)
+            if elegidos:
+                lista = ('<ul class="lista">'
+                         + "".join(self.item(a) for a in elegidos) + "</ul>")
             else:
-                cuerpo = '<p class="vacio">Aún no hay noticias de este tema.</p>'
-            bloques.append(
-                f'<section class="bloque" id="{clave}">'
-                f'<h2 style="--c:{self.color(clave)}">{esc(nombre)}'
-                f'<small><a href="tema/{clave}.html">ver todas →</a></small></h2>{cuerpo}</section>')
-        cuerpo = ('<h2 style="--c:#0b3d6b">Lo más reciente</h2>'
-                  f'<div class="fichas">{"".join(fichas)}</div>' + "".join(bloques))
+                lista = '<p class="vacio">Aún no hay noticias de este tema.</p>'
+            tarjetas.append(
+                f'<section class="tema-card bloque" id="{clave}" style="--c:{self.color(clave)}">'
+                f'<header><h2>{esc(nombre)}</h2>'
+                f'<a href="tema/{clave}.html">Ver todas ({len(propios)}) →</a></header>'
+                f'{lista}</section>')
+        cuerpo = ('<div class="intro">Lo más reciente'
+                  '<small>Selección automática: pocas noticias por tema y de fuentes variadas.'
+                  '</small></div><div class="rejilla">' + "".join(tarjetas) + "</div>")
         self.escribir("index.html", self.pagina("Portada", cuerpo, "", "portada", buscador=True))
+
+    def acerca(self):
+        textos = self.cfg["sitio"].get("acerca") or [
+            "Aprendo y comparto, en castellano, cómo se aplican los datos y la inteligencia "
+            "artificial al mantenimiento y a la ingeniería."]
+        cuerpo = "<h2>Acerca de</h2>" + "".join(f"<p>{esc(t)}</p>" for t in textos)
+        self.escribir("acerca.html", self.pagina("Acerca de", cuerpo, "", "acerca"))
 
     def paginas_tema(self):
         for clave, nombre in self.temas.items():
@@ -422,6 +478,7 @@ pertenece a cada fuente original.
         self.escribir(".nojekyll", "")
         self.portada()
         self.paginas_tema()
+        self.acerca()
         self.archivo()
 
 
