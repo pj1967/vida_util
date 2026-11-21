@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 """
-Vida Útil — generador de la web de noticias.
+Vida Útil — generador de la web.
 
-Qué hace cada vez que se ejecuta:
-  1. Lee los feeds RSS definidos en feeds.json.
-  2. Añade a data/articulos.json los titulares nuevos (sin duplicados).
-  3. Regenera la web completa en la carpeta docs/ (portada, temas y archivo
-     por año/mes).
+Cada vez que se ejecuta:
+  1. Lee los feeds RSS de feeds.json y se queda solo con lo relevante
+     (inteligencia artificial, robótica, automatización) según las listas de palabras.
+  2. Clasifica cada noticia por tema y la guarda en data/articulos.json (sin duplicados).
+  3. Lee los resúmenes semanales de data/resumenes/*.json (si los hay).
+  4. Regenera la web completa en docs/.
 
 Solo se guardan título, fuente, fecha y enlace a la noticia original.
-Uso:  python build.py            (descarga + genera)
-      python build.py --sin-descarga   (solo regenera la web con los datos guardados)
+Uso:  python build.py                  (descarga + genera)
+      python build.py --sin-descarga   (solo regenera la web con lo ya guardado)
 """
 import argparse
 import hashlib
@@ -23,6 +24,7 @@ import sys
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from urllib.parse import quote
 
 import feedparser
 
@@ -35,6 +37,7 @@ except Exception:  # pragma: no cover
 RAIZ = Path(__file__).resolve().parent
 USER_AGENT = "VidaUtil/1.0 (+lector RSS personal)"
 MAX_POR_FEED_DEFECTO = 10
+RESUMEN_MAX = 500  # caracteres del extracto del feed, solo para decidir relevancia y tema
 
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
          "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
@@ -43,14 +46,236 @@ MESES_CORTOS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago",
 DIAS = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
 
 COLORES = {
-    "ia": "#1f4e79",
-    "medicina": "#8a1c1c",
-    "robotica": "#5b3a8c",
-    "programacion": "#0f6b4f",
-    "farmacologia": "#a15c00",
-    "aeronautica": "#15607a",
-    "tecnologia": "#4a4a4a",
+    "ia": "#818cf8",
+    "robotica": "#c084fc",
+    "programacion": "#4ade80",
+    "aeronautica": "#38bdf8",
+    "otros": "#fbbf24",
 }
+
+# ----------------------------------------------------------------- estilo
+CSS = """
+:root{--fondo:#0b1220;--superficie:#111a2c;--superficie2:#16213a;--linea:#22304a;
+ --tinta:#e6edf7;--suave:#9aa8bf;--acento:#38bdf8}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;background:var(--fondo)}
+body{margin:0;background:var(--fondo);color:var(--tinta);
+ font:16px/1.55 Inter,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+a{color:var(--acento);text-decoration:none}
+a:hover{text-decoration:underline}
+.contenedor{max-width:1080px;margin:0 auto;padding:0 18px}
+header.sitio{padding:30px 0 22px;
+ background:radial-gradient(900px 320px at 12% -30%,rgba(56,189,248,.20),transparent 65%),
+            radial-gradient(700px 260px at 90% -40%,rgba(129,140,248,.16),transparent 65%)}
+.hero{display:flex;align-items:center;gap:18px}
+.logo{flex:none;display:block;line-height:0;filter:drop-shadow(0 0 14px rgba(56,189,248,.35))}
+.logo svg{width:68px;height:68px}
+.hero h1{margin:0;font-size:2.4rem;line-height:1.05;font-weight:800;letter-spacing:-.025em}
+.hero h1 a{color:var(--tinta);text-decoration:none}
+.hero h1 span{color:var(--acento)}
+.lema{margin:6px 0 0;font-size:1.15rem;font-weight:700;display:inline-block;
+ background:linear-gradient(90deg,#38bdf8,#818cf8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.subtitulo{margin:2px 0 0;color:var(--suave);font-size:.98rem}
+.autor{margin:6px 0 0;color:var(--suave);font-size:.85rem}
+.barra{position:sticky;top:0;z-index:50;background:rgba(11,18,32,.92);
+ -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--linea);border-bottom:1px solid var(--linea)}
+nav.menu{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0}
+nav.menu>a,.desplegable summary{display:inline-block;white-space:nowrap;padding:6px 14px;border:1px solid var(--linea);
+ border-radius:999px;color:var(--tinta);font-size:.9rem;background:var(--superficie);cursor:pointer;list-style:none}
+nav.menu>a:hover,.desplegable summary:hover{border-color:var(--acento);text-decoration:none}
+nav.menu>a.activo,.desplegable.activo summary{background:rgba(56,189,248,.14);border-color:var(--acento);
+ color:var(--acento);font-weight:600}
+.desplegable{position:relative}
+.desplegable summary::-webkit-details-marker{display:none}
+.desplegable summary::after{content:" \\25BE";font-size:.8em}
+.panel{position:absolute;top:calc(100% + 8px);left:0;min-width:260px;display:flex;flex-direction:column;
+ background:var(--superficie);border:1px solid var(--linea);border-radius:12px;padding:8px;
+ box-shadow:0 14px 34px rgba(0,0,0,.55);z-index:60}
+.panel a{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;color:var(--tinta)}
+.panel a:hover{background:var(--superficie2);text-decoration:none}
+main{padding:8px 0 48px}
+.intro{margin:26px 0 16px;font-size:1.4rem;font-weight:700;letter-spacing:-.01em}
+.intro small{display:block;margin-top:3px;font-size:.88rem;font-weight:400;color:var(--suave)}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+.tema-card{position:relative;display:flex;flex-direction:column;gap:12px;background:var(--superficie);
+ border:1px solid var(--linea);border-top:3px solid var(--c,var(--acento));border-radius:14px;
+ padding:16px 18px 14px;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
+.tema-card:hover{transform:translateY(-2px);border-color:var(--c,var(--acento));box-shadow:0 10px 28px rgba(0,0,0,.45)}
+.enlace-tema{position:absolute;inset:0;z-index:1;border-radius:14px}
+.tema-card header{display:flex;align-items:center;gap:10px}
+.punto{display:inline-block;flex:none;width:10px;height:10px;border-radius:50%;background:var(--c,var(--acento));
+ box-shadow:0 0 10px var(--c,var(--acento))}
+.tema-card h2{margin:0;padding:0;border:0;flex:1;font-size:1.1rem;font-weight:700;color:var(--c,var(--acento))}
+.cuenta{font-size:.78rem;color:var(--suave);white-space:nowrap}
+.resumen{margin:0;color:var(--tinta);font-size:.96rem;line-height:1.62}
+.nota{margin:0;color:var(--suave);font-size:.82rem;font-style:italic}
+.fuentes{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.78rem;color:var(--suave)}
+.fuentes a{position:relative;z-index:2;padding:2px 10px;border:1px solid var(--linea);border-radius:999px;
+ color:var(--tinta);background:var(--superficie2)}
+.fuentes a:hover{border-color:var(--c,var(--acento));text-decoration:none}
+.mas{margin-top:auto;padding-top:2px;font-size:.85rem;font-weight:600;color:var(--c,var(--acento))}
+.tema-card li.item a{position:relative;z-index:2}
+h2{font-size:1.25rem;line-height:1.3;font-weight:700;margin:30px 0 10px;padding-left:12px;
+ border-left:4px solid var(--c,var(--acento))}
+h2 small{font-size:.85rem;font-weight:400;color:var(--suave);margin-left:6px}
+h3{font-size:1rem;margin:20px 0 4px;color:var(--suave);font-weight:600}
+h3.semana{font-size:1.1rem;color:var(--tinta);margin:30px 0 10px;padding-top:14px;border-top:1px solid var(--linea)}
+h4{margin:0 0 6px;font-size:1rem;color:var(--c,var(--acento))}
+.desc{margin:0 0 6px;color:var(--suave)}
+.bloque-resumen{background:var(--superficie);border:1px solid var(--linea);border-left:4px solid var(--c,var(--acento));
+ border-radius:12px;padding:14px 16px;margin:12px 0}
+.bloque-resumen p{margin:0 0 10px;line-height:1.62}
+ul.lista{list-style:none;margin:0;padding:0}
+li.item{padding:10px 0;border-bottom:1px solid var(--linea)}
+li.item:last-child{border-bottom:0}
+li.item a.titular{font-weight:600;color:var(--tinta);line-height:1.35}
+li.item a.titular:hover{color:var(--acento)}
+.meta{display:block;font-size:.8rem;color:var(--suave);margin-top:3px}
+.nuevo{display:inline-block;margin-left:6px;padding:0 7px;border:1px solid var(--c,var(--acento));
+ border-radius:8px;font-size:.68rem;color:var(--c,var(--acento));font-weight:600}
+.etiqueta{color:var(--c,var(--acento));font-weight:600}
+ul.flujo li.item{background:var(--superficie);border:1px solid var(--linea);border-left:3px solid var(--c,var(--acento));
+ border-radius:10px;padding:11px 14px;margin:8px 0;transition:border-color .15s ease}
+ul.flujo li.item:hover{border-color:var(--c,var(--acento))}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 8px}
+.chip-tema{font:inherit;font-size:.88rem;cursor:pointer;padding:6px 14px;border-radius:999px;
+ border:1px solid var(--linea);background:var(--superficie);color:var(--tinta)}
+.chip-tema:hover{border-color:var(--c,var(--acento))}
+.chip-tema.activo{background:rgba(56,189,248,.14);border-color:var(--c,var(--acento));
+ color:var(--c,var(--acento));font-weight:600}
+.boton-mas{display:block;margin:18px auto 0;padding:10px 22px;font:inherit;font-weight:600;color:var(--acento);
+ background:var(--superficie);border:1px solid var(--acento);border-radius:999px;cursor:pointer}
+.boton-mas:hover{background:rgba(56,189,248,.12)}
+.buscador{margin:16px 0 0}
+.buscador input{width:100%;padding:11px 14px;font-size:1rem;color:var(--tinta);background:var(--superficie);
+ border:1px solid var(--linea);border-radius:10px}
+.buscador input::placeholder{color:var(--suave)}
+.buscador input:focus{outline:2px solid rgba(56,189,248,.45);border-color:var(--acento)}
+.tarjetas{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:14px 0}
+.proyecto{display:flex;flex-direction:column;gap:8px;background:var(--superficie);border:1px solid var(--linea);
+ border-radius:14px;padding:16px 18px}
+.proyecto h3{margin:0;color:var(--tinta);font-size:1.05rem}
+.proyecto p{margin:0;color:var(--suave);font-size:.93rem}
+.proyecto a.ir{margin-top:auto;font-weight:600}
+.estado{align-self:flex-start;font-size:.72rem;font-weight:700;padding:2px 10px;border-radius:999px;
+ border:1px solid var(--acento);color:var(--acento)}
+.estado.idea{border-color:var(--suave);color:var(--suave)}
+.estado.curso{border-color:#fbbf24;color:#fbbf24}
+.estado.publicado{border-color:#4ade80;color:#4ade80}
+.fichas{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:12px 0}
+.ficha{display:block;padding:12px 14px;border:1px solid var(--linea);border-left:4px solid var(--c,var(--acento));
+ border-radius:10px;background:var(--superficie);color:var(--tinta)}
+.ficha:hover{border-color:var(--c,var(--acento));text-decoration:none}
+.ficha b{display:block}
+.ficha span{color:var(--suave);font-size:.85rem}
+.vacio{color:var(--suave);font-style:italic}
+main p{max-width:70ch}
+.bloque-resumen p,.resumen{max-width:none}
+footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--suave);font-size:.82rem}
+.oculto{display:none!important}
+@media (max-width:560px){
+ .hero{gap:12px}.logo svg{width:52px;height:52px}.hero h1{font-size:1.85rem}
+ .rejilla,.tarjetas{grid-template-columns:1fr}
+ .panel{min-width:230px}
+}
+@media print{
+ *{background:#fff!important;color:#000!important;box-shadow:none!important;
+   border-color:#bbb!important;text-shadow:none!important;transform:none!important}
+ .barra,.buscador,.chips,.boton-mas,.logo,.enlace-tema,.mas{display:none!important}
+ body{font-size:11pt}
+ a{text-decoration:underline}
+ .rejilla,.tarjetas{display:block}
+ .tema-card,.bloque-resumen,.proyecto{break-inside:avoid;margin-bottom:12px}
+ li.item{break-inside:avoid}
+}
+"""
+
+LOGO_SVG = (
+    '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vida Útil">'
+    '<defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">'
+    '<stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#818cf8"/></linearGradient></defs>'
+    '<path d="M24 3 L42 13.5 V34.5 L24 45 L6 34.5 V13.5 Z" fill="none" stroke="url(#lg)" '
+    'stroke-width="2.6" stroke-linejoin="round"/>'
+    '<polyline points="9,25 17,25 21,15 27,35 31,25 39,25" fill="none" stroke="url(#lg)" '
+    'stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+)
+
+FAVICON_SVG = (
+    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'>"
+    "<rect width='48' height='48' rx='10' fill='#0b1220'/>"
+    "<path d='M24 6L40 15V33L24 42L8 33V15Z' fill='none' stroke='#38bdf8' stroke-width='2.6' "
+    "stroke-linejoin='round'/>"
+    "<polyline points='11,25 18,25 22,16 27,34 30,25 37,25' fill='none' stroke='#38bdf8' "
+    "stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>"
+)
+FAVICON = "data:image/svg+xml," + quote(FAVICON_SVG)
+
+# ----------------------------------------------------------------- interactividad
+JS = """
+(function(){
+  var $=function(s,c){return (c||document).querySelector(s)};
+  var $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+
+  function hace(iso){
+    var d=new Date(iso); if(isNaN(d)) return null;
+    var s=(Date.now()-d.getTime())/1000;
+    if(s<0) return null;
+    if(s<3600) return 'hace '+Math.max(1,Math.round(s/60))+' min';
+    if(s<86400) return 'hace '+Math.round(s/3600)+' h';
+    var dias=Math.round(s/86400);
+    if(dias<=6) return 'hace '+dias+(dias===1?' día':' días');
+    return null;
+  }
+  $$('time[data-iso]').forEach(function(t){
+    var h=hace(t.getAttribute('data-iso')); if(h) t.textContent=h;
+  });
+
+  var flujo=$('#flujo'), caja=$('#buscar');
+  if(flujo){
+    var items=$$('li.item',flujo), paso=15, visibles=paso, tema='todas', q='';
+    var mas=$('#mas'), vacio=$('#sin-resultados');
+    var pintar=function(){
+      var coinc=items.filter(function(li){
+        return (tema==='todas'||li.getAttribute('data-tema')===tema) &&
+               (!q||li.textContent.toLowerCase().indexOf(q)>-1);
+      });
+      items.forEach(function(li){li.classList.add('oculto');});
+      coinc.slice(0,visibles).forEach(function(li){li.classList.remove('oculto');});
+      if(mas) mas.classList.toggle('oculto',coinc.length<=visibles);
+      if(vacio) vacio.classList.toggle('oculto',coinc.length>0);
+    };
+    $$('.chip-tema').forEach(function(b){
+      b.addEventListener('click',function(){
+        tema=b.getAttribute('data-tema'); visibles=paso;
+        $$('.chip-tema').forEach(function(x){x.classList.toggle('activo',x===b);});
+        pintar();
+      });
+    });
+    if(caja) caja.addEventListener('input',function(){q=caja.value.toLowerCase().trim();visibles=paso;pintar();});
+    if(mas) mas.addEventListener('click',function(){visibles+=paso;pintar();});
+    pintar();
+  } else if(caja){
+    caja.addEventListener('input',function(){
+      var q=caja.value.toLowerCase().trim();
+      $$('li.item').forEach(function(li){
+        li.classList.toggle('oculto', !!q && li.textContent.toLowerCase().indexOf(q)===-1);
+      });
+      $$('section.bloque').forEach(function(s){
+        s.classList.toggle('oculto', !!q && !s.querySelector('li.item:not(.oculto)'));
+      });
+    });
+  }
+
+  document.addEventListener('keydown',function(e){
+    var activo=document.activeElement, tag=activo?activo.tagName:'';
+    if(e.key==='/' && !/INPUT|TEXTAREA/.test(tag) && caja){e.preventDefault();caja.focus();}
+    if(e.key==='Escape' && caja && activo===caja){caja.blur();}
+  });
+  document.addEventListener('click',function(e){
+    $$('details.desplegable').forEach(function(d){ if(!d.contains(e.target)) d.removeAttribute('open'); });
+  });
+})();
+"""
 
 
 # ----------------------------------------------------------------- utilidades
@@ -92,6 +317,79 @@ def fecha_entrada(entrada, ahora):
     return ahora
 
 
+def enlace_seguro(u):
+    """Solo http(s) o rutas relativas simples; evita enlaces tipo javascript:."""
+    u = (u or "").strip()
+    return u if re.match(r"^(https?://\S+|[\w./#-]+)$", u) else ""
+
+
+# ----------------------------------------------------------------- relevancia y temas
+def compilar(palabras):
+    partes = []
+    for p in palabras or []:
+        p = p.strip().lower()
+        if not p:
+            continue
+        fin = r"\b" if len(p) <= 3 else ""
+        partes.append(r"\b" + re.escape(p) + fin)
+    return re.compile("|".join(partes), re.IGNORECASE) if partes else None
+
+
+def preparar_patrones(config):
+    return {
+        "relevancia": compilar(config.get("relevancia", [])),
+        "reglas": [(r["tema"], compilar(r.get("palabras", [])))
+                   for r in config.get("clasificacion", [])],
+    }
+
+
+def es_relevante(patrones, texto):
+    p = patrones["relevancia"]
+    return True if p is None else bool(p.search(texto))
+
+
+def clasificar(texto, patrones, temas):
+    for tema, pat in patrones["reglas"]:
+        if tema in temas and pat and pat.search(texto):
+            return tema
+    return "ia" if "ia" in temas else next(iter(temas))
+
+
+# ----------------------------------------------------------------- resúmenes semanales
+def parsear_fecha(txt):
+    return datetime.strptime(txt, "%Y-%m-%d")
+
+
+def rango_semana(desde, hasta):
+    d, h = parsear_fecha(desde), parsear_fecha(hasta)
+    if d.year == h.year and d.month == h.month:
+        return f"{d.day} al {h.day} de {MESES[h.month - 1]} de {h.year}"
+    if d.year == h.year:
+        return f"{d.day} de {MESES[d.month - 1]} al {h.day} de {MESES[h.month - 1]} de {h.year}"
+    return (f"{d.day} de {MESES[d.month - 1]} de {d.year} al "
+            f"{h.day} de {MESES[h.month - 1]} de {h.year}")
+
+
+def cargar_resumenes(carpeta):
+    """Lee data/resumenes/*.json (uno por semana). Ignora los mal formados."""
+    resumenes = []
+    if not carpeta.exists():
+        return resumenes
+    for f in sorted(carpeta.glob("*.json")):
+        try:
+            with open(f, encoding="utf-8") as fh:
+                datos = json.load(fh)
+            parsear_fecha(datos["desde"])
+            parsear_fecha(datos["hasta"])
+            if not isinstance(datos.get("temas"), dict):
+                raise ValueError("falta el bloque 'temas'")
+            resumenes.append(datos)
+        except Exception as e:
+            print(f"  [AVISO] Resumen {f.name} ignorado: {e}")
+    resumenes.sort(key=lambda r: r["desde"], reverse=True)
+    return resumenes
+
+
 # ----------------------------------------------------------------- datos
 def cargar_json(ruta, defecto):
     if ruta.exists():
@@ -110,20 +408,21 @@ def guardar_datos(ruta, articulos):
         f.write("\n]\n")
 
 
-def descargar(config, articulos):
+def descargar(config, articulos, patrones):
     socket.setdefaulttimeout(25)
     ahora = datetime.now(timezone.utc)
+    temas = config["temas"]
     conocidos = {a["id"] for a in articulos}
-    nuevos_total = 0
+    nuevos_total = descartados_total = 0
     fallos = []
 
     for feed in config["feeds"]:
-        nombre, url, tema = feed["nombre"], feed["url"], feed["tema"]
-        palabras = [p.lower() for p in feed.get("palabras", [])]
+        nombre, url, tema_feed = feed["nombre"], feed["url"], feed["tema"]
+        filtrar = bool(feed.get("filtrar"))
         maximo = feed.get("max", MAX_POR_FEED_DEFECTO)
         try:
             datos = feedparser.parse(url, agent=USER_AGENT)
-        except Exception as e:  # red caída, etc.
+        except Exception as e:
             fallos.append(nombre)
             print(f"  [ERROR] {nombre}: {e}")
             continue
@@ -134,154 +433,124 @@ def descargar(config, articulos):
             print(f"  [AVISO] {nombre}: sin entradas ({motivo})")
             continue
 
-        nuevos = 0
+        nuevos = descartados = 0
         for e in datos.entries[:maximo]:
             enlace = (e.get("link") or "").strip()
             titulo = limpiar_texto(e.get("title"))
             if not enlace or not titulo:
                 continue
-            if palabras and not any(p in titulo.lower() for p in palabras):
-                continue
             ident = id_articulo(enlace)
             if ident in conocidos:
                 continue
+            extracto = limpiar_texto(e.get("summary") or e.get("description"))[:RESUMEN_MAX]
+            texto = f"{titulo} {extracto}"
+            if filtrar and not es_relevante(patrones, texto):
+                descartados += 1
+                continue
             conocidos.add(ident)
-            articulos.append({
+            tema = tema_feed if tema_feed in temas else clasificar(texto, patrones, temas)
+            art = {
                 "id": ident,
                 "titulo": titulo,
                 "enlace": enlace,
                 "fuente": nombre,
                 "tema": tema,
                 "fecha": fecha_entrada(e, ahora).isoformat(),
-            })
+            }
+            if filtrar:
+                art["rel"] = True
+            articulos.append(art)
             nuevos += 1
         nuevos_total += nuevos
-        print(f"  [OK] {nombre}: {nuevos} nuevos")
+        descartados_total += descartados
+        print(f"  [OK] {nombre}: {nuevos} nuevos, {descartados} descartados por no ser relevantes")
 
-    print(f"Total nuevos: {nuevos_total}. Feeds con problemas: {len(fallos)}")
+    print(f"Total nuevos: {nuevos_total}. Descartados: {descartados_total}. "
+          f"Feeds con problemas: {len(fallos)}")
     if fallos:
         print("  -> " + ", ".join(fallos))
     return articulos
 
 
-# ----------------------------------------------------------------- HTML
-CSS = """
-:root{--tinta:#1b1f24;--suave:#5f6b7a;--linea:#e3e8ee;--fondo:#ffffff;--acento:#0b3d6b;--tarjeta:#f7f9fb}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{margin:0;background:var(--fondo);color:var(--tinta);
- font:16px/1.55 Inter,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-a{color:var(--acento);text-decoration:none}
-a:hover{text-decoration:underline}
-.contenedor{max-width:1040px;margin:0 auto;padding:0 18px}
-header.sitio{padding:28px 0 0}
-.marca h1{margin:0;font-size:2.1rem;line-height:1.05;font-weight:800;letter-spacing:-.02em}
-.marca h1 a{color:var(--tinta);text-decoration:none}
-.marca h1 span{color:var(--acento)}
-.lema{margin:8px 0 0;font-size:1.08rem;font-weight:600;color:var(--acento)}
-.subtitulo{margin:2px 0 0;color:var(--suave);font-size:.95rem}
-.autor{margin:8px 0 0;color:var(--suave);font-size:.85rem}
-nav.menu{display:flex;gap:8px;overflow-x:auto;padding:18px 0 16px;border-bottom:1px solid var(--linea);scrollbar-width:thin}
-nav.menu a{white-space:nowrap;padding:6px 13px;border:1px solid var(--linea);border-radius:999px;
- color:var(--tinta);font-size:.9rem;background:#fff}
-nav.menu a:hover{background:var(--tarjeta);text-decoration:none}
-nav.menu a.activo{background:#eaf1f8;border-color:#bcd0e4;color:var(--acento);font-weight:600}
-main{padding:8px 0 44px}
-.intro{margin:24px 0 14px;font-size:1.35rem;font-weight:700;letter-spacing:-.01em}
-.intro small{display:block;margin-top:2px;font-size:.88rem;font-weight:400;color:var(--suave)}
-.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px}
-.tema-card{border:1px solid var(--linea);border-top:4px solid var(--c,var(--acento));border-radius:12px;
- padding:14px 16px 6px;background:#fff;box-shadow:0 1px 3px rgba(16,24,40,.06)}
-.tema-card header{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:2px}
-.tema-card h2{margin:0;padding:0;border:0;font-size:1.05rem;font-weight:700;color:var(--c,var(--acento))}
-.tema-card header a{font-size:.82rem;white-space:nowrap}
-h2{font-size:1.25rem;line-height:1.3;font-weight:700;margin:28px 0 8px;padding-left:12px;
- border-left:5px solid var(--c,var(--acento))}
-h2 small{font-size:.85rem;font-weight:400;color:var(--suave);margin-left:6px}
-h3{font-size:1rem;margin:18px 0 4px;color:var(--suave);font-weight:600}
-ul.lista{list-style:none;margin:0;padding:0}
-li.item{padding:10px 0;border-bottom:1px solid var(--linea)}
-li.item:last-child{border-bottom:0}
-li.item a.titular{font-weight:600;color:var(--tinta);line-height:1.35}
-li.item a.titular:hover{color:var(--acento)}
-.meta{display:block;font-size:.8rem;color:var(--suave);margin-top:3px}
-.nuevo{display:inline-block;margin-left:6px;padding:0 7px;border:1px solid var(--c,var(--acento));
- border-radius:8px;font-size:.68rem;color:var(--c,var(--acento));font-weight:600}
-.etiqueta{color:var(--c,var(--acento));font-weight:600}
-.buscador{margin:16px 0 0}
-.buscador input{width:100%;padding:10px 14px;font-size:1rem;border:1px solid var(--linea);border-radius:10px;background:#fff}
-.buscador input:focus{outline:2px solid #bcd0e4;border-color:var(--acento)}
-.fichas{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:12px 0}
-.ficha{display:block;padding:12px 14px;border:1px solid var(--linea);border-left:5px solid var(--c,var(--acento));
- border-radius:10px;background:var(--tarjeta);color:var(--tinta)}
-.ficha b{display:block}
-.ficha span{color:var(--suave);font-size:.85rem}
-.vacio{color:var(--suave);font-style:italic}
-main p{max-width:68ch}
-footer.pie{border-top:1px solid var(--linea);padding:16px 0 32px;color:var(--suave);font-size:.82rem}
-.oculto{display:none!important}
-@media (max-width:520px){.marca h1{font-size:1.75rem}.rejilla{grid-template-columns:1fr}}
-@media print{
- nav.menu,.buscador{display:none}
- body{font-size:11pt}
- a{color:#000}
- .rejilla{display:block}
- .tema-card{box-shadow:none;break-inside:avoid;margin-bottom:12px}
- li.item{break-inside:avoid}
-}
-"""
-
-JS_BUSCADOR = """
-<script>
-(function(){
-  var caja=document.getElementById('buscar'); if(!caja) return;
-  caja.addEventListener('input',function(){
-    var q=caja.value.toLowerCase().trim();
-    document.querySelectorAll('li.item').forEach(function(li){
-      li.classList.toggle('oculto', q && li.textContent.toLowerCase().indexOf(q)===-1);
-    });
-    document.querySelectorAll('section.bloque').forEach(function(s){
-      var hay=s.querySelector('li.item:not(.oculto)');
-      s.classList.toggle('oculto', q && !hay);
-    });
-  });
-})();
-</script>
-"""
+def depurar(articulos, config, patrones):
+    """Aplica las reglas actuales a lo ya guardado: quita lo irrelevante y recoloca
+    lo que está en temas que ya no existen. Es idempotente."""
+    temas = config["temas"]
+    feeds = {f["nombre"]: f for f in config["feeds"]}
+    limpios, quitados = [], 0
+    for a in articulos:
+        f = feeds.get(a["fuente"])
+        filtrar = True if f is None else bool(f.get("filtrar"))
+        tema_feed = f["tema"] if f and f["tema"] in temas else None
+        if filtrar and not a.get("rel"):
+            if not es_relevante(patrones, a["titulo"]):
+                quitados += 1
+                continue
+            a["rel"] = True
+            a["tema"] = tema_feed or clasificar(a["titulo"], patrones, temas)
+        if a["tema"] not in temas:
+            a["tema"] = tema_feed or clasificar(a["titulo"], patrones, temas)
+        limpios.append(a)
+    if quitados:
+        print(f"Depuración: {quitados} titulares antiguos quitados por no ser relevantes.")
+    return limpios
 
 
+# ----------------------------------------------------------------- sitio
 class Sitio:
-    def __init__(self, config, articulos, salida):
+    def __init__(self, config, articulos, salida, resumenes=None):
+        sitio = config["sitio"]
         self.cfg = config
         self.temas = config["temas"]
-        self.titulo = config["sitio"]["titulo"]
-        self.subtitulo = config["sitio"].get("subtitulo", "")
-        self.lema = config["sitio"].get("lema", "")
-        self.autor = config["sitio"].get("autor", "")
+        self.descripciones = config.get("descripciones", {})
+        self.titulo = sitio["titulo"]
+        self.subtitulo = sitio.get("subtitulo", "")
+        self.lema = sitio.get("lema", "")
+        self.autor = sitio.get("autor", "")
+        goat = (sitio.get("goatcounter") or "").strip().lower()
+        self.goat = goat if re.fullmatch(r"[a-z0-9-]+", goat) else ""
+        form = (sitio.get("formulario") or "").strip()
+        self.formulario = form if form.startswith("https://") else ""
         self.articulos = sorted(articulos, key=lambda a: a["fecha"], reverse=True)
+        self.resumenes = resumenes or []
+        self.ultimo = self.resumenes[0] if self.resumenes else None
         self.salida = salida
         self.ahora = datetime.now(timezone.utc)
         for a in self.articulos:
             a["_dt"] = a_local(a["fecha"])
 
-    # -- piezas
+    # -- piezas comunes
     def color(self, tema):
-        return COLORES.get(tema, "#444444")
+        return COLORES.get(tema, "#94a3b8")
 
     def escribir(self, ruta_rel, contenido):
         ruta = self.salida / ruta_rel
         ruta.parent.mkdir(parents=True, exist_ok=True)
         ruta.write_text(contenido, encoding="utf-8")
 
-    def pagina(self, titulo, cuerpo, raiz, activo="", buscador=False):
-        enlaces = [("portada", "Portada", f"{raiz}index.html"),
-                   ("archivo", "Archivo", f"{raiz}archivo/index.html")]
-        for clave, nombre in self.temas.items():
-            enlaces.append((clave, nombre, f"{raiz}tema/{clave}.html"))
-        enlaces.append(("acerca", "Acerca de", f"{raiz}acerca.html"))
-        menu = "".join(
-            f'<a href="{u}"{" class=activo" if k == activo else ""}>{esc(n)}</a>'
-            for k, n, u in enlaces)
+    def pagina(self, titulo, cuerpo, raiz, activo="", buscador=False, descripcion=""):
+        def act(k):
+            return ' class="activo"' if k == activo else ""
+
+        temas_html = "".join(
+            f'<a href="{raiz}tema/{k}.html" style="--c:{self.color(k)}">'
+            f'<span class="punto"></span>{esc(n)}</a>' for k, n in self.temas.items())
+        desplegable_act = " activo" if activo in self.temas else ""
+        enlaces = [
+            f'<a href="{raiz}index.html"{act("portada")}>Portada</a>',
+            f'<details class="desplegable{desplegable_act}"><summary>Temas</summary>'
+            f'<div class="panel">{temas_html}</div></details>',
+            f'<a href="{raiz}resumenes.html"{act("resumenes")}>Resúmenes</a>',
+            f'<a href="{raiz}proyectos.html"{act("proyectos")}>Proyectos</a>',
+            f'<a href="{raiz}retos.html"{act("retos")}>Retos de datos</a>',
+            f'<a href="{raiz}archivo/index.html"{act("archivo")}>Archivo</a>',
+            f'<a href="{raiz}acerca.html"{act("acerca")}>Acerca de</a>',
+        ]
+        if self.formulario:
+            enlaces.append(f'<a href="{esc(self.formulario)}" target="_blank" '
+                           f'rel="noopener noreferrer">Contacto</a>')
+        menu = "".join(enlaces)
+
         caja = ('<div class="buscador"><input id="buscar" type="search" '
                 'placeholder="Buscar en los titulares de esta página…" '
                 'autocomplete="off"></div>') if buscador else ""
@@ -293,31 +562,44 @@ class Sitio:
         autor = f'<p class="autor">por {esc(self.autor)}</p>' if self.autor else ""
         ahora_l = self.ahora.astimezone(ZONA)
         actualizado = fecha_corta(ahora_l) + ahora_l.strftime(", %H:%M")
-        pie_autor = f"{esc(self.titulo)} · {esc(self.autor)} · " if self.autor else ""
+        autor_pie = f" · {esc(self.autor)}" if self.autor else ""
+        contacto = (f' · <a href="{esc(self.formulario)}" target="_blank" '
+                    f'rel="noopener noreferrer">Enviar comentario</a>') if self.formulario else ""
+        contador = (f'<script data-goatcounter="https://{self.goat}.goatcounter.com/count" '
+                    f'async src="//gc.zgo.at/count.js"></script>') if self.goat else ""
+        desc_meta = esc(descripcion or self.subtitulo)
         return f"""<!doctype html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(titulo)} · {esc(self.titulo)}</title>
+<meta name="description" content="{desc_meta}">
+<meta name="theme-color" content="#0b1220">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{esc(titulo)} · {esc(self.titulo)}">
+<meta property="og:description" content="{desc_meta}">
+<link rel="icon" href="{FAVICON}">
 <link rel="stylesheet" href="{raiz}estilo.css">
 </head><body>
-<header class="sitio"><div class="contenedor">
-<div class="marca"><h1><a href="{raiz}index.html">{marca}</a></h1></div>
-{lema}{sub}{autor}
-<nav class="menu">{menu}</nav>
-</div></header>
+<header class="sitio"><div class="contenedor"><div class="hero">
+<a class="logo" href="{raiz}index.html" aria-label="{esc(self.titulo)}, inicio">{LOGO_SVG}</a>
+<div><h1><a href="{raiz}index.html">{marca}</a></h1>{lema}{sub}{autor}</div>
+</div></div></header>
+<div class="barra"><div class="contenedor"><nav class="menu">{menu}</nav></div></div>
 <main><div class="contenedor">
 {caja}
 {cuerpo}
 </div></main>
 <footer class="pie"><div class="contenedor">
-{pie_autor}Actualizado automáticamente: {actualizado}. Solo se muestran titulares y enlaces; el contenido
-pertenece a cada fuente original.
+{esc(self.titulo)}{autor_pie}{contacto}<br>
+Actualizado automáticamente: {actualizado}. Titulares y enlaces a las fuentes originales, cuyo
+contenido pertenece a cada medio; los resúmenes semanales son elaboración propia.
+Contenido divulgativo: no sustituye el consejo médico ni profesional.
 </div></footer>
-{JS_BUSCADOR if buscador else ""}
+<script src="{raiz}interactivo.js" defer></script>
+{contador}
 </body></html>"""
 
     def item(self, a, con_fecha=True, con_tema=False):
-        dt = a["_dt"]
         nuevo = ""
         if self.ahora - datetime.fromisoformat(a["fecha"]) < timedelta(hours=48):
             nuevo = '<span class="nuevo">nuevo</span>'
@@ -327,9 +609,10 @@ pertenece a cada fuente original.
                           f'{esc(self.temas.get(a["tema"], a["tema"]))}</span>')
         partes.append(esc(a["fuente"]))
         if con_fecha:
-            partes.append(fecha_corta(dt))
+            partes.append(f'<time datetime="{esc(a["fecha"])}" data-iso="{esc(a["fecha"])}">'
+                          f'{fecha_corta(a["_dt"])}</time>')
         meta = " · ".join(partes)
-        return (f'<li class="item" style="--c:{self.color(a["tema"])}">'
+        return (f'<li class="item" data-tema="{esc(a["tema"])}" style="--c:{self.color(a["tema"])}">'
                 f'<a class="titular" href="{esc(a["enlace"])}" target="_blank" '
                 f'rel="noopener noreferrer">{esc(a["titulo"])}</a>'
                 f'<span class="meta">{meta}{nuevo}</span></li>')
@@ -346,12 +629,33 @@ pertenece a cada fuente original.
                           + "</ul>")
         return "".join(salida) or '<p class="vacio">Sin noticias.</p>'
 
-    # -- páginas
+    def chips_fuentes(self, fuentes):
+        chips = []
+        for f in (fuentes or [])[:4]:
+            enlace = (f.get("enlace") or "").strip()
+            nombre = f.get("fuente") or f.get("titulo") or "Fuente"
+            if enlace.startswith(("http://", "https://")):
+                chips.append(f'<a href="{esc(enlace)}" target="_blank" '
+                             f'rel="noopener noreferrer">{esc(nombre)} ↗</a>')
+        if not chips:
+            return ""
+        return '<div class="fuentes"><span>Fuentes:</span>' + "".join(chips) + "</div>"
+
+    def resumen_de(self, clave, resumen_semana=None):
+        r = resumen_semana or self.ultimo or {}
+        t = (r.get("temas") or {}).get(clave) or {}
+        return (t.get("resumen") or "").strip(), t.get("fuentes") or []
+
+    # -- portada
+    def conteo_semana(self, clave, dias):
+        limite = self.ahora - timedelta(days=dias)
+        return sum(1 for a in self.articulos if a["tema"] == clave
+                   and datetime.fromisoformat(a["fecha"]) >= limite)
+
     def seleccion_portada(self, propios, dias, maximo, max_fuente):
-        """Las más recientes del tema, con tope por fuente para que haya variedad."""
         limite = self.ahora - timedelta(days=dias)
         elegidos, por_fuente = [], defaultdict(int)
-        for a in propios:  # ya vienen ordenadas de más nueva a más antigua
+        for a in propios:
             if datetime.fromisoformat(a["fecha"]) < limite:
                 break
             if por_fuente[a["fuente"]] >= max_fuente:
@@ -360,7 +664,7 @@ pertenece a cada fuente original.
             por_fuente[a["fuente"]] += 1
             if len(elegidos) >= maximo:
                 break
-        if len(elegidos) < 3:  # pocas recientes: completar con lo último guardado
+        if len(elegidos) < 3:
             for a in propios:
                 if a not in elegidos:
                     elegidos.append(a)
@@ -368,37 +672,62 @@ pertenece a cada fuente original.
                     break
         return elegidos
 
+    def tarjeta_tema(self, clave, nombre, dias):
+        n = self.conteo_semana(clave, dias)
+        texto, fuentes = self.resumen_de(clave)
+        if texto:
+            cuerpo = f'<p class="resumen">{esc(texto)}</p>' + self.chips_fuentes(fuentes)
+        else:
+            propios = [a for a in self.articulos if a["tema"] == clave]
+            elegidos = self.seleccion_portada(propios, dias, 3, 2)
+            if elegidos:
+                cuerpo = ('<p class="nota">Resumen semanal en preparación. Últimos titulares:</p>'
+                          '<ul class="lista">' + "".join(self.item(a) for a in elegidos) + "</ul>")
+            else:
+                cuerpo = '<p class="vacio">Aún no hay noticias de este tema.</p>'
+        return (f'<section class="tema-card bloque" id="{clave}" style="--c:{self.color(clave)}">'
+                f'<a class="enlace-tema" href="tema/{clave}.html" '
+                f'aria-label="Todas las noticias de {esc(nombre)}"></a>'
+                f'<header><span class="punto"></span><h2>{esc(nombre)}</h2>'
+                f'<span class="cuenta">{n} esta semana</span></header>'
+                f'{cuerpo}<span class="mas">Ver todas las noticias →</span></section>')
+
     def portada(self):
         sitio = self.cfg["sitio"]
         dias = sitio.get("dias_portada", 7)
-        maximo = sitio.get("max_por_tema_portada", 5)
-        max_fuente = sitio.get("max_por_fuente_portada", 2)
-        tarjetas = []
-        for clave, nombre in self.temas.items():
-            propios = [a for a in self.articulos if a["tema"] == clave]
-            elegidos = self.seleccion_portada(propios, dias, maximo, max_fuente)
-            if elegidos:
-                lista = ('<ul class="lista">'
-                         + "".join(self.item(a) for a in elegidos) + "</ul>")
-            else:
-                lista = '<p class="vacio">Aún no hay noticias de este tema.</p>'
-            tarjetas.append(
-                f'<section class="tema-card bloque" id="{clave}" style="--c:{self.color(clave)}">'
-                f'<header><h2>{esc(nombre)}</h2>'
-                f'<a href="tema/{clave}.html">Ver todas ({len(propios)}) →</a></header>'
-                f'{lista}</section>')
-        cuerpo = ('<div class="intro">Lo más reciente'
-                  '<small>Selección automática: pocas noticias por tema y de fuentes variadas.'
-                  '</small></div><div class="rejilla">' + "".join(tarjetas) + "</div>")
-        self.escribir("index.html", self.pagina("Portada", cuerpo, "", "portada", buscador=True))
+        max_flujo = sitio.get("max_flujo_portada", 60)
+        tarjetas = "".join(self.tarjeta_tema(k, n, dias) for k, n in self.temas.items())
+        if self.ultimo:
+            semana = f'Semana del {rango_semana(self.ultimo["desde"], self.ultimo["hasta"])}'
+        else:
+            semana = "Lo más reciente"
+        chips = ('<button class="chip-tema activo" data-tema="todas" type="button">Todas</button>'
+                 + "".join(f'<button class="chip-tema" data-tema="{k}" type="button" '
+                           f'style="--c:{self.color(k)}">{esc(n)}</button>'
+                           for k, n in self.temas.items()))
+        flujo = self.articulos[:max_flujo]
+        if flujo:
+            lista = ('<ul class="lista flujo" id="flujo">'
+                     + "".join(self.item(a, con_tema=True) for a in flujo) + "</ul>")
+        else:
+            lista = '<p class="vacio">Aún no hay noticias. Aparecerán tras la primera actualización.</p>'
+        cuerpo = (
+            f'<div class="intro">{esc(semana)}'
+            '<small>Resumen por temas. Pulsa un tema para ver todas sus noticias.</small></div>'
+            f'<div class="rejilla">{tarjetas}</div>'
+            '<h2 id="ultimas" style="--c:#38bdf8">Últimas noticias<small>de todos los temas</small></h2>'
+            '<div class="buscador"><input id="buscar" type="search" autocomplete="off" '
+            'placeholder="Buscar en las últimas noticias… (pulsa / para buscar)"></div>'
+            f'<div class="chips">{chips}</div>'
+            f'{lista}'
+            '<p id="sin-resultados" class="vacio oculto">No hay noticias con ese filtro.</p>'
+            '<button id="mas" class="boton-mas oculto" type="button">Cargar más noticias</button>'
+        )
+        self.escribir("index.html", self.pagina(
+            "Portada", cuerpo, "", "portada",
+            descripcion="Noticias y resúmenes semanales de inteligencia artificial, robótica y automatización."))
 
-    def acerca(self):
-        textos = self.cfg["sitio"].get("acerca") or [
-            "Aprendo y comparto, en castellano, cómo se aplican los datos y la inteligencia "
-            "artificial al mantenimiento y a la ingeniería."]
-        cuerpo = "<h2>Acerca de</h2>" + "".join(f"<p>{esc(t)}</p>" for t in textos)
-        self.escribir("acerca.html", self.pagina("Acerca de", cuerpo, "", "acerca"))
-
+    # -- temas
     def paginas_tema(self):
         for clave, nombre in self.temas.items():
             propios = [a for a in self.articulos if a["tema"] == clave]
@@ -407,6 +736,15 @@ pertenece a cada fuente original.
                 por_mes[(a["_dt"].year, a["_dt"].month)].append(a)
             partes = [f'<h2 style="--c:{self.color(clave)}">{esc(nombre)}'
                       f'<small>{len(propios)} titulares</small></h2>']
+            if self.descripciones.get(clave):
+                partes.append(f'<p class="desc">{esc(self.descripciones[clave])}</p>')
+            texto, fuentes = self.resumen_de(clave)
+            if texto:
+                partes.append(
+                    f'<section class="bloque-resumen" style="--c:{self.color(clave)}">'
+                    f'<h4>Resumen · semana del '
+                    f'{rango_semana(self.ultimo["desde"], self.ultimo["hasta"])}</h4>'
+                    f'<p>{esc(texto)}</p>{self.chips_fuentes(fuentes)}</section>')
             if not propios:
                 partes.append('<p class="vacio">Aún no hay noticias de este tema.</p>')
             for (y, m) in sorted(por_mes, reverse=True):
@@ -418,14 +756,82 @@ pertenece a cada fuente original.
                     + (f'<p class="vacio">… y {len(items) - 30} más en el mes completo.</p>'
                        if len(items) > 30 else "") + "</section>")
             self.escribir(f"tema/{clave}.html",
-                          self.pagina(nombre, "".join(partes), "../", clave, buscador=True))
+                          self.pagina(nombre, "".join(partes), "../", clave, buscador=True,
+                                      descripcion=self.descripciones.get(clave, "")))
 
+    # -- resúmenes, proyectos, retos, acerca
+    def pagina_resumenes(self):
+        partes = ['<h2>Resúmenes semanales</h2>'
+                  '<p class="desc">Cada semana, lo más importante de cada tema, en castellano y con enlaces '
+                  'a las fuentes originales.</p>']
+        if not self.resumenes:
+            partes.append('<p class="vacio">Los resúmenes semanales aparecerán aquí, '
+                          'del más nuevo al más antiguo.</p>')
+        for r in self.resumenes:
+            partes.append(f'<h3 class="semana">Semana del {rango_semana(r["desde"], r["hasta"])}</h3>')
+            for clave, nombre in self.temas.items():
+                texto, fuentes = self.resumen_de(clave, r)
+                if not texto:
+                    continue
+                partes.append(
+                    f'<section class="bloque-resumen" style="--c:{self.color(clave)}">'
+                    f'<h4>{esc(nombre)}</h4><p>{esc(texto)}</p>{self.chips_fuentes(fuentes)}</section>')
+        self.escribir("resumenes.html", self.pagina(
+            "Resúmenes semanales", "".join(partes), "", "resumenes",
+            descripcion="Resumen semanal por temas de inteligencia artificial, robótica y automatización."))
+
+    def pagina_proyectos(self):
+        estados = {"proximo": "Próximo", "idea": "Idea", "curso": "En curso", "publicado": "Publicado"}
+        tarjetas = []
+        for p in self.cfg.get("proyectos", []):
+            est = p.get("estado", "idea")
+            enlace = enlace_seguro(p.get("enlace"))
+            ir = f'<a class="ir" href="{esc(enlace)}">Abrir →</a>' if enlace else ""
+            tarjetas.append(
+                f'<article class="proyecto"><span class="estado {esc(est)}">'
+                f'{esc(estados.get(est, est))}</span><h3>{esc(p.get("titulo", ""))}</h3>'
+                f'<p>{esc(p.get("descripcion", ""))}</p>{ir}</article>')
+        cuerpo = ('<h2>Proyectos</h2>'
+                  '<p class="desc">Programas útiles explicados paso a paso, con datos reales y abiertos. '
+                  'Se irán completando poco a poco, indicando siempre las fuentes de los datos y los '
+                  'límites de cada resultado.</p>'
+                  f'<div class="tarjetas">{"".join(tarjetas)}</div>')
+        self.escribir("proyectos.html", self.pagina(
+            "Proyectos", cuerpo, "", "proyectos",
+            descripcion="Programas explicados paso a paso con datos reales y abiertos."))
+
+    def pagina_retos(self):
+        tarjetas = []
+        for r in self.cfg.get("retos", []):
+            url = (r.get("url") or "").strip()
+            if not url.startswith("https://"):
+                continue
+            marca = '<span class="estado">Para empezar</span>' if r.get("destacado") else ""
+            tarjetas.append(
+                f'<article class="proyecto">{marca}<h3>{esc(r.get("nombre", ""))}</h3>'
+                f'<p>{esc(r.get("descripcion", ""))}</p>'
+                f'<a class="ir" href="{esc(url)}" target="_blank" rel="noopener noreferrer">'
+                f'Visitar ↗</a></article>')
+        cuerpo = ('<h2>Retos de datos</h2>'
+                  '<p class="desc">Plataformas con retos reales para practicar. Más adelante publicaré aquí '
+                  'fichas de retos concretos: qué se pide, qué enfoques funcionaron y qué se aprende. '
+                  'Siempre respetando las normas de cada plataforma y citando a sus autores.</p>'
+                  f'<div class="tarjetas">{"".join(tarjetas)}</div>')
+        self.escribir("retos.html", self.pagina(
+            "Retos de datos", cuerpo, "", "retos",
+            descripcion="Plataformas de retos de datos para aprender inteligencia artificial."))
+
+    def acerca(self):
+        textos = self.cfg["sitio"].get("acerca") or []
+        cuerpo = "<h2>Acerca de</h2>" + "".join(f"<p>{esc(t)}</p>" for t in textos)
+        self.escribir("acerca.html", self.pagina("Acerca de", cuerpo, "", "acerca"))
+
+    # -- archivo
     def archivo(self):
         por_mes = defaultdict(list)
         for a in self.articulos:
             por_mes[(a["_dt"].year, a["_dt"].month)].append(a)
 
-        # índice general
         años = sorted({y for y, _ in por_mes}, reverse=True)
         partes = ['<h2>Archivo por año y mes</h2>']
         if not años:
@@ -441,25 +847,25 @@ pertenece a cada fuente original.
         self.escribir("archivo/index.html",
                       self.pagina("Archivo", "".join(partes), "../", "archivo"))
 
-        # carpeta por mes: índice + una página por tema
         for (y, m), items in por_mes.items():
             carpeta = f"archivo/{y}/{m:02d}"
             raiz = "../../../"
             fichas = []
             for clave, nombre in self.temas.items():
-                n = sum(1 for a in items if a["tema"] == clave)
-                if n:
-                    fichas.append(
-                        f'<a class="ficha" style="--c:{self.color(clave)}" '
-                        f'href="{clave}.html"><b>{esc(nombre)}</b><span>{n} titulares</span></a>')
-                    propios = [a for a in items if a["tema"] == clave]
-                    cuerpo = (f'<h2 style="--c:{self.color(clave)}">{esc(nombre)} · '
-                              f'{MESES[m - 1]} {y}</h2>'
-                              f'<p><a href="index.html">← {MESES[m - 1].capitalize()} {y}</a></p>'
-                              + self.lista_por_dias(propios))
-                    self.escribir(f"{carpeta}/{clave}.html",
-                                  self.pagina(f"{nombre} — {MESES[m - 1]} {y}", cuerpo,
-                                              raiz, "archivo", buscador=True))
+                propios = [a for a in items if a["tema"] == clave]
+                if not propios:
+                    continue
+                fichas.append(
+                    f'<a class="ficha" style="--c:{self.color(clave)}" '
+                    f'href="{clave}.html"><b>{esc(nombre)}</b>'
+                    f'<span>{len(propios)} titulares</span></a>')
+                cuerpo = (f'<h2 style="--c:{self.color(clave)}">{esc(nombre)} · '
+                          f'{MESES[m - 1]} {y}</h2>'
+                          f'<p><a href="index.html">← {MESES[m - 1].capitalize()} {y}</a></p>'
+                          + self.lista_por_dias(propios))
+                self.escribir(f"{carpeta}/{clave}.html",
+                              self.pagina(f"{nombre} — {MESES[m - 1]} {y}", cuerpo,
+                                          raiz, "archivo", buscador=True))
             cuerpo = (f'<h2>{MESES[m - 1].capitalize()} {y}'
                       f'<small>{len(items)} titulares</small></h2>'
                       f'<p><a href="../../index.html">← Todo el archivo</a></p>'
@@ -475,9 +881,13 @@ pertenece a cada fuente original.
             shutil.rmtree(self.salida)
         self.salida.mkdir(parents=True)
         self.escribir("estilo.css", CSS)
+        self.escribir("interactivo.js", JS)
         self.escribir(".nojekyll", "")
         self.portada()
         self.paginas_tema()
+        self.pagina_resumenes()
+        self.pagina_proyectos()
+        self.pagina_retos()
         self.acerca()
         self.archivo()
 
@@ -487,6 +897,7 @@ def main():
     p = argparse.ArgumentParser(description="Genera la web de noticias.")
     p.add_argument("--config", default=str(RAIZ / "feeds.json"))
     p.add_argument("--datos", default=str(RAIZ / "data" / "articulos.json"))
+    p.add_argument("--resumenes", default=str(RAIZ / "data" / "resumenes"))
     p.add_argument("--salida", default=str(RAIZ / "docs"))
     p.add_argument("--sin-descarga", action="store_true",
                    help="No consulta los feeds; solo regenera la web.")
@@ -495,16 +906,21 @@ def main():
     config = cargar_json(Path(args.config), None)
     if not config:
         sys.exit(f"No se encuentra la configuración: {args.config}")
+    patrones = preparar_patrones(config)
     ruta_datos = Path(args.datos)
     articulos = cargar_json(ruta_datos, [])
 
     if not args.sin_descarga:
         print("Descargando feeds…")
-        articulos = descargar(config, articulos)
+        articulos = descargar(config, articulos, patrones)
+    articulos = depurar(articulos, config, patrones)
+    if not args.sin_descarga or ruta_datos.exists():
         guardar_datos(ruta_datos, articulos)
 
-    Sitio(config, articulos, Path(args.salida)).generar()
-    print(f"Web generada en {args.salida} con {len(articulos)} titulares.")
+    resumenes = cargar_resumenes(Path(args.resumenes))
+    Sitio(config, articulos, Path(args.salida), resumenes).generar()
+    print(f"Web generada en {args.salida} con {len(articulos)} titulares "
+          f"y {len(resumenes)} resúmenes semanales.")
 
 
 if __name__ == "__main__":
