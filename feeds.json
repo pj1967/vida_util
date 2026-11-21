@@ -1,163 +1,656 @@
 {
-  "sitio": {
-    "titulo": "Vida Útil",
-    "lema": "Del taller a los datos",
-    "subtitulo": "Inteligencia artificial, robótica y automatización en castellano",
-    "autor": "Pedro José de la Rosa Martín",
-    "acerca": [
-      "Soy Pedro José de la Rosa Martín. Aprendo y comparto, en castellano, cómo se aplican los datos, la inteligencia artificial y la automatización al mantenimiento y a la ingeniería.",
-      "Esta web reúne cada día las noticias más relevantes sobre inteligencia artificial, robótica y automatización en distintos ámbitos, y cada semana las resume por temas. Solo muestra titulares y enlaces a la fuente original.",
-      "Además publico programas útiles explicados paso a paso con datos reales y abiertos, indicando siempre de dónde salen los datos y cuáles son sus límites."
-    ],
-    "dias_portada": 7,
-    "max_flujo_portada": 60,
-    "goatcounter": "",
-    "formulario": ""
-  },
-
-  "temas": {
-    "ia": "Inteligencia artificial",
-    "robotica": "Robótica y automatización",
-    "programacion": "Programación",
-    "aeronautica": "Aeronáutica",
-    "otros": "Otros ámbitos"
-  },
-
-  "descripciones": {
-    "ia": "Modelos, herramientas y avances de la inteligencia artificial.",
-    "robotica": "Robots, drones, vehículos autónomos y automatización.",
-    "programacion": "Desarrollo de software y programación con inteligencia artificial.",
-    "aeronautica": "Aviación y espacio: autonomía, mantenimiento predictivo y datos.",
-    "otros": "La IA y la automatización en industria, agricultura, clima, energía, salud y farmacia."
-  },
-
-  "relevancia": [
-    "inteligencia artificial", "artificial intelligence", "ai", "ia",
-    "machine learning", "aprendizaje automático", "aprendizaje profundo", "deep learning",
-    "neural", "neuronal", "llm", "large language model", "modelo de lenguaje", "language model",
-    "chatgpt", "gpt", "openai", "anthropic", "claude", "gemini", "deepmind", "copilot",
-    "generative", "generativ", "ai agent", "agente de ia", "agentic", "chatbot",
-    "computer vision", "visión artificial",
-    "robot", "robótica", "robotic", "humanoid", "humanoide", "cobot",
-    "drone", "dron", "autonomous", "vehículo autónomo", "coche autónomo", "conducción autónoma", "self-driving",
-    "automation", "automatización", "automatizar", "automated",
-    "predictive maintenance", "mantenimiento predictivo", "digital twin", "gemelo digital"
+ "sitio": {
+  "titulo": "Mente Máquina",
+  "lema": "Del taller a los datos",
+  "subtitulo": "Inteligencia artificial, robótica y automatización en castellano",
+  "autor": "Pedro José de la Rosa Martín",
+  "acerca": [
+   "Soy Pedro José de la Rosa Martín, técnico aeronáutico. Aprendo y comparto, en castellano, cómo se aplican los datos, la inteligencia artificial y la automatización al mantenimiento y a la ingeniería.",
+   "Lo más importante de esta web son los proyectos: programas útiles explicados paso a paso, con datos reales y abiertos, indicando siempre de dónde salen los datos y cuáles son sus límites.",
+   "Como complemento, reúne cada día noticias sobre inteligencia artificial, robótica y automatización, y cada semana las resume por temas. Solo muestra titulares con enlace a la fuente original."
   ],
-
-  "clasificacion": [
-    {"tema": "robotica", "palabras": [
-      "robot", "robótica", "robotic", "humanoid", "humanoide", "cobot",
-      "drone", "dron", "self-driving", "vehículo autónomo", "coche autónomo", "conducción autónoma",
-      "autonomous vehicle", "automation", "automatización"
-    ]},
-    {"tema": "aeronautica", "palabras": [
-      "aircraft", "aviation", "aviación", "airline", "aerolínea", "aerospace", "aeroespacial",
-      "aeronáutica", "airbus", "boeing", "eurofighter", "jet engine", "turbofan", "avión", "aviones",
-      "nasa", "satellite", "satélite", "spacecraft", "rocket", "cohete"
-    ]},
-    {"tema": "programacion", "palabras": [
-      "programming", "programación", "coding", "código", "github", "copilot",
-      "software engineer", "ingeniería de software", "open source", "código abierto", "python", "javascript"
-    ]},
-    {"tema": "otros", "palabras": [
-      "agricultur", "farming", "crop", "cultivo", "cosecha", "clima", "climate", "weather", "meteorolog",
-      "energy", "energía", "power grid", "red eléctrica", "factory", "fábrica", "industria", "industrial",
-      "manufactur", "logistic", "supply chain",
-      "salud", "health", "medic", "pharma", "fármaco", "drug", "hospital", "clinical", "clínic",
-      "diagnos", "cirugía", "surgery", "biotech"
-    ]}
-  ],
-
-  "feeds": [
-    {"nombre": "MIT Technology Review IA", "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed", "tema": "ia"},
-    {"nombre": "MIT News IA", "url": "https://news.mit.edu/rss/topic/artificial-intelligence2", "tema": "ia"},
-    {"nombre": "Hugging Face Blog", "url": "https://huggingface.co/blog/feed.xml", "tema": "ia"},
-    {"nombre": "Google DeepMind", "url": "https://deepmind.google/blog/rss.xml", "tema": "ia"},
-    {"nombre": "VentureBeat IA", "url": "https://venturebeat.com/category/ai/feed/", "tema": "ia"},
-    {"nombre": "TechCrunch IA", "url": "https://techcrunch.com/category/artificial-intelligence/feed/", "tema": "ia"},
-    {"nombre": "The Verge IA", "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml", "tema": "ia"},
-    {"nombre": "arXiv cs.AI", "url": "https://export.arxiv.org/rss/cs.AI", "tema": "ia", "max": 6},
-
-    {"nombre": "IEEE Spectrum Robótica", "url": "https://spectrum.ieee.org/feeds/topic/robotics.rss", "tema": "robotica"},
-    {"nombre": "The Robot Report", "url": "https://www.therobotreport.com/feed/", "tema": "robotica"},
-    {"nombre": "arXiv cs.RO", "url": "https://export.arxiv.org/rss/cs.RO", "tema": "robotica", "max": 6},
-
-    {"nombre": "GitHub Blog", "url": "https://github.blog/feed/", "tema": "programacion", "filtrar": true},
-    {"nombre": "InfoQ", "url": "https://feed.infoq.com/", "tema": "programacion", "filtrar": true},
-    {"nombre": "Real Python", "url": "https://realpython.com/atom.xml", "tema": "programacion", "filtrar": true},
-
-    {"nombre": "The Aviationist", "url": "https://theaviationist.com/feed/", "tema": "aeronautica", "filtrar": true},
-    {"nombre": "Simple Flying", "url": "https://simpleflying.com/feed/", "tema": "aeronautica", "filtrar": true},
-    {"nombre": "NASA Aeronáutica", "url": "https://www.nasa.gov/aeronautics/feed/", "tema": "aeronautica", "filtrar": true},
-    {"nombre": "ESA Tecnología", "url": "https://www.esa.int/rssfeed/Our_Activities/Space_Engineering_Technology", "tema": "aeronautica", "filtrar": true},
-
-    {"nombre": "Ars Technica", "url": "https://feeds.arstechnica.com/arstechnica/index", "tema": "auto", "filtrar": true, "max": 20},
-    {"nombre": "The Verge", "url": "https://www.theverge.com/rss/index.xml", "tema": "auto", "filtrar": true, "max": 20},
-    {"nombre": "Xataka", "url": "https://www.xataka.com/feedburner.xml", "tema": "auto", "filtrar": true, "max": 20},
-    {"nombre": "Genbeta", "url": "https://www.genbeta.com/feedburner.xml", "tema": "auto", "filtrar": true, "max": 20},
-    {"nombre": "Wired", "url": "https://www.wired.com/feed/rss", "tema": "auto", "filtrar": true, "max": 20},
-    {"nombre": "IEEE Spectrum", "url": "https://spectrum.ieee.org/feeds/feed.rss", "tema": "auto", "filtrar": true, "max": 20},
-    {"nombre": "MIT Technology Review", "url": "https://www.technologyreview.com/feed/", "tema": "auto", "filtrar": true, "max": 20},
-
-    {"nombre": "Nature Medicine", "url": "https://www.nature.com/nm.rss", "tema": "otros", "filtrar": true},
-    {"nombre": "ScienceDaily Salud", "url": "https://www.sciencedaily.com/rss/health_medicine.xml", "tema": "otros", "filtrar": true},
-    {"nombre": "Fierce Pharma", "url": "https://www.fiercepharma.com/rss/xml", "tema": "otros", "filtrar": true},
-    {"nombre": "Fierce Biotech", "url": "https://www.fiercebiotech.com/rss/xml", "tema": "otros", "filtrar": true},
-    {"nombre": "AgFunder News", "url": "https://agfundernews.com/feed", "tema": "otros", "filtrar": true},
-    {"nombre": "Carbon Brief", "url": "https://www.carbonbrief.org/feed", "tema": "otros", "filtrar": true},
-    {"nombre": "Utility Dive", "url": "https://www.utilitydive.com/feeds/news/", "tema": "otros", "filtrar": true}
-  ],
-
-  "proyectos": [
+  "dias_portada": 7,
+  "max_flujo_portada": 100,
+  "goatcounter": "",
+  "formulario": "",
+  "sobre": {
+   "que_es": "Un blog personal, sin ánimo comercial, para aprender y compartir en castellano cómo se aplican la inteligencia artificial, la robótica y la automatización en distintos ámbitos. Se hace a ritmo de afición: poco a poco y sin prisa.",
+   "no_hace": [
+    "No es asesoramiento médico, legal ni financiero.",
+    "No copia artículos: solo muestra titulares y enlaza a la fuente original.",
+    "No usa datos ni documentación de ningún empleo: todos los proyectos usan datos públicos y abiertos.",
+    "No garantiza que los resultados de un proyecto sirvan fuera de sus datos de ejemplo."
+   ]
+  }
+ },
+ "temas": {
+  "ia": "Inteligencia artificial",
+  "robotica": "Robótica y automatización",
+  "programacion": "Programación",
+  "aeronautica": "Aeronáutica",
+  "otros": "Otros ámbitos"
+ },
+ "descripciones": {
+  "ia": "Modelos, herramientas y avances de la inteligencia artificial.",
+  "robotica": "Robots, drones, vehículos autónomos y automatización.",
+  "programacion": "Desarrollo de software y programación con inteligencia artificial.",
+  "aeronautica": "Aviación y espacio: autonomía, mantenimiento predictivo y datos.",
+  "otros": "La IA y la automatización en industria, agricultura, clima, energía, salud y farmacia."
+ },
+ "relevancia": [
+  "inteligencia artificial",
+  "artificial intelligence",
+  "ai",
+  "ia",
+  "machine learning",
+  "aprendizaje automático",
+  "aprendizaje profundo",
+  "deep learning",
+  "neural",
+  "neuronal",
+  "llm",
+  "large language model",
+  "modelo de lenguaje",
+  "language model",
+  "chatgpt",
+  "gpt",
+  "openai",
+  "anthropic",
+  "claude",
+  "gemini",
+  "deepmind",
+  "copilot",
+  "generative",
+  "generativ",
+  "ai agent",
+  "agente de ia",
+  "agentic",
+  "chatbot",
+  "computer vision",
+  "visión artificial",
+  "robot",
+  "robótica",
+  "robotic",
+  "humanoid",
+  "humanoide",
+  "cobot",
+  "drone",
+  "dron",
+  "autonomous",
+  "vehículo autónomo",
+  "coche autónomo",
+  "conducción autónoma",
+  "self-driving",
+  "automation",
+  "automatización",
+  "automatizar",
+  "automated",
+  "predictive maintenance",
+  "mantenimiento predictivo",
+  "digital twin",
+  "gemelo digital"
+ ],
+ "clasificacion": [
+  {
+   "tema": "robotica",
+   "palabras": [
+    "robot",
+    "robótica",
+    "robotic",
+    "humanoid",
+    "humanoide",
+    "cobot",
+    "drone",
+    "dron",
+    "self-driving",
+    "vehículo autónomo",
+    "coche autónomo",
+    "conducción autónoma",
+    "autonomous vehicle"
+   ]
+  },
+  {
+   "tema": "ia",
+   "palabras": [
+    "llm",
+    "gpt",
+    "chatgpt",
+    "modelo de lenguaje",
+    "language model",
+    "chatbot",
+    "openai",
+    "anthropic",
+    "claude",
+    "gemini",
+    "deepseek",
+    "llama",
+    "mistral",
+    "inteligencia artificial",
+    "artificial intelligence",
+    "machine learning",
+    "aprendizaje automático",
+    "deep learning",
+    "redes neuronales",
+    "neural network",
+    "generative",
+    "generativ",
+    "agentic",
+    "agentes de ia",
+    "ai agent"
+   ]
+  },
+  {
+   "tema": "aeronautica",
+   "palabras": [
+    "aircraft",
+    "aviation",
+    "aviación",
+    "airline",
+    "aerolínea",
+    "aerospace",
+    "aeroespacial",
+    "aeronáutica",
+    "airbus",
+    "boeing",
+    "eurofighter",
+    "jet engine",
+    "turbofan",
+    "avión",
+    "aviones",
+    "nasa",
+    "satellite",
+    "satélite",
+    "spacecraft",
+    "rocket",
+    "cohete"
+   ]
+  },
+  {
+   "tema": "programacion",
+   "palabras": [
+    "programming",
+    "programación",
+    "coding",
+    "código",
+    "github",
+    "copilot",
+    "software engineer",
+    "ingeniería de software",
+    "open source",
+    "código abierto",
+    "python",
+    "javascript"
+   ]
+  },
+  {
+   "tema": "otros",
+   "palabras": [
+    "agricultur",
+    "farming",
+    "crop",
+    "cultivo",
+    "cosecha",
+    "clima",
+    "climate",
+    "weather",
+    "meteorolog",
+    "energy",
+    "energía",
+    "power grid",
+    "red eléctrica",
+    "factory",
+    "fábrica",
+    "industria",
+    "industrial",
+    "manufactur",
+    "logistic",
+    "supply chain",
+    "salud",
+    "health",
+    "medic",
+    "pharma",
+    "fármaco",
+    "drug",
+    "hospital",
+    "clinical",
+    "clínic",
+    "diagnos",
+    "cirugía",
+    "surgery",
+    "biotech"
+   ]
+  },
+  {
+   "tema": "robotica",
+   "palabras": [
+    "automation",
+    "automatización",
+    "automatizaci",
+    "autonomous",
+    "autónom"
+   ]
+  }
+ ],
+ "feeds": [
+  {
+   "nombre": "MIT Technology Review IA",
+   "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed",
+   "tema": "ia"
+  },
+  {
+   "nombre": "MIT News IA",
+   "url": "https://news.mit.edu/rss/topic/artificial-intelligence2",
+   "tema": "ia"
+  },
+  {
+   "nombre": "Hugging Face Blog",
+   "url": "https://huggingface.co/blog/feed.xml",
+   "tema": "ia"
+  },
+  {
+   "nombre": "Google DeepMind",
+   "url": "https://deepmind.google/blog/rss.xml",
+   "tema": "ia"
+  },
+  {
+   "nombre": "VentureBeat IA",
+   "url": "https://venturebeat.com/category/ai/feed/",
+   "tema": "ia"
+  },
+  {
+   "nombre": "TechCrunch IA",
+   "url": "https://techcrunch.com/category/artificial-intelligence/feed/",
+   "tema": "ia"
+  },
+  {
+   "nombre": "The Verge IA",
+   "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+   "tema": "ia"
+  },
+  {
+   "nombre": "arXiv cs.AI",
+   "url": "https://export.arxiv.org/rss/cs.AI",
+   "tema": "ia",
+   "max": 6
+  },
+  {
+   "nombre": "IEEE Spectrum Robótica",
+   "url": "https://spectrum.ieee.org/feeds/topic/robotics.rss",
+   "tema": "robotica"
+  },
+  {
+   "nombre": "The Robot Report",
+   "url": "https://www.therobotreport.com/feed/",
+   "tema": "robotica"
+  },
+  {
+   "nombre": "arXiv cs.RO",
+   "url": "https://export.arxiv.org/rss/cs.RO",
+   "tema": "robotica",
+   "max": 6
+  },
+  {
+   "nombre": "GitHub Blog",
+   "url": "https://github.blog/feed/",
+   "tema": "programacion",
+   "filtrar": true
+  },
+  {
+   "nombre": "InfoQ",
+   "url": "https://feed.infoq.com/",
+   "tema": "programacion",
+   "filtrar": true
+  },
+  {
+   "nombre": "Real Python",
+   "url": "https://realpython.com/atom.xml",
+   "tema": "programacion",
+   "filtrar": true
+  },
+  {
+   "nombre": "The Aviationist",
+   "url": "https://theaviationist.com/feed/",
+   "tema": "aeronautica",
+   "filtrar": true
+  },
+  {
+   "nombre": "Simple Flying",
+   "url": "https://simpleflying.com/feed/",
+   "tema": "aeronautica",
+   "filtrar": true
+  },
+  {
+   "nombre": "NASA Aeronáutica",
+   "url": "https://www.nasa.gov/aeronautics/feed/",
+   "tema": "aeronautica",
+   "filtrar": true
+  },
+  {
+   "nombre": "ESA Tecnología",
+   "url": "https://www.esa.int/rssfeed/Our_Activities/Space_Engineering_Technology",
+   "tema": "aeronautica",
+   "filtrar": true
+  },
+  {
+   "nombre": "Ars Technica",
+   "url": "https://feeds.arstechnica.com/arstechnica/index",
+   "tema": "auto",
+   "filtrar": true,
+   "max": 20
+  },
+  {
+   "nombre": "The Verge",
+   "url": "https://www.theverge.com/rss/index.xml",
+   "tema": "auto",
+   "filtrar": true,
+   "max": 20
+  },
+  {
+   "nombre": "Xataka",
+   "url": "https://www.xataka.com/feedburner.xml",
+   "tema": "auto",
+   "filtrar": true,
+   "max": 20,
+   "idioma": "es"
+  },
+  {
+   "nombre": "Genbeta",
+   "url": "https://www.genbeta.com/feedburner.xml",
+   "tema": "auto",
+   "filtrar": true,
+   "max": 20,
+   "idioma": "es"
+  },
+  {
+   "nombre": "Wired",
+   "url": "https://www.wired.com/feed/rss",
+   "tema": "auto",
+   "filtrar": true,
+   "max": 20
+  },
+  {
+   "nombre": "IEEE Spectrum",
+   "url": "https://spectrum.ieee.org/feeds/feed.rss",
+   "tema": "auto",
+   "filtrar": true,
+   "max": 20
+  },
+  {
+   "nombre": "MIT Technology Review",
+   "url": "https://www.technologyreview.com/feed/",
+   "tema": "auto",
+   "filtrar": true,
+   "max": 20
+  },
+  {
+   "nombre": "Nature Medicine",
+   "url": "https://www.nature.com/nm.rss",
+   "tema": "otros",
+   "filtrar": true
+  },
+  {
+   "nombre": "ScienceDaily Salud",
+   "url": "https://www.sciencedaily.com/rss/health_medicine.xml",
+   "tema": "otros",
+   "filtrar": true
+  },
+  {
+   "nombre": "Fierce Pharma",
+   "url": "https://www.fiercepharma.com/rss/xml",
+   "tema": "otros",
+   "filtrar": true
+  },
+  {
+   "nombre": "Fierce Biotech",
+   "url": "https://www.fiercebiotech.com/rss/xml",
+   "tema": "otros",
+   "filtrar": true
+  },
+  {
+   "nombre": "AgFunder News",
+   "url": "https://agfundernews.com/feed",
+   "tema": "otros",
+   "filtrar": true
+  },
+  {
+   "nombre": "Carbon Brief",
+   "url": "https://www.carbonbrief.org/feed",
+   "tema": "otros",
+   "filtrar": true
+  },
+  {
+   "nombre": "Utility Dive",
+   "url": "https://www.utilitydive.com/feeds/news/",
+   "tema": "otros",
+   "filtrar": true
+  }
+ ],
+ "proyectos": [
+  {
+   "id": "motor-nasa",
+   "titulo": "Vida útil de un motor, con datos de la NASA",
+   "estado": "proximo",
+   "nivel": "inicial",
+   "area": "mantenimiento",
+   "descripcion": "Estimar cuántos ciclos de vuelo le quedan a un motor turbofán a partir de sus sensores, con datos abiertos de la NASA.",
+   "dataset": {
+    "nombre": "NASA C-MAPSS: simulación de degradación de motores turbofán (subconjunto FD001)",
+    "url": "https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/"
+   },
+   "objetivo": "Predecir la vida útil restante (RUL, en ciclos) de un motor a partir de las lecturas de sus sensores, y aprender el recorrido completo de un proyecto de datos: de la tabla en bruto a un modelo evaluado con honestidad.",
+   "datos": "Simulación de flotas de motores turbofán que se degradan hasta el fallo. Cada motor tiene 3 ajustes de operación y 21 sensores medidos ciclo a ciclo. El conjunto FD001 tiene 100 motores de entrenamiento (con la vida completa) y 100 de prueba (cortados antes del fallo, con su RUL real aparte). Son datos simulados, no de motores reales.",
+   "herramientas": [
+    "Python",
+    "pandas",
+    "NumPy",
+    "matplotlib",
+    "scikit-learn"
+   ],
+   "metodo": "Primero un modelo sencillo de referencia y después uno algo mejor, comparados con la misma métrica sobre los motores de prueba.",
+   "metrica": "RMSE (error medio en ciclos) y la puntuación asimétrica de la NASA, que penaliza más predecir un fallo tarde que predecirlo pronto.",
+   "pasos": [
     {
-      "titulo": "Vida útil de un motor, con datos de la NASA",
-      "descripcion": "Estimar cuánto le queda a un motor turbofán a partir de datos abiertos (NASA C-MAPSS): primero gráficas de degradación y después un primer modelo, explicado desde cero y con sus límites.",
-      "estado": "proximo"
+     "titulo": "Entender qué es la RUL",
+     "que": "Aclarar qué queremos predecir.",
+     "como": "RUL (Remaining Useful Life) es el número de ciclos que le quedan a un motor antes de fallar. Si un motor falló en el ciclo 200 y ahora está en el 150, su RUL es 50.",
+     "porque": "Si no está claro qué se predice, no se puede saber si el modelo funciona.",
+     "para": "Fijar el objetivo y la unidad (ciclos) antes de tocar ningún dato."
     },
     {
-      "titulo": "Línea base: detectar anomalías en una máquina sana",
-      "descripcion": "Registrar el comportamiento normal de un ventilador, una bomba o un rodamiento y avisar cuando se aleja de él. Con datos públicos y, más adelante, con sensores propios.",
-      "estado": "idea"
+     "titulo": "Descargar y cargar los datos",
+     "que": "Traer los ficheros de FD001 a tu ordenador y abrirlos con Python.",
+     "como": "Descarga el conjunto desde la página oficial. Son ficheros de texto con números separados por espacios (train_FD001, test_FD001 y RUL_FD001). Se cargan con pandas, dándole nombre a cada columna: motor, ciclo, 3 ajustes y 21 sensores.",
+     "porque": "Los ficheros no traen cabecera; sin nombres no se sabe qué es cada columna.",
+     "para": "Tener una tabla ordenada con la que trabajar."
     },
     {
-      "titulo": "Demanda eléctrica con datos abiertos",
-      "descripcion": "Predecir la demanda de electricidad con los datos abiertos de Red Eléctrica y estimar la producción solar con PVGIS.",
-      "estado": "idea"
+     "titulo": "Mirar los datos antes de modelar",
+     "que": "Dibujar gráficas de varios sensores para algunos motores.",
+     "como": "Con matplotlib, una línea por motor: ciclo en el eje horizontal y lectura del sensor en el vertical.",
+     "porque": "Los ojos detectan en segundos qué sensores cambian al degradarse el motor y cuáles son ruido o constantes.",
+     "para": "Decidir con criterio qué sensores merecen la pena."
+    },
+    {
+     "titulo": "Calcular la RUL de entrenamiento",
+     "que": "Ponerle a cada fila la respuesta correcta.",
+     "como": "Para cada motor, RUL = ciclo máximo del motor − ciclo actual. Después se limita a un tope (por ejemplo 125): al principio de la vida un motor sano está igual de sano con 300 que con 200 ciclos por delante.",
+     "porque": "Un modelo aprende de ejemplos con respuesta. El tope evita que se obsesione con distinguir lo indistinguible.",
+     "para": "Crear la columna objetivo que el modelo tiene que aprender a adivinar."
+    },
+    {
+     "titulo": "Limpiar y normalizar",
+     "que": "Quitar sensores inútiles y poner los demás en la misma escala.",
+     "como": "Se descartan los sensores que no cambian nunca. Los restantes se escalan (por ejemplo, con StandardScaler de scikit-learn), ajustando la escala solo con los datos de entrenamiento.",
+     "porque": "Un sensor que mide miles y otro que mide décimas se estorban. Ajustar la escala con los datos de prueba sería hacer trampa.",
+     "para": "Que el modelo compare sensores de forma justa."
+    },
+    {
+     "titulo": "Crear ventanas de tiempo",
+     "que": "Dar al modelo no solo la última lectura, sino cómo viene evolucionando.",
+     "como": "Por cada ciclo se calculan medias y pendientes de los últimos 10 o 30 ciclos de cada sensor.",
+     "porque": "La degradación se ve en la tendencia, no en un solo instante, que puede ser ruido.",
+     "para": "Mejorar mucho la predicción con muy poco esfuerzo."
+    },
+    {
+     "titulo": "Entrenar un modelo base",
+     "que": "Empezar por lo simple.",
+     "como": "Una regresión lineal y después un Random Forest, ambos de scikit-learn, entrenados con los motores de entrenamiento.",
+     "porque": "Un modelo simple da la referencia mínima. Si uno complejo no la supera, no merece la pena.",
+     "para": "Tener una cifra de partida contra la que comparar cualquier mejora."
+    },
+    {
+     "titulo": "Evaluar con honestidad",
+     "que": "Medir el error sobre motores que el modelo no ha visto.",
+     "como": "Se predice la RUL del último ciclo de cada motor de prueba y se compara con RUL_FD001. Se calculan el RMSE y la puntuación de la NASA.",
+     "porque": "Un buen resultado sobre los datos de entrenamiento no demuestra nada; solo vale lo que funciona con datos nuevos.",
+     "para": "Saber cuánto puedes fiarte realmente del modelo."
+    },
+    {
+     "titulo": "Mejorar y poner límites",
+     "que": "Probar una mejora y escribir qué no sabe hacer el modelo.",
+     "como": "Ajustar el tope de la RUL, el tamaño de ventana o probar otro modelo, anotando cada cambio y su efecto. Por último, redactar las limitaciones.",
+     "porque": "Un resultado sin sus límites engaña, aunque sea sin querer.",
+     "para": "Dejar un proyecto reproducible y creíble."
     }
-  ],
-
-  "retos": [
+   ],
+   "resultados": "Pendiente: se publicarán al completar el proyecto, con las cifras reales obtenidas.",
+   "limitaciones": "Los datos son simulados, no de motores reales. Solo se usa el subconjunto FD001 (una condición de operación y un tipo de fallo). El resultado no es aplicable a ningún motor real.",
+   "codigo": "",
+   "entrega": {
+    "notebook": "",
+    "repositorio": "",
+    "demo": "",
+    "articulo": ""
+   },
+   "noticias_palabras": [
+    "mantenimiento predictivo",
+    "predictive maintenance",
+    "turbofan",
+    "jet engine",
+    "remaining useful life",
+    "vida útil restante",
+    "prognostics",
+    "motor de avión"
+   ]
+  },
+  {
+   "id": "linea-base-anomalias",
+   "titulo": "Línea base: detectar anomalías en una máquina sana",
+   "estado": "idea",
+   "nivel": "intermedio",
+   "area": "mantenimiento",
+   "descripcion": "Registrar el comportamiento normal de una máquina rotativa y avisar cuando se aleja de él.",
+   "dataset": {
+    "nombre": "Datos públicos de rodamientos (por ejemplo, Case Western Reserve University)",
+    "url": "https://engineering.case.edu/bearingdatacenter"
+   },
+   "objetivo": "Aprender qué es «normal» para una máquina sana y detectar desviaciones sin necesitar ejemplos de averías.",
+   "datos": "Vibraciones de rodamientos sanos y con fallos, medidas en banco de pruebas.",
+   "herramientas": [
+    "Python",
+    "pandas",
+    "SciPy",
+    "scikit-learn"
+   ],
+   "metodo": "Extraer características de la señal (energía, picos, frecuencias) y entrenar un detector de anomalías solo con datos sanos.",
+   "metrica": "Tasa de detección y falsas alarmas.",
+   "pasos": [
     {
-      "nombre": "Kaggle",
-      "url": "https://www.kaggle.com/competitions",
-      "descripcion": "La mayor plataforma de retos de datos: competiciones, conjuntos de datos y cuadernos con cálculo gratuito (con límites).",
-      "destacado": true
-    },
-    {
-      "nombre": "PHM Society",
-      "url": "https://phmsociety.org",
-      "descripcion": "Sociedad de gestión de la salud y pronóstico de equipos. Organiza retos anuales de datos de mantenimiento predictivo.",
-      "destacado": true
-    },
-    {
-      "nombre": "Grand Challenge",
-      "url": "https://grand-challenge.org",
-      "descripcion": "Retos de imagen médica. Solo para aprender, nunca para diagnosticar."
-    },
-    {
-      "nombre": "DrivenData",
-      "url": "https://www.drivendata.org/competitions/",
-      "descripcion": "Retos con impacto social: salud pública, clima y conservación."
-    },
-    {
-      "nombre": "AIcrowd",
-      "url": "https://www.aicrowd.com/challenges",
-      "descripcion": "Retos de inteligencia artificial, aprendizaje por refuerzo y robótica."
-    },
-    {
-      "nombre": "Zindi",
-      "url": "https://zindi.africa/competitions",
-      "descripcion": "Retos centrados en problemas reales, con mucha agricultura y clima."
+     "titulo": "Pasos previstos",
+     "que": "Se detallarán al comenzar el proyecto.",
+     "como": "Cargar señales, extraer características, entrenar con datos sanos y probar con datos con fallo.",
+     "porque": "Aprender la normalidad evita depender de tener muchas averías.",
+     "para": "Preparar el terreno para usar sensores propios más adelante."
     }
-  ]
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Datos de banco de pruebas, no de máquinas en servicio.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "anomaly detection",
+    "detección de anomalías",
+    "vibration",
+    "vibración",
+    "condition monitoring",
+    "rodamiento"
+   ]
+  },
+  {
+   "id": "demanda-electrica",
+   "titulo": "Demanda eléctrica con datos abiertos",
+   "estado": "idea",
+   "nivel": "inicial",
+   "area": "energía",
+   "descripcion": "Predecir la demanda de electricidad con datos abiertos de Red Eléctrica y estimar la producción solar.",
+   "dataset": {
+    "nombre": "Red Eléctrica de España (datos abiertos) y PVGIS",
+    "url": "https://www.ree.es/es/datos"
+   },
+   "objetivo": "Predecir la demanda eléctrica del día siguiente y compararla con la real.",
+   "datos": "Series horarias de demanda peninsular y datos de radiación solar.",
+   "herramientas": [
+    "Python",
+    "pandas",
+    "scikit-learn"
+   ],
+   "metodo": "Modelo de series temporales sencillo, comparado con una referencia ingenua (repetir la semana anterior).",
+   "metrica": "MAE y RMSE.",
+   "pasos": [
+    {
+     "titulo": "Pasos previstos",
+     "que": "Se detallarán al comenzar el proyecto.",
+     "como": "Descargar series, crear variables de calendario, entrenar y comparar con la referencia.",
+     "porque": "Solo se puede presumir de un modelo si supera a la referencia más simple.",
+     "para": "Aprender series temporales con datos reales."
+    }
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Depende de la calidad y disponibilidad de la API.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "demanda eléctrica",
+    "power grid",
+    "red eléctrica",
+    "energy forecasting",
+    "solar",
+    "smart grid"
+   ]
+  }
+ ],
+ "retos": [
+  {
+   "nombre": "Kaggle",
+   "url": "https://www.kaggle.com/competitions",
+   "descripcion": "La mayor plataforma de retos de datos: competiciones, conjuntos de datos y cuadernos con cálculo gratuito (con límites).",
+   "destacado": true
+  },
+  {
+   "nombre": "PHM Society",
+   "url": "https://phmsociety.org",
+   "descripcion": "Sociedad de gestión de la salud y pronóstico de equipos. Organiza retos anuales de datos de mantenimiento predictivo.",
+   "destacado": true
+  },
+  {
+   "nombre": "Grand Challenge",
+   "url": "https://grand-challenge.org",
+   "descripcion": "Retos de imagen médica. Solo para aprender, nunca para diagnosticar."
+  },
+  {
+   "nombre": "DrivenData",
+   "url": "https://www.drivendata.org/competitions/",
+   "descripcion": "Retos con impacto social: salud pública, clima y conservación."
+  },
+  {
+   "nombre": "AIcrowd",
+   "url": "https://www.aicrowd.com/challenges",
+   "descripcion": "Retos de inteligencia artificial, aprendizaje por refuerzo y robótica."
+  },
+  {
+   "nombre": "Zindi",
+   "url": "https://zindi.africa/competitions",
+   "descripcion": "Retos centrados en problemas reales, con mucha agricultura y clima."
+  }
+ ]
 }

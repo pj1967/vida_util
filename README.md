@@ -1,84 +1,115 @@
-# Vida Útil — web de noticias automática
+# Mente Máquina — proyectos y noticias de IA, robótica y automatización
 
-Web estática y gratuita con noticias de **IA, medicina, robótica, programación,
-farmacología, aeronáutica y tecnología en general**. Se actualiza sola dos veces al día, muestra lo más
-nuevo en la portada y guarda lo antiguo en un archivo ordenado por año y mes.
-
-Solo se guardan **título, fuente, fecha y enlace** a la noticia original (no se
-copian ni resumen textos de otros medios).
+Blog sobre **inteligencia artificial, robótica y automatización** en distintos ámbitos
+(IA, robótica, programación, aeronáutica y otros: industria, agricultura, clima, energía,
+salud y farmacia). Se actualiza solo y solo muestra titulares con enlace a la fuente original.
 
 ## Cómo funciona
 
 ```
-feeds.json ──► build.py ──► data/articulos.json  (historial acumulado)
-                       └──► docs/                (la web publicada)
+feeds.json ──► build.py ──► data/articulos.json   (historial de titulares)
+data/resumenes/*.json ─┘└──► docs/                 (la web publicada)
 ```
 
-- `feeds.json`: lista de fuentes (RSS) y temas. Aquí añades o quitas fuentes.
-- `build.py`: descarga los feeds, evita duplicados y genera la web.
-- `.github/workflows/actualizar.yml`: lo ejecuta GitHub automáticamente.
-- `docs/`: web generada. **No se edita a mano**, se regenera sola.
+- `feeds.json`: temas, fuentes (RSS), palabras de relevancia, proyectos y retos.
+- `build.py`: descarga los feeds, **descarta lo que no tiene que ver con IA, robótica o
+  automatización**, clasifica por tema y genera la web.
+- `.github/workflows/actualizar.yml`: GitHub lo ejecuta solo, dos veces al día.
+- `docs/`: web generada. No se edita a mano.
+- `data/resumenes/`: un archivo por semana con los resúmenes por tema (los escribes tú).
 
-Estructura de la web generada:
+## Qué entra y qué no
 
+Cada fuente tiene un campo `"tema"` y, a veces, `"filtrar": true`.
+
+- **Fuente especializada** (por ejemplo «The Robot Report»): entra todo, con su tema fijo.
+- **Fuente con `"filtrar": true`**: solo entra lo que contiene alguna palabra de la lista
+  `relevancia` de `feeds.json`.
+- **`"tema": "auto"`** (fuentes generales como Xataka o Genbeta): además del filtro, el tema
+  se elige con las reglas de `clasificacion` (robótica, aeronáutica, programación, otros;
+  si no encaja en ninguna, inteligencia artificial).
+
+En el registro de cada ejecución verás cuántos titulares se descartaron por fuente. Si se
+cuela algo que no toca, o se pierde algo bueno, se ajusta la lista de palabras.
+
+## Resúmenes semanales
+
+Crea un archivo `data/resumenes/AAAA-MM-DD.json` (fecha del lunes) con este formato:
+
+```json
+{
+  "desde": "2026-11-16",
+  "hasta": "2026-11-22",
+  "temas": {
+    "ia": {
+      "resumen": "Texto del resumen en castellano.",
+      "fuentes": [
+        {"fuente": "Nombre del medio", "enlace": "https://..."}
+      ]
+    }
+  }
+}
 ```
-docs/
-├── index.html                 Portada: lo más reciente de cada tema
-├── tema/ia.html …             Todo lo guardado de cada tema, por mes
-└── archivo/
-    ├── index.html             Años y meses
-    └── 2026/11/
-        ├── index.html         Todo noviembre 2026, por día
-        └── ia.html …          Noviembre 2026 solo de ese tema
-```
 
-## Puesta en marcha (una sola vez, ~15 minutos, gratis)
+Para crearlo directamente en GitHub, abre (cambiando la fecha):
+`https://github.com/pj1967/vida_util/new/main?filename=data/resumenes/2026-11-16.json`
 
-1. Crea una cuenta en <https://github.com> (gratuita).
-2. Pulsa **New repository**. Ponle un nombre (por ejemplo `radar-noticias`),
-   déjalo **Public** y créalo.
-3. En el repositorio nuevo elige **uploading an existing file** y sube todo el
-   contenido de esta carpeta (incluida la carpeta oculta `.github`). Si desde el
-   móvil no puedes subir carpetas ocultas, hazlo desde un ordenador.
-4. Ve a **Settings → Pages**. En *Build and deployment*, elige
-   **Deploy from a branch**, rama `main` y carpeta **/docs**. Guarda.
-5. Ve a **Actions**, entra en *Actualizar noticias* y pulsa **Run workflow**
-   para la primera ejecución (tarda 1–2 minutos).
-6. Tu web estará en `https://TU-USUARIO.github.io/NOMBRE-DEL-REPOSITORIO/`
-   (GitHub te muestra la dirección en Settings → Pages).
+Los temas sin resumen muestran sus últimos titulares. El resumen más reciente va en la
+portada y todos quedan en la página «Resúmenes».
 
-A partir de ahí se actualiza sola cada día. Para forzar una actualización:
-Actions → *Actualizar noticias* → *Run workflow*.
+## Contador de visitas y comentarios
 
-## Personalizar
+- **Visitas** (privadas, sin cookies): crea una cuenta gratuita en goatcounter.com, elige
+  un código y escríbelo en `"goatcounter"` dentro de `"sitio"` en `feeds.json`.
+- **Comentarios**: crea un formulario (por ejemplo, Google Forms) y pega su dirección
+  `https://...` en `"formulario"`. Aparecerán «Contacto» en el menú y «Enviar comentario»
+  en el pie, sin mostrar tu correo.
 
-- **Añadir una fuente**: copia una línea de `feeds.json` y cambia nombre, `url`
-  y `tema`. Cualquier web con RSS sirve (busca el icono RSS o añade `/feed`).
-- **Filtrar una fuente general**: añade `"palabras": ["robot", "drone"]` y solo
-  se guardarán titulares que contengan alguna de esas palabras.
-- **Limitar una fuente muy activa**: añade `"max": 10` (titulares por ejecución).
-- **Añadir un tema nuevo**: añádelo en `"temas"` y úsalo en algún feed.
-- **Cuántos días muestra la portada**: `dias_portada` y `max_por_tema_portada`.
-- **Cambiar el título de la web**: bloque `"sitio"` de `feeds.json`.
+## Proyectos (lo principal de la web) y retos
 
-## Probarlo en tu ordenador (opcional)
+Cada proyecto de la lista `"proyectos"` de `feeds.json` genera su tarjeta en la portada
+(«Aprende haciendo») y su propia ficha en `proyectos/<id>.html`. Campos: `id`, `titulo`,
+`estado` (`proximo`, `idea`, `curso`, `publicado`), `nivel` (inicial, intermedio, avanzado),
+`area`, `descripcion`, `dataset` (`nombre`, `url`), `objetivo`, `datos`, `herramientas`,
+`metodo`, `metrica`, `pasos` (cada uno con `titulo`, `que`, `como`, `porque`, `para`),
+`resultados`, `limitaciones`, `codigo` (enlace) y `entrega` (`notebook`, `repositorio`,
+`demo`, `articulo`: enlaces, vacío = «pendiente»). Con `noticias_palabras` la ficha enseña
+automáticamente las noticias relacionadas.
+
+Los retos están en `"retos"`.
+
+## Traducción, repetidos y filtros
+
+- Los titulares en inglés se traducen solos (Argos Translate, opcional: `requirements-traduccion.txt`).
+  Si falla, se muestra el original.
+- Titulares casi idénticos de medios distintos se unen en uno («También en: …»).
+- En la portada, máximo 4 titulares por medio y día (`max_por_fuente_dia` en `sitio`).
+- Filtros de tiempo: últimas 24 horas, esta semana, este mes.
+- Clasificación por prioridad: robots/drones primero, luego IA (LLM, GPT…), aeronáutica,
+  programación, otros y, al final, automatización general.
+
+## Borrador semanal
+
+Cada lunes el workflow crea un *Issue* con el borrador; GitHub te avisa por correo. Pégalo en
+el chat para obtener el resumen en castellano y súbelo como `data/resumenes/AAAA-MM-DD.json`.
+
+## Probarlo en el ordenador (opcional)
 
 ```bash
 pip install -r requirements.txt
-python build.py            # descarga y genera
-python build.py --sin-descarga   # solo regenera con los datos guardados
+python build.py
+python build.py --sin-descarga   # solo regenera con lo guardado
 ```
 
 Abre `docs/index.html` en el navegador.
 
 ## Si una fuente deja de funcionar
 
-Algunas webs cambian la dirección de su feed. En el registro de la ejecución
-(Actions → última ejecución → *Descargar noticias*) aparece `[AVISO]` junto a la
-fuente que falló. Basta con corregir o quitar esa línea en `feeds.json`; el resto
+En el registro de la ejecución (Actions → última ejecución → «Descargar noticias») aparece
+`[AVISO]` junto a la fuente que falló. Corrige o quita esa línea en `feeds.json`; el resto
 sigue funcionando y el historial no se pierde.
 
-## Nota sobre contenido médico y farmacológico
+## Nota
 
-La web es un agregador de titulares con enlace a la fuente original. No ofrece
-consejo médico ni sustituye a profesionales sanitarios.
+Contenido divulgativo: no sustituye el consejo médico ni profesional. Los datos de cada
+proyecto se citan con su fuente y sus límites.

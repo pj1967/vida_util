@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Vida Útil — generador de la web.
+Mente Máquina — generador de la web.
 
 Cada vez que se ejecuta:
   1. Lee los feeds RSS de feeds.json y se queda solo con lo relevante
@@ -17,6 +17,8 @@ import argparse
 import hashlib
 import html
 import json
+import os
+import unicodedata
 import re
 import shutil
 import socket
@@ -26,8 +28,6 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import quote
 
-import feedparser
-
 try:
     from zoneinfo import ZoneInfo
     ZONA = ZoneInfo("Europe/Madrid")
@@ -35,7 +35,7 @@ except Exception:  # pragma: no cover
     ZONA = timezone.utc
 
 RAIZ = Path(__file__).resolve().parent
-USER_AGENT = "VidaUtil/1.0 (+lector RSS personal)"
+USER_AGENT = "MenteMaquina/1.0 (+lector RSS personal)"
 MAX_POR_FEED_DEFECTO = 10
 RESUMEN_MAX = 500  # caracteres del extracto del feed, solo para decidir relevancia y tema
 
@@ -50,7 +50,7 @@ COLORES = {
     "robotica": "#c084fc",
     "programacion": "#4ade80",
     "aeronautica": "#38bdf8",
-    "otros": "#fbbf24",
+    "otros": "#fb7185",
 }
 
 # ----------------------------------------------------------------- estilo
@@ -68,15 +68,17 @@ header.sitio{padding:30px 0 22px;
  background:radial-gradient(900px 320px at 12% -30%,rgba(56,189,248,.20),transparent 65%),
             radial-gradient(700px 260px at 90% -40%,rgba(129,140,248,.16),transparent 65%)}
 .hero{display:flex;align-items:center;gap:18px}
-.logo{flex:none;display:block;line-height:0;filter:drop-shadow(0 0 14px rgba(56,189,248,.35))}
-.logo svg{width:68px;height:68px}
+.logo{flex:none;display:block;line-height:0;transition:transform .2s ease}
+.logo:hover{transform:translateY(-2px) scale(1.04)}
+.logo svg{width:84px;height:84px;overflow:visible}
 .hero h1{margin:0;font-size:2.4rem;line-height:1.05;font-weight:800;letter-spacing:-.025em}
 .hero h1 a{color:var(--tinta);text-decoration:none}
 .hero h1 span{color:var(--acento)}
 .lema{margin:6px 0 0;font-size:1.15rem;font-weight:700;display:inline-block;
  background:linear-gradient(90deg,#38bdf8,#818cf8);-webkit-background-clip:text;background-clip:text;color:transparent}
 .subtitulo{margin:2px 0 0;color:var(--suave);font-size:.98rem}
-.autor{margin:6px 0 0;color:var(--suave);font-size:.85rem}
+.autor{margin:8px 0 0;color:var(--suave);font-size:.9rem}
+.autor b,.pie .nombre{color:#f5c451;font-weight:700;letter-spacing:.01em}
 .barra{position:sticky;top:0;z-index:50;background:rgba(11,18,32,.92);
  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--linea);border-bottom:1px solid var(--linea)}
 nav.menu{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0}
@@ -173,8 +175,44 @@ main p{max-width:70ch}
 .bloque-resumen p,.resumen{max-width:none}
 footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--suave);font-size:.82rem}
 .oculto{display:none!important}
+.etiquetas{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.74rem;padding:2px 10px;border-radius:999px;border:1px solid var(--linea);color:var(--suave);background:var(--superficie2)}
+.tag.nivel-inicial{color:#4ade80;border-color:#2c6b46}
+.tag.nivel-intermedio{color:#fbbf24;border-color:#7a5d17}
+.tag.nivel-avanzado{color:#fb7185;border-color:#7d2f3d}
+.tag.area{color:var(--acento);border-color:#1d5b78}
+.proyecto{position:relative;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
+.proyecto:hover{transform:translateY(-2px);border-color:var(--acento);box-shadow:0 10px 28px rgba(0,0,0,.45)}
+.proyecto a.ir::after{content:"";position:absolute;inset:0;border-radius:14px}
+.destacado h2{margin-top:26px}
+.ver-todos{display:inline-block;margin:2px 0 8px;font-weight:600}
+.migas{margin:22px 0 0;font-size:.88rem}
+.ficha-tec{display:grid;grid-template-columns:170px 1fr;gap:0;margin:12px 0;background:var(--superficie);
+ border:1px solid var(--linea);border-radius:12px;overflow:hidden}
+.ficha-tec dt,.ficha-tec dd{margin:0;padding:11px 14px;border-bottom:1px solid var(--linea)}
+.ficha-tec dt{color:var(--suave);font-size:.85rem;font-weight:600;background:var(--superficie2)}
+.ficha-tec dd:last-of-type,.ficha-tec dt:last-of-type{border-bottom:0}
+ol.pasos{list-style:none;counter-reset:paso;margin:12px 0;padding:0}
+ol.pasos>li{counter-increment:paso;position:relative;margin:12px 0;padding:14px 16px 12px 58px;background:var(--superficie);
+ border:1px solid var(--linea);border-radius:12px}
+ol.pasos>li::before{content:counter(paso);position:absolute;left:14px;top:14px;width:30px;height:30px;border-radius:50%;
+ display:flex;align-items:center;justify-content:center;font-weight:800;color:#06122f;background:linear-gradient(135deg,#9be7ff,#3b82f6)}
+ol.pasos h4{margin:0 0 6px;color:var(--tinta);font-size:1.02rem}
+ol.pasos p{margin:4px 0;font-size:.93rem;max-width:none}
+ol.pasos p b{color:var(--acento)}
+.entrega{list-style:none;margin:8px 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.entrega li{padding:10px 14px;border:1px dashed var(--linea);border-radius:10px;background:var(--superficie)}
+.entrega li span{display:block;color:var(--suave);font-size:.85rem}
+.sobre h3{color:var(--tinta);margin-top:24px}
+.sobre ul{padding-left:20px}
+.tambien{display:block;font-size:.78rem;color:var(--suave);margin-top:2px}
+.tambien a{color:var(--suave);text-decoration:underline}
+.chips.tiempo{margin:4px 0 8px}
+.chip-tiempo{font:inherit;font-size:.82rem;cursor:pointer;padding:4px 12px;border-radius:999px;border:1px solid var(--linea);background:transparent;color:var(--suave)}
+.chip-tiempo.activo{border-color:var(--acento);color:var(--acento);font-weight:600}
 @media (max-width:560px){
- .hero{gap:12px}.logo svg{width:52px;height:52px}.hero h1{font-size:1.85rem}
+ .ficha-tec{grid-template-columns:1fr}.ficha-tec dt{border-bottom:0;padding-bottom:2px}
+ .hero{gap:12px}.logo svg{width:60px;height:60px}.hero h1{font-size:1.85rem}
  .rejilla,.tarjetas{grid-template-columns:1fr}
  .panel{min-width:230px}
 }
@@ -185,29 +223,17 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
  body{font-size:11pt}
  a{text-decoration:underline}
  .rejilla,.tarjetas{display:block}
- .tema-card,.bloque-resumen,.proyecto{break-inside:avoid;margin-bottom:12px}
+ .tema-card,.bloque-resumen,.proyecto,ol.pasos>li{break-inside:avoid;margin-bottom:12px}
+ .chips.tiempo,.proyecto a.ir::after{display:none!important}
+ ol.pasos>li::before{background:#fff!important;border:1px solid #000}
  li.item{break-inside:avoid}
 }
 """
 
-LOGO_SVG = (
-    '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vida Útil">'
-    '<defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">'
-    '<stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#818cf8"/></linearGradient></defs>'
-    '<path d="M24 3 L42 13.5 V34.5 L24 45 L6 34.5 V13.5 Z" fill="none" stroke="url(#lg)" '
-    'stroke-width="2.6" stroke-linejoin="round"/>'
-    '<polyline points="9,25 17,25 21,15 27,35 31,25 39,25" fill="none" stroke="url(#lg)" '
-    'stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-)
+LOGO_SVG = '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logotipo"><defs><linearGradient id="lt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b6cd6" stop-opacity=".78"/><stop offset="1" stop-color="#123a8f" stop-opacity=".55"/></linearGradient><linearGradient id="li" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f3a8a" stop-opacity=".62"/><stop offset="1" stop-color="#091a47" stop-opacity=".82"/></linearGradient><linearGradient id="ld" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16408f" stop-opacity=".6"/><stop offset="1" stop-color="#06122f" stop-opacity=".88"/></linearGradient><linearGradient id="lb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bff3ff"/><stop offset=".55" stop-color="#38bdf8"/><stop offset="1" stop-color="#3b82f6"/></linearGradient><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e6fbff"/><stop offset=".5" stop-color="#5ad1ff"/><stop offset="1" stop-color="#2f7be8"/></linearGradient><radialGradient id="ln" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#9eeaff"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></radialGradient><filter id="lh" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.3"/></filter><filter id="ls" x="-40%" y="-100%" width="180%" height="300%"><feGaussianBlur stdDeviation="2"/></filter></defs><ellipse cx="32" cy="62" rx="18" ry="2" fill="#000" opacity=".4" filter="url(#ls)"/><path d="M32 5 L56 19 L32 33 L8 19 Z" fill="url(#lt)"/><path d="M8 19 L32 33 L32 61 L8 47 Z" fill="url(#li)"/><path d="M32 33 L56 19 L56 47 L32 61 Z" fill="url(#ld)"/><path d="M32 7.5 L50 18 L32 28.5 L14 18 Z" fill="#fff" opacity=".10"/><path d="M10.5 31 H17 V36 H23" fill="none" stroke="#38bdf8" stroke-width=".9" stroke-linejoin="round" opacity=".75"/><path d="M30 50 V44 H37 V39 H45" fill="none" stroke="#38bdf8" stroke-width=".9" stroke-linejoin="round" opacity=".75"/><path d="M54 31 V37 H48 V43 H53" fill="none" stroke="#38bdf8" stroke-width=".9" stroke-linejoin="round" opacity=".75"/><path d="M30 57.5 V53 H25" fill="none" stroke="#38bdf8" stroke-width=".9" stroke-linejoin="round" opacity=".75"/><circle cx="10.5" cy="31" r="1.1" fill="#7fe3ff"/><circle cx="23" cy="36" r="1.1" fill="#7fe3ff"/><circle cx="45" cy="39" r="1.1" fill="#7fe3ff"/><circle cx="53" cy="43" r="1.1" fill="#7fe3ff"/><circle cx="25" cy="53" r="1.1" fill="#7fe3ff"/><line x1="20" y1="28" x2="14" y2="40" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="14" y1="40" x2="24" y2="45" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="24" y1="45" x2="27" y2="54" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="24" y1="45" x2="32" y2="41" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="32" y1="41" x2="40" y2="45" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="40" y1="45" x2="48" y2="38" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="40" y1="45" x2="48" y2="52" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="20" y1="28" x2="32" y2="41" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="32" y1="41" x2="21" y2="19" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="21" y1="19" x2="20" y2="28" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="27" y1="54" x2="48" y2="52" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><circle cx="20" cy="28" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="20" cy="28" r="1.5" fill="#fff"/><circle cx="14" cy="40" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="14" cy="40" r="1.5" fill="#fff"/><circle cx="24" cy="45" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="24" cy="45" r="1.5" fill="#fff"/><circle cx="27" cy="54" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="27" cy="54" r="1.5" fill="#fff"/><circle cx="40" cy="45" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="40" cy="45" r="1.5" fill="#fff"/><circle cx="48" cy="38" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="48" cy="38" r="1.5" fill="#fff"/><circle cx="48" cy="52" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="48" cy="52" r="1.5" fill="#fff"/><circle cx="32" cy="41" r="5.0" fill="url(#ln)" opacity=".85"/><circle cx="32" cy="41" r="2.1" fill="#fff"/><circle cx="21" cy="19" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="21" cy="19" r="1.5" fill="#fff"/><path d="M32 5 L56 19 V47 L32 61 L8 47 V19 Z" fill="none" stroke="url(#lb)" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 19 L32 33 L56 19 M32 33 V61" fill="none" stroke="#7fe3ff" stroke-width=".9" stroke-linejoin="round" opacity=".7"/><circle cx="51.5" cy="22.5" r="10" fill="#38bdf8" opacity=".35" filter="url(#lh)"/><path d="M57.97 21.21 L60.05 21.56 L60.05 23.44 L57.97 23.79 L56.99 26.17 L58.21 27.88 L56.88 29.21 L55.17 27.99 L52.79 28.97 L52.44 31.05 L50.56 31.05 L50.21 28.97 L47.83 27.99 L46.12 29.21 L44.79 27.88 L46.01 26.17 L45.03 23.79 L42.95 23.44 L42.95 21.56 L45.03 21.21 L46.01 18.83 L44.79 17.12 L46.12 15.79 L47.83 17.01 L50.21 16.03 L50.56 13.95 L52.44 13.95 L52.79 16.03 L55.17 17.01 L56.88 15.79 L58.21 17.12 L56.99 18.83 Z M54.10 22.50 A2.6 2.6 0 1 0 48.90 22.50 A2.6 2.6 0 1 0 54.10 22.50 Z" fill="url(#lg)" fill-rule="evenodd" stroke="#e6fbff" stroke-width=".5" stroke-linejoin="round"/></svg>'
 
-FAVICON_SVG = (
-    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'>"
-    "<rect width='48' height='48' rx='10' fill='#0b1220'/>"
-    "<path d='M24 6L40 15V33L24 42L8 33V15Z' fill='none' stroke='#38bdf8' stroke-width='2.6' "
-    "stroke-linejoin='round'/>"
-    "<polyline points='11,25 18,25 22,16 27,34 30,25 37,25' fill='none' stroke='#38bdf8' "
-    "stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>"
-)
+FAVICON_SVG = '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logotipo"><defs><linearGradient id="lt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b6cd6" stop-opacity=".78"/><stop offset="1" stop-color="#123a8f" stop-opacity=".55"/></linearGradient><linearGradient id="li" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f3a8a" stop-opacity=".62"/><stop offset="1" stop-color="#091a47" stop-opacity=".82"/></linearGradient><linearGradient id="ld" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16408f" stop-opacity=".6"/><stop offset="1" stop-color="#06122f" stop-opacity=".88"/></linearGradient><linearGradient id="lb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bff3ff"/><stop offset=".55" stop-color="#38bdf8"/><stop offset="1" stop-color="#3b82f6"/></linearGradient><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e6fbff"/><stop offset=".5" stop-color="#5ad1ff"/><stop offset="1" stop-color="#2f7be8"/></linearGradient><radialGradient id="ln" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#9eeaff"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></radialGradient><filter id="lh" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.3"/></filter><filter id="ls" x="-40%" y="-100%" width="180%" height="300%"><feGaussianBlur stdDeviation="2"/></filter></defs><rect width="64" height="64" rx="14" fill="#0b1220"/><path d="M32 5 L56 19 L32 33 L8 19 Z" fill="url(#lt)"/><path d="M8 19 L32 33 L32 61 L8 47 Z" fill="url(#li)"/><path d="M32 33 L56 19 L56 47 L32 61 Z" fill="url(#ld)"/><path d="M32 7.5 L50 18 L32 28.5 L14 18 Z" fill="#fff" opacity=".10"/><path d="M10.5 31 H17 V36 H23" fill="none" stroke="#38bdf8" stroke-width=".9" stroke-linejoin="round" opacity=".75"/><path d="M30 50 V44 H37 V39 H45" fill="none" stroke="#38bdf8" stroke-width=".9" stroke-linejoin="round" opacity=".75"/><path d="M54 31 V37 H48 V43 H53" fill="none" stroke="#38bdf8" stroke-width=".9" stroke-linejoin="round" opacity=".75"/><path d="M30 57.5 V53 H25" fill="none" stroke="#38bdf8" stroke-width=".9" stroke-linejoin="round" opacity=".75"/><circle cx="10.5" cy="31" r="1.1" fill="#7fe3ff"/><circle cx="23" cy="36" r="1.1" fill="#7fe3ff"/><circle cx="45" cy="39" r="1.1" fill="#7fe3ff"/><circle cx="53" cy="43" r="1.1" fill="#7fe3ff"/><circle cx="25" cy="53" r="1.1" fill="#7fe3ff"/><line x1="20" y1="28" x2="14" y2="40" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="14" y1="40" x2="24" y2="45" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="24" y1="45" x2="27" y2="54" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="24" y1="45" x2="32" y2="41" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="32" y1="41" x2="40" y2="45" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="40" y1="45" x2="48" y2="38" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="40" y1="45" x2="48" y2="52" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="20" y1="28" x2="32" y2="41" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="32" y1="41" x2="21" y2="19" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="21" y1="19" x2="20" y2="28" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><line x1="27" y1="54" x2="48" y2="52" stroke="#8fe6ff" stroke-width=".8" opacity=".85"/><circle cx="20" cy="28" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="20" cy="28" r="1.5" fill="#fff"/><circle cx="14" cy="40" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="14" cy="40" r="1.5" fill="#fff"/><circle cx="24" cy="45" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="24" cy="45" r="1.5" fill="#fff"/><circle cx="27" cy="54" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="27" cy="54" r="1.5" fill="#fff"/><circle cx="40" cy="45" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="40" cy="45" r="1.5" fill="#fff"/><circle cx="48" cy="38" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="48" cy="38" r="1.5" fill="#fff"/><circle cx="48" cy="52" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="48" cy="52" r="1.5" fill="#fff"/><circle cx="32" cy="41" r="5.0" fill="url(#ln)" opacity=".85"/><circle cx="32" cy="41" r="2.1" fill="#fff"/><circle cx="21" cy="19" r="3.6" fill="url(#ln)" opacity=".85"/><circle cx="21" cy="19" r="1.5" fill="#fff"/><path d="M32 5 L56 19 V47 L32 61 L8 47 V19 Z" fill="none" stroke="url(#lb)" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 19 L32 33 L56 19 M32 33 V61" fill="none" stroke="#7fe3ff" stroke-width=".9" stroke-linejoin="round" opacity=".7"/><circle cx="51.5" cy="22.5" r="10" fill="#38bdf8" opacity=".35" filter="url(#lh)"/><path d="M57.97 21.21 L60.05 21.56 L60.05 23.44 L57.97 23.79 L56.99 26.17 L58.21 27.88 L56.88 29.21 L55.17 27.99 L52.79 28.97 L52.44 31.05 L50.56 31.05 L50.21 28.97 L47.83 27.99 L46.12 29.21 L44.79 27.88 L46.01 26.17 L45.03 23.79 L42.95 23.44 L42.95 21.56 L45.03 21.21 L46.01 18.83 L44.79 17.12 L46.12 15.79 L47.83 17.01 L50.21 16.03 L50.56 13.95 L52.44 13.95 L52.79 16.03 L55.17 17.01 L56.88 15.79 L58.21 17.12 L56.99 18.83 Z M54.10 22.50 A2.6 2.6 0 1 0 48.90 22.50 A2.6 2.6 0 1 0 54.10 22.50 Z" fill="url(#lg)" fill-rule="evenodd" stroke="#e6fbff" stroke-width=".5" stroke-linejoin="round"/></svg>'
+
 FAVICON = "data:image/svg+xml," + quote(FAVICON_SVG)
 
 # ----------------------------------------------------------------- interactividad
@@ -232,11 +258,13 @@ JS = """
 
   var flujo=$('#flujo'), caja=$('#buscar');
   if(flujo){
-    var items=$$('li.item',flujo), paso=15, visibles=paso, tema='todas', q='';
+    var items=$$('li.item',flujo), paso=15, visibles=paso, tema='todas', q='', horas=0;
     var mas=$('#mas'), vacio=$('#sin-resultados');
     var pintar=function(){
       var coinc=items.filter(function(li){
+        var ts=parseInt(li.getAttribute('data-ts')||'0',10)*1000;
         return (tema==='todas'||li.getAttribute('data-tema')===tema) &&
+               (!horas||(ts&&Date.now()-ts<=horas*3600000)) &&
                (!q||li.textContent.toLowerCase().indexOf(q)>-1);
       });
       items.forEach(function(li){li.classList.add('oculto');});
@@ -248,6 +276,13 @@ JS = """
       b.addEventListener('click',function(){
         tema=b.getAttribute('data-tema'); visibles=paso;
         $$('.chip-tema').forEach(function(x){x.classList.toggle('activo',x===b);});
+        pintar();
+      });
+    });
+    $$('.chip-tiempo').forEach(function(b){
+      b.addEventListener('click',function(){
+        horas=parseInt(b.getAttribute('data-horas'),10)||0; visibles=paso;
+        $$('.chip-tiempo').forEach(function(x){x.classList.toggle('activo',x===b);});
         pintar();
       });
     });
@@ -355,6 +390,54 @@ def clasificar(texto, patrones, temas):
     return "ia" if "ia" in temas else next(iter(temas))
 
 
+# ----------------------------------------------------------------- titulares repetidos
+STOP_SIM = {"the", "and", "for", "with", "from", "that", "this", "into", "how", "new", "will",
+            "una", "uno", "los", "las", "del", "que", "con", "para", "por", "sus", "como", "mas",
+            "sobre", "este", "esta", "ante", "tras", "hay", "est", "are", "has", "have", "can"}
+
+
+def _tokens(texto):
+    t = unicodedata.normalize("NFKD", texto or "").encode("ascii", "ignore").decode().lower()
+    return {w for w in re.findall(r"[a-z0-9]{3,}", t) if w not in STOP_SIM}
+
+
+def agrupar_similares(articulos, umbral=0.5, horas=72):
+    """Une titulares casi iguales de medios distintos. Recibe la lista ordenada de más
+    nueva a más antigua; conserva el más reciente y anota en '_tambien' los otros medios."""
+    kept, toks = [], []
+    for a in articulos:
+        t = _tokens(a.get("titulo_es") or a["titulo"]) | _tokens(a["titulo"])
+        f = datetime.fromisoformat(a["fecha"])
+        dup = None
+        if len(t) >= 3:
+            for k, tk in zip(reversed(kept), reversed(toks)):
+                if (datetime.fromisoformat(k["fecha"]) - f).total_seconds() > horas * 3600:
+                    break
+                union = len(t | tk)
+                if union and len(t & tk) / union >= umbral:
+                    dup = k
+                    break
+        if dup is None:
+            kept.append(a)
+            toks.append(t)
+        elif a["fuente"] != dup["fuente"]:
+            otros = dup.setdefault("_tambien", [])
+            if all(o["fuente"] != a["fuente"] for o in otros):
+                otros.append({"fuente": a["fuente"], "enlace": a["enlace"]})
+    return kept
+
+
+def limitar_por_fuente_dia(items, maximo):
+    cuenta, salida = defaultdict(int), []
+    for a in items:
+        clave = (a["fuente"], a["_dt"].date())
+        if cuenta[clave] >= maximo:
+            continue
+        cuenta[clave] += 1
+        salida.append(a)
+    return salida
+
+
 # ----------------------------------------------------------------- resúmenes semanales
 def parsear_fecha(txt):
     return datetime.strptime(txt, "%Y-%m-%d")
@@ -409,6 +492,8 @@ def guardar_datos(ruta, articulos):
 
 
 def descargar(config, articulos, patrones):
+    import feedparser  # solo hace falta para descargar; el resto del script no lo usa
+
     socket.setdefaulttimeout(25)
     ahora = datetime.now(timezone.utc)
     temas = config["temas"]
@@ -488,12 +573,151 @@ def depurar(articulos, config, patrones):
                 continue
             a["rel"] = True
             a["tema"] = tema_feed or clasificar(a["titulo"], patrones, temas)
-        if a["tema"] not in temas:
+        if f and f.get("tema") == "auto":
+            a["tema"] = clasificar(a["titulo"], patrones, temas)
+        elif a["tema"] not in temas:
             a["tema"] = tema_feed or clasificar(a["titulo"], patrones, temas)
         limpios.append(a)
     if quitados:
         print(f"Depuración: {quitados} titulares antiguos quitados por no ser relevantes.")
     return limpios
+
+
+# ----------------------------------------------------------------- traducción
+PALABRAS_ES = {"el", "la", "los", "las", "de", "del", "que", "en", "y", "con", "para", "por",
+               "una", "un", "se", "su", "al", "lo", "más", "como", "es", "sobre", "este", "esta",
+               "sus", "entre", "ya", "hay", "tras", "ante"}
+MAX_TRADUCCIONES = 400  # por ejecución
+
+
+def es_castellano(texto):
+    palabras = re.findall(r"[a-záéíóúüñ]+", texto.lower())
+    if not palabras:
+        return False
+    aciertos = sum(1 for p in palabras if p in PALABRAS_ES)
+    return aciertos >= 2 and aciertos / len(palabras) >= 0.15
+
+
+def _traduccion_en_es(traduccion):
+    idiomas = traduccion.get_installed_languages()
+    en = next((i for i in idiomas if i.code == "en"), None)
+    es = next((i for i in idiomas if i.code == "es"), None)
+    return en.get_translation(es) if en and es else None
+
+
+def crear_traductor():
+    """Traductor offline inglés→castellano con Argos Translate (gratuito).
+    Devuelve una función texto→texto, o None si no está disponible."""
+    try:
+        import argostranslate.package as paquete
+        import argostranslate.translate as traduccion
+
+        tr = _traduccion_en_es(traduccion)
+        if tr is None:
+            print("  Descargando el modelo de traducción inglés→castellano…")
+            paquete.update_package_index()
+            pk = next((p for p in paquete.get_available_packages()
+                       if p.from_code == "en" and p.to_code == "es"), None)
+            if pk is None:
+                raise RuntimeError("no hay paquete en→es en el índice")
+            paquete.install_from_path(pk.download())
+            tr = _traduccion_en_es(traduccion)
+        if tr is None:
+            raise RuntimeError("el modelo en→es no quedó disponible tras instalarlo")
+        return tr.translate
+    except Exception as e:
+        print(f"  [AVISO] Traducción no disponible: {e}")
+        return None
+
+
+def necesita_traduccion(a, feeds):
+    if a.get("titulo_es") or a.get("idioma") == "es":
+        return False
+    f = feeds.get(a["fuente"])
+    if (f and f.get("idioma") == "es") or es_castellano(a["titulo"]):
+        a["idioma"] = "es"
+        return False
+    return True
+
+
+def traducir_titulares(articulos, config, traductor=None):
+    """Añade 'titulo_es' a los titulares que no están en castellano. El original se conserva."""
+    feeds = {f["nombre"]: f for f in config["feeds"]}
+    pendientes = [a for a in articulos if necesita_traduccion(a, feeds)]
+    if not pendientes:
+        return 0
+    pendientes.sort(key=lambda a: a["fecha"], reverse=True)
+    pendientes = pendientes[:MAX_TRADUCCIONES]
+    if traductor is None:
+        traductor = crear_traductor()
+    if traductor is None:
+        print(f"  [AVISO] Sin traductor: {len(pendientes)} titulares quedan en su idioma original.")
+        return 0
+    hechos = errores = 0
+    for a in pendientes:
+        try:
+            t = (traductor(a["titulo"]) or "").strip()
+        except Exception as e:
+            errores += 1
+            print(f"  [AVISO] No se pudo traducir un titular: {e}")
+            if errores >= 5:
+                print("  [AVISO] Demasiados errores; se detiene la traducción en esta ejecución.")
+                break
+            continue
+        if not t or t.lower() == a["titulo"].lower():
+            a["idioma"] = "es"  # nombres propios u otro caso sin cambios: no reintentar
+        else:
+            a["titulo_es"] = t[:300]
+        hechos += 1
+    print(f"Titulares traducidos: {hechos}.")
+    return hechos
+
+
+# ----------------------------------------------------------------- borrador semanal
+def escribir_borrador(articulos, config, ruta):
+    """Escribe en 'ruta' (Markdown) los titulares de los últimos 7 días completos,
+    agrupados por tema, listos para pegar en una conversación y redactar el resumen."""
+    temas = config["temas"]
+    hoy = datetime.now(ZONA).date()
+    hasta = hoy - timedelta(days=1)
+    desde = hasta - timedelta(days=6)
+    d, h = desde.isoformat(), hasta.isoformat()
+    semana = sorted((a for a in articulos if desde <= a_local(a["fecha"]).date() <= hasta),
+                    key=lambda a: a["fecha"], reverse=True)
+    dueno = os.environ.get("GITHUB_REPOSITORY_OWNER", "")
+    repo = os.environ.get("GITHUB_REPOSITORY", "")
+    aviso = f"@{dueno} " if dueno else ""
+    enlace_subida = (f"https://github.com/{repo}/new/main?filename=data/resumenes/{d}.json"
+                     if repo else f"data/resumenes/{d}.json")
+
+    lineas = [
+        f"{aviso}Borrador de la semana del {rango_semana(d, h)}: {len(semana)} titulares.",
+        "",
+        "**Cómo usarlo**",
+        "1. Copia todo este mensaje en una conversación con Claude y escribe: "
+        "«Redacta el resumen semanal por temas, en castellano y con enlaces a las fuentes».",
+        "2. Revisa con calma lo que te devuelva.",
+        f"3. Súbelo como `data/resumenes/{d}.json`: {enlace_subida}",
+        "",
+        "---",
+    ]
+    for clave, nombre in temas.items():
+        propios = [a for a in semana if a["tema"] == clave]
+        lineas += ["", f"## {nombre} ({len(propios)})"]
+        if not propios:
+            lineas.append("_Sin titulares esta semana._")
+        for a in propios[:30]:
+            titulo = (a.get("titulo_es") or a["titulo"]).replace("[", "(").replace("]", ")")
+            lineas.append(f"- [{titulo}]({a['enlace']}) — {a['fuente']} · "
+                          f"{a_local(a['fecha']).day} {MESES_CORTOS[a_local(a['fecha']).month - 1]}")
+        if len(propios) > 30:
+            lineas.append(f"- … y {len(propios) - 30} más.")
+    plantilla = {"desde": d, "hasta": h,
+                 "temas": {k: {"resumen": "", "fuentes": []} for k in temas}}
+    lineas += ["", "---", "", "**Plantilla del archivo**", "```json",
+               json.dumps(plantilla, ensure_ascii=False, indent=2), "```"]
+    Path(ruta).write_text("\n".join(lineas) + "\n", encoding="utf-8")
+    print(f"Borrador escrito en {ruta} con {len(semana)} titulares.")
 
 
 # ----------------------------------------------------------------- sitio
@@ -512,6 +736,11 @@ class Sitio:
         form = (sitio.get("formulario") or "").strip()
         self.formulario = form if form.startswith("https://") else ""
         self.articulos = sorted(articulos, key=lambda a: a["fecha"], reverse=True)
+        for a in self.articulos:
+            a.pop("_tambien", None)
+        self.articulos = agrupar_similares(self.articulos)
+        self.proyectos = [p for p in config.get("proyectos", [])
+                          if re.fullmatch(r"[a-z0-9-]+", p.get("id", ""))]
         self.resumenes = resumenes or []
         self.ultimo = self.resumenes[0] if self.resumenes else None
         self.salida = salida
@@ -538,13 +767,13 @@ class Sitio:
         desplegable_act = " activo" if activo in self.temas else ""
         enlaces = [
             f'<a href="{raiz}index.html"{act("portada")}>Portada</a>',
-            f'<details class="desplegable{desplegable_act}"><summary>Temas</summary>'
-            f'<div class="panel">{temas_html}</div></details>',
-            f'<a href="{raiz}resumenes.html"{act("resumenes")}>Resúmenes</a>',
             f'<a href="{raiz}proyectos.html"{act("proyectos")}>Proyectos</a>',
             f'<a href="{raiz}retos.html"{act("retos")}>Retos de datos</a>',
+            f'<details class="desplegable{desplegable_act}"><summary>Noticias</summary>'
+            f'<div class="panel">{temas_html}</div></details>',
+            f'<a href="{raiz}resumenes.html"{act("resumenes")}>Resúmenes</a>',
             f'<a href="{raiz}archivo/index.html"{act("archivo")}>Archivo</a>',
-            f'<a href="{raiz}acerca.html"{act("acerca")}>Acerca de</a>',
+            f'<a href="{raiz}sobre.html"{act("sobre")}>Sobre el proyecto</a>',
         ]
         if self.formulario:
             enlaces.append(f'<a href="{esc(self.formulario)}" target="_blank" '
@@ -559,10 +788,10 @@ class Sitio:
                  if len(partes) == 2 else esc(self.titulo))
         lema = f'<p class="lema">{esc(self.lema)}</p>' if self.lema else ""
         sub = f'<p class="subtitulo">{esc(self.subtitulo)}</p>' if self.subtitulo else ""
-        autor = f'<p class="autor">por {esc(self.autor)}</p>' if self.autor else ""
+        autor = f'<p class="autor">por <b>{esc(self.autor)}</b></p>' if self.autor else ""
         ahora_l = self.ahora.astimezone(ZONA)
         actualizado = fecha_corta(ahora_l) + ahora_l.strftime(", %H:%M")
-        autor_pie = f" · {esc(self.autor)}" if self.autor else ""
+        autor_pie = f' · <span class="nombre">{esc(self.autor)}</span>' if self.autor else ""
         contacto = (f' · <a href="{esc(self.formulario)}" target="_blank" '
                     f'rel="noopener noreferrer">Enviar comentario</a>') if self.formulario else ""
         contador = (f'<script data-goatcounter="https://{self.goat}.goatcounter.com/count" '
@@ -592,7 +821,8 @@ class Sitio:
 <footer class="pie"><div class="contenedor">
 {esc(self.titulo)}{autor_pie}{contacto}<br>
 Actualizado automáticamente: {actualizado}. Titulares y enlaces a las fuentes originales, cuyo
-contenido pertenece a cada medio; los resúmenes semanales son elaboración propia.
+contenido pertenece a cada medio. Los titulares en inglés se traducen automáticamente (el original
+aparece al pasar el cursor). Los resúmenes semanales son elaboración propia.
 Contenido divulgativo: no sustituye el consejo médico ni profesional.
 </div></footer>
 <script src="{raiz}interactivo.js" defer></script>
@@ -612,10 +842,21 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             partes.append(f'<time datetime="{esc(a["fecha"])}" data-iso="{esc(a["fecha"])}">'
                           f'{fecha_corta(a["_dt"])}</time>')
         meta = " · ".join(partes)
-        return (f'<li class="item" data-tema="{esc(a["tema"])}" style="--c:{self.color(a["tema"])}">'
+        titulo_es = a.get("titulo_es")
+        texto_titulo = titulo_es or a["titulo"]
+        pista = f' title="Original: {esc(a["titulo"])}"' if titulo_es else ""
+        tambien = ""
+        otros = [o for o in a.get("_tambien", []) if o["enlace"].startswith(("http://", "https://"))]
+        if otros:
+            tambien = ('<span class="tambien">También en: ' + ", ".join(
+                f'<a href="{esc(o["enlace"])}" target="_blank" rel="noopener noreferrer">'
+                f'{esc(o["fuente"])}</a>' for o in otros[:3]) + "</span>")
+        ts = int(datetime.fromisoformat(a["fecha"]).timestamp())
+        return (f'<li class="item" data-tema="{esc(a["tema"])}" data-ts="{ts}" '
+                f'style="--c:{self.color(a["tema"])}">'
                 f'<a class="titular" href="{esc(a["enlace"])}" target="_blank" '
-                f'rel="noopener noreferrer">{esc(a["titulo"])}</a>'
-                f'<span class="meta">{meta}{nuevo}</span></li>')
+                f'rel="noopener noreferrer"{pista}>{esc(texto_titulo)}</a>'
+                f'<span class="meta">{meta}{nuevo}</span>{tambien}</li>')
 
     def lista_por_dias(self, items):
         por_dia = defaultdict(list)
@@ -705,27 +946,40 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                  + "".join(f'<button class="chip-tema" data-tema="{k}" type="button" '
                            f'style="--c:{self.color(k)}">{esc(n)}</button>'
                            for k, n in self.temas.items()))
-        flujo = self.articulos[:max_flujo]
+        flujo = limitar_por_fuente_dia(self.articulos, sitio.get("max_por_fuente_dia", 4))[:max_flujo]
         if flujo:
             lista = ('<ul class="lista flujo" id="flujo">'
                      + "".join(self.item(a, con_tema=True) for a in flujo) + "</ul>")
         else:
             lista = '<p class="vacio">Aún no hay noticias. Aparecerán tras la primera actualización.</p>'
+        tiempo = ('<div class="chips tiempo"><button class="chip-tiempo activo" data-horas="0" type="button">Todo</button>'
+                  '<button class="chip-tiempo" data-horas="24" type="button">Últimas 24 horas</button>'
+                  '<button class="chip-tiempo" data-horas="168" type="button">Esta semana</button>'
+                  '<button class="chip-tiempo" data-horas="720" type="button">Este mes</button></div>')
+        proy = "".join(self.tarjeta_proyecto(p, "") for p in self.proyectos[:3])
+        bloque_proy = (
+            '<div class="destacado"><h2 id="aprende" style="--c:#4ade80">Aprende haciendo'
+            '<small>proyectos paso a paso, con datos reales y abiertos</small></h2>'
+            f'<div class="tarjetas">{proy}</div>'
+            '<a class="ver-todos" href="proyectos.html">Ver todos los proyectos →</a></div>'
+        ) if proy else ""
         cuerpo = (
-            f'<div class="intro">{esc(semana)}'
-            '<small>Resumen por temas. Pulsa un tema para ver todas sus noticias.</small></div>'
+            bloque_proy +
+            f'<h2 id="resumen" style="--c:#818cf8">Noticias de la semana<small>{esc(semana)}. '
+            'Pulsa un tema para ver todas sus noticias</small></h2>'
             f'<div class="rejilla">{tarjetas}</div>'
             '<h2 id="ultimas" style="--c:#38bdf8">Últimas noticias<small>de todos los temas</small></h2>'
             '<div class="buscador"><input id="buscar" type="search" autocomplete="off" '
             'placeholder="Buscar en las últimas noticias… (pulsa / para buscar)"></div>'
             f'<div class="chips">{chips}</div>'
+            f'{tiempo}'
             f'{lista}'
             '<p id="sin-resultados" class="vacio oculto">No hay noticias con ese filtro.</p>'
             '<button id="mas" class="boton-mas oculto" type="button">Cargar más noticias</button>'
         )
         self.escribir("index.html", self.pagina(
             "Portada", cuerpo, "", "portada",
-            descripcion="Noticias y resúmenes semanales de inteligencia artificial, robótica y automatización."))
+            descripcion="Proyectos paso a paso y noticias de inteligencia artificial, robótica y automatización, en castellano."))
 
     # -- temas
     def paginas_tema(self):
@@ -780,25 +1034,126 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             "Resúmenes semanales", "".join(partes), "", "resumenes",
             descripcion="Resumen semanal por temas de inteligencia artificial, robótica y automatización."))
 
+    ESTADOS = {"proximo": "Próximo", "idea": "Idea", "curso": "En curso", "publicado": "Publicado"}
+
+    def etiquetas(self, p):
+        nivel = (p.get("nivel") or "").strip().lower()
+        area = (p.get("area") or "").strip()
+        t = []
+        if nivel:
+            t.append(f'<span class="tag nivel-{esc(nivel)}">Nivel: {esc(nivel)}</span>')
+        if area:
+            t.append(f'<span class="tag area">Área: {esc(area)}</span>')
+        return f'<div class="etiquetas">{"".join(t)}</div>' if t else ""
+
+    def tarjeta_proyecto(self, p, raiz):
+        est = p.get("estado", "idea")
+        return (f'<article class="proyecto"><span class="estado {esc(est)}">'
+                f'{esc(self.ESTADOS.get(est, est))}</span><h3>{esc(p.get("titulo", ""))}</h3>'
+                f'{self.etiquetas(p)}<p>{esc(p.get("descripcion", ""))}</p>'
+                f'<a class="ir" href="{raiz}proyectos/{esc(p["id"])}.html">Ver ficha del proyecto →</a></article>')
+
     def pagina_proyectos(self):
-        estados = {"proximo": "Próximo", "idea": "Idea", "curso": "En curso", "publicado": "Publicado"}
-        tarjetas = []
-        for p in self.cfg.get("proyectos", []):
-            est = p.get("estado", "idea")
-            enlace = enlace_seguro(p.get("enlace"))
-            ir = f'<a class="ir" href="{esc(enlace)}">Abrir →</a>' if enlace else ""
-            tarjetas.append(
-                f'<article class="proyecto"><span class="estado {esc(est)}">'
-                f'{esc(estados.get(est, est))}</span><h3>{esc(p.get("titulo", ""))}</h3>'
-                f'<p>{esc(p.get("descripcion", ""))}</p>{ir}</article>')
-        cuerpo = ('<h2>Proyectos</h2>'
+        tarjetas = "".join(self.tarjeta_proyecto(p, "") for p in self.proyectos)
+        cuerpo = ('<h2 style="--c:#4ade80">Proyectos<small>aprende haciendo</small></h2>'
                   '<p class="desc">Programas útiles explicados paso a paso, con datos reales y abiertos. '
-                  'Se irán completando poco a poco, indicando siempre las fuentes de los datos y los '
-                  'límites de cada resultado.</p>'
-                  f'<div class="tarjetas">{"".join(tarjetas)}</div>')
+                  'Cada proyecto tiene su ficha técnica, indica el nivel y el área, explica cada paso desde '
+                  'cero (cómo, por qué y para qué) y recoge siempre las fuentes de los datos y los límites '
+                  'del resultado.</p>'
+                  f'<div class="tarjetas">{tarjetas}</div>')
         self.escribir("proyectos.html", self.pagina(
             "Proyectos", cuerpo, "", "proyectos",
             descripcion="Programas explicados paso a paso con datos reales y abiertos."))
+        for p in self.proyectos:
+            self.ficha_proyecto(p)
+
+    def noticias_relacionadas(self, p, maximo=6):
+        pat = compilar(p.get("noticias_palabras", []))
+        if not pat:
+            return []
+        out = []
+        for a in self.articulos:
+            if pat.search((a.get("titulo_es") or "") + " " + a["titulo"]):
+                out.append(a)
+                if len(out) >= maximo:
+                    break
+        return out
+
+    def ficha_proyecto(self, p):
+        def fila(k, v):
+            return f"<dt>{esc(k)}</dt><dd>{v}</dd>" if v else ""
+
+        ds = p.get("dataset") or {}
+        url = enlace_seguro(ds.get("url"))
+        dataset = ""
+        if ds.get("nombre"):
+            dataset = esc(ds["nombre"])
+            if url.startswith("http"):
+                dataset += (f' · <a href="{esc(url)}" target="_blank" rel="noopener noreferrer">'
+                            f'enlace oficial ↗</a>')
+        herr = "".join(f'<span class="tag">{esc(h)}</span> ' for h in p.get("herramientas", []))
+        est = p.get("estado", "idea")
+        ficha = ('<dl class="ficha-tec">'
+                 + fila("Nivel", esc(p.get("nivel", "")).capitalize())
+                 + fila("Área", esc(p.get("area", "")).capitalize())
+                 + fila("Dataset", dataset)
+                 + fila("Objetivo", esc(p.get("objetivo", "")))
+                 + fila("Datos usados", esc(p.get("datos", "")))
+                 + fila("Herramientas", herr)
+                 + fila("Método", esc(p.get("metodo", "")))
+                 + fila("Métrica", esc(p.get("metrica", "")))
+                 + "</dl>")
+        pasos = []
+        for st in p.get("pasos", []):
+            partes = [f'<h4>{esc(st.get("titulo", ""))}</h4>']
+            for clave, etiqueta in (("que", "Qué hacemos"), ("como", "Cómo"),
+                                    ("porque", "Por qué"), ("para", "Para qué")):
+                if st.get(clave):
+                    partes.append(f"<p><b>{etiqueta}:</b> {esc(st[clave])}</p>")
+            pasos.append("<li>" + "".join(partes) + "</li>")
+        cod = enlace_seguro(p.get("codigo"))
+        codigo = (f'<a href="{esc(cod)}" target="_blank" rel="noopener noreferrer">Ver el código ↗</a>'
+                  if cod.startswith("http") else '<span class="vacio">Aún no publicado.</span>')
+        entrega_items = []
+        ent = p.get("entrega") or {}
+        for clave, nombre in (("notebook", "Notebook"), ("repositorio", "Repositorio"),
+                              ("demo", "Demo"), ("articulo", "Artículo")):
+            u = enlace_seguro(ent.get(clave))
+            if u.startswith("http"):
+                entrega_items.append(f'<li><a href="{esc(u)}" target="_blank" '
+                                     f'rel="noopener noreferrer">{nombre} ↗</a></li>')
+            else:
+                entrega_items.append(f'<li>{nombre}<span>pendiente</span></li>')
+        contacto = (f' <a href="{esc(self.formulario)}" target="_blank" rel="noopener noreferrer">'
+                    f'Escríbeme</a>.') if self.formulario else ""
+        rel = self.noticias_relacionadas(p)
+        noticias = ""
+        if rel:
+            noticias = ('<h2 style="--c:#38bdf8">Noticias relacionadas</h2><ul class="lista">'
+                        + "".join(self.item(a, con_tema=True) for a in rel) + "</ul>")
+        cuerpo = (
+            '<p class="migas"><a href="../proyectos.html">← Todos los proyectos</a></p>'
+            f'<h2 style="--c:#4ade80">{esc(p.get("titulo", ""))}</h2>'
+            f'<span class="estado {esc(est)}">{esc(self.ESTADOS.get(est, est))}</span> '
+            f'{self.etiquetas(p)}'
+            f'<p class="desc">{esc(p.get("descripcion", ""))}</p>'
+            '<h2 style="--c:#38bdf8">Ficha técnica</h2>' + ficha
+            + '<h2 style="--c:#fbbf24">Métrica y pasos del proyecto'
+              '<small>explicados desde cero</small></h2>'
+            + (f'<p class="desc">Medimos el resultado con: {esc(p.get("metrica", ""))}</p>'
+               if p.get("metrica") else "")
+            + f'<ol class="pasos">{"".join(pasos)}</ol>'
+            + '<h2 style="--c:#4ade80">Resultados</h2>'
+            + f'<p>{esc(p.get("resultados") or "Pendiente.")}</p>'
+            + '<h2 style="--c:#fb7185">Limitaciones</h2>'
+            + f'<p>{esc(p.get("limitaciones") or "Se indicarán al completar el proyecto.")}</p>'
+            + '<h2 style="--c:#818cf8">Código</h2>' + f"<p>{codigo}</p>"
+            + '<h2 style="--c:#c084fc">Entrega<small>notebook, repositorio, demo o artículo</small></h2>'
+            + f'<ul class="entrega">{"".join(entrega_items)}</ul>'
+            + f'<p class="desc">Si quieres corregir o mejorar este proyecto, será bienvenido.{contacto}</p>'
+            + noticias)
+        self.escribir(f"proyectos/{p['id']}.html", self.pagina(
+            p.get("titulo", ""), cuerpo, "../", "proyectos", descripcion=p.get("descripcion", "")))
 
     def pagina_retos(self):
         tarjetas = []
@@ -821,10 +1176,42 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             "Retos de datos", cuerpo, "", "retos",
             descripcion="Plataformas de retos de datos para aprender inteligencia artificial."))
 
-    def acerca(self):
-        textos = self.cfg["sitio"].get("acerca") or []
-        cuerpo = "<h2>Acerca de</h2>" + "".join(f"<p>{esc(t)}</p>" for t in textos)
-        self.escribir("acerca.html", self.pagina("Acerca de", cuerpo, "", "acerca"))
+    def sobre(self):
+        sitio = self.cfg["sitio"]
+        info = sitio.get("sobre") or {}
+        textos = "".join(f"<p>{esc(t)}</p>" for t in (sitio.get("acerca") or []))
+        fuentes = sorted({f["nombre"] for f in self.cfg.get("feeds", [])})
+        reglas = "".join(f"<li><b>{esc(self.temas.get(r['tema'], r['tema']))}</b>: "
+                         f"{esc(', '.join(r.get('palabras', [])[:6]))}…</li>"
+                         for r in self.cfg.get("clasificacion", []) if r["tema"] in self.temas)
+        no_hace = "".join(f"<li>{esc(t)}</li>" for t in info.get("no_hace", []))
+        contacto = (f'<p>Puedes escribirme desde <a href="{esc(self.formulario)}" target="_blank" '
+                    f'rel="noopener noreferrer">este formulario</a>; no se muestra ningún correo.</p>'
+                    if self.formulario else
+                    "<p>Próximamente habrá un formulario de contacto privado.</p>")
+        cuerpo = (
+            '<div class="sobre"><h2>Sobre el proyecto</h2>' + textos
+            + (f"<h3>Qué es esta web</h3><p>{esc(info['que_es'])}</p>" if info.get("que_es") else "")
+            + "<h3>Cómo se seleccionan las noticias</h3>"
+              "<p>Cada día un programa lee los canales RSS de las fuentes y se queda solo con los "
+              "titulares que tienen que ver con inteligencia artificial, robótica y automatización "
+              "(según una lista de palabras clave). Las fuentes muy generales pasan además este filtro; "
+              "las especializadas entran enteras. Los titulares casi idénticos de medios distintos se "
+              "agrupan en uno, y en la portada se limita cuántos entran de cada medio al día.</p>"
+              "<h3>Cómo se clasifican</h3><p>Por reglas de prioridad: se comprueba cada tema en este "
+              "orden y gana el primero que encaja (si ninguno, va a Inteligencia artificial).</p>"
+              f"<ul>{reglas}</ul>"
+            + "<h3>Fuentes</h3><p>" + esc(" · ".join(fuentes)) + "</p>"
+              "<p>Los titulares en inglés se traducen automáticamente al castellano; el original "
+              "aparece al pasar el cursor. De cada noticia solo se muestra título, fuente, fecha y "
+              "enlace: el contenido pertenece a cada medio.</p>"
+              "<h3>Resúmenes semanales</h3><p>Los escribo y reviso yo cada semana, con enlaces a las "
+              "fuentes.</p>"
+            + (f"<h3>Qué no hace esta web</h3><ul>{no_hace}</ul>" if no_hace else "")
+            + "<h3>Contacto</h3>" + contacto + "</div>")
+        self.escribir("sobre.html", self.pagina(
+            "Sobre el proyecto", cuerpo, "", "sobre",
+            descripcion="Qué es esta web, cómo se eligen y clasifican las noticias y qué no hace."))
 
     # -- archivo
     def archivo(self):
@@ -888,7 +1275,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
         self.pagina_resumenes()
         self.pagina_proyectos()
         self.pagina_retos()
-        self.acerca()
+        self.sobre()
         self.archivo()
 
 
@@ -901,6 +1288,12 @@ def main():
     p.add_argument("--salida", default=str(RAIZ / "docs"))
     p.add_argument("--sin-descarga", action="store_true",
                    help="No consulta los feeds; solo regenera la web.")
+    p.add_argument("--sin-traduccion", action="store_true",
+                   help="No traduce titulares.")
+    p.add_argument("--borrador-semanal", action="store_true",
+                   help="Escribe el borrador del resumen semanal y termina (no genera la web).")
+    p.add_argument("--borrador", default="borrador_semanal.md",
+                   help="Archivo de salida del borrador semanal.")
     args = p.parse_args()
 
     config = cargar_json(Path(args.config), None)
@@ -914,6 +1307,11 @@ def main():
         print("Descargando feeds…")
         articulos = descargar(config, articulos, patrones)
     articulos = depurar(articulos, config, patrones)
+    if args.borrador_semanal:
+        escribir_borrador(articulos, config, args.borrador)
+        return
+    if not args.sin_descarga and not args.sin_traduccion:
+        traducir_titulares(articulos, config)
     if not args.sin_descarga or ruta_datos.exists():
         guardar_datos(ruta_datos, articulos)
 
