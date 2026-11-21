@@ -19,11 +19,13 @@
 
   var flujo=$('#flujo'), caja=$('#buscar');
   if(flujo){
-    var items=$$('li.item',flujo), paso=15, visibles=paso, tema='todas', q='';
+    var items=$$('li.item',flujo), paso=15, visibles=paso, tema='todas', q='', horas=0;
     var mas=$('#mas'), vacio=$('#sin-resultados');
     var pintar=function(){
       var coinc=items.filter(function(li){
+        var ts=parseInt(li.getAttribute('data-ts')||'0',10)*1000;
         return (tema==='todas'||li.getAttribute('data-tema')===tema) &&
+               (!horas||(ts&&Date.now()-ts<=horas*3600000)) &&
                (!q||li.textContent.toLowerCase().indexOf(q)>-1);
       });
       items.forEach(function(li){li.classList.add('oculto');});
@@ -35,6 +37,13 @@
       b.addEventListener('click',function(){
         tema=b.getAttribute('data-tema'); visibles=paso;
         $$('.chip-tema').forEach(function(x){x.classList.toggle('activo',x===b);});
+        pintar();
+      });
+    });
+    $$('.chip-tiempo').forEach(function(b){
+      b.addEventListener('click',function(){
+        horas=parseInt(b.getAttribute('data-horas'),10)||0; visibles=paso;
+        $$('.chip-tiempo').forEach(function(x){x.classList.toggle('activo',x===b);});
         pintar();
       });
     });
