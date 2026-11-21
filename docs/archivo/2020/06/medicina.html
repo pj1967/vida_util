@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Medicina — junio 2020 · Vida Útil</title>
+<link rel="stylesheet" href="../../../estilo.css">
+</head><body>
+<header class="sitio"><div class="contenedor">
+<h1><a href="../../../index.html" style="color:inherit">Vida Útil</a></h1>
+<p>Del taller a los datos · Ingeniería y datos en castellano</p>
+<nav class="menu"><a href="../../../index.html">Portada</a><a href="../../../archivo/index.html" class=activo>Archivo</a><a href="../../../tema/ia.html">Inteligencia artificial</a><a href="../../../tema/medicina.html">Medicina</a><a href="../../../tema/robotica.html">Robótica</a><a href="../../../tema/programacion.html">Programación</a><a href="../../../tema/farmacologia.html">Farmacología</a><a href="../../../tema/aeronautica.html">Aeronáutica</a><a href="../../../tema/tecnologia.html">Tecnología</a></nav>
+</div></header>
+<main><div class="contenedor">
+<div class="buscador"><input id="buscar" type="search" placeholder="Buscar en los titulares de esta página…" autocomplete="off"></div>
+<h2 style="--c:#8a1c1c">Medicina · junio 2020</h2><p><a href="index.html">← Junio 2020</a></p><h3>Lunes 29 de junio de 2020</h3><ul class="lista"><li class="item" style="--c:#8a1c1c"><a class="titular" href="https://www.who.int/news/item/29-06-2020-covidtimeline" target="_blank" rel="noopener noreferrer">Listings of WHO’s response to COVID-19</a><span class="meta">OMS / WHO</span></li></ul>
+</div></main>
+<footer class="pie"><div class="contenedor">
+Actualizado automáticamente: 21 nov 2026, 14:34. Solo se muestran titulares y enlaces; el contenido
+pertenece a cada fuente original.
+</div></footer>
+
+<script>
+(function(){
+  var caja=document.getElementById('buscar'); if(!caja) return;
+  caja.addEventListener('input',function(){
+    var q=caja.value.toLowerCase().trim();
+    document.querySelectorAll('li.item').forEach(function(li){
+      li.classList.toggle('oculto', q && li.textContent.toLowerCase().indexOf(q)===-1);
+    });
+    document.querySelectorAll('section.bloque').forEach(function(s){
+      var hay=s.querySelector('li.item:not(.oculto)');
+      s.classList.toggle('oculto', q && !hay);
+    });
+  });
+})();
+</script>
+
+</body></html>

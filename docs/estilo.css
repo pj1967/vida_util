@@ -1,0 +1,44 @@
+
+:root{--tinta:#1a1a1a;--suave:#5a5a5a;--linea:#d9d9d9;--fondo:#ffffff;--acento:#0b3d6b;--tarjeta:#f6f8fa}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--fondo);color:var(--tinta);
+ font:16px/1.5 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+a{color:var(--acento);text-decoration:none}
+a:hover{text-decoration:underline}
+.contenedor{max-width:880px;margin:0 auto;padding:0 16px}
+header.sitio{border-bottom:3px solid var(--acento);padding:18px 0 10px}
+header.sitio h1{margin:0;font:700 1.6rem/1.2 Georgia,"Times New Roman",serif;color:var(--acento)}
+header.sitio p{margin:4px 0 10px;color:var(--suave);font-size:.95rem}
+nav.menu{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.95rem}
+nav.menu a{padding:4px 0;border-bottom:2px solid transparent}
+nav.menu a.activo{border-bottom-color:var(--acento);font-weight:600}
+main{padding:18px 0 40px}
+h2{font:700 1.25rem/1.3 Georgia,serif;margin:28px 0 8px;padding-left:10px;border-left:5px solid var(--c,var(--acento))}
+h2 small{font:400 .85rem sans-serif;color:var(--suave);margin-left:6px}
+h3{font-size:1rem;margin:18px 0 4px;color:var(--suave);font-weight:600}
+ul.lista{list-style:none;margin:0;padding:0}
+li.item{padding:9px 0;border-bottom:1px solid var(--linea)}
+li.item a.titular{font-weight:600;color:var(--tinta)}
+li.item a.titular:hover{color:var(--acento)}
+.meta{display:block;font-size:.82rem;color:var(--suave);margin-top:2px}
+.nuevo{display:inline-block;margin-left:6px;padding:0 6px;border:1px solid var(--c,var(--acento));
+ border-radius:8px;font-size:.7rem;color:var(--c,var(--acento));font-weight:600}
+.etiqueta{color:var(--c,var(--acento));font-weight:600}
+.buscador{margin:14px 0 4px}
+.buscador input{width:100%;padding:10px 12px;font-size:1rem;border:1px solid var(--linea);border-radius:8px}
+.fichas{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:12px 0}
+.ficha{display:block;padding:12px;border:1px solid var(--linea);border-left:5px solid var(--c,var(--acento));
+ border-radius:8px;background:var(--tarjeta);color:var(--tinta)}
+.ficha b{display:block}
+.ficha span{color:var(--suave);font-size:.85rem}
+.vacio{color:var(--suave);font-style:italic}
+footer.pie{border-top:1px solid var(--linea);padding:14px 0 30px;color:var(--suave);font-size:.82rem}
+.oculto{display:none!important}
+@media print{
+ nav.menu,.buscador,footer.pie .no-imprimir{display:none}
+ body{font-size:11pt}
+ a{color:#000}
+ header.sitio{border-bottom:1px solid #000}
+ li.item{break-inside:avoid}
+}
