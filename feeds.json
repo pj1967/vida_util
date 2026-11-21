@@ -1,0 +1,52 @@
+{
+  "sitio": {
+    "titulo": "Vida Útil",
+    "subtitulo": "Del taller a los datos · Ingeniería y datos en castellano",
+    "dias_portada": 10,
+    "max_por_tema_portada": 12
+  },
+  "temas": {
+    "ia": "Inteligencia artificial",
+    "medicina": "Medicina",
+    "robotica": "Robótica",
+    "programacion": "Programación",
+    "farmacologia": "Farmacología",
+    "aeronautica": "Aeronáutica",
+    "tecnologia": "Tecnología"
+  },
+  "feeds": [
+    {"nombre": "MIT Technology Review (IA)", "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed", "tema": "ia"},
+    {"nombre": "Hugging Face Blog", "url": "https://huggingface.co/blog/feed.xml", "tema": "ia"},
+    {"nombre": "Google AI Blog", "url": "https://blog.google/technology/ai/rss/", "tema": "ia"},
+    {"nombre": "arXiv cs.AI", "url": "https://export.arxiv.org/rss/cs.AI", "tema": "ia", "max": 10},
+
+    {"nombre": "OMS / WHO", "url": "https://www.who.int/rss-feeds/news-english.xml", "tema": "medicina"},
+    {"nombre": "Nature Medicine", "url": "https://www.nature.com/nm.rss", "tema": "medicina"},
+    {"nombre": "ScienceDaily Salud", "url": "https://www.sciencedaily.com/rss/health_medicine.xml", "tema": "medicina"},
+    {"nombre": "Medical News Today", "url": "https://www.medicalnewstoday.com/rss", "tema": "medicina"},
+
+    {"nombre": "IEEE Spectrum Robótica", "url": "https://spectrum.ieee.org/feeds/topic/robotics.rss", "tema": "robotica"},
+    {"nombre": "The Robot Report", "url": "https://www.therobotreport.com/feed/", "tema": "robotica"},
+    {"nombre": "arXiv cs.RO", "url": "https://export.arxiv.org/rss/cs.RO", "tema": "robotica", "max": 10},
+
+    {"nombre": "GitHub Blog", "url": "https://github.blog/feed/", "tema": "programacion"},
+    {"nombre": "InfoQ", "url": "https://feed.infoq.com/", "tema": "programacion"},
+    {"nombre": "Real Python", "url": "https://realpython.com/atom.xml", "tema": "programacion"},
+    {"nombre": "Genbeta", "url": "https://www.genbeta.com/feedburner.xml", "tema": "programacion"},
+
+    {"nombre": "FDA Comunicados", "url": "https://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds/press-releases/rss.xml", "tema": "farmacologia"},
+    {"nombre": "Fierce Pharma", "url": "https://www.fiercepharma.com/rss/xml", "tema": "farmacologia"},
+    {"nombre": "Fierce Biotech", "url": "https://www.fiercebiotech.com/rss/xml", "tema": "farmacologia"},
+    {"nombre": "ScienceDaily Farmacología", "url": "https://www.sciencedaily.com/rss/health_medicine/pharmacology.xml", "tema": "farmacologia"},
+
+    {"nombre": "The Aviationist", "url": "https://theaviationist.com/feed/", "tema": "aeronautica"},
+    {"nombre": "Simple Flying", "url": "https://simpleflying.com/feed/", "tema": "aeronautica"},
+    {"nombre": "NASA Aeronáutica", "url": "https://www.nasa.gov/aeronautics/feed/", "tema": "aeronautica"},
+    {"nombre": "ESA", "url": "https://www.esa.int/rssfeed/Our_Activities/Space_Engineering_Technology", "tema": "aeronautica"},
+
+    {"nombre": "Ars Technica", "url": "https://feeds.arstechnica.com/arstechnica/index", "tema": "tecnologia"},
+    {"nombre": "The Verge", "url": "https://www.theverge.com/rss/index.xml", "tema": "tecnologia"},
+    {"nombre": "TechCrunch", "url": "https://techcrunch.com/feed/", "tema": "tecnologia"},
+    {"nombre": "Xataka", "url": "https://www.xataka.com/feedburner.xml", "tema": "tecnologia"}
+  ]
+}
