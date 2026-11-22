@@ -129,6 +129,16 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .proyecto:hover{transform:translateY(-2px);border-color:var(--acento);box-shadow:0 10px 28px rgba(0,0,0,.45)}
 .proyecto a.ir::after{content:"";position:absolute;inset:0;border-radius:14px}
 .destacado h2{margin-top:26px}
+.nivel-bloque{margin:18px 0 6px}
+.nivel-bloque h3{display:flex;align-items:baseline;gap:10px;margin:18px 0 2px;font-size:1.05rem;color:var(--c)}
+.nivel-bloque h3 small{font-weight:400;color:var(--suave);font-size:.84rem}
+.compacta p{display:none}
+.compacta{padding:13px 16px}
+.num{font-size:.72rem;font-weight:700;color:var(--suave)}
+.cabecera-card{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.esquema{margin:8px 0 8px 20px;padding:0}
+.esquema li{margin:4px 0}
+.nota-dato{color:#fbbf24;font-size:.82rem}
 .ver-todos{display:inline-block;margin:2px 0 8px;font-weight:600}
 .migas{margin:22px 0 0;font-size:.88rem}
 .ficha-tec{display:grid;grid-template-columns:170px 1fr;gap:0;margin:12px 0;background:var(--superficie);
