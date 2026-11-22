@@ -259,6 +259,79 @@ ol.pasos p b{color:var(--acento)}
  .rejilla,.tarjetas{grid-template-columns:1fr}
  .panel{min-width:230px}
 }
+.aprenderas{margin:14px 0;padding:16px 20px;border:1px solid #4ade8055;border-left:4px solid #4ade80;border-radius:10px;
+ background:rgba(74,222,128,.06)}
+.aprenderas h3{margin:0 0 8px;font-size:1.05rem;color:#4ade80}
+.aprenderas ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:4px 22px}
+.aprenderas li{padding-left:24px;position:relative;font-size:.95rem}
+.aprenderas li::before{content:"✓";position:absolute;left:0;color:#4ade80;font-weight:700}
+.prog{display:flex;align-items:center;gap:10px;margin:8px 0 12px;font-size:.9rem;color:var(--suave)}
+.prog-barra{flex:0 1 220px;height:8px;border-radius:99px;background:var(--linea);overflow:hidden}
+.prog-barra i{display:block;height:100%;width:0;background:#4ade80;transition:width .3s}
+.hecho-marca{display:none;margin-left:8px;padding:1px 9px;border-radius:99px;font-size:.78rem;font-weight:600;
+ color:#052e16;background:#4ade80}
+li.hecho .hecho-marca{display:inline-block}
+.enlace-paso{display:inline-block;margin:8px 0 2px;padding:8px 14px;border-radius:8px;font-weight:600;font-size:.92rem;
+ background:rgba(56,189,248,.12);border:1px solid #38bdf866;text-decoration:none}
+.enlace-paso:hover{background:rgba(56,189,248,.22)}
+.paso-pag h3.sec{margin:26px 0 8px;font-size:1.12rem;color:var(--tinta);border-bottom:1px solid var(--linea);padding-bottom:4px}
+.paso-pag h3.sec .pag{float:right;font-size:.78rem;font-weight:400;color:var(--suave)}
+.paso-pag p,.paso-pag li{max-width:72ch}
+.paso-pag .fuente{color:var(--suave);font-size:.88rem;margin:0 0 6px}
+.callout{margin:12px 0;padding:10px 14px;border-radius:8px;border-left:4px solid #38bdf8;background:rgba(56,189,248,.07);max-width:72ch}
+.callout b{display:block;margin-bottom:2px;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:#38bdf8}
+.callout.atencion{border-color:#fbbf24;background:rgba(251,191,36,.08)}.callout.atencion b{color:#fbbf24}
+.callout.nota{border-color:#a78bfa;background:rgba(167,139,250,.08)}.callout.nota b{color:#a78bfa}
+.callout.regla{border-color:#4ade80;background:rgba(74,222,128,.08)}.callout.regla b{color:#4ade80}
+.tabla-scroll{overflow-x:auto;margin:10px 0}
+.tabla-libro td.num,.tabla-libro th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tabla-libro tfoot td{font-weight:600;border-top:2px solid var(--linea)}
+.tabla-nota{font-size:.88rem;color:var(--suave);margin:2px 0 10px}
+details.codigo{margin:10px 0;border:1px solid var(--linea);border-radius:8px;background:var(--superficie)}
+details.codigo summary{cursor:pointer;padding:8px 12px;font-size:.88rem;font-weight:600;color:#38bdf8}
+pre.cod{margin:0;padding:12px 14px;overflow-x:auto;font-size:.82rem;line-height:1.5;border-top:1px solid var(--linea);
+ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+pre.salida{margin:0 0 10px;padding:10px 14px;overflow-x:auto;font-size:.82rem;line-height:1.5;border-radius:8px;
+ background:#0a1a12;border:1px solid #4ade8044;color:#bbf7d0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.etiqueta-salida{margin:8px 0 2px;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:#4ade80;font-weight:600}
+.copiar{float:right;margin:6px 8px;padding:3px 10px;font-size:.78rem;border-radius:6px;border:1px solid var(--linea);
+ background:transparent;color:var(--suave);cursor:pointer}
+figure.fig{margin:14px 0;padding:12px;border:1px solid var(--linea);border-radius:10px;background:var(--superficie);max-width:560px}
+figure.fig svg{width:100%;height:auto;display:block}
+figure.fig figcaption{font-size:.84rem;color:var(--suave);margin-top:8px}
+.caja-paso{margin:26px 0;padding:16px 18px;border:1px solid var(--linea);border-radius:12px;background:var(--superficie)}
+.caja-paso h2{margin-top:0}
+.pregunta{margin:16px 0;padding:12px 14px;border:1px solid var(--linea);border-radius:10px}
+.pregunta p{margin:0 0 8px;font-weight:600;max-width:none}
+.pregunta label{display:block;margin:5px 0;padding:6px 10px;border-radius:8px;border:1px solid var(--linea);cursor:pointer;font-size:.95rem}
+.pregunta label:hover{border-color:#38bdf8}
+.pregunta input{margin-right:8px}
+.pregunta.ok label.marcada{border-color:#4ade80;background:rgba(74,222,128,.12)}
+.pregunta.mal label.marcada{border-color:#fb7185;background:rgba(251,113,133,.12)}
+.pregunta label.correcta{border-color:#4ade80}
+.pregunta .exp{margin:8px 0 0;font-size:.88rem;color:var(--suave);font-weight:400}
+.resultado{margin:14px 0;padding:12px 16px;border-radius:10px;font-weight:600}
+.resultado.bien{background:rgba(74,222,128,.12);border:1px solid #4ade80}
+.resultado.regular{background:rgba(251,191,36,.1);border:1px solid #fbbf24}
+.boton{display:inline-block;margin:6px 8px 0 0;padding:9px 16px;border-radius:8px;border:1px solid #38bdf8;background:rgba(56,189,248,.14);
+ color:var(--tinta);font-weight:600;font-size:.92rem;cursor:pointer}
+.boton:hover{background:rgba(56,189,248,.26)}
+.boton.verde{border-color:#4ade80;background:rgba(74,222,128,.14)}
+.boton:disabled{opacity:.5;cursor:default}
+.evid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:12px 0}
+.evid figure{margin:0;padding:10px;border:1px solid var(--linea);border-radius:10px;background:var(--bg)}
+.evid img{max-width:100%;height:auto;border-radius:6px;display:block}
+.evid figcaption{font-size:.84rem;color:var(--suave);margin-top:6px}
+.evid-vacia{padding:12px 14px;border:1px dashed var(--linea);border-radius:10px;font-size:.92rem;color:var(--suave)}
+.evid-vacia code,.paso-pag code.nombre{background:rgba(148,163,184,.15);padding:1px 6px;border-radius:5px;font-size:.84rem;word-break:break-all}
+.nav-pasos{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:20px 0}
+@media print{
+ .caja-paso{break-inside:avoid}
+ .copiar,.boton,.nav-pasos{display:none!important}
+ .fig-svg text{fill:#000!important}.fig-svg line{stroke:#555!important}.fig-svg circle{fill:#999!important;stroke:#000!important}
+ details.codigo>summary{display:none}
+ pre.cod,pre.salida{white-space:pre-wrap;border:1px solid #bbb!important}
+}
 @media print{
  *{background:#fff!important;color:#000!important;box-shadow:none!important;
    border-color:#bbb!important;text-shadow:none!important;transform:none!important}
@@ -366,6 +439,88 @@ JS = """
     $('.visor-cerrar',visor).addEventListener('click',function(){visor.close();});
     visor.addEventListener('click',function(e){ if(e.target===visor) visor.close(); });
     visor.addEventListener('close',function(){ $('.visor-marco',visor).innerHTML=''; });
+  }
+
+  /* ---- progreso por pasos y test (se guarda solo en este navegador) ---- */
+  function lee(k){ try{ return window.localStorage.getItem(k); }catch(e){ return null; } }
+  function guarda(k,v){ try{ window.localStorage.setItem(k,v); }catch(e){} }
+  function pintaProgreso(){
+    var lis=$$('li[data-paso]'); if(!lis.length) return;
+    var hechos=0;
+    lis.forEach(function(li){
+      var ok=lee('mm-ok:'+li.getAttribute('data-paso'))==='1';
+      li.classList.toggle('hecho',ok); if(ok) hechos++;
+    });
+    var p=$('.prog'); if(!p) return;
+    $('.prog-n',p).textContent=hechos;
+    $('.prog-barra i',p).style.width=Math.round(100*hechos/lis.length)+'%';
+  }
+  pintaProgreso();
+  $$('button.copiar').forEach(function(b){
+    b.addEventListener('click',function(){
+      var pre=b.parentNode.querySelector('pre'); if(!pre||!navigator.clipboard) return;
+      navigator.clipboard.writeText(pre.textContent).then(function(){ b.textContent='Copiado ✓'; setTimeout(function(){ b.textContent='Copiar'; },1500); });
+    });
+  });
+  var marcar=$('#marcar-paso');
+  if(marcar){
+    var clave=marcar.getAttribute('data-clave');
+    var pinta=function(){
+      var ok=lee('mm-ok:'+clave)==='1';
+      marcar.textContent= ok ? '✓ Paso completado (pulsa para desmarcar)' : 'Marcar este paso como completado';
+      marcar.classList.toggle('verde',ok);
+    };
+    pinta();
+    marcar.addEventListener('click',function(){ guarda('mm-ok:'+clave, lee('mm-ok:'+clave)==='1' ? '0' : '1'); pinta(); });
+  }
+  var test=$('#test');
+  if(test){
+    var datos=JSON.parse($('#test-datos').textContent);
+    var cuerpo=$('#test-cuerpo');
+    var mezcla=function(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; };
+    var texto=function(s){ var d=document.createElement('span'); d.textContent=s; return d; };
+    var nuevo=function(){
+      var preg=mezcla(datos.preguntas).slice(0,datos.cuantas||8);
+      cuerpo.innerHTML='';
+      var form=document.createElement('form');
+      preg.forEach(function(q,i){
+        var opts=mezcla([{t:q.ok,ok:true}].concat(q.mal.map(function(m){ return {t:m,ok:false}; })));
+        var div=document.createElement('div'); div.className='pregunta';
+        var p=document.createElement('p'); p.textContent=(i+1)+'. '+q.q; div.appendChild(p);
+        opts.forEach(function(o){
+          var l=document.createElement('label'); var r=document.createElement('input');
+          r.type='radio'; r.name='q'+i; r.setAttribute('data-ok',o.ok?'1':'0');
+          l.appendChild(r); l.appendChild(texto(o.t)); div.appendChild(l);
+        });
+        var e=document.createElement('p'); e.className='exp'; e.hidden=true; e.textContent=q.exp; div.appendChild(e);
+        form.appendChild(div);
+      });
+      var b=document.createElement('button'); b.type='button'; b.className='boton'; b.textContent='Corregir';
+      form.appendChild(b); cuerpo.appendChild(form);
+      var res=document.createElement('div'); cuerpo.appendChild(res);
+      b.addEventListener('click',function(){
+        var bien=0, sin=0;
+        $$('.pregunta',form).forEach(function(div){
+          var m=$('input:checked',div);
+          div.classList.remove('ok','mal');
+          $$('label',div).forEach(function(l){ l.classList.remove('marcada','correcta'); if($('input',l).getAttribute('data-ok')==='1') l.classList.add('correcta'); });
+          if(!m){ sin++; return; }
+          m.parentNode.classList.add('marcada');
+          if(m.getAttribute('data-ok')==='1'){ bien++; div.classList.add('ok'); } else div.classList.add('mal');
+          $('.exp',div).hidden=false;
+        });
+        if(sin){ res.className='resultado regular'; res.textContent='Te faltan '+sin+' pregunta(s) por contestar.'; return; }
+        var pct=Math.round(100*bien/preg.length), apr=datos.aprobado||70;
+        res.innerHTML='';
+        res.className='resultado '+(pct>=apr?'bien':'regular');
+        res.appendChild(texto(bien+' de '+preg.length+' ('+pct+' %). '+(pct>=apr?'¡Aprobado! Ya puedes marcar el paso como completado.':'Repasa la explicación de las falladas y vuelve a intentarlo con otras preguntas.')));
+        if(pct>=apr && test.getAttribute('data-clave')){ guarda('mm-test:'+test.getAttribute('data-clave'),String(pct)); }
+        var r=document.createElement('button'); r.type='button'; r.className='boton'; r.textContent='Repetir con otras preguntas';
+        r.addEventListener('click',nuevo); res.appendChild(document.createElement('br')); res.appendChild(r);
+        b.disabled=true;
+      });
+    };
+    nuevo();
   }
   document.addEventListener('click',function(e){
     var a=e.target.closest ? e.target.closest('a.ver-pdf') : null;
@@ -827,6 +982,9 @@ class Sitio:
                 ini += sm.get("paginas", 1)
             r = dict(r, _subs=subs, _total=ini - 1, _existe=self.localizar_recurso(r.get("archivo", "")) is not None)
             self.recursos[r["id"]] = r
+        self.ayudas = cargar_json(RAIZ / "ayuda.json", {})
+        if not isinstance(self.ayudas, dict):
+            self.ayudas = {}
         self.proyectos = [p for p in config.get("proyectos", [])
                           if re.fullmatch(r"[a-z0-9-]+", p.get("id", ""))]
         self.resumenes = resumenes or []
@@ -1074,7 +1232,8 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                 cuerpo = ('<p class="migas"><a href="' + f'{clave}.html">← {esc(nombre)}</a></p>'
                           f'<h2 style="--c:{self.NIVEL_COLOR[nv]}">{esc(nombre)} · nivel {self.NIVEL_TXT[nv]}'
                           f'<small>{esc(self.NIVEL_DESC[nv])}</small></h2>'
-                          '<div class="tarjetas">'
+                          + self.caja_aprenderas(self.cfg.get("aprenderas", {}).get(f"{clave}-{nv}"), "nivel")
+                          + '<div class="tarjetas">'
                           + "".join(self.tarjeta_proyecto(p, "") for p in pn) + "</div>")
                 self.escribir(f"proyectos/{clave}-{nv}.html",
                               self.pagina(f"{nombre}, nivel {self.NIVEL_TXT[nv]}", cuerpo, "../", "proyectos"))
@@ -1269,14 +1428,18 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                  + fila("Métrica", esc(p.get("metrica", "")))
                  + "</dl>")
         pasos = []
-        for st in p.get("pasos", []):
-            partes = [f'<h4>{esc(st.get("titulo", ""))}</h4>']
+        for num, st in enumerate(p.get("pasos", []), 1):
+            partes = [f'<h4>{esc(st.get("titulo", ""))}<span class="hecho-marca">✓ completado</span></h4>']
             for clave, etiqueta in (("que", "Qué hacemos"), ("como", "Cómo"),
                                     ("porque", "Por qué"), ("para", "Para qué")):
                 if st.get(clave):
                     partes.append(f"<p><b>{etiqueta}:</b> {esc(st[clave])}</p>")
-            partes.append(self.ayuda_html(st.get("ayuda"), "../"))
-            pasos.append("<li>" + "".join(partes) + "</li>")
+            if self.ayuda_paso(p["id"], num):
+                partes.append(f'<a class="enlace-paso" href="{esc(p["id"])}-paso-{num}.html">'
+                              'Abrir el paso: ayuda del libro, test y entrega →</a>')
+            else:
+                partes.append(self.ayuda_html(st.get("ayuda"), "../"))
+            pasos.append(f'<li id="paso-{num}" data-paso="{esc(p["id"])}:{num}">' + "".join(partes) + "</li>")
         if p.get("esquema") and not pasos:
             esquema = ('<p class="desc">Esquema previsto. Los pasos se explicarán uno a uno, desde cero, '
                        'cuando hagamos el proyecto.</p><ol class="esquema">'
@@ -1317,11 +1480,16 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             f'<span class="estado {esc(est)}">{esc(self.ESTADOS.get(est, est))}</span> '
             f'{self.etiquetas(p)}'
             f'<p class="desc">{esc(p.get("descripcion", ""))}</p>'
-            '<h2 style="--c:#38bdf8">Ficha técnica</h2>' + ficha
+            + self.caja_aprenderas(p.get("aprenderas") or self.cfg.get("aprenderas", {}).get(
+                f'{p.get("bloque")}-{p.get("nivel")}'))
+            + '<h2 style="--c:#38bdf8">Ficha técnica</h2>' + ficha
             + '<h2 style="--c:#fbbf24">Métrica y pasos del proyecto'
               '<small>explicados desde cero</small></h2>'
             + (f'<p class="desc">Medimos el resultado con: {esc(p.get("metrica", ""))}</p>'
                if p.get("metrica") else "")
+            + ('<p class="prog"><span class="prog-barra"><i></i></span>'
+               f'<span><b class="prog-n">0</b> de {len(pasos)} pasos completados (se guarda en este navegador)</span></p>'
+               if pasos else "")
             + (f'<ol class="pasos">{"".join(pasos)}</ol>' if pasos else esquema)
             + '<h2 style="--c:#4ade80">Resultados</h2>'
             + f'<p>{esc(p.get("resultados") or "Pendiente.")}</p>'
@@ -1471,6 +1639,143 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             return ""
         return '<p class="ayuda"><b>Ayuda en el libro:</b> ' + '<span class="sep">·</span>'.join(trozos) + "</p>"
 
+    def ayuda_paso(self, pid, n):
+        d = (self.ayudas.get(pid) or {}).get(str(n))
+        return d if isinstance(d, dict) and d.get("bloques") else None
+
+    @staticmethod
+    def caja_aprenderas(lista, que="proyecto"):
+        if not lista:
+            return ""
+        return (f'<div class="aprenderas"><h3>Al terminar este {que} sabrás:</h3><ul>'
+                + "".join(f"<li>{esc(x)}</li>" for x in lista) + "</ul></div>")
+
+    def bloques_html(self, bloques):
+        out = []
+        for b in bloques:
+            t = b.get("t")
+            if t == "sec":
+                out.append(f'<h3 class="sec">{esc(b.get("x", ""))}<span class="pag">{esc(b.get("pag", ""))}</span></h3>')
+            elif t == "h":
+                out.append(f'<h4>{esc(b.get("x", ""))}</h4>')
+            elif t == "p":
+                out.append(f'<p>{esc(b.get("x", ""))}</p>')
+            elif t == "ul":
+                out.append("<ul>" + "".join(f"<li>{esc(x)}</li>" for x in b.get("x", [])) + "</ul>")
+            elif t == "etq":
+                k = b.get("k", "sencilla")
+                k = k if k in ("sencilla", "atencion", "nota", "regla") else "sencilla"
+                out.append(f'<div class="callout {k}"><b>{esc(b.get("titulo", ""))}</b>{esc(b.get("x", ""))}</div>')
+            elif t == "tabla":
+                cab = "".join(f"<th>{esc(c)}</th>" for c in b.get("cab", []))
+                filas = "".join("<tr>" + "".join(f"<td>{esc(c)}</td>" for c in f) + "</tr>" for f in b.get("filas", []))
+                pie = b.get("pie")
+                tf = ("<tfoot><tr>" + "".join(f"<td>{esc(c)}</td>" for c in pie) + "</tr></tfoot>") if pie else ""
+                out.append(f'<div class="tabla-scroll"><table class="tabla-libro"><thead><tr>{cab}</tr></thead>'
+                           f'<tbody>{filas}</tbody>{tf}</table></div>')
+                if b.get("nota"):
+                    out.append(f'<p class="tabla-nota">{esc(b["nota"])}</p>')
+            elif t == "code":
+                x = b.get("x", "")
+                abierto = " open" if x.count("\n") < 24 else ""
+                out.append(f'<details class="codigo"{abierto}><summary>{esc(b.get("titulo", "Código"))}</summary>'
+                           f'<button class="copiar" type="button">Copiar</button><pre class="cod"><code>{esc(x)}</code></pre></details>')
+            elif t == "salida":
+                out.append(f'<p class="etiqueta-salida">Salida real del programa</p><pre class="salida">{esc(b.get("x", ""))}</pre>')
+            elif t == "fig":
+                out.append(f'<figure class="fig">{b.get("svg", "")}<figcaption>{esc(b.get("x", ""))}</figcaption></figure>')
+        return "".join(out)
+
+    @staticmethod
+    def evidencias_de(pid, n):
+        patron = re.compile(rf"^{re.escape(pid)}--p{n}--(.+)\.([A-Za-z0-9]+)$")
+        hallados = []
+        for carpeta in (RAIZ, RAIZ / "evidencias"):
+            if not carpeta.is_dir():
+                continue
+            for f in sorted(carpeta.iterdir()):
+                m = patron.match(f.name)
+                if f.is_file() and m and m.group(2).lower() in ("png", "jpg", "jpeg", "gif", "webp", "svg",
+                                                                 "py", "txt", "ipynb", "pdf", "csv"):
+                    hallados.append((f, m.group(1).replace("-", " ").strip(), m.group(2).lower()))
+        return hallados
+
+    def evidencias_html(self, pid, n, d):
+        items = self.evidencias_de(pid, n)
+        cab = f'<p>{esc(d.get("evidencias", ""))}</p>' if d.get("evidencias") else ""
+        if not items:
+            ejemplo = f"{pid}--p{n}--grafico-dispersion.png"
+            return (cab + '<div class="evid-vacia">Todavía no hay nada subido en este paso.<br>'
+                    'Para añadir una imagen, un código (.py, .txt) o un cuaderno (.ipynb), sube el archivo a la raíz '
+                    f'del repositorio con este nombre: <code class="nombre">{esc(ejemplo)}</code><br>'
+                    f'Lo que va entre <code class="nombre">--p{n}--</code> y la extensión es el título que se mostrará.</div>')
+        cuerpo = []
+        for f, titulo, ext in items:
+            destino = f"evidencias/{f.name}"
+            self.copiar(f, destino)
+            if ext in ("png", "jpg", "jpeg", "gif", "webp", "svg"):
+                cuerpo.append(f'<figure><a href="../{esc(destino)}" target="_blank" rel="noopener noreferrer">'
+                              f'<img src="../{esc(destino)}" alt="{esc(titulo)}" loading="lazy"></a>'
+                              f'<figcaption>{esc(titulo)}</figcaption></figure>')
+            elif ext in ("py", "txt") and f.stat().st_size < 80000:
+                txt = f.read_text(encoding="utf-8", errors="replace")
+                cuerpo.append(f'<figure style="grid-column:1/-1"><figcaption>{esc(titulo)} · <a href="../{esc(destino)}" '
+                              f'download>descargar</a></figcaption><details class="codigo" open><summary>Código</summary>'
+                              f'<button class="copiar" type="button">Copiar</button><pre class="cod"><code>{esc(txt)}</code></pre></details></figure>')
+            else:
+                cuerpo.append(f'<figure><a href="../{esc(destino)}" target="_blank" rel="noopener noreferrer">{esc(titulo)}'
+                              f' ({esc(ext)}) ↗</a></figure>')
+        return cab + '<div class="evid">' + "".join(cuerpo) + "</div>"
+
+    def copiar(self, origen, destino_rel):
+        d = self.salida / destino_rel
+        d.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(origen, d)
+
+    def paginas_pasos(self):
+        for p in self.proyectos:
+            pasos = p.get("pasos") or []
+            for n in range(1, len(pasos) + 1):
+                d = self.ayuda_paso(p["id"], n)
+                if not d:
+                    continue
+                clave = f'{p["id"]}:{n}'
+                prev = (f'<a class="enlace-paso" href="{p["id"]}-paso-{n - 1}.html">← Paso anterior</a>'
+                        if n > 1 and self.ayuda_paso(p["id"], n - 1) else "")
+                sig = (f'<a class="enlace-paso" href="{p["id"]}-paso-{n + 1}.html">Siguiente paso →</a>'
+                       if self.ayuda_paso(p["id"], n + 1) else
+                       (f'<a class="enlace-paso" href="{p["id"]}.html#paso-{n + 1}">Volver al proyecto: paso {n + 1} →</a>'
+                        if n < len(pasos) else f'<a class="enlace-paso" href="{p["id"]}.html">Volver al proyecto →</a>'))
+                test = d.get("test") or {}
+                if test.get("preguntas"):
+                    datos = json.dumps(test, ensure_ascii=False).replace("</", "<\\/")
+                    caja_test = ('<section class="caja-paso" id="test" data-clave="' + esc(clave) + '">'
+                                 '<h2 style="--c:#fbbf24">2 · Comprueba lo aprendido'
+                                 f'<small>test de {int(test.get("cuantas", 8))} preguntas al azar; las respuestas cambian de orden cada vez</small></h2>'
+                                 f'<script type="application/json" id="test-datos">{datos}</script>'
+                                 '<div id="test-cuerpo"></div></section>')
+                else:
+                    caja_test = ""
+                cuerpo = (
+                    f'<p class="migas"><a href="{esc(p["id"])}.html#paso-{n}">← {esc(p.get("titulo", ""))}</a></p>'
+                    f'<div class="paso-pag"><h2 style="--c:#4ade80">Paso {n} de {len(pasos)} · {esc(d.get("titulo") or pasos[n - 1].get("titulo", ""))}</h2>'
+                    f'<p class="fuente">{esc(d.get("fuente", ""))}</p>'
+                    f'<p>{esc(d.get("intro", ""))}</p>'
+                    '<section><h2 style="--c:#38bdf8">1 · Lee la ayuda<small>extraída del libro, en su mismo orden</small></h2>'
+                    + self.bloques_html(d["bloques"]) + '</section>'
+                    + caja_test
+                    + '<section class="caja-paso"><h2 style="--c:#fb7185">3 · Enseña tu trabajo'
+                      '<small>código, gráficos, notas</small></h2>'
+                    + self.evidencias_html(p["id"], n, d) + '</section>'
+                    + '<section class="caja-paso"><h2 style="--c:#4ade80">4 · Cierra el paso</h2>'
+                      '<p>Cuando hayas leído, aprobado el test y subido lo que quieras enseñar, márcalo. '
+                      'La marca se guarda en este navegador y se refleja en la página del proyecto.</p>'
+                      f'<button id="marcar-paso" class="boton verde" type="button" data-clave="{esc(clave)}">'
+                      'Marcar este paso como completado</button></section>'
+                    + f'<div class="nav-pasos"><span>{prev}</span><span>{sig}</span></div></div>')
+                self.escribir(f"proyectos/{p['id']}-paso-{n}.html", self.pagina(
+                    f"Paso {n}: {d.get('titulo') or pasos[n - 1].get('titulo', '')}", cuerpo, "../", "proyectos"))
+
     def pagina_biblioteca(self):
         if not self.recursos:
             return
@@ -1517,6 +1822,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
         self.paginas_tema()
         self.pagina_resumenes()
         self.pagina_proyectos()
+        self.paginas_pasos()
         self.pagina_retos()
         self.sobre()
         self.copiar_recursos()

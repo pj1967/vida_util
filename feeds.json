@@ -1,99 +1,73 @@
 {
- "sitio": {
-  "titulo": "Mente Máquina",
-  "lema": "Del taller a los datos",
-  "subtitulo": "Inteligencia artificial, robótica y automatización en castellano",
-  "autor": "Pedro José de la Rosa Martín",
-  "acerca": [
-   "Soy Pedro José de la Rosa Martín, técnico aeronáutico. Aprendo y comparto, en castellano, cómo se aplican los datos, la inteligencia artificial y la automatización al mantenimiento y a la ingeniería.",
-   "Lo más importante de esta web son los proyectos: programas útiles explicados paso a paso, con datos reales y abiertos, indicando siempre de dónde salen los datos y cuáles son sus límites.",
-   "Como complemento, reúne cada día noticias sobre inteligencia artificial, robótica y automatización, y cada semana las resume por temas. Solo muestra titulares con enlace a la fuente original."
-  ],
-  "dias_portada": 7,
-  "max_flujo_portada": 100,
-  "goatcounter": "",
-  "formulario": "",
-  "sobre": {
-   "que_es": "Un blog personal, sin ánimo comercial, para aprender y compartir en castellano cómo se aplican la inteligencia artificial, la robótica y la automatización en distintos ámbitos. Se hace a ritmo de afición: poco a poco y sin prisa.",
-   "no_hace": [
-    "No es asesoramiento médico, legal ni financiero.",
-    "No copia artículos: solo muestra titulares y enlaza a la fuente original.",
-    "No usa datos ni documentación de ningún empleo: todos los proyectos usan datos públicos y abiertos.",
-    "No garantiza que los resultados de un proyecto sirvan fuera de sus datos de ejemplo."
-   ]
-  }
- },
- "temas": {
-  "ia": "Inteligencia artificial",
-  "robotica": "Robótica y automatización",
-  "programacion": "Programación",
-  "aeronautica": "Aeronáutica",
-  "otros": "Otros ámbitos"
- },
- "descripciones": {
-  "ia": "Modelos, herramientas y avances de la inteligencia artificial.",
-  "robotica": "Robots, drones, vehículos autónomos y automatización.",
-  "programacion": "Desarrollo de software y programación con inteligencia artificial.",
-  "aeronautica": "Aviación y espacio: autonomía, mantenimiento predictivo y datos.",
-  "otros": "La IA y la automatización en industria, agricultura, clima, energía, salud y farmacia."
- },
- "relevancia": [
-  "inteligencia artificial",
-  "artificial intelligence",
-  "ai",
-  "ia",
-  "machine learning",
-  "aprendizaje automático",
-  "aprendizaje profundo",
-  "deep learning",
-  "neural",
-  "neuronal",
-  "llm",
-  "large language model",
-  "modelo de lenguaje",
-  "language model",
-  "chatgpt",
-  "gpt",
-  "openai",
-  "anthropic",
-  "claude",
-  "gemini",
-  "deepmind",
-  "copilot",
-  "generative",
-  "generativ",
-  "ai agent",
-  "agente de ia",
-  "agentic",
-  "chatbot",
-  "computer vision",
-  "visión artificial",
-  "robot",
-  "robótica",
-  "robotic",
-  "humanoid",
-  "humanoide",
-  "cobot",
-  "drone",
-  "dron",
-  "autonomous",
-  "vehículo autónomo",
-  "coche autónomo",
-  "conducción autónoma",
-  "self-driving",
-  "automation",
-  "automatización",
-  "automatizar",
-  "automated",
-  "predictive maintenance",
-  "mantenimiento predictivo",
-  "digital twin",
-  "gemelo digital"
- ],
- "clasificacion": [
-  {
-   "tema": "robotica",
-   "palabras": [
+  "sitio": {
+    "titulo": "Mente Máquina",
+    "lema": "Del taller a los datos",
+    "subtitulo": "Inteligencia artificial, robótica y automatización en castellano",
+    "autor": "Pedro José de la Rosa Martín",
+    "acerca": [
+      "Soy Pedro José de la Rosa Martín, técnico aeronáutico. Aprendo y comparto, en castellano, cómo se aplican los datos, la inteligencia artificial y la automatización al mantenimiento y a la ingeniería.",
+      "Lo más importante de esta web son los proyectos: programas útiles explicados paso a paso, con datos reales y abiertos, indicando siempre de dónde salen los datos y cuáles son sus límites.",
+      "Como complemento, reúne cada día noticias sobre inteligencia artificial, robótica y automatización, y cada semana las resume por temas. Solo muestra titulares con enlace a la fuente original."
+    ],
+    "dias_portada": 7,
+    "max_flujo_portada": 100,
+    "goatcounter": "",
+    "formulario": "",
+    "sobre": {
+      "que_es": "Un blog personal, sin ánimo comercial, para aprender y compartir en castellano cómo se aplican la inteligencia artificial, la robótica y la automatización en distintos ámbitos. Se hace a ritmo de afición: poco a poco y sin prisa.",
+      "no_hace": [
+        "No es asesoramiento médico, legal ni financiero.",
+        "No copia artículos: solo muestra titulares y enlaza a la fuente original.",
+        "No usa datos ni documentación de ningún empleo: todos los proyectos usan datos públicos y abiertos.",
+        "No garantiza que los resultados de un proyecto sirvan fuera de sus datos de ejemplo."
+      ]
+    }
+  },
+  "temas": {
+    "ia": "Inteligencia artificial",
+    "robotica": "Robótica y automatización",
+    "programacion": "Programación",
+    "aeronautica": "Aeronáutica",
+    "otros": "Otros ámbitos"
+  },
+  "descripciones": {
+    "ia": "Modelos, herramientas y avances de la inteligencia artificial.",
+    "robotica": "Robots, drones, vehículos autónomos y automatización.",
+    "programacion": "Desarrollo de software y programación con inteligencia artificial.",
+    "aeronautica": "Aviación y espacio: autonomía, mantenimiento predictivo y datos.",
+    "otros": "La IA y la automatización en industria, agricultura, clima, energía, salud y farmacia."
+  },
+  "relevancia": [
+    "inteligencia artificial",
+    "artificial intelligence",
+    "ai",
+    "ia",
+    "machine learning",
+    "aprendizaje automático",
+    "aprendizaje profundo",
+    "deep learning",
+    "neural",
+    "neuronal",
+    "llm",
+    "large language model",
+    "modelo de lenguaje",
+    "language model",
+    "chatgpt",
+    "gpt",
+    "openai",
+    "anthropic",
+    "claude",
+    "gemini",
+    "deepmind",
+    "copilot",
+    "generative",
+    "generativ",
+    "ai agent",
+    "agente de ia",
+    "agentic",
+    "chatbot",
+    "computer vision",
+    "visión artificial",
     "robot",
     "robótica",
     "robotic",
@@ -102,2074 +76,2113 @@
     "cobot",
     "drone",
     "dron",
-    "self-driving",
+    "autonomous",
     "vehículo autónomo",
     "coche autónomo",
     "conducción autónoma",
-    "autonomous vehicle"
-   ]
-  },
-  {
-   "tema": "ia",
-   "palabras": [
-    "llm",
-    "gpt",
-    "chatgpt",
-    "modelo de lenguaje",
-    "language model",
-    "chatbot",
-    "openai",
-    "anthropic",
-    "claude",
-    "gemini",
-    "deepseek",
-    "llama",
-    "mistral",
-    "inteligencia artificial",
-    "artificial intelligence",
-    "machine learning",
-    "aprendizaje automático",
-    "deep learning",
-    "redes neuronales",
-    "neural network",
-    "generative",
-    "generativ",
-    "agentic",
-    "agentes de ia",
-    "ai agent"
-   ]
-  },
-  {
-   "tema": "aeronautica",
-   "palabras": [
-    "aircraft",
-    "aviation",
-    "aviación",
-    "airline",
-    "aerolínea",
-    "aerospace",
-    "aeroespacial",
-    "aeronáutica",
-    "airbus",
-    "boeing",
-    "eurofighter",
-    "jet engine",
-    "turbofan",
-    "avión",
-    "aviones",
-    "nasa",
-    "satellite",
-    "satélite",
-    "spacecraft",
-    "rocket",
-    "cohete"
-   ]
-  },
-  {
-   "tema": "programacion",
-   "palabras": [
-    "programming",
-    "programación",
-    "coding",
-    "código",
-    "github",
-    "copilot",
-    "software engineer",
-    "ingeniería de software",
-    "open source",
-    "código abierto",
-    "python",
-    "javascript"
-   ]
-  },
-  {
-   "tema": "otros",
-   "palabras": [
-    "agricultur",
-    "farming",
-    "crop",
-    "cultivo",
-    "cosecha",
-    "clima",
-    "climate",
-    "weather",
-    "meteorolog",
-    "energy",
-    "energía",
-    "power grid",
-    "red eléctrica",
-    "factory",
-    "fábrica",
-    "industria",
-    "industrial",
-    "manufactur",
-    "logistic",
-    "supply chain",
-    "salud",
-    "health",
-    "medic",
-    "pharma",
-    "fármaco",
-    "drug",
-    "hospital",
-    "clinical",
-    "clínic",
-    "diagnos",
-    "cirugía",
-    "surgery",
-    "biotech"
-   ]
-  },
-  {
-   "tema": "robotica",
-   "palabras": [
+    "self-driving",
     "automation",
     "automatización",
-    "automatizaci",
-    "autonomous",
-    "autónom"
-   ]
-  }
- ],
- "feeds": [
-  {
-   "nombre": "MIT Technology Review IA",
-   "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed",
-   "tema": "ia"
-  },
-  {
-   "nombre": "MIT News IA",
-   "url": "https://news.mit.edu/rss/topic/artificial-intelligence2",
-   "tema": "ia"
-  },
-  {
-   "nombre": "Hugging Face Blog",
-   "url": "https://huggingface.co/blog/feed.xml",
-   "tema": "ia"
-  },
-  {
-   "nombre": "Google DeepMind",
-   "url": "https://deepmind.google/blog/rss.xml",
-   "tema": "ia"
-  },
-  {
-   "nombre": "VentureBeat IA",
-   "url": "https://venturebeat.com/category/ai/feed/",
-   "tema": "ia"
-  },
-  {
-   "nombre": "TechCrunch IA",
-   "url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-   "tema": "ia"
-  },
-  {
-   "nombre": "The Verge IA",
-   "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-   "tema": "ia"
-  },
-  {
-   "nombre": "arXiv cs.AI",
-   "url": "https://export.arxiv.org/rss/cs.AI",
-   "tema": "ia",
-   "max": 6
-  },
-  {
-   "nombre": "IEEE Spectrum Robótica",
-   "url": "https://spectrum.ieee.org/feeds/topic/robotics.rss",
-   "tema": "robotica"
-  },
-  {
-   "nombre": "The Robot Report",
-   "url": "https://www.therobotreport.com/feed/",
-   "tema": "robotica"
-  },
-  {
-   "nombre": "arXiv cs.RO",
-   "url": "https://export.arxiv.org/rss/cs.RO",
-   "tema": "robotica",
-   "max": 6
-  },
-  {
-   "nombre": "GitHub Blog",
-   "url": "https://github.blog/feed/",
-   "tema": "programacion",
-   "filtrar": true
-  },
-  {
-   "nombre": "InfoQ",
-   "url": "https://feed.infoq.com/",
-   "tema": "programacion",
-   "filtrar": true
-  },
-  {
-   "nombre": "Real Python",
-   "url": "https://realpython.com/atom.xml",
-   "tema": "programacion",
-   "filtrar": true
-  },
-  {
-   "nombre": "The Aviationist",
-   "url": "https://theaviationist.com/feed/",
-   "tema": "aeronautica",
-   "filtrar": true
-  },
-  {
-   "nombre": "Simple Flying",
-   "url": "https://simpleflying.com/feed/",
-   "tema": "aeronautica",
-   "filtrar": true
-  },
-  {
-   "nombre": "NASA Aeronáutica",
-   "url": "https://www.nasa.gov/aeronautics/feed/",
-   "tema": "aeronautica",
-   "filtrar": true
-  },
-  {
-   "nombre": "ESA Tecnología",
-   "url": "https://www.esa.int/rssfeed/Our_Activities/Space_Engineering_Technology",
-   "tema": "aeronautica",
-   "filtrar": true
-  },
-  {
-   "nombre": "Ars Technica",
-   "url": "https://feeds.arstechnica.com/arstechnica/index",
-   "tema": "auto",
-   "filtrar": true,
-   "max": 20
-  },
-  {
-   "nombre": "The Verge",
-   "url": "https://www.theverge.com/rss/index.xml",
-   "tema": "auto",
-   "filtrar": true,
-   "max": 20
-  },
-  {
-   "nombre": "Xataka",
-   "url": "https://www.xataka.com/feedburner.xml",
-   "tema": "auto",
-   "filtrar": true,
-   "max": 20,
-   "idioma": "es"
-  },
-  {
-   "nombre": "Genbeta",
-   "url": "https://www.genbeta.com/feedburner.xml",
-   "tema": "auto",
-   "filtrar": true,
-   "max": 20,
-   "idioma": "es"
-  },
-  {
-   "nombre": "Wired",
-   "url": "https://www.wired.com/feed/rss",
-   "tema": "auto",
-   "filtrar": true,
-   "max": 20
-  },
-  {
-   "nombre": "IEEE Spectrum",
-   "url": "https://spectrum.ieee.org/feeds/feed.rss",
-   "tema": "auto",
-   "filtrar": true,
-   "max": 20
-  },
-  {
-   "nombre": "MIT Technology Review",
-   "url": "https://www.technologyreview.com/feed/",
-   "tema": "auto",
-   "filtrar": true,
-   "max": 20
-  },
-  {
-   "nombre": "Nature Medicine",
-   "url": "https://www.nature.com/nm.rss",
-   "tema": "otros",
-   "filtrar": true
-  },
-  {
-   "nombre": "ScienceDaily Salud",
-   "url": "https://www.sciencedaily.com/rss/health_medicine.xml",
-   "tema": "otros",
-   "filtrar": true
-  },
-  {
-   "nombre": "Fierce Pharma",
-   "url": "https://www.fiercepharma.com/rss/xml",
-   "tema": "otros",
-   "filtrar": true
-  },
-  {
-   "nombre": "Fierce Biotech",
-   "url": "https://www.fiercebiotech.com/rss/xml",
-   "tema": "otros",
-   "filtrar": true
-  },
-  {
-   "nombre": "AgFunder News",
-   "url": "https://agfundernews.com/feed",
-   "tema": "otros",
-   "filtrar": true
-  },
-  {
-   "nombre": "Carbon Brief",
-   "url": "https://www.carbonbrief.org/feed",
-   "tema": "otros",
-   "filtrar": true
-  },
-  {
-   "nombre": "Utility Dive",
-   "url": "https://www.utilitydive.com/feeds/news/",
-   "tema": "otros",
-   "filtrar": true
-  }
- ],
- "proyectos": [
-  {
-   "id": "potencia-central-regresion-simple",
-   "titulo": "Potencia de una central según la temperatura",
-   "estado": "proximo",
-   "nivel": "basico",
-   "area": "energía",
-   "tipo": "Regresión",
-   "tecnica": "Regresión lineal simple",
-   "descripcion": "Predecir la potencia que genera una central eléctrica a partir de una sola variable: la temperatura ambiente.",
-   "dataset": {
-    "nombre": "Central eléctrica de ciclo combinado (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/294/combined+cycle+power+plant",
-    "verificado": true
-   },
-   "objetivo": "Aprender qué es una regresión lineal simple: ajustar una recta a datos reales, interpretarla y medir cuánto se equivoca.",
-   "datos": "Medias horarias de una central eléctrica de ciclo combinado real, durante varios años (unos 9.500 registros): temperatura ambiente, presión, humedad, vacío del escape y potencia eléctrica neta. Aquí usamos solo la temperatura (entrada) y la potencia (salida).",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "matplotlib",
-    "scikit-learn",
-    "statsmodels"
-   ],
-   "metrica": "R² (cuánta variación explica la recta), RMSE y MAE (error medio en MW).",
-   "esquema": null,
-   "resultados": "Pendiente.",
-   "limitaciones": "Es una sola variable: la recta no explica todo lo que influye en la potencia (eso lo mejora el proyecto de regresión múltiple con la misma central). Los datos son de una única central.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "power plant",
-    "central eléctrica",
-    "ciclo combinado",
-    "combined cycle",
-    "turbina de gas",
-    "gas turbine"
-   ],
-   "metodo": "Una recta y = a·x + b ajustada con los datos de entrenamiento y evaluada con datos que el modelo no ha visto.",
-   "pasos": [
-    {
-     "titulo": "Entender qué es una regresión lineal simple",
-     "que": "Saber qué vamos a calcular.",
-     "como": "Buscamos una recta: potencia = pendiente × temperatura + ordenada. La pendiente dice cuántos MW cambia la potencia por cada grado; la ordenada es el punto de partida.",
-     "porque": "Es el modelo más sencillo que existe: si una recta basta, no hace falta nada más complicado.",
-     "para": "Tener claro qué significan los dos números que saldrán al final.",
-     "ayuda": [
-      {
-       "r": "modulo-1",
-       "s": "1.1",
-       "p": 9,
-       "t": "La recta: y = m·x + b"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.1",
-       "p": 10,
-       "t": "Cómo se encuentra la mejor recta"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.2",
-       "p": 9,
-       "t": "¿Por qué «mínimos cuadrados»?"
-      }
-     ]
-    },
-    {
-     "titulo": "Descargar y abrir los datos",
-     "que": "Traer el fichero a tu ordenador y cargarlo.",
-     "como": "Descárgalo desde la página de la UCI. Es un fichero de Excel; con pandas se lee con read_excel. Comprueba cuántas filas y columnas tiene.",
-     "porque": "Antes de analizar nada hay que saber con qué se trabaja.",
-     "para": "Tener la tabla en Python, lista para usar.",
-     "ayuda": [
-      {
-       "r": "modulo-1",
-       "s": "1.1",
-       "p": 6,
-       "t": "Qué es un dataset: la tabla de datos"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.3",
-       "p": 5,
-       "t": "El archivo CSV y sus separadores"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.3",
-       "p": 7,
-       "t": "Los «supermercados» de datos y la ficha de un dataset"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.3",
-       "p": 8,
-       "t": "Primera carga y pandas en diez minutos"
-      }
-     ]
-    },
-    {
-     "titulo": "Revisar la tabla",
-     "que": "Mirar nombres, rangos y huecos.",
-     "como": "Con describe() se ven mínimos, máximos y medias de cada columna; con isna().sum() se comprueba que no faltan datos.",
-     "porque": "Los datos reales pueden traer errores o vacíos que estropean el resultado sin avisar.",
-     "para": "Asegurarte de que los números tienen sentido.",
-     "ayuda": [
-      {
-       "r": "modulo-1",
-       "s": "1.1",
-       "p": 6,
-       "t": "Los cinco comandos que usarás siempre"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.3",
-       "p": 9,
-       "t": "EDA en cinco preguntas"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.3",
-       "p": 11,
-       "t": "Valores que faltan"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.3",
-       "p": 13,
-       "t": "Nulos disfrazados"
-      }
-     ]
-    },
-    {
-     "titulo": "Dibujar el diagrama de dispersión",
-     "que": "Poner la temperatura en el eje horizontal y la potencia en el vertical.",
-     "como": "Con matplotlib, un punto por registro. Se mira si la nube de puntos sigue una línea.",
-     "porque": "Si no se ve una tendencia más o menos recta, la regresión lineal no es el modelo adecuado.",
-     "para": "Decidir con los ojos si merece la pena seguir.",
-     "ayuda": [
-      {
-       "r": "modulo-1",
-       "s": "1.1",
-       "p": 8,
-       "t": "Mirar antes de calcular: el gráfico de dispersión"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.1",
-       "p": 19,
-       "t": "Tus propios gráficos con matplotlib"
-      }
-     ]
-    },
-    {
-     "titulo": "Separar entrenamiento y prueba",
-     "que": "Guardar una parte de los datos sin tocarla.",
-     "como": "Con train_test_split de scikit-learn: 80 % para entrenar y 20 % para probar, fijando una semilla para poder repetirlo.",
-     "porque": "Si evaluamos con los mismos datos con los que aprendió, el resultado sale mejor de lo que es.",
-     "para": "Medir el modelo con datos que no ha visto, como en la vida real.",
-     "ayuda": [
-      {
-       "r": "modulo-1",
-       "s": "1.8",
-       "p": 8,
-       "t": "Train/test: no te examines con las preguntas que ya viste"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.4",
-       "p": 6,
-       "t": "La división train/test no es neutra (nivel medio)"
-      }
-     ]
-    },
-    {
-     "titulo": "Ajustar la recta",
-     "que": "Calcular la pendiente y la ordenada.",
-     "como": "Con LinearRegression de scikit-learn y fit() sobre los datos de entrenamiento. Después se leen coef_ e intercept_.",
-     "porque": "El ordenador elige la recta que minimiza el error cuadrático con todos los puntos.",
-     "para": "Obtener la fórmula y poder leerla: cuántos MW se pierden por cada grado.",
-     "ayuda": [
-      {
-       "r": "modulo-1",
-       "s": "1.1",
-       "p": 13,
-       "t": "Tu primer proyecto completo"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.1",
-       "p": 14,
-       "t": "El código, línea a línea"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.2",
-       "p": 11,
-       "t": "La fórmula de la pendiente y el intercepto, a mano"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.2",
-       "p": 17,
-       "t": "Qué significan m y b"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.3",
-       "p": 14,
-       "t": "Tu primer modelo: una recta"
-      }
-     ]
-    },
-    {
-     "titulo": "Evaluar con datos nuevos",
-     "que": "Medir el error sobre el 20 % reservado.",
-     "como": "Se predice con predict() y se calculan R², RMSE y MAE. El RMSE y el MAE se leen en MW.",
-     "porque": "Un número en las unidades reales se entiende: «me equivoco, de media, en tantos MW».",
-     "para": "Saber cuánto te puedes fiar de la recta.",
-     "ayuda": [
-      {
-       "r": "modulo-1",
-       "s": "1.1",
-       "p": 12,
-       "t": "R²: ¿cuánto explica la recta?"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.8",
-       "p": 9,
-       "t": "El modelo de referencia («el tonto»)"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.4",
-       "p": 4,
-       "t": "Las métricas, a fondo (nivel medio)"
-      }
-     ]
-    },
-    {
-     "titulo": "Mirar los errores y poner límites",
-     "que": "Dibujar los residuos y escribir qué no explica el modelo.",
-     "como": "Se resta el valor real al predicho y se dibuja. Si queda una forma, algo falta en el modelo. Se anotan los límites: una sola variable, una sola central, correlación no es causalidad.",
-     "porque": "Un resultado sin sus límites engaña, aunque sea sin querer.",
-     "para": "Dejar el proyecto honesto y preparar el siguiente: añadir más variables.",
-     "ayuda": [
-      {
-       "r": "modulo-1",
-       "s": "1.5",
-       "p": 4,
-       "t": "¿Por qué diagnosticar? El cuarteto de Anscombe"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.5",
-       "p": 5,
-       "t": "Los 4 gráficos de diagnóstico"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.1",
-       "p": 15,
-       "t": "Interpolar sí, extrapolar con cuidado"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.1",
-       "p": 22,
-       "t": "Los 8 errores típicos del principiante"
-      }
-     ]
-    },
-    {
-     "titulo": "Poner un rango a la predicción",
-     "que": "Dar un margen y no solo un número.",
-     "como": "Con statsmodels se calcula el intervalo de predicción de la recta (get_prediction) para una temperatura concreta, y se comprueba qué porcentaje de los datos de prueba cae dentro del margen.",
-     "porque": "Un número suelto parece más exacto de lo que es; un rango dice cuánto fiarse.",
-     "para": "Poder decir «a esta temperatura la central dará entre tantos y tantos MW».",
-     "ayuda": [
-      {
-       "r": "modulo-1",
-       "s": "1.8",
-       "p": 5,
-       "t": "Los dos intervalos en un ejemplo"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.8",
-       "p": 6,
-       "t": "De dónde sale el «+1»"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.9",
-       "p": 5,
-       "t": "Error estándar, t y p-valor"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.9",
-       "p": 7,
-       "t": "El intervalo de confianza"
-      }
-     ]
-    },
-    {
-     "titulo": "Contar el resultado en cinco frases",
-     "que": "Explicar el proyecto a otra persona.",
-     "como": "Cinco frases: la pregunta, los datos (cuántas filas y de dónde), el resultado (la recta con sus unidades y el R²), las limitaciones y la conclusión.",
-     "porque": "Un análisis que no se sabe contar no sirve a nadie.",
-     "para": "Dejar el proyecto listo para publicar en esta web.",
-     "ayuda": [
-      {
-       "r": "modulo-1",
-       "s": "1.1",
-       "p": 23,
-       "t": "Cómo contar tus resultados: informe en 5 frases"
-      },
-      {
-       "r": "modulo-1",
-       "s": "1.7",
-       "p": 11,
-       "t": "Qué decir al cliente"
-      }
-     ]
-    }
-   ],
-   "bloque": "regresion"
-  },
-  {
-   "id": "consumo-coche-peso",
-   "titulo": "Consumo de un coche según su peso",
-   "estado": "idea",
-   "nivel": "basico",
-   "area": "ingeniería",
-   "tipo": "Regresión",
-   "tecnica": "Regresión lineal simple",
-   "descripcion": "Estimar el consumo (millas por galón) a partir del peso del vehículo.",
-   "dataset": {
-    "nombre": "Auto MPG (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/9/auto+mpg",
-    "verificado": false
-   },
-   "objetivo": "Repetir la regresión simple con otro conjunto de datos y aprender a detectar valores raros.",
-   "datos": "Datos reales de coches de los años 70 y 80: consumo, peso, cilindrada, potencia y año.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "matplotlib",
-    "scikit-learn"
-   ],
-   "metrica": "R², RMSE y MAE.",
-   "esquema": [
-    "Cargar el conjunto y tratar los valores que faltan.",
-    "Dibujar consumo frente a peso.",
-    "Ajustar la recta y evaluar con datos de prueba.",
-    "Probar si una curva ajusta mejor que una recta.",
-    "Anotar los límites del modelo."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Coches antiguos: no representan los actuales.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "consumo",
-    "eficiencia",
-    "fuel efficiency"
-   ],
-   "bloque": "regresion"
-  },
-  {
-   "id": "hormigon-cemento",
-   "titulo": "Resistencia del hormigón según el cemento",
-   "estado": "idea",
-   "area": "ingeniería",
-   "tipo": "Regresión",
-   "tecnica": "Regresión lineal simple",
-   "descripcion": "Predecir la resistencia del hormigón a partir de la cantidad de cemento.",
-   "dataset": {
-    "nombre": "Concrete Compressive Strength (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/165/concrete+compressive+strength",
-    "verificado": false
-   },
-   "objetivo": "Practicar la recta simple con datos de ingeniería civil y ver cuándo una sola variable se queda corta.",
-   "datos": "Ensayos reales de laboratorio de mezclas de hormigón.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "scikit-learn",
-    "matplotlib"
-   ],
-   "metrica": "R², RMSE y MAE.",
-   "esquema": [
-    "Cargar los datos y revisarlos.",
-    "Dibujar resistencia frente a cemento.",
-    "Ajustar la recta y evaluar con datos de prueba.",
-    "Comparar con otra variable de entrada.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Ensayos de laboratorio de unas mezclas concretas.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "hormigón",
-    "concrete",
-    "construcción"
-   ],
-   "bloque": "regresion",
-   "nivel": "basico"
-  },
-  {
-   "id": "potencia-central-regresion-multiple",
-   "titulo": "Potencia de la central con 4 variables",
-   "estado": "idea",
-   "nivel": "medio",
-   "area": "energía",
-   "tipo": "Regresión",
-   "tecnica": "Regresión lineal múltiple",
-   "descripcion": "Añadir temperatura, presión, humedad y vacío del escape y ver cuánto mejora la predicción.",
-   "dataset": {
-    "nombre": "Central eléctrica de ciclo combinado (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/294/combined+cycle+power+plant",
-    "verificado": true
-   },
-   "objetivo": "Entender por qué más variables mejoran el modelo y cómo se interpretan varios coeficientes a la vez.",
-   "datos": "Los mismos datos del proyecto de la recta simple, con las cuatro variables de entrada.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "scikit-learn"
-   ],
-   "metrica": "R², RMSE y MAE, comparados con el modelo de la recta simple.",
-   "esquema": [
-    "Repasar el proyecto de la recta simple como punto de partida.",
-    "Mirar la correlación entre variables.",
-    "Ajustar la regresión múltiple.",
-    "Comparar el error con el del modelo simple.",
-    "Interpretar los coeficientes y sus límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Una sola central; la relación puede no ser del todo lineal.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "power plant",
-    "central eléctrica",
-    "ciclo combinado"
-   ],
-   "bloque": "regresion"
-  },
-  {
-   "id": "bateria-nasa",
-   "titulo": "Capacidad de una batería según los ciclos",
-   "estado": "idea",
-   "nivel": "medio",
-   "area": "energía",
-   "tipo": "Regresión",
-   "tecnica": "Regresión polinómica",
-   "descripcion": "Seguir cómo se degrada una batería de litio y estimar en qué ciclo llegará al final de su vida.",
-   "dataset": {
-    "nombre": "NASA Li-ion Battery Aging Datasets",
-    "url": "https://data.nasa.gov/dataset/li-ion-battery-aging-datasets",
-    "verificado": true
-   },
-   "objetivo": "Ver cuándo una recta no basta y ajustar una curva a datos reales de degradación.",
-   "datos": "Ensayos de laboratorio de la NASA: baterías de litio cargadas y descargadas hasta que pierden capacidad.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "SciPy",
-    "matplotlib"
-   ],
-   "metrica": "RMSE de la curva y error en el ciclo estimado de fin de vida.",
-   "esquema": [
-    "Descargar los ficheros y extraer la capacidad de cada ciclo.",
-    "Dibujar capacidad frente a ciclo.",
-    "Ajustar una recta y después un polinomio.",
-    "Estimar cuándo se cruza el umbral de fin de vida.",
-    "Anotar límites: pocas baterías, condiciones de laboratorio."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Ensayos de laboratorio con pocas baterías: no sirven para predecir una batería real en uso.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "battery",
-    "batería",
-    "lithium",
-    "litio"
-   ],
-   "bloque": "regresion"
-  },
-  {
-   "id": "demanda-electrica",
-   "titulo": "Demanda eléctrica según la temperatura",
-   "estado": "idea",
-   "nivel": "medio",
-   "area": "energía",
-   "tipo": "Regresión",
-   "tecnica": "Regresión múltiple con variables de calendario",
-   "descripcion": "Predecir la demanda eléctrica con datos abiertos de Red Eléctrica y la temperatura de AEMET.",
-   "dataset": {
-    "nombre": "Red Eléctrica de España, datos abiertos (y AEMET OpenData)",
-    "url": "https://www.ree.es/es/datos",
-    "verificado": false
-   },
-   "objetivo": "Aprender a descargar datos por API, unirlos y predecir con variables de temperatura y calendario.",
-   "datos": "Demanda horaria peninsular y temperatura de una estación meteorológica.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "scikit-learn"
-   ],
-   "metrica": "MAE y RMSE frente a repetir la semana anterior.",
-   "esquema": [
-    "Descargar la demanda y la temperatura.",
-    "Unir las dos tablas por fecha y hora.",
-    "Crear variables de calendario (día de la semana, festivos).",
-    "Ajustar el modelo y compararlo con la referencia ingenua.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Depende de la disponibilidad de las APIs.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "demanda eléctrica",
-    "power grid",
-    "red eléctrica",
-    "energy forecasting",
-    "solar",
-    "smart grid"
-   ],
-   "bloque": "regresion"
-  },
-  {
-   "id": "ruido-perfil-aerodinamico",
-   "titulo": "Ruido de un perfil aerodinámico",
-   "estado": "idea",
-   "nivel": "avanzado",
-   "area": "aeronáutica",
-   "tipo": "Regresión",
-   "tecnica": "Random Forest y comparación de modelos",
-   "descripcion": "Predecir el ruido que genera un perfil de ala en un túnel de viento y comparar varios modelos.",
-   "dataset": {
-    "nombre": "NASA Airfoil Self-Noise (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/291/airfoil+self+noise",
-    "verificado": false
-   },
-   "objetivo": "Aprender a comparar modelos de forma justa con datos reales de aeronáutica.",
-   "datos": "Medidas de túnel de viento de la NASA con distintos perfiles, velocidades y ángulos.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "scikit-learn"
-   ],
-   "metrica": "RMSE y R² de cada modelo.",
-   "esquema": [
-    "Cargar y revisar los datos.",
-    "Modelo de referencia: regresión múltiple.",
-    "Random Forest y otro modelo más.",
-    "Comparar con validación cruzada.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Datos de túnel de viento, no de vuelo.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "airfoil",
-    "aerodynamic",
-    "aerodinámic",
-    "noise",
-    "ruido"
-   ],
-   "bloque": "regresion"
-  },
-  {
-   "id": "motor-nasa",
-   "titulo": "Vida útil de un motor, con datos de la NASA",
-   "estado": "proximo",
-   "nivel": "avanzado",
-   "area": "mantenimiento",
-   "descripcion": "Estimar cuántos ciclos de vuelo le quedan a un motor turbofán a partir de sus sensores, con datos abiertos de la NASA.",
-   "dataset": {
-    "nombre": "NASA C-MAPSS: simulación de degradación de motores turbofán (subconjunto FD001)",
-    "url": "https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/",
-    "verificado": false
-   },
-   "objetivo": "Predecir la vida útil restante (RUL, en ciclos) de un motor a partir de las lecturas de sus sensores, y aprender el recorrido completo de un proyecto de datos: de la tabla en bruto a un modelo evaluado con honestidad.",
-   "datos": "Simulación de flotas de motores turbofán que se degradan hasta el fallo. Cada motor tiene 3 ajustes de operación y 21 sensores medidos ciclo a ciclo. El conjunto FD001 tiene 100 motores de entrenamiento (con la vida completa) y 100 de prueba (cortados antes del fallo, con su RUL real aparte). Son datos simulados, no de motores reales.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "NumPy",
-    "matplotlib",
-    "scikit-learn"
-   ],
-   "metodo": "Primero una regresión lineal de referencia y después un Random Forest con ventanas de tiempo, comparados con la misma métrica.",
-   "metrica": "RMSE (error medio en ciclos) y la puntuación asimétrica de la NASA, que penaliza más predecir un fallo tarde que predecirlo pronto.",
-   "pasos": [
-    {
-     "titulo": "Entender qué es la RUL",
-     "que": "Aclarar qué queremos predecir.",
-     "como": "RUL (Remaining Useful Life) es el número de ciclos que le quedan a un motor antes de fallar. Si un motor falló en el ciclo 200 y ahora está en el 150, su RUL es 50.",
-     "porque": "Si no está claro qué se predice, no se puede saber si el modelo funciona.",
-     "para": "Fijar el objetivo y la unidad (ciclos) antes de tocar ningún dato."
-    },
-    {
-     "titulo": "Descargar y cargar los datos",
-     "que": "Traer los ficheros de FD001 a tu ordenador y abrirlos con Python.",
-     "como": "Descarga el conjunto desde la página oficial. Son ficheros de texto con números separados por espacios (train_FD001, test_FD001 y RUL_FD001). Se cargan con pandas, dándole nombre a cada columna: motor, ciclo, 3 ajustes y 21 sensores.",
-     "porque": "Los ficheros no traen cabecera; sin nombres no se sabe qué es cada columna.",
-     "para": "Tener una tabla ordenada con la que trabajar."
-    },
-    {
-     "titulo": "Mirar los datos antes de modelar",
-     "que": "Dibujar gráficas de varios sensores para algunos motores.",
-     "como": "Con matplotlib, una línea por motor: ciclo en el eje horizontal y lectura del sensor en el vertical.",
-     "porque": "Los ojos detectan en segundos qué sensores cambian al degradarse el motor y cuáles son ruido o constantes.",
-     "para": "Decidir con criterio qué sensores merecen la pena."
-    },
-    {
-     "titulo": "Calcular la RUL de entrenamiento",
-     "que": "Ponerle a cada fila la respuesta correcta.",
-     "como": "Para cada motor, RUL = ciclo máximo del motor − ciclo actual. Después se limita a un tope (por ejemplo 125): al principio de la vida un motor sano está igual de sano con 300 que con 200 ciclos por delante.",
-     "porque": "Un modelo aprende de ejemplos con respuesta. El tope evita que se obsesione con distinguir lo indistinguible.",
-     "para": "Crear la columna objetivo que el modelo tiene que aprender a adivinar."
-    },
-    {
-     "titulo": "Limpiar y normalizar",
-     "que": "Quitar sensores inútiles y poner los demás en la misma escala.",
-     "como": "Se descartan los sensores que no cambian nunca. Los restantes se escalan (por ejemplo, con StandardScaler de scikit-learn), ajustando la escala solo con los datos de entrenamiento.",
-     "porque": "Un sensor que mide miles y otro que mide décimas se estorban. Ajustar la escala con los datos de prueba sería hacer trampa.",
-     "para": "Que el modelo compare sensores de forma justa."
-    },
-    {
-     "titulo": "Crear ventanas de tiempo",
-     "que": "Dar al modelo no solo la última lectura, sino cómo viene evolucionando.",
-     "como": "Por cada ciclo se calculan medias y pendientes de los últimos 10 o 30 ciclos de cada sensor.",
-     "porque": "La degradación se ve en la tendencia, no en un solo instante, que puede ser ruido.",
-     "para": "Mejorar mucho la predicción con muy poco esfuerzo."
-    },
-    {
-     "titulo": "Entrenar un modelo base",
-     "que": "Empezar por lo simple.",
-     "como": "Una regresión lineal y después un Random Forest, ambos de scikit-learn, entrenados con los motores de entrenamiento.",
-     "porque": "Un modelo simple da la referencia mínima. Si uno complejo no la supera, no merece la pena.",
-     "para": "Tener una cifra de partida contra la que comparar cualquier mejora."
-    },
-    {
-     "titulo": "Evaluar con honestidad",
-     "que": "Medir el error sobre motores que el modelo no ha visto.",
-     "como": "Se predice la RUL del último ciclo de cada motor de prueba y se compara con RUL_FD001. Se calculan el RMSE y la puntuación de la NASA.",
-     "porque": "Un buen resultado sobre los datos de entrenamiento no demuestra nada; solo vale lo que funciona con datos nuevos.",
-     "para": "Saber cuánto puedes fiarte realmente del modelo."
-    },
-    {
-     "titulo": "Mejorar y poner límites",
-     "que": "Probar una mejora y escribir qué no sabe hacer el modelo.",
-     "como": "Ajustar el tope de la RUL, el tamaño de ventana o probar otro modelo, anotando cada cambio y su efecto. Por último, redactar las limitaciones.",
-     "porque": "Un resultado sin sus límites engaña, aunque sea sin querer.",
-     "para": "Dejar un proyecto reproducible y creíble."
-    }
-   ],
-   "resultados": "Pendiente: se publicarán al completar el proyecto, con las cifras reales obtenidas.",
-   "limitaciones": "Los datos son simulados, no de motores reales. Solo se usa el subconjunto FD001 (una condición de operación y un tipo de fallo). El resultado no es aplicable a ningún motor real.",
-   "codigo": "",
-   "entrega": {
-    "notebook": "",
-    "repositorio": "",
-    "demo": "",
-    "articulo": ""
-   },
-   "noticias_palabras": [
+    "automatizar",
+    "automated",
+    "predictive maintenance",
     "mantenimiento predictivo",
-    "predictive maintenance",
-    "turbofan",
-    "jet engine",
-    "remaining useful life",
-    "vida útil restante",
-    "prognostics",
-    "motor de avión"
-   ],
-   "tipo": "Regresión",
-   "tecnica": "Random Forest con ventanas de tiempo",
-   "bloque": "regresion"
-  },
-  {
-   "id": "emisiones-turbina-gas",
-   "titulo": "Emisiones de una turbina de gas",
-   "estado": "idea",
-   "area": "energía",
-   "tipo": "Regresión",
-   "tecnica": "Gradient boosting con regularización",
-   "descripcion": "Predecir las emisiones de CO y NOx de una turbina de gas a partir de sus sensores.",
-   "dataset": {
-    "nombre": "Gas Turbine CO and NOx Emission (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/551/gas+turbine+co+and+nox+emission+data+set",
-    "verificado": false
-   },
-   "objetivo": "Usar modelos de árboles potenciados y aprender a evitar el sobreajuste.",
-   "datos": "Sensores reales de una turbina de gas durante varios años.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "scikit-learn",
-    "matplotlib"
-   ],
-   "metrica": "RMSE y R², con validación cruzada por años.",
-   "esquema": [
-    "Cargar y separar por años.",
-    "Modelo de referencia lineal.",
-    "Gradient boosting y ajuste de parámetros.",
-    "Validar por años, no al azar.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Una sola turbina; las condiciones cambian con los años.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "gas turbine",
-    "turbina de gas",
-    "emisiones"
-   ],
-   "bloque": "regresion",
-   "nivel": "avanzado"
-  },
-  {
-   "id": "iris-clasificacion",
-   "titulo": "Reconocer tres especies de flor",
-   "estado": "idea",
-   "area": "IA",
-   "tipo": "Clasificación",
-   "tecnica": "K vecinos más cercanos",
-   "descripcion": "El ejemplo clásico para entender qué es clasificar.",
-   "dataset": {
-    "nombre": "Iris (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/53/iris",
-    "verificado": false
-   },
-   "objetivo": "Entender la idea de clasificar: clases, entrenamiento, prueba y acierto.",
-   "datos": "150 flores medidas por un botánico, con tres especies.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "scikit-learn"
-   ],
-   "metrica": "Exactitud y matriz de confusión.",
-   "esquema": [
-    "Cargar y dibujar los datos.",
-    "Separar entrenamiento y prueba.",
-    "Entrenar k vecinos.",
-    "Evaluar con matriz de confusión.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Conjunto muy pequeño y muy fácil: sirve para aprender, no para sacar conclusiones.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "clasificación",
-    "classification"
-   ],
-   "bloque": "clasificacion",
-   "nivel": "basico"
-  },
-  {
-   "id": "calidad-vino",
-   "titulo": "Calidad de un vino según su química",
-   "estado": "idea",
-   "area": "IA",
-   "tipo": "Clasificación",
-   "tecnica": "Regresión logística",
-   "descripcion": "Decidir si un vino es bueno o no a partir de análisis químicos.",
-   "dataset": {
-    "nombre": "Wine Quality (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/186/wine+quality",
-    "verificado": false
-   },
-   "objetivo": "Aprender la regresión logística y qué es un umbral de decisión.",
-   "datos": "Análisis físico-químicos reales de vinos y notas de catadores.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "scikit-learn"
-   ],
-   "metrica": "Exactitud, precisión y recall.",
-   "esquema": [
-    "Cargar y convertir la nota en bueno o no bueno.",
-    "Revisar las variables.",
-    "Ajustar la regresión logística.",
-    "Evaluar y ajustar el umbral.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Las notas de los catadores son subjetivas.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "calidad",
-    "quality"
-   ],
-   "bloque": "clasificacion",
-   "nivel": "basico"
-  },
-  {
-   "id": "enfriador-hidraulico-binario",
-   "titulo": "¿Enfriador sano o degradado?",
-   "estado": "idea",
-   "area": "mantenimiento",
-   "tipo": "Clasificación",
-   "tecnica": "Clasificación binaria con árboles",
-   "descripcion": "Decidir con los sensores de un banco hidráulico si el enfriador funciona bien.",
-   "dataset": {
-    "nombre": "Condition monitoring of hydraulic systems (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/447/condition+monitoring+of+hydraulic+systems",
-    "verificado": true
-   },
-   "objetivo": "Primera clasificación con sensores reales y dos clases.",
-   "datos": "Banco de pruebas hidráulico real: ciclos de trabajo y estado de cada componente.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "scikit-learn"
-   ],
-   "metrica": "Exactitud y matriz de confusión.",
-   "esquema": [
-    "Cargar sensores y etiqueta del enfriador.",
-    "Resumir cada ciclo en pocas cifras.",
-    "Entrenar un árbol de decisión.",
-    "Evaluar y mirar qué sensores pesan.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Banco de pruebas, no un circuito en servicio.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "hydraulic",
-    "hidráulic"
-   ],
-   "bloque": "clasificacion",
-   "nivel": "basico"
-  },
-  {
-   "id": "estado-circuito-hidraulico",
-   "titulo": "Estado de un circuito hidráulico",
-   "estado": "idea",
-   "nivel": "medio",
-   "area": "mantenimiento",
-   "tipo": "Clasificación",
-   "tecnica": "Regresión logística y árboles",
-   "descripcion": "Identificar si el enfriador, la válvula, la bomba y el acumulador de un banco hidráulico están sanos o degradados.",
-   "dataset": {
-    "nombre": "Condition monitoring of hydraulic systems (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/447/condition+monitoring+of+hydraulic+systems",
-    "verificado": true
-   },
-   "objetivo": "Aprender clasificación con muchos sensores y a leer una matriz de confusión.",
-   "datos": "Ciclos de trabajo de un banco de pruebas hidráulico real con sensores de presión, caudal, temperatura y vibración, y el estado de cada componente.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "scikit-learn"
-   ],
-   "metrica": "Exactitud, precisión, recall y matriz de confusión.",
-   "esquema": [
-    "Cargar sensores y etiquetas.",
-    "Resumir cada ciclo en pocas cifras (media, máximo).",
-    "Entrenar regresión logística y un árbol.",
-    "Evaluar con matriz de confusión.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Es un banco de pruebas, no un circuito en servicio.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "hydraulic",
-    "hidráulic",
-    "condition monitoring"
-   ],
-   "bloque": "clasificacion"
-  },
-  {
-   "id": "fallo-maquina-clases-desequilibradas",
-   "titulo": "Fallo de máquina con pocos casos de avería",
-   "estado": "idea",
-   "nivel": "medio",
-   "area": "mantenimiento",
-   "tipo": "Clasificación",
-   "tecnica": "Clasificación con clases desequilibradas",
-   "descripcion": "Predecir fallos cuando casi todos los registros son de funcionamiento normal.",
-   "dataset": {
-    "nombre": "AI4I 2020 Predictive Maintenance (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/601/ai4i+2020+predictive+maintenance+dataset",
-    "verificado": false
-   },
-   "objetivo": "Entender por qué la exactitud engaña cuando hay pocos fallos y cómo medir mejor.",
-   "datos": "Datos sintéticos que imitan el mantenimiento de máquinas.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "scikit-learn"
-   ],
-   "metrica": "Precisión, recall y F1.",
-   "esquema": [
-    "Cargar y ver cuántos fallos hay.",
-    "Modelo ingenuo que siempre dice «no falla».",
-    "Modelo real y comparación.",
-    "Ajustar el umbral.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Datos sintéticos: sirve para aprender la técnica, no para sacar conclusiones sobre máquinas reales.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "predictive maintenance",
-    "mantenimiento predictivo"
-   ],
-   "bloque": "clasificacion"
-  },
-  {
-   "id": "fallos-planchas-acero",
-   "titulo": "Fallos en planchas de acero",
-   "estado": "idea",
-   "area": "ingeniería",
-   "tipo": "Clasificación",
-   "tecnica": "Random Forest y SVM",
-   "descripcion": "Clasificar el tipo de defecto de una plancha de acero a partir de medidas.",
-   "dataset": {
-    "nombre": "Steel Plates Faults (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/198/steel+plates+faults",
-    "verificado": false
-   },
-   "objetivo": "Clasificar con varias clases y comparar modelos.",
-   "datos": "Medidas reales de planchas de acero con siete tipos de defecto.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "scikit-learn"
-   ],
-   "metrica": "Exactitud y matriz de confusión.",
-   "esquema": [
-    "Cargar y revisar las clases.",
-    "Modelo de referencia.",
-    "Random Forest y SVM.",
-    "Comparar con validación cruzada.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Una sola fábrica y un solo tipo de acero.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "steel",
-    "acero",
-    "defect"
-   ],
-   "bloque": "clasificacion",
-   "nivel": "medio"
-  },
-  {
-   "id": "actividad-movil",
-   "titulo": "Reconocer actividades con sensores de un móvil",
-   "estado": "idea",
-   "area": "IA",
-   "tipo": "Clasificación",
-   "tecnica": "Gradient boosting y validación por persona",
-   "descripcion": "Distinguir andar, subir escaleras o estar sentado con el acelerómetro de un móvil.",
-   "dataset": {
-    "nombre": "Human Activity Recognition Using Smartphones (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/240/human+activity+recognition+using+smartphones",
-    "verificado": false
-   },
-   "objetivo": "Trabajar con señales de sensores y validar por persona para no engañarse.",
-   "datos": "Medidas reales del acelerómetro y el giroscopio de varios voluntarios.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "scikit-learn"
-   ],
-   "metrica": "Exactitud por persona y matriz de confusión.",
-   "esquema": [
-    "Cargar las características ya calculadas.",
-    "Separar por personas, no al azar.",
-    "Entrenar un modelo de boosting.",
-    "Evaluar con personas nuevas.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Pocas personas; el resultado puede no generalizarse.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "sensor",
-    "wearable",
-    "activity recognition"
-   ],
-   "bloque": "clasificacion",
-   "nivel": "avanzado"
-  },
-  {
-   "id": "linea-base-anomalias",
-   "titulo": "Máquina sana frente a anómala",
-   "estado": "idea",
-   "nivel": "avanzado",
-   "area": "mantenimiento",
-   "descripcion": "Aprender cómo se comporta una máquina sana y avisar cuando se aleja de ello.",
-   "dataset": {
-    "nombre": "Datos públicos de rodamientos (por ejemplo, Case Western Reserve University)",
-    "url": "https://engineering.case.edu/bearingdatacenter",
-    "verificado": false
-   },
-   "objetivo": "Aprender qué es «normal» para una máquina sana y detectar desviaciones sin necesitar ejemplos de averías.",
-   "datos": "Vibraciones de rodamientos sanos y con fallos, medidas en banco de pruebas.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "SciPy",
-    "scikit-learn"
-   ],
-   "metodo": "Extraer características de la señal (energía, picos, frecuencias) y entrenar un detector de anomalías solo con datos sanos.",
-   "metrica": "Tasa de detección y falsas alarmas.",
-   "resultados": "Pendiente.",
-   "limitaciones": "Datos de banco de pruebas, no de máquinas en servicio.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "anomaly detection",
-    "detección de anomalías",
-    "vibration",
-    "vibración",
-    "condition monitoring",
-    "rodamiento"
-   ],
-   "tipo": "Anomalías",
-   "tecnica": "Detección de anomalías",
-   "esquema": [
-    "Cargar señales de rodamientos sanos.",
-    "Extraer características (energía, picos, frecuencias).",
-    "Entrenar un detector solo con datos sanos.",
-    "Probar con datos con fallo.",
-    "Anotar límites."
-   ],
-   "bloque": "clasificacion"
-  },
-  {
-   "id": "fallos-semiconductores",
-   "titulo": "Fallos en fabricación de semiconductores",
-   "estado": "idea",
-   "area": "ingeniería",
-   "tipo": "Clasificación",
-   "tecnica": "Selección de variables y clases desequilibradas",
-   "descripcion": "Predecir fallos de producción con cientos de sensores y muy pocos fallos.",
-   "dataset": {
-    "nombre": "SECOM (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/179/secom",
-    "verificado": false
-   },
-   "objetivo": "Aprender a manejar muchas variables, huecos y pocos casos positivos.",
-   "datos": "Medidas reales de un proceso de fabricación de semiconductores.",
-   "herramientas": [
-    "Python",
-    "pandas",
-    "scikit-learn"
-   ],
-   "metrica": "Precisión, recall y F1.",
-   "esquema": [
-    "Cargar y tratar los valores que faltan.",
-    "Quitar variables inútiles.",
-    "Entrenar con clases desequilibradas.",
-    "Evaluar con validación cruzada.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Datos anónimos: no se sabe qué mide cada sensor.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "semiconductor",
-    "manufactur",
-    "fabricación"
-   ],
-   "bloque": "clasificacion",
-   "nivel": "avanzado"
-  },
-  {
-   "id": "mlp-digitos",
-   "titulo": "Mi primera red neuronal: dígitos escritos a mano",
-   "estado": "idea",
-   "area": "IA",
-   "tipo": "Clasificación de imágenes",
-   "tecnica": "Perceptrón multicapa (MLP)",
-   "descripcion": "Una red neuronal sencilla para reconocer dígitos.",
-   "dataset": {
-    "nombre": "MNIST (por confirmar)",
-    "url": "",
-    "verificado": false
-   },
-   "objetivo": "Entender qué es una neurona, una capa y el entrenamiento por épocas.",
-   "datos": "70.000 imágenes de dígitos escritos a mano.",
-   "herramientas": [
-    "Python",
-    "PyTorch o TensorFlow"
-   ],
-   "metrica": "Exactitud y curvas de entrenamiento.",
-   "esquema": [
-    "Cargar las imágenes.",
-    "Definir una red de dos capas.",
-    "Entrenar y dibujar el aprendizaje.",
-    "Evaluar y ver los fallos.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Imágenes muy limpias; es un ejercicio de aprendizaje.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "neural network",
-    "red neuronal"
-   ],
-   "bloque": "redes",
-   "nivel": "basico"
-  },
-  {
-   "id": "mlp-potencia-central",
-   "titulo": "Red neuronal para la potencia de la central",
-   "estado": "idea",
-   "area": "energía",
-   "tipo": "Regresión",
-   "tecnica": "Perceptrón multicapa (MLP)",
-   "descripcion": "Resolver con una red neuronal el problema de la central y compararlo con la regresión múltiple.",
-   "dataset": {
-    "nombre": "Central eléctrica de ciclo combinado (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/294/combined+cycle+power+plant",
-    "verificado": true
-   },
-   "objetivo": "Ver si una red mejora a un modelo lineal y a qué coste.",
-   "datos": "Los mismos datos de la central.",
-   "herramientas": [
-    "Python",
-    "PyTorch o TensorFlow"
-   ],
-   "metrica": "RMSE comparado con el modelo lineal.",
-   "esquema": [
-    "Preparar y escalar los datos.",
-    "Definir una red pequeña.",
-    "Entrenar y vigilar el sobreajuste.",
-    "Comparar con la regresión múltiple.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Con pocas variables una red rara vez gana a un buen modelo sencillo.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "neural network",
-    "red neuronal"
-   ],
-   "bloque": "redes",
-   "nivel": "basico"
-  },
-  {
-   "id": "mlp-circuito-hidraulico",
-   "titulo": "Red neuronal para el estado hidráulico",
-   "estado": "idea",
-   "area": "mantenimiento",
-   "tipo": "Clasificación",
-   "tecnica": "Perceptrón multicapa (MLP)",
-   "descripcion": "Clasificar el estado de los componentes hidráulicos con una red y compararla con los árboles.",
-   "dataset": {
-    "nombre": "Condition monitoring of hydraulic systems (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/447/condition+monitoring+of+hydraulic+systems",
-    "verificado": true
-   },
-   "objetivo": "Aplicar una red a datos de sensores y comparar con modelos clásicos.",
-   "datos": "Los mismos del banco hidráulico.",
-   "herramientas": [
-    "Python",
-    "PyTorch o TensorFlow"
-   ],
-   "metrica": "Exactitud y matriz de confusión.",
-   "esquema": [
-    "Preparar y escalar sensores.",
-    "Definir la red.",
-    "Entrenar con validación.",
-    "Comparar con los árboles.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Banco de pruebas, no un circuito en servicio.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "hydraulic",
-    "hidráulic"
-   ],
-   "bloque": "redes",
-   "nivel": "basico"
-  },
-  {
-   "id": "lstm-vida-util",
-   "titulo": "Vida útil con redes recurrentes",
-   "estado": "idea",
-   "nivel": "medio",
-   "area": "mantenimiento",
-   "tipo": "Regresión",
-   "tecnica": "LSTM / GRU",
-   "descripcion": "Resolver el problema del proyecto de vida útil con Random Forest con redes neuronales recurrentes y comparar resultados.",
-   "dataset": {
-    "nombre": "NASA C-MAPSS (los cuatro subconjuntos)",
-    "url": "https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/",
-    "verificado": false
-   },
-   "objetivo": "Aprender a usar redes sobre series temporales y ver si mejoran al Random Forest.",
-   "datos": "Los mismos datos simulados del proyecto de vida útil con Random Forest, ampliados.",
-   "herramientas": [
-    "Python",
-    "PyTorch o TensorFlow"
-   ],
-   "metrica": "RMSE y puntuación de la NASA, comparados con el proyecto de vida útil con Random Forest.",
-   "esquema": [
-    "Preparar secuencias de entrada.",
-    "Definir una LSTM pequeña.",
-    "Entrenar y vigilar el sobreajuste.",
-    "Comparar con el proyecto de vida útil con Random Forest.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Datos simulados.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "lstm",
-    "remaining useful life",
-    "prognostics"
-   ],
-   "bloque": "redes"
-  },
-  {
-   "id": "autoencoder-hidraulico",
-   "titulo": "Anomalías con un autoencoder",
-   "estado": "idea",
-   "nivel": "medio",
-   "area": "mantenimiento",
-   "tipo": "Anomalías",
-   "tecnica": "Red neuronal autoencoder",
-   "descripcion": "Detectar comportamientos raros del banco hidráulico sin usar etiquetas.",
-   "dataset": {
-    "nombre": "Condition monitoring of hydraulic systems (UCI)",
-    "url": "https://archive.ics.uci.edu/dataset/447/condition+monitoring+of+hydraulic+systems",
-    "verificado": true
-   },
-   "objetivo": "Entrenar una red que aprende a reconstruir lo normal y marca lo que no sabe reconstruir.",
-   "datos": "Los mismos datos del proyecto del circuito hidráulico.",
-   "herramientas": [
-    "Python",
-    "PyTorch o TensorFlow"
-   ],
-   "metrica": "Error de reconstrucción y curva de aciertos y falsas alarmas.",
-   "esquema": [
-    "Elegir ciclos sanos.",
-    "Definir el autoencoder.",
-    "Entrenar con datos sanos.",
-    "Fijar un umbral de error.",
-    "Probar con ciclos degradados y anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Banco de pruebas, no un circuito en servicio.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "autoencoder",
-    "anomaly detection",
-    "detección de anomalías"
-   ],
-   "bloque": "redes"
-  },
-  {
-   "id": "temperatura-series-jena",
-   "titulo": "Predecir la temperatura con series temporales",
-   "estado": "idea",
-   "area": "energía",
-   "tipo": "Regresión",
-   "tecnica": "Redes recurrentes (GRU)",
-   "descripcion": "Predecir la temperatura de las próximas horas con datos meteorológicos reales.",
-   "dataset": {
-    "nombre": "Jena Climate (Instituto Max Planck, por confirmar)",
-    "url": "https://www.bgc-jena.mpg.de/wetter/",
-    "verificado": false
-   },
-   "objetivo": "Aprender a preparar series y comparar una red con una referencia ingenua.",
-   "datos": "Medidas meteorológicas cada diez minutos de una estación real.",
-   "herramientas": [
-    "Python",
-    "PyTorch o TensorFlow"
-   ],
-   "metrica": "MAE frente a «repetir el último valor».",
-   "esquema": [
-    "Cargar y reducir la frecuencia.",
-    "Crear ventanas de tiempo.",
-    "Referencia ingenua.",
-    "Entrenar una GRU.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Una estación, una ciudad.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "weather",
-    "clima",
-    "meteorolog"
-   ],
-   "bloque": "redes",
-   "nivel": "medio"
-  },
-  {
-   "id": "cnn-espectrogramas-rodamientos",
-   "titulo": "Fallos de rodamiento con imágenes de vibración",
-   "estado": "idea",
-   "nivel": "avanzado",
-   "area": "mantenimiento",
-   "tipo": "Clasificación",
-   "tecnica": "Red convolucional (CNN) sobre espectrogramas",
-   "descripcion": "Convertir señales de vibración en imágenes y clasificar el estado del rodamiento.",
-   "dataset": {
-    "nombre": "Case Western Reserve University Bearing Data Center",
-    "url": "https://engineering.case.edu/bearingdatacenter",
-    "verificado": false
-   },
-   "objetivo": "Descubrir cómo una CNN reconoce patrones en imágenes de señales.",
-   "datos": "Vibraciones de rodamientos sanos y con fallos de varios tamaños.",
-   "herramientas": [
-    "Python",
-    "PyTorch o TensorFlow",
-    "SciPy"
-   ],
-   "metrica": "Exactitud y matriz de confusión.",
-   "esquema": [
-    "Cargar señales.",
-    "Convertirlas en espectrogramas.",
-    "Definir una CNN pequeña.",
-    "Entrenar y evaluar.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Banco de pruebas; ojo con mezclar datos de entrenamiento y prueba del mismo rodamiento.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "convolutional",
-    "cnn",
-    "vibration",
-    "vibración"
-   ],
-   "bloque": "redes"
-  },
-  {
-   "id": "cnn-defectos-acero",
-   "titulo": "Defectos en superficies de acero",
-   "estado": "idea",
-   "nivel": "avanzado",
-   "area": "visión artificial",
-   "tipo": "Clasificación de imágenes",
-   "tecnica": "CNN con transferencia de aprendizaje",
-   "descripcion": "Clasificar defectos de superficies de acero a partir de imágenes.",
-   "dataset": {
-    "nombre": "NEU Surface Defect Database (por verificar)",
-    "url": "",
-    "verificado": false
-   },
-   "objetivo": "Usar una red ya entrenada y adaptarla a un problema industrial.",
-   "datos": "Imágenes de superficies de acero con varios tipos de defecto.",
-   "herramientas": [
-    "Python",
-    "PyTorch o TensorFlow"
-   ],
-   "metrica": "Exactitud y matriz de confusión.",
-   "esquema": [
-    "Obtener y revisar las imágenes.",
-    "Cargar una red preentrenada.",
-    "Reentrenar la última capa.",
-    "Evaluar.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Imágenes de laboratorio, con iluminación controlada.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "defect detection",
-    "visión artificial",
-    "computer vision"
-   ],
-   "bloque": "redes"
-  },
-  {
-   "id": "cnn-plantas-incendios",
-   "titulo": "Plantas enfermas o detección de humo e incendios",
-   "estado": "idea",
-   "nivel": "avanzado",
-   "area": "visión artificial",
-   "tipo": "Clasificación de imágenes",
-   "tecnica": "CNN con transferencia de aprendizaje",
-   "descripcion": "Clasificar imágenes de hojas enfermas o de humo en el monte.",
-   "dataset": {
-    "nombre": "Por elegir (PlantVillage u otro; por verificar)",
-    "url": "",
-    "verificado": false
-   },
-   "objetivo": "Aprender los límites de las imágenes tomadas en laboratorio frente a las del campo.",
-   "datos": "Conjunto de imágenes a elegir.",
-   "herramientas": [
-    "Python",
-    "PyTorch o TensorFlow"
-   ],
-   "metrica": "Exactitud y matriz de confusión.",
-   "esquema": [
-    "Elegir y verificar el conjunto.",
-    "Preparar imágenes.",
-    "Entrenar con transferencia.",
-    "Probar con fotos propias.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Las imágenes de laboratorio suelen funcionar peor en el campo.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "plant disease",
-    "enfermedad",
-    "wildfire",
-    "incendio",
-    "humo"
-   ],
-   "bloque": "redes"
-  },
-  {
-   "id": "sensor-propio-esp32",
-   "titulo": "Mi propio sensor: línea base de un ventilador",
-   "estado": "idea",
-   "area": "mantenimiento",
-   "tipo": "Anomalías",
-   "tecnica": "Sensores propios y detección de anomalías",
-   "descripcion": "Medir la vibración y la temperatura de una máquina real con un microcontrolador y aprender su comportamiento normal.",
-   "dataset": {
-    "nombre": "Datos propios (grabados con el proyecto)",
-    "url": "",
-    "verificado": false
-   },
-   "objetivo": "Pasar de datos ajenos a datos propios: construir el sensor, grabar y detectar cambios.",
-   "datos": "Vibración y temperatura de un ventilador, grabadas con un acelerómetro y un ESP32.",
-   "herramientas": [
-    "Python",
-    "ESP32",
-    "scikit-learn"
-   ],
-   "metrica": "Falsas alarmas y avisos a tiempo.",
-   "esquema": [
-    "Montar el sensor y fijarlo.",
-    "Grabar días de funcionamiento normal.",
-    "Extraer características.",
-    "Entrenar la línea base.",
-    "Provocar un cambio controlado y ver el aviso."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Un solo equipo y pocos días de datos.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "edge",
-    "sensor",
-    "esp32",
-    "condition monitoring"
-   ],
-   "bloque": "experto",
-   "nivel": "experto"
-  },
-  {
-   "id": "gemelo-hibrido-motor",
-   "titulo": "Gemelo digital híbrido de un motor",
-   "estado": "idea",
-   "area": "mantenimiento",
-   "tipo": "Regresión",
-   "tecnica": "Modelo físico + aprendizaje automático",
-   "descripcion": "Combinar un modelo físico sencillo de un turbofán con un modelo de datos que corrige sus errores.",
-   "dataset": {
-    "nombre": "NASA C-MAPSS",
-    "url": "https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/",
-    "verificado": false
-   },
-   "objetivo": "Ver cuándo la física y los datos se complementan mejor que por separado.",
-   "datos": "Datos simulados de motores turbofán.",
-   "herramientas": [
-    "Python",
-    "SciPy",
-    "PyTorch o scikit-learn"
-   ],
-   "metrica": "RMSE frente a modelo solo físico y modelo solo de datos.",
-   "esquema": [
-    "Elegir un modelo físico simple.",
-    "Medir sus errores con los datos.",
-    "Entrenar un corrector.",
-    "Comparar los tres.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Datos simulados; el modelo físico es una simplificación.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
     "digital twin",
-    "gemelo digital",
-    "physics-informed"
-   ],
-   "bloque": "experto",
-   "nivel": "experto"
-  },
-  {
-   "id": "refuerzo-control",
-   "titulo": "Aprendizaje por refuerzo: control de un péndulo y un dron",
-   "estado": "idea",
-   "area": "robótica",
-   "tipo": "Control",
-   "tecnica": "Aprendizaje por refuerzo",
-   "descripcion": "Entrenar un agente en simulación para mantener en equilibrio un sistema.",
-   "dataset": {
-    "nombre": "Entornos de simulación Gymnasium (por confirmar)",
-    "url": "",
-    "verificado": false
-   },
-   "objetivo": "Entender recompensa, política y exploración.",
-   "datos": "Simulación, sin datos externos.",
-   "herramientas": [
-    "Python",
-    "Gymnasium",
-    "PyTorch"
-   ],
-   "metrica": "Recompensa acumulada y estabilidad.",
-   "esquema": [
-    "Instalar el entorno.",
-    "Probar un agente aleatorio.",
-    "Entrenar con un algoritmo estándar.",
-    "Medir la estabilidad.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "En simulación: pasar a un sistema real es otro problema.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "reinforcement learning",
-    "aprendizaje por refuerzo",
-    "robot"
-   ],
-   "bloque": "experto",
-   "nivel": "experto"
-  },
-  {
-   "id": "vision-en-el-borde",
-   "titulo": "Visión artificial en un dispositivo pequeño",
-   "estado": "idea",
-   "area": "visión artificial",
-   "tipo": "Detección de objetos",
-   "tecnica": "Redes de detección optimizadas para el borde",
-   "descripcion": "Detectar defectos con una cámara y un dispositivo de bajo coste, sin conexión a internet.",
-   "dataset": {
-    "nombre": "Defectos de superficie (por elegir y verificar)",
-    "url": "",
-    "verificado": false
-   },
-   "objetivo": "Llevar un modelo del ordenador a un dispositivo pequeño.",
-   "datos": "Imágenes de defectos y fotos propias.",
-   "herramientas": [
-    "Python",
-    "OpenCV",
-    "TensorFlow Lite o similar"
-   ],
-   "metrica": "Precisión y fotogramas por segundo.",
-   "esquema": [
-    "Elegir el conjunto de imágenes.",
-    "Entrenar un detector pequeño.",
-    "Reducir y exportar el modelo.",
-    "Ejecutarlo en el dispositivo.",
-    "Medir velocidad y fallos."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "El rendimiento depende de la luz y de la cámara.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "edge ai",
-    "computer vision",
-    "visión artificial"
-   ],
-   "bloque": "experto",
-   "nivel": "experto"
-  },
-  {
-   "id": "asistente-manuales-rag",
-   "titulo": "Asistente que responde con citas sobre manuales públicos",
-   "estado": "idea",
-   "area": "IA",
-   "tipo": "Lenguaje",
-   "tecnica": "Modelos de lenguaje y recuperación de documentos (RAG)",
-   "descripcion": "Preguntar en castellano a una colección de manuales y normas públicas y recibir respuestas con la página de origen.",
-   "dataset": {
-    "nombre": "Documentación pública (por elegir)",
-    "url": "",
-    "verificado": false
-   },
-   "objetivo": "Aprender cómo se le da información propia a un modelo de lenguaje y cómo se comprueba que no inventa.",
-   "datos": "Documentos públicos y de libre uso, nunca confidenciales.",
-   "herramientas": [
-    "Python",
-    "Un modelo de lenguaje",
-    "Base de vectores"
-   ],
-   "metrica": "Respuestas correctas con cita y tasa de «no lo sé».",
-   "esquema": [
-    "Elegir y limpiar los documentos.",
-    "Trocear e indexar.",
-    "Montar la búsqueda y el modelo.",
-    "Evaluar con preguntas con respuesta conocida.",
-    "Anotar límites."
-   ],
-   "resultados": "Pendiente.",
-   "limitaciones": "Puede equivocarse: siempre hay que comprobar la cita.",
-   "codigo": "",
-   "entrega": {},
-   "noticias_palabras": [
-    "rag",
-    "llm",
-    "language model",
-    "modelo de lenguaje"
-   ],
-   "bloque": "experto",
-   "nivel": "experto"
-  }
- ],
- "retos": [
-  {
-   "nombre": "Kaggle",
-   "url": "https://www.kaggle.com/competitions",
-   "descripcion": "La mayor plataforma de retos de datos: competiciones, conjuntos de datos y cuadernos con cálculo gratuito (con límites).",
-   "destacado": true
-  },
-  {
-   "nombre": "PHM Society",
-   "url": "https://phmsociety.org",
-   "descripcion": "Sociedad de gestión de la salud y pronóstico de equipos. Organiza retos anuales de datos de mantenimiento predictivo.",
-   "destacado": true
-  },
-  {
-   "nombre": "Grand Challenge",
-   "url": "https://grand-challenge.org",
-   "descripcion": "Retos de imagen médica. Solo para aprender, nunca para diagnosticar."
-  },
-  {
-   "nombre": "DrivenData",
-   "url": "https://www.drivendata.org/competitions/",
-   "descripcion": "Retos con impacto social: salud pública, clima y conservación."
-  },
-  {
-   "nombre": "AIcrowd",
-   "url": "https://www.aicrowd.com/challenges",
-   "descripcion": "Retos de inteligencia artificial, aprendizaje por refuerzo y robótica."
-  },
-  {
-   "nombre": "Zindi",
-   "url": "https://zindi.africa/competitions",
-   "descripcion": "Retos centrados en problemas reales, con mucha agricultura y clima."
-  }
- ],
- "recursos": [
-  {
-   "id": "modulo-1",
-   "titulo": "Módulo 1 · Regresión lineal simple",
-   "autor": "Book Profesional IA · Edición 2025-2026",
-   "archivo": "Modulo_1_nivel_basico_all.pdf",
-   "descripcion": "Apuntes de regresión lineal simple, desde cero, con ejercicios resueltos y test. Cada paso de los proyectos enlaza con la página que lo explica.",
-   "submodulos": [
+    "gemelo digital"
+  ],
+  "clasificacion": [
     {
-     "n": "1.1",
-     "titulo": "Práctica con datasets reales",
-     "nivel": "básico",
-     "paginas": 29
+      "tema": "robotica",
+      "palabras": [
+        "robot",
+        "robótica",
+        "robotic",
+        "humanoid",
+        "humanoide",
+        "cobot",
+        "drone",
+        "dron",
+        "self-driving",
+        "vehículo autónomo",
+        "coche autónomo",
+        "conducción autónoma",
+        "autonomous vehicle"
+      ]
     },
     {
-     "n": "1.2",
-     "titulo": "Mínimos cuadrados: la matemática de la recta",
-     "nivel": "básico",
-     "paginas": 25
+      "tema": "ia",
+      "palabras": [
+        "llm",
+        "gpt",
+        "chatgpt",
+        "modelo de lenguaje",
+        "language model",
+        "chatbot",
+        "openai",
+        "anthropic",
+        "claude",
+        "gemini",
+        "deepseek",
+        "llama",
+        "mistral",
+        "inteligencia artificial",
+        "artificial intelligence",
+        "machine learning",
+        "aprendizaje automático",
+        "deep learning",
+        "redes neuronales",
+        "neural network",
+        "generative",
+        "generativ",
+        "agentic",
+        "agentes de ia",
+        "ai agent"
+      ]
     },
     {
-     "n": "1.3",
-     "titulo": "El ecosistema del dato (Kaggle, UCI, OpenML)",
-     "nivel": "básico",
-     "paginas": 23
+      "tema": "aeronautica",
+      "palabras": [
+        "aircraft",
+        "aviation",
+        "aviación",
+        "airline",
+        "aerolínea",
+        "aerospace",
+        "aeroespacial",
+        "aeronáutica",
+        "airbus",
+        "boeing",
+        "eurofighter",
+        "jet engine",
+        "turbofan",
+        "avión",
+        "aviones",
+        "nasa",
+        "satellite",
+        "satélite",
+        "spacecraft",
+        "rocket",
+        "cohete"
+      ]
     },
     {
-     "n": "1.4",
-     "titulo": "Evaluación del modelo",
-     "nivel": "medio",
-     "paginas": 22
+      "tema": "programacion",
+      "palabras": [
+        "programming",
+        "programación",
+        "coding",
+        "código",
+        "github",
+        "copilot",
+        "software engineer",
+        "ingeniería de software",
+        "open source",
+        "código abierto",
+        "python",
+        "javascript"
+      ]
     },
     {
-     "n": "1.5",
-     "titulo": "Diagnóstico de la regresión",
-     "nivel": "básico",
-     "paginas": 15
+      "tema": "otros",
+      "palabras": [
+        "agricultur",
+        "farming",
+        "crop",
+        "cultivo",
+        "cosecha",
+        "clima",
+        "climate",
+        "weather",
+        "meteorolog",
+        "energy",
+        "energía",
+        "power grid",
+        "red eléctrica",
+        "factory",
+        "fábrica",
+        "industria",
+        "industrial",
+        "manufactur",
+        "logistic",
+        "supply chain",
+        "salud",
+        "health",
+        "medic",
+        "pharma",
+        "fármaco",
+        "drug",
+        "hospital",
+        "clinical",
+        "clínic",
+        "diagnos",
+        "cirugía",
+        "surgery",
+        "biotech"
+      ]
     },
     {
-     "n": "1.6",
-     "titulo": "Guía de los 4 gráficos de diagnóstico",
-     "nivel": "básico",
-     "paginas": 17
-    },
-    {
-     "n": "1.7",
-     "titulo": "Aplicando el diagnóstico al proyecto energético",
-     "nivel": "básico",
-     "paginas": 15
-    },
-    {
-     "n": "1.8",
-     "titulo": "Predecir con honestidad: intervalos y train/test",
-     "nivel": "básico",
-     "paginas": 16
-    },
-    {
-     "n": "1.9",
-     "titulo": "Inferencia en la regresión simple",
-     "nivel": "básico",
-     "paginas": 16
+      "tema": "robotica",
+      "palabras": [
+        "automation",
+        "automatización",
+        "automatizaci",
+        "autonomous",
+        "autónom"
+      ]
     }
-   ]
+  ],
+  "feeds": [
+    {
+      "nombre": "MIT Technology Review IA",
+      "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed",
+      "tema": "ia"
+    },
+    {
+      "nombre": "MIT News IA",
+      "url": "https://news.mit.edu/rss/topic/artificial-intelligence2",
+      "tema": "ia"
+    },
+    {
+      "nombre": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/feed.xml",
+      "tema": "ia"
+    },
+    {
+      "nombre": "Google DeepMind",
+      "url": "https://deepmind.google/blog/rss.xml",
+      "tema": "ia"
+    },
+    {
+      "nombre": "VentureBeat IA",
+      "url": "https://venturebeat.com/category/ai/feed/",
+      "tema": "ia"
+    },
+    {
+      "nombre": "TechCrunch IA",
+      "url": "https://techcrunch.com/category/artificial-intelligence/feed/",
+      "tema": "ia"
+    },
+    {
+      "nombre": "The Verge IA",
+      "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+      "tema": "ia"
+    },
+    {
+      "nombre": "arXiv cs.AI",
+      "url": "https://export.arxiv.org/rss/cs.AI",
+      "tema": "ia",
+      "max": 6
+    },
+    {
+      "nombre": "IEEE Spectrum Robótica",
+      "url": "https://spectrum.ieee.org/feeds/topic/robotics.rss",
+      "tema": "robotica"
+    },
+    {
+      "nombre": "The Robot Report",
+      "url": "https://www.therobotreport.com/feed/",
+      "tema": "robotica"
+    },
+    {
+      "nombre": "arXiv cs.RO",
+      "url": "https://export.arxiv.org/rss/cs.RO",
+      "tema": "robotica",
+      "max": 6
+    },
+    {
+      "nombre": "GitHub Blog",
+      "url": "https://github.blog/feed/",
+      "tema": "programacion",
+      "filtrar": true
+    },
+    {
+      "nombre": "InfoQ",
+      "url": "https://feed.infoq.com/",
+      "tema": "programacion",
+      "filtrar": true
+    },
+    {
+      "nombre": "Real Python",
+      "url": "https://realpython.com/atom.xml",
+      "tema": "programacion",
+      "filtrar": true
+    },
+    {
+      "nombre": "The Aviationist",
+      "url": "https://theaviationist.com/feed/",
+      "tema": "aeronautica",
+      "filtrar": true
+    },
+    {
+      "nombre": "Simple Flying",
+      "url": "https://simpleflying.com/feed/",
+      "tema": "aeronautica",
+      "filtrar": true
+    },
+    {
+      "nombre": "NASA Aeronáutica",
+      "url": "https://www.nasa.gov/aeronautics/feed/",
+      "tema": "aeronautica",
+      "filtrar": true
+    },
+    {
+      "nombre": "ESA Tecnología",
+      "url": "https://www.esa.int/rssfeed/Our_Activities/Space_Engineering_Technology",
+      "tema": "aeronautica",
+      "filtrar": true
+    },
+    {
+      "nombre": "Ars Technica",
+      "url": "https://feeds.arstechnica.com/arstechnica/index",
+      "tema": "auto",
+      "filtrar": true,
+      "max": 20
+    },
+    {
+      "nombre": "The Verge",
+      "url": "https://www.theverge.com/rss/index.xml",
+      "tema": "auto",
+      "filtrar": true,
+      "max": 20
+    },
+    {
+      "nombre": "Xataka",
+      "url": "https://www.xataka.com/feedburner.xml",
+      "tema": "auto",
+      "filtrar": true,
+      "max": 20,
+      "idioma": "es"
+    },
+    {
+      "nombre": "Genbeta",
+      "url": "https://www.genbeta.com/feedburner.xml",
+      "tema": "auto",
+      "filtrar": true,
+      "max": 20,
+      "idioma": "es"
+    },
+    {
+      "nombre": "Wired",
+      "url": "https://www.wired.com/feed/rss",
+      "tema": "auto",
+      "filtrar": true,
+      "max": 20
+    },
+    {
+      "nombre": "IEEE Spectrum",
+      "url": "https://spectrum.ieee.org/feeds/feed.rss",
+      "tema": "auto",
+      "filtrar": true,
+      "max": 20
+    },
+    {
+      "nombre": "MIT Technology Review",
+      "url": "https://www.technologyreview.com/feed/",
+      "tema": "auto",
+      "filtrar": true,
+      "max": 20
+    },
+    {
+      "nombre": "Nature Medicine",
+      "url": "https://www.nature.com/nm.rss",
+      "tema": "otros",
+      "filtrar": true
+    },
+    {
+      "nombre": "ScienceDaily Salud",
+      "url": "https://www.sciencedaily.com/rss/health_medicine.xml",
+      "tema": "otros",
+      "filtrar": true
+    },
+    {
+      "nombre": "Fierce Pharma",
+      "url": "https://www.fiercepharma.com/rss/xml",
+      "tema": "otros",
+      "filtrar": true
+    },
+    {
+      "nombre": "Fierce Biotech",
+      "url": "https://www.fiercebiotech.com/rss/xml",
+      "tema": "otros",
+      "filtrar": true
+    },
+    {
+      "nombre": "AgFunder News",
+      "url": "https://agfundernews.com/feed",
+      "tema": "otros",
+      "filtrar": true
+    },
+    {
+      "nombre": "Carbon Brief",
+      "url": "https://www.carbonbrief.org/feed",
+      "tema": "otros",
+      "filtrar": true
+    },
+    {
+      "nombre": "Utility Dive",
+      "url": "https://www.utilitydive.com/feeds/news/",
+      "tema": "otros",
+      "filtrar": true
+    }
+  ],
+  "proyectos": [
+    {
+      "id": "potencia-central-regresion-simple",
+      "titulo": "Potencia de una central según la temperatura",
+      "estado": "proximo",
+      "nivel": "basico",
+      "area": "energía",
+      "tipo": "Regresión",
+      "tecnica": "Regresión lineal simple",
+      "descripcion": "Predecir la potencia que genera una central eléctrica a partir de una sola variable: la temperatura ambiente.",
+      "dataset": {
+        "nombre": "Central eléctrica de ciclo combinado (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/294/combined+cycle+power+plant",
+        "verificado": true
+      },
+      "objetivo": "Aprender qué es una regresión lineal simple: ajustar una recta a datos reales, interpretarla y medir cuánto se equivoca.",
+      "datos": "Medias horarias de una central eléctrica de ciclo combinado real, durante varios años (unos 9.500 registros): temperatura ambiente, presión, humedad, vacío del escape y potencia eléctrica neta. Aquí usamos solo la temperatura (entrada) y la potencia (salida).",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "matplotlib",
+        "scikit-learn",
+        "statsmodels"
+      ],
+      "metrica": "R² (cuánta variación explica la recta), RMSE y MAE (error medio en MW).",
+      "esquema": null,
+      "resultados": "Pendiente.",
+      "limitaciones": "Es una sola variable: la recta no explica todo lo que influye en la potencia (eso lo mejora el proyecto de regresión múltiple con la misma central). Los datos son de una única central.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "power plant",
+        "central eléctrica",
+        "ciclo combinado",
+        "combined cycle",
+        "turbina de gas",
+        "gas turbine"
+      ],
+      "metodo": "Una recta y = a·x + b ajustada con los datos de entrenamiento y evaluada con datos que el modelo no ha visto.",
+      "pasos": [
+        {
+          "titulo": "Entender qué es una regresión lineal simple",
+          "que": "Saber qué vamos a calcular.",
+          "como": "Buscamos una recta: potencia = pendiente × temperatura + ordenada. La pendiente dice cuántos MW cambia la potencia por cada grado; la ordenada es el punto de partida.",
+          "porque": "Es el modelo más sencillo que existe: si una recta basta, no hace falta nada más complicado.",
+          "para": "Tener claro qué significan los dos números que saldrán al final.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 9,
+              "t": "La recta: y = m·x + b"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 10,
+              "t": "Cómo se encuentra la mejor recta"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.2",
+              "p": 9,
+              "t": "¿Por qué «mínimos cuadrados»?"
+            }
+          ]
+        },
+        {
+          "titulo": "Descargar y abrir los datos",
+          "que": "Traer el fichero a tu ordenador y cargarlo.",
+          "como": "Descárgalo desde la página de la UCI. Es un fichero de Excel; con pandas se lee con read_excel. Comprueba cuántas filas y columnas tiene.",
+          "porque": "Antes de analizar nada hay que saber con qué se trabaja.",
+          "para": "Tener la tabla en Python, lista para usar.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 6,
+              "t": "Qué es un dataset: la tabla de datos"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.3",
+              "p": 5,
+              "t": "El archivo CSV y sus separadores"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.3",
+              "p": 7,
+              "t": "Los «supermercados» de datos y la ficha de un dataset"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.3",
+              "p": 8,
+              "t": "Primera carga y pandas en diez minutos"
+            }
+          ]
+        },
+        {
+          "titulo": "Revisar la tabla",
+          "que": "Mirar nombres, rangos y huecos.",
+          "como": "Con describe() se ven mínimos, máximos y medias de cada columna; con isna().sum() se comprueba que no faltan datos.",
+          "porque": "Los datos reales pueden traer errores o vacíos que estropean el resultado sin avisar.",
+          "para": "Asegurarte de que los números tienen sentido.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 6,
+              "t": "Los cinco comandos que usarás siempre"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.3",
+              "p": 9,
+              "t": "EDA en cinco preguntas"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.3",
+              "p": 11,
+              "t": "Valores que faltan"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.3",
+              "p": 13,
+              "t": "Nulos disfrazados"
+            }
+          ]
+        },
+        {
+          "titulo": "Dibujar el diagrama de dispersión",
+          "que": "Poner la temperatura en el eje horizontal y la potencia en el vertical.",
+          "como": "Con matplotlib, un punto por registro. Se mira si la nube de puntos sigue una línea.",
+          "porque": "Si no se ve una tendencia más o menos recta, la regresión lineal no es el modelo adecuado.",
+          "para": "Decidir con los ojos si merece la pena seguir.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 8,
+              "t": "Mirar antes de calcular: el gráfico de dispersión"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 19,
+              "t": "Tus propios gráficos con matplotlib"
+            }
+          ]
+        },
+        {
+          "titulo": "Separar entrenamiento y prueba",
+          "que": "Guardar una parte de los datos sin tocarla.",
+          "como": "Con train_test_split de scikit-learn: 80 % para entrenar y 20 % para probar, fijando una semilla para poder repetirlo.",
+          "porque": "Si evaluamos con los mismos datos con los que aprendió, el resultado sale mejor de lo que es.",
+          "para": "Medir el modelo con datos que no ha visto, como en la vida real.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.8",
+              "p": 8,
+              "t": "Train/test: no te examines con las preguntas que ya viste"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.4",
+              "p": 6,
+              "t": "La división train/test no es neutra (nivel medio)"
+            }
+          ]
+        },
+        {
+          "titulo": "Ajustar la recta",
+          "que": "Calcular la pendiente y la ordenada.",
+          "como": "Con LinearRegression de scikit-learn y fit() sobre los datos de entrenamiento. Después se leen coef_ e intercept_.",
+          "porque": "El ordenador elige la recta que minimiza el error cuadrático con todos los puntos.",
+          "para": "Obtener la fórmula y poder leerla: cuántos MW se pierden por cada grado.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 13,
+              "t": "Tu primer proyecto completo"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 14,
+              "t": "El código, línea a línea"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.2",
+              "p": 11,
+              "t": "La fórmula de la pendiente y el intercepto, a mano"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.2",
+              "p": 17,
+              "t": "Qué significan m y b"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.3",
+              "p": 14,
+              "t": "Tu primer modelo: una recta"
+            }
+          ]
+        },
+        {
+          "titulo": "Evaluar con datos nuevos",
+          "que": "Medir el error sobre el 20 % reservado.",
+          "como": "Se predice con predict() y se calculan R², RMSE y MAE. El RMSE y el MAE se leen en MW.",
+          "porque": "Un número en las unidades reales se entiende: «me equivoco, de media, en tantos MW».",
+          "para": "Saber cuánto te puedes fiar de la recta.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 12,
+              "t": "R²: ¿cuánto explica la recta?"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.8",
+              "p": 9,
+              "t": "El modelo de referencia («el tonto»)"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.4",
+              "p": 4,
+              "t": "Las métricas, a fondo (nivel medio)"
+            }
+          ]
+        },
+        {
+          "titulo": "Mirar los errores y poner límites",
+          "que": "Dibujar los residuos y escribir qué no explica el modelo.",
+          "como": "Se resta el valor real al predicho y se dibuja. Si queda una forma, algo falta en el modelo. Se anotan los límites: una sola variable, una sola central, correlación no es causalidad.",
+          "porque": "Un resultado sin sus límites engaña, aunque sea sin querer.",
+          "para": "Dejar el proyecto honesto y preparar el siguiente: añadir más variables.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.5",
+              "p": 4,
+              "t": "¿Por qué diagnosticar? El cuarteto de Anscombe"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.5",
+              "p": 5,
+              "t": "Los 4 gráficos de diagnóstico"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 15,
+              "t": "Interpolar sí, extrapolar con cuidado"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 22,
+              "t": "Los 8 errores típicos del principiante"
+            }
+          ]
+        },
+        {
+          "titulo": "Poner un rango a la predicción",
+          "que": "Dar un margen y no solo un número.",
+          "como": "Con statsmodels se calcula el intervalo de predicción de la recta (get_prediction) para una temperatura concreta, y se comprueba qué porcentaje de los datos de prueba cae dentro del margen.",
+          "porque": "Un número suelto parece más exacto de lo que es; un rango dice cuánto fiarse.",
+          "para": "Poder decir «a esta temperatura la central dará entre tantos y tantos MW».",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.8",
+              "p": 5,
+              "t": "Los dos intervalos en un ejemplo"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.8",
+              "p": 6,
+              "t": "De dónde sale el «+1»"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.9",
+              "p": 5,
+              "t": "Error estándar, t y p-valor"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.9",
+              "p": 7,
+              "t": "El intervalo de confianza"
+            }
+          ]
+        },
+        {
+          "titulo": "Contar el resultado en cinco frases",
+          "que": "Explicar el proyecto a otra persona.",
+          "como": "Cinco frases: la pregunta, los datos (cuántas filas y de dónde), el resultado (la recta con sus unidades y el R²), las limitaciones y la conclusión.",
+          "porque": "Un análisis que no se sabe contar no sirve a nadie.",
+          "para": "Dejar el proyecto listo para publicar en esta web.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 23,
+              "t": "Cómo contar tus resultados: informe en 5 frases"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.7",
+              "p": 11,
+              "t": "Qué decir al cliente"
+            }
+          ]
+        }
+      ],
+      "bloque": "regresion"
+    },
+    {
+      "id": "consumo-coche-peso",
+      "titulo": "Consumo de un coche según su peso",
+      "estado": "idea",
+      "nivel": "basico",
+      "area": "ingeniería",
+      "tipo": "Regresión",
+      "tecnica": "Regresión lineal simple",
+      "descripcion": "Estimar el consumo (millas por galón) a partir del peso del vehículo.",
+      "dataset": {
+        "nombre": "Auto MPG (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/9/auto+mpg",
+        "verificado": false
+      },
+      "objetivo": "Repetir la regresión simple con otro conjunto de datos y aprender a detectar valores raros.",
+      "datos": "Datos reales de coches de los años 70 y 80: consumo, peso, cilindrada, potencia y año.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "matplotlib",
+        "scikit-learn"
+      ],
+      "metrica": "R², RMSE y MAE.",
+      "esquema": [
+        "Cargar el conjunto y tratar los valores que faltan.",
+        "Dibujar consumo frente a peso.",
+        "Ajustar la recta y evaluar con datos de prueba.",
+        "Probar si una curva ajusta mejor que una recta.",
+        "Anotar los límites del modelo."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Coches antiguos: no representan los actuales.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "consumo",
+        "eficiencia",
+        "fuel efficiency"
+      ],
+      "bloque": "regresion"
+    },
+    {
+      "id": "hormigon-cemento",
+      "titulo": "Resistencia del hormigón según el cemento",
+      "estado": "idea",
+      "area": "ingeniería",
+      "tipo": "Regresión",
+      "tecnica": "Regresión lineal simple",
+      "descripcion": "Predecir la resistencia del hormigón a partir de la cantidad de cemento.",
+      "dataset": {
+        "nombre": "Concrete Compressive Strength (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/165/concrete+compressive+strength",
+        "verificado": false
+      },
+      "objetivo": "Practicar la recta simple con datos de ingeniería civil y ver cuándo una sola variable se queda corta.",
+      "datos": "Ensayos reales de laboratorio de mezclas de hormigón.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "scikit-learn",
+        "matplotlib"
+      ],
+      "metrica": "R², RMSE y MAE.",
+      "esquema": [
+        "Cargar los datos y revisarlos.",
+        "Dibujar resistencia frente a cemento.",
+        "Ajustar la recta y evaluar con datos de prueba.",
+        "Comparar con otra variable de entrada.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Ensayos de laboratorio de unas mezclas concretas.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "hormigón",
+        "concrete",
+        "construcción"
+      ],
+      "bloque": "regresion",
+      "nivel": "basico"
+    },
+    {
+      "id": "potencia-central-regresion-multiple",
+      "titulo": "Potencia de la central con 4 variables",
+      "estado": "idea",
+      "nivel": "medio",
+      "area": "energía",
+      "tipo": "Regresión",
+      "tecnica": "Regresión lineal múltiple",
+      "descripcion": "Añadir temperatura, presión, humedad y vacío del escape y ver cuánto mejora la predicción.",
+      "dataset": {
+        "nombre": "Central eléctrica de ciclo combinado (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/294/combined+cycle+power+plant",
+        "verificado": true
+      },
+      "objetivo": "Entender por qué más variables mejoran el modelo y cómo se interpretan varios coeficientes a la vez.",
+      "datos": "Los mismos datos del proyecto de la recta simple, con las cuatro variables de entrada.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "scikit-learn"
+      ],
+      "metrica": "R², RMSE y MAE, comparados con el modelo de la recta simple.",
+      "esquema": [
+        "Repasar el proyecto de la recta simple como punto de partida.",
+        "Mirar la correlación entre variables.",
+        "Ajustar la regresión múltiple.",
+        "Comparar el error con el del modelo simple.",
+        "Interpretar los coeficientes y sus límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Una sola central; la relación puede no ser del todo lineal.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "power plant",
+        "central eléctrica",
+        "ciclo combinado"
+      ],
+      "bloque": "regresion"
+    },
+    {
+      "id": "bateria-nasa",
+      "titulo": "Capacidad de una batería según los ciclos",
+      "estado": "idea",
+      "nivel": "medio",
+      "area": "energía",
+      "tipo": "Regresión",
+      "tecnica": "Regresión polinómica",
+      "descripcion": "Seguir cómo se degrada una batería de litio y estimar en qué ciclo llegará al final de su vida.",
+      "dataset": {
+        "nombre": "NASA Li-ion Battery Aging Datasets",
+        "url": "https://data.nasa.gov/dataset/li-ion-battery-aging-datasets",
+        "verificado": true
+      },
+      "objetivo": "Ver cuándo una recta no basta y ajustar una curva a datos reales de degradación.",
+      "datos": "Ensayos de laboratorio de la NASA: baterías de litio cargadas y descargadas hasta que pierden capacidad.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "SciPy",
+        "matplotlib"
+      ],
+      "metrica": "RMSE de la curva y error en el ciclo estimado de fin de vida.",
+      "esquema": [
+        "Descargar los ficheros y extraer la capacidad de cada ciclo.",
+        "Dibujar capacidad frente a ciclo.",
+        "Ajustar una recta y después un polinomio.",
+        "Estimar cuándo se cruza el umbral de fin de vida.",
+        "Anotar límites: pocas baterías, condiciones de laboratorio."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Ensayos de laboratorio con pocas baterías: no sirven para predecir una batería real en uso.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "battery",
+        "batería",
+        "lithium",
+        "litio"
+      ],
+      "bloque": "regresion"
+    },
+    {
+      "id": "demanda-electrica",
+      "titulo": "Demanda eléctrica según la temperatura",
+      "estado": "idea",
+      "nivel": "medio",
+      "area": "energía",
+      "tipo": "Regresión",
+      "tecnica": "Regresión múltiple con variables de calendario",
+      "descripcion": "Predecir la demanda eléctrica con datos abiertos de Red Eléctrica y la temperatura de AEMET.",
+      "dataset": {
+        "nombre": "Red Eléctrica de España, datos abiertos (y AEMET OpenData)",
+        "url": "https://www.ree.es/es/datos",
+        "verificado": false
+      },
+      "objetivo": "Aprender a descargar datos por API, unirlos y predecir con variables de temperatura y calendario.",
+      "datos": "Demanda horaria peninsular y temperatura de una estación meteorológica.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "scikit-learn"
+      ],
+      "metrica": "MAE y RMSE frente a repetir la semana anterior.",
+      "esquema": [
+        "Descargar la demanda y la temperatura.",
+        "Unir las dos tablas por fecha y hora.",
+        "Crear variables de calendario (día de la semana, festivos).",
+        "Ajustar el modelo y compararlo con la referencia ingenua.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Depende de la disponibilidad de las APIs.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "demanda eléctrica",
+        "power grid",
+        "red eléctrica",
+        "energy forecasting",
+        "solar",
+        "smart grid"
+      ],
+      "bloque": "regresion"
+    },
+    {
+      "id": "ruido-perfil-aerodinamico",
+      "titulo": "Ruido de un perfil aerodinámico",
+      "estado": "idea",
+      "nivel": "avanzado",
+      "area": "aeronáutica",
+      "tipo": "Regresión",
+      "tecnica": "Random Forest y comparación de modelos",
+      "descripcion": "Predecir el ruido que genera un perfil de ala en un túnel de viento y comparar varios modelos.",
+      "dataset": {
+        "nombre": "NASA Airfoil Self-Noise (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/291/airfoil+self+noise",
+        "verificado": false
+      },
+      "objetivo": "Aprender a comparar modelos de forma justa con datos reales de aeronáutica.",
+      "datos": "Medidas de túnel de viento de la NASA con distintos perfiles, velocidades y ángulos.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "scikit-learn"
+      ],
+      "metrica": "RMSE y R² de cada modelo.",
+      "esquema": [
+        "Cargar y revisar los datos.",
+        "Modelo de referencia: regresión múltiple.",
+        "Random Forest y otro modelo más.",
+        "Comparar con validación cruzada.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Datos de túnel de viento, no de vuelo.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "airfoil",
+        "aerodynamic",
+        "aerodinámic",
+        "noise",
+        "ruido"
+      ],
+      "bloque": "regresion"
+    },
+    {
+      "id": "motor-nasa",
+      "titulo": "Vida útil de un motor, con datos de la NASA",
+      "estado": "proximo",
+      "nivel": "avanzado",
+      "area": "mantenimiento",
+      "descripcion": "Estimar cuántos ciclos de vuelo le quedan a un motor turbofán a partir de sus sensores, con datos abiertos de la NASA.",
+      "dataset": {
+        "nombre": "NASA C-MAPSS: simulación de degradación de motores turbofán (subconjunto FD001)",
+        "url": "https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/",
+        "verificado": false
+      },
+      "objetivo": "Predecir la vida útil restante (RUL, en ciclos) de un motor a partir de las lecturas de sus sensores, y aprender el recorrido completo de un proyecto de datos: de la tabla en bruto a un modelo evaluado con honestidad.",
+      "datos": "Simulación de flotas de motores turbofán que se degradan hasta el fallo. Cada motor tiene 3 ajustes de operación y 21 sensores medidos ciclo a ciclo. El conjunto FD001 tiene 100 motores de entrenamiento (con la vida completa) y 100 de prueba (cortados antes del fallo, con su RUL real aparte). Son datos simulados, no de motores reales.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "NumPy",
+        "matplotlib",
+        "scikit-learn"
+      ],
+      "metodo": "Primero una regresión lineal de referencia y después un Random Forest con ventanas de tiempo, comparados con la misma métrica.",
+      "metrica": "RMSE (error medio en ciclos) y la puntuación asimétrica de la NASA, que penaliza más predecir un fallo tarde que predecirlo pronto.",
+      "pasos": [
+        {
+          "titulo": "Entender qué es la RUL",
+          "que": "Aclarar qué queremos predecir.",
+          "como": "RUL (Remaining Useful Life) es el número de ciclos que le quedan a un motor antes de fallar. Si un motor falló en el ciclo 200 y ahora está en el 150, su RUL es 50.",
+          "porque": "Si no está claro qué se predice, no se puede saber si el modelo funciona.",
+          "para": "Fijar el objetivo y la unidad (ciclos) antes de tocar ningún dato."
+        },
+        {
+          "titulo": "Descargar y cargar los datos",
+          "que": "Traer los ficheros de FD001 a tu ordenador y abrirlos con Python.",
+          "como": "Descarga el conjunto desde la página oficial. Son ficheros de texto con números separados por espacios (train_FD001, test_FD001 y RUL_FD001). Se cargan con pandas, dándole nombre a cada columna: motor, ciclo, 3 ajustes y 21 sensores.",
+          "porque": "Los ficheros no traen cabecera; sin nombres no se sabe qué es cada columna.",
+          "para": "Tener una tabla ordenada con la que trabajar."
+        },
+        {
+          "titulo": "Mirar los datos antes de modelar",
+          "que": "Dibujar gráficas de varios sensores para algunos motores.",
+          "como": "Con matplotlib, una línea por motor: ciclo en el eje horizontal y lectura del sensor en el vertical.",
+          "porque": "Los ojos detectan en segundos qué sensores cambian al degradarse el motor y cuáles son ruido o constantes.",
+          "para": "Decidir con criterio qué sensores merecen la pena."
+        },
+        {
+          "titulo": "Calcular la RUL de entrenamiento",
+          "que": "Ponerle a cada fila la respuesta correcta.",
+          "como": "Para cada motor, RUL = ciclo máximo del motor − ciclo actual. Después se limita a un tope (por ejemplo 125): al principio de la vida un motor sano está igual de sano con 300 que con 200 ciclos por delante.",
+          "porque": "Un modelo aprende de ejemplos con respuesta. El tope evita que se obsesione con distinguir lo indistinguible.",
+          "para": "Crear la columna objetivo que el modelo tiene que aprender a adivinar."
+        },
+        {
+          "titulo": "Limpiar y normalizar",
+          "que": "Quitar sensores inútiles y poner los demás en la misma escala.",
+          "como": "Se descartan los sensores que no cambian nunca. Los restantes se escalan (por ejemplo, con StandardScaler de scikit-learn), ajustando la escala solo con los datos de entrenamiento.",
+          "porque": "Un sensor que mide miles y otro que mide décimas se estorban. Ajustar la escala con los datos de prueba sería hacer trampa.",
+          "para": "Que el modelo compare sensores de forma justa."
+        },
+        {
+          "titulo": "Crear ventanas de tiempo",
+          "que": "Dar al modelo no solo la última lectura, sino cómo viene evolucionando.",
+          "como": "Por cada ciclo se calculan medias y pendientes de los últimos 10 o 30 ciclos de cada sensor.",
+          "porque": "La degradación se ve en la tendencia, no en un solo instante, que puede ser ruido.",
+          "para": "Mejorar mucho la predicción con muy poco esfuerzo."
+        },
+        {
+          "titulo": "Entrenar un modelo base",
+          "que": "Empezar por lo simple.",
+          "como": "Una regresión lineal y después un Random Forest, ambos de scikit-learn, entrenados con los motores de entrenamiento.",
+          "porque": "Un modelo simple da la referencia mínima. Si uno complejo no la supera, no merece la pena.",
+          "para": "Tener una cifra de partida contra la que comparar cualquier mejora."
+        },
+        {
+          "titulo": "Evaluar con honestidad",
+          "que": "Medir el error sobre motores que el modelo no ha visto.",
+          "como": "Se predice la RUL del último ciclo de cada motor de prueba y se compara con RUL_FD001. Se calculan el RMSE y la puntuación de la NASA.",
+          "porque": "Un buen resultado sobre los datos de entrenamiento no demuestra nada; solo vale lo que funciona con datos nuevos.",
+          "para": "Saber cuánto puedes fiarte realmente del modelo."
+        },
+        {
+          "titulo": "Mejorar y poner límites",
+          "que": "Probar una mejora y escribir qué no sabe hacer el modelo.",
+          "como": "Ajustar el tope de la RUL, el tamaño de ventana o probar otro modelo, anotando cada cambio y su efecto. Por último, redactar las limitaciones.",
+          "porque": "Un resultado sin sus límites engaña, aunque sea sin querer.",
+          "para": "Dejar un proyecto reproducible y creíble."
+        }
+      ],
+      "resultados": "Pendiente: se publicarán al completar el proyecto, con las cifras reales obtenidas.",
+      "limitaciones": "Los datos son simulados, no de motores reales. Solo se usa el subconjunto FD001 (una condición de operación y un tipo de fallo). El resultado no es aplicable a ningún motor real.",
+      "codigo": "",
+      "entrega": {
+        "notebook": "",
+        "repositorio": "",
+        "demo": "",
+        "articulo": ""
+      },
+      "noticias_palabras": [
+        "mantenimiento predictivo",
+        "predictive maintenance",
+        "turbofan",
+        "jet engine",
+        "remaining useful life",
+        "vida útil restante",
+        "prognostics",
+        "motor de avión"
+      ],
+      "tipo": "Regresión",
+      "tecnica": "Random Forest con ventanas de tiempo",
+      "bloque": "regresion"
+    },
+    {
+      "id": "emisiones-turbina-gas",
+      "titulo": "Emisiones de una turbina de gas",
+      "estado": "idea",
+      "area": "energía",
+      "tipo": "Regresión",
+      "tecnica": "Gradient boosting con regularización",
+      "descripcion": "Predecir las emisiones de CO y NOx de una turbina de gas a partir de sus sensores.",
+      "dataset": {
+        "nombre": "Gas Turbine CO and NOx Emission (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/551/gas+turbine+co+and+nox+emission+data+set",
+        "verificado": false
+      },
+      "objetivo": "Usar modelos de árboles potenciados y aprender a evitar el sobreajuste.",
+      "datos": "Sensores reales de una turbina de gas durante varios años.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "scikit-learn",
+        "matplotlib"
+      ],
+      "metrica": "RMSE y R², con validación cruzada por años.",
+      "esquema": [
+        "Cargar y separar por años.",
+        "Modelo de referencia lineal.",
+        "Gradient boosting y ajuste de parámetros.",
+        "Validar por años, no al azar.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Una sola turbina; las condiciones cambian con los años.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "gas turbine",
+        "turbina de gas",
+        "emisiones"
+      ],
+      "bloque": "regresion",
+      "nivel": "avanzado"
+    },
+    {
+      "id": "iris-clasificacion",
+      "titulo": "Reconocer tres especies de flor",
+      "estado": "idea",
+      "area": "IA",
+      "tipo": "Clasificación",
+      "tecnica": "K vecinos más cercanos",
+      "descripcion": "El ejemplo clásico para entender qué es clasificar.",
+      "dataset": {
+        "nombre": "Iris (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/53/iris",
+        "verificado": false
+      },
+      "objetivo": "Entender la idea de clasificar: clases, entrenamiento, prueba y acierto.",
+      "datos": "150 flores medidas por un botánico, con tres especies.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "scikit-learn"
+      ],
+      "metrica": "Exactitud y matriz de confusión.",
+      "esquema": [
+        "Cargar y dibujar los datos.",
+        "Separar entrenamiento y prueba.",
+        "Entrenar k vecinos.",
+        "Evaluar con matriz de confusión.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Conjunto muy pequeño y muy fácil: sirve para aprender, no para sacar conclusiones.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "clasificación",
+        "classification"
+      ],
+      "bloque": "clasificacion",
+      "nivel": "basico"
+    },
+    {
+      "id": "calidad-vino",
+      "titulo": "Calidad de un vino según su química",
+      "estado": "idea",
+      "area": "IA",
+      "tipo": "Clasificación",
+      "tecnica": "Regresión logística",
+      "descripcion": "Decidir si un vino es bueno o no a partir de análisis químicos.",
+      "dataset": {
+        "nombre": "Wine Quality (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/186/wine+quality",
+        "verificado": false
+      },
+      "objetivo": "Aprender la regresión logística y qué es un umbral de decisión.",
+      "datos": "Análisis físico-químicos reales de vinos y notas de catadores.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "scikit-learn"
+      ],
+      "metrica": "Exactitud, precisión y recall.",
+      "esquema": [
+        "Cargar y convertir la nota en bueno o no bueno.",
+        "Revisar las variables.",
+        "Ajustar la regresión logística.",
+        "Evaluar y ajustar el umbral.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Las notas de los catadores son subjetivas.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "calidad",
+        "quality"
+      ],
+      "bloque": "clasificacion",
+      "nivel": "basico"
+    },
+    {
+      "id": "enfriador-hidraulico-binario",
+      "titulo": "¿Enfriador sano o degradado?",
+      "estado": "idea",
+      "area": "mantenimiento",
+      "tipo": "Clasificación",
+      "tecnica": "Clasificación binaria con árboles",
+      "descripcion": "Decidir con los sensores de un banco hidráulico si el enfriador funciona bien.",
+      "dataset": {
+        "nombre": "Condition monitoring of hydraulic systems (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/447/condition+monitoring+of+hydraulic+systems",
+        "verificado": true
+      },
+      "objetivo": "Primera clasificación con sensores reales y dos clases.",
+      "datos": "Banco de pruebas hidráulico real: ciclos de trabajo y estado de cada componente.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "scikit-learn"
+      ],
+      "metrica": "Exactitud y matriz de confusión.",
+      "esquema": [
+        "Cargar sensores y etiqueta del enfriador.",
+        "Resumir cada ciclo en pocas cifras.",
+        "Entrenar un árbol de decisión.",
+        "Evaluar y mirar qué sensores pesan.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Banco de pruebas, no un circuito en servicio.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "hydraulic",
+        "hidráulic"
+      ],
+      "bloque": "clasificacion",
+      "nivel": "basico"
+    },
+    {
+      "id": "estado-circuito-hidraulico",
+      "titulo": "Estado de un circuito hidráulico",
+      "estado": "idea",
+      "nivel": "medio",
+      "area": "mantenimiento",
+      "tipo": "Clasificación",
+      "tecnica": "Regresión logística y árboles",
+      "descripcion": "Identificar si el enfriador, la válvula, la bomba y el acumulador de un banco hidráulico están sanos o degradados.",
+      "dataset": {
+        "nombre": "Condition monitoring of hydraulic systems (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/447/condition+monitoring+of+hydraulic+systems",
+        "verificado": true
+      },
+      "objetivo": "Aprender clasificación con muchos sensores y a leer una matriz de confusión.",
+      "datos": "Ciclos de trabajo de un banco de pruebas hidráulico real con sensores de presión, caudal, temperatura y vibración, y el estado de cada componente.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "scikit-learn"
+      ],
+      "metrica": "Exactitud, precisión, recall y matriz de confusión.",
+      "esquema": [
+        "Cargar sensores y etiquetas.",
+        "Resumir cada ciclo en pocas cifras (media, máximo).",
+        "Entrenar regresión logística y un árbol.",
+        "Evaluar con matriz de confusión.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Es un banco de pruebas, no un circuito en servicio.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "hydraulic",
+        "hidráulic",
+        "condition monitoring"
+      ],
+      "bloque": "clasificacion"
+    },
+    {
+      "id": "fallo-maquina-clases-desequilibradas",
+      "titulo": "Fallo de máquina con pocos casos de avería",
+      "estado": "idea",
+      "nivel": "medio",
+      "area": "mantenimiento",
+      "tipo": "Clasificación",
+      "tecnica": "Clasificación con clases desequilibradas",
+      "descripcion": "Predecir fallos cuando casi todos los registros son de funcionamiento normal.",
+      "dataset": {
+        "nombre": "AI4I 2020 Predictive Maintenance (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/601/ai4i+2020+predictive+maintenance+dataset",
+        "verificado": false
+      },
+      "objetivo": "Entender por qué la exactitud engaña cuando hay pocos fallos y cómo medir mejor.",
+      "datos": "Datos sintéticos que imitan el mantenimiento de máquinas.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "scikit-learn"
+      ],
+      "metrica": "Precisión, recall y F1.",
+      "esquema": [
+        "Cargar y ver cuántos fallos hay.",
+        "Modelo ingenuo que siempre dice «no falla».",
+        "Modelo real y comparación.",
+        "Ajustar el umbral.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Datos sintéticos: sirve para aprender la técnica, no para sacar conclusiones sobre máquinas reales.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "predictive maintenance",
+        "mantenimiento predictivo"
+      ],
+      "bloque": "clasificacion"
+    },
+    {
+      "id": "fallos-planchas-acero",
+      "titulo": "Fallos en planchas de acero",
+      "estado": "idea",
+      "area": "ingeniería",
+      "tipo": "Clasificación",
+      "tecnica": "Random Forest y SVM",
+      "descripcion": "Clasificar el tipo de defecto de una plancha de acero a partir de medidas.",
+      "dataset": {
+        "nombre": "Steel Plates Faults (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/198/steel+plates+faults",
+        "verificado": false
+      },
+      "objetivo": "Clasificar con varias clases y comparar modelos.",
+      "datos": "Medidas reales de planchas de acero con siete tipos de defecto.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "scikit-learn"
+      ],
+      "metrica": "Exactitud y matriz de confusión.",
+      "esquema": [
+        "Cargar y revisar las clases.",
+        "Modelo de referencia.",
+        "Random Forest y SVM.",
+        "Comparar con validación cruzada.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Una sola fábrica y un solo tipo de acero.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "steel",
+        "acero",
+        "defect"
+      ],
+      "bloque": "clasificacion",
+      "nivel": "medio"
+    },
+    {
+      "id": "actividad-movil",
+      "titulo": "Reconocer actividades con sensores de un móvil",
+      "estado": "idea",
+      "area": "IA",
+      "tipo": "Clasificación",
+      "tecnica": "Gradient boosting y validación por persona",
+      "descripcion": "Distinguir andar, subir escaleras o estar sentado con el acelerómetro de un móvil.",
+      "dataset": {
+        "nombre": "Human Activity Recognition Using Smartphones (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/240/human+activity+recognition+using+smartphones",
+        "verificado": false
+      },
+      "objetivo": "Trabajar con señales de sensores y validar por persona para no engañarse.",
+      "datos": "Medidas reales del acelerómetro y el giroscopio de varios voluntarios.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "scikit-learn"
+      ],
+      "metrica": "Exactitud por persona y matriz de confusión.",
+      "esquema": [
+        "Cargar las características ya calculadas.",
+        "Separar por personas, no al azar.",
+        "Entrenar un modelo de boosting.",
+        "Evaluar con personas nuevas.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Pocas personas; el resultado puede no generalizarse.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "sensor",
+        "wearable",
+        "activity recognition"
+      ],
+      "bloque": "clasificacion",
+      "nivel": "avanzado"
+    },
+    {
+      "id": "linea-base-anomalias",
+      "titulo": "Máquina sana frente a anómala",
+      "estado": "idea",
+      "nivel": "avanzado",
+      "area": "mantenimiento",
+      "descripcion": "Aprender cómo se comporta una máquina sana y avisar cuando se aleja de ello.",
+      "dataset": {
+        "nombre": "Datos públicos de rodamientos (por ejemplo, Case Western Reserve University)",
+        "url": "https://engineering.case.edu/bearingdatacenter",
+        "verificado": false
+      },
+      "objetivo": "Aprender qué es «normal» para una máquina sana y detectar desviaciones sin necesitar ejemplos de averías.",
+      "datos": "Vibraciones de rodamientos sanos y con fallos, medidas en banco de pruebas.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "SciPy",
+        "scikit-learn"
+      ],
+      "metodo": "Extraer características de la señal (energía, picos, frecuencias) y entrenar un detector de anomalías solo con datos sanos.",
+      "metrica": "Tasa de detección y falsas alarmas.",
+      "resultados": "Pendiente.",
+      "limitaciones": "Datos de banco de pruebas, no de máquinas en servicio.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "anomaly detection",
+        "detección de anomalías",
+        "vibration",
+        "vibración",
+        "condition monitoring",
+        "rodamiento"
+      ],
+      "tipo": "Anomalías",
+      "tecnica": "Detección de anomalías",
+      "esquema": [
+        "Cargar señales de rodamientos sanos.",
+        "Extraer características (energía, picos, frecuencias).",
+        "Entrenar un detector solo con datos sanos.",
+        "Probar con datos con fallo.",
+        "Anotar límites."
+      ],
+      "bloque": "clasificacion"
+    },
+    {
+      "id": "fallos-semiconductores",
+      "titulo": "Fallos en fabricación de semiconductores",
+      "estado": "idea",
+      "area": "ingeniería",
+      "tipo": "Clasificación",
+      "tecnica": "Selección de variables y clases desequilibradas",
+      "descripcion": "Predecir fallos de producción con cientos de sensores y muy pocos fallos.",
+      "dataset": {
+        "nombre": "SECOM (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/179/secom",
+        "verificado": false
+      },
+      "objetivo": "Aprender a manejar muchas variables, huecos y pocos casos positivos.",
+      "datos": "Medidas reales de un proceso de fabricación de semiconductores.",
+      "herramientas": [
+        "Python",
+        "pandas",
+        "scikit-learn"
+      ],
+      "metrica": "Precisión, recall y F1.",
+      "esquema": [
+        "Cargar y tratar los valores que faltan.",
+        "Quitar variables inútiles.",
+        "Entrenar con clases desequilibradas.",
+        "Evaluar con validación cruzada.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Datos anónimos: no se sabe qué mide cada sensor.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "semiconductor",
+        "manufactur",
+        "fabricación"
+      ],
+      "bloque": "clasificacion",
+      "nivel": "avanzado"
+    },
+    {
+      "id": "mlp-digitos",
+      "titulo": "Mi primera red neuronal: dígitos escritos a mano",
+      "estado": "idea",
+      "area": "IA",
+      "tipo": "Clasificación de imágenes",
+      "tecnica": "Perceptrón multicapa (MLP)",
+      "descripcion": "Una red neuronal sencilla para reconocer dígitos.",
+      "dataset": {
+        "nombre": "MNIST (por confirmar)",
+        "url": "",
+        "verificado": false
+      },
+      "objetivo": "Entender qué es una neurona, una capa y el entrenamiento por épocas.",
+      "datos": "70.000 imágenes de dígitos escritos a mano.",
+      "herramientas": [
+        "Python",
+        "PyTorch o TensorFlow"
+      ],
+      "metrica": "Exactitud y curvas de entrenamiento.",
+      "esquema": [
+        "Cargar las imágenes.",
+        "Definir una red de dos capas.",
+        "Entrenar y dibujar el aprendizaje.",
+        "Evaluar y ver los fallos.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Imágenes muy limpias; es un ejercicio de aprendizaje.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "neural network",
+        "red neuronal"
+      ],
+      "bloque": "redes",
+      "nivel": "basico"
+    },
+    {
+      "id": "mlp-potencia-central",
+      "titulo": "Red neuronal para la potencia de la central",
+      "estado": "idea",
+      "area": "energía",
+      "tipo": "Regresión",
+      "tecnica": "Perceptrón multicapa (MLP)",
+      "descripcion": "Resolver con una red neuronal el problema de la central y compararlo con la regresión múltiple.",
+      "dataset": {
+        "nombre": "Central eléctrica de ciclo combinado (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/294/combined+cycle+power+plant",
+        "verificado": true
+      },
+      "objetivo": "Ver si una red mejora a un modelo lineal y a qué coste.",
+      "datos": "Los mismos datos de la central.",
+      "herramientas": [
+        "Python",
+        "PyTorch o TensorFlow"
+      ],
+      "metrica": "RMSE comparado con el modelo lineal.",
+      "esquema": [
+        "Preparar y escalar los datos.",
+        "Definir una red pequeña.",
+        "Entrenar y vigilar el sobreajuste.",
+        "Comparar con la regresión múltiple.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Con pocas variables una red rara vez gana a un buen modelo sencillo.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "neural network",
+        "red neuronal"
+      ],
+      "bloque": "redes",
+      "nivel": "basico"
+    },
+    {
+      "id": "mlp-circuito-hidraulico",
+      "titulo": "Red neuronal para el estado hidráulico",
+      "estado": "idea",
+      "area": "mantenimiento",
+      "tipo": "Clasificación",
+      "tecnica": "Perceptrón multicapa (MLP)",
+      "descripcion": "Clasificar el estado de los componentes hidráulicos con una red y compararla con los árboles.",
+      "dataset": {
+        "nombre": "Condition monitoring of hydraulic systems (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/447/condition+monitoring+of+hydraulic+systems",
+        "verificado": true
+      },
+      "objetivo": "Aplicar una red a datos de sensores y comparar con modelos clásicos.",
+      "datos": "Los mismos del banco hidráulico.",
+      "herramientas": [
+        "Python",
+        "PyTorch o TensorFlow"
+      ],
+      "metrica": "Exactitud y matriz de confusión.",
+      "esquema": [
+        "Preparar y escalar sensores.",
+        "Definir la red.",
+        "Entrenar con validación.",
+        "Comparar con los árboles.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Banco de pruebas, no un circuito en servicio.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "hydraulic",
+        "hidráulic"
+      ],
+      "bloque": "redes",
+      "nivel": "basico"
+    },
+    {
+      "id": "lstm-vida-util",
+      "titulo": "Vida útil con redes recurrentes",
+      "estado": "idea",
+      "nivel": "medio",
+      "area": "mantenimiento",
+      "tipo": "Regresión",
+      "tecnica": "LSTM / GRU",
+      "descripcion": "Resolver el problema del proyecto de vida útil con Random Forest con redes neuronales recurrentes y comparar resultados.",
+      "dataset": {
+        "nombre": "NASA C-MAPSS (los cuatro subconjuntos)",
+        "url": "https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/",
+        "verificado": false
+      },
+      "objetivo": "Aprender a usar redes sobre series temporales y ver si mejoran al Random Forest.",
+      "datos": "Los mismos datos simulados del proyecto de vida útil con Random Forest, ampliados.",
+      "herramientas": [
+        "Python",
+        "PyTorch o TensorFlow"
+      ],
+      "metrica": "RMSE y puntuación de la NASA, comparados con el proyecto de vida útil con Random Forest.",
+      "esquema": [
+        "Preparar secuencias de entrada.",
+        "Definir una LSTM pequeña.",
+        "Entrenar y vigilar el sobreajuste.",
+        "Comparar con el proyecto de vida útil con Random Forest.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Datos simulados.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "lstm",
+        "remaining useful life",
+        "prognostics"
+      ],
+      "bloque": "redes"
+    },
+    {
+      "id": "autoencoder-hidraulico",
+      "titulo": "Anomalías con un autoencoder",
+      "estado": "idea",
+      "nivel": "medio",
+      "area": "mantenimiento",
+      "tipo": "Anomalías",
+      "tecnica": "Red neuronal autoencoder",
+      "descripcion": "Detectar comportamientos raros del banco hidráulico sin usar etiquetas.",
+      "dataset": {
+        "nombre": "Condition monitoring of hydraulic systems (UCI)",
+        "url": "https://archive.ics.uci.edu/dataset/447/condition+monitoring+of+hydraulic+systems",
+        "verificado": true
+      },
+      "objetivo": "Entrenar una red que aprende a reconstruir lo normal y marca lo que no sabe reconstruir.",
+      "datos": "Los mismos datos del proyecto del circuito hidráulico.",
+      "herramientas": [
+        "Python",
+        "PyTorch o TensorFlow"
+      ],
+      "metrica": "Error de reconstrucción y curva de aciertos y falsas alarmas.",
+      "esquema": [
+        "Elegir ciclos sanos.",
+        "Definir el autoencoder.",
+        "Entrenar con datos sanos.",
+        "Fijar un umbral de error.",
+        "Probar con ciclos degradados y anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Banco de pruebas, no un circuito en servicio.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "autoencoder",
+        "anomaly detection",
+        "detección de anomalías"
+      ],
+      "bloque": "redes"
+    },
+    {
+      "id": "temperatura-series-jena",
+      "titulo": "Predecir la temperatura con series temporales",
+      "estado": "idea",
+      "area": "energía",
+      "tipo": "Regresión",
+      "tecnica": "Redes recurrentes (GRU)",
+      "descripcion": "Predecir la temperatura de las próximas horas con datos meteorológicos reales.",
+      "dataset": {
+        "nombre": "Jena Climate (Instituto Max Planck, por confirmar)",
+        "url": "https://www.bgc-jena.mpg.de/wetter/",
+        "verificado": false
+      },
+      "objetivo": "Aprender a preparar series y comparar una red con una referencia ingenua.",
+      "datos": "Medidas meteorológicas cada diez minutos de una estación real.",
+      "herramientas": [
+        "Python",
+        "PyTorch o TensorFlow"
+      ],
+      "metrica": "MAE frente a «repetir el último valor».",
+      "esquema": [
+        "Cargar y reducir la frecuencia.",
+        "Crear ventanas de tiempo.",
+        "Referencia ingenua.",
+        "Entrenar una GRU.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Una estación, una ciudad.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "weather",
+        "clima",
+        "meteorolog"
+      ],
+      "bloque": "redes",
+      "nivel": "medio"
+    },
+    {
+      "id": "cnn-espectrogramas-rodamientos",
+      "titulo": "Fallos de rodamiento con imágenes de vibración",
+      "estado": "idea",
+      "nivel": "avanzado",
+      "area": "mantenimiento",
+      "tipo": "Clasificación",
+      "tecnica": "Red convolucional (CNN) sobre espectrogramas",
+      "descripcion": "Convertir señales de vibración en imágenes y clasificar el estado del rodamiento.",
+      "dataset": {
+        "nombre": "Case Western Reserve University Bearing Data Center",
+        "url": "https://engineering.case.edu/bearingdatacenter",
+        "verificado": false
+      },
+      "objetivo": "Descubrir cómo una CNN reconoce patrones en imágenes de señales.",
+      "datos": "Vibraciones de rodamientos sanos y con fallos de varios tamaños.",
+      "herramientas": [
+        "Python",
+        "PyTorch o TensorFlow",
+        "SciPy"
+      ],
+      "metrica": "Exactitud y matriz de confusión.",
+      "esquema": [
+        "Cargar señales.",
+        "Convertirlas en espectrogramas.",
+        "Definir una CNN pequeña.",
+        "Entrenar y evaluar.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Banco de pruebas; ojo con mezclar datos de entrenamiento y prueba del mismo rodamiento.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "convolutional",
+        "cnn",
+        "vibration",
+        "vibración"
+      ],
+      "bloque": "redes"
+    },
+    {
+      "id": "cnn-defectos-acero",
+      "titulo": "Defectos en superficies de acero",
+      "estado": "idea",
+      "nivel": "avanzado",
+      "area": "visión artificial",
+      "tipo": "Clasificación de imágenes",
+      "tecnica": "CNN con transferencia de aprendizaje",
+      "descripcion": "Clasificar defectos de superficies de acero a partir de imágenes.",
+      "dataset": {
+        "nombre": "NEU Surface Defect Database (por verificar)",
+        "url": "",
+        "verificado": false
+      },
+      "objetivo": "Usar una red ya entrenada y adaptarla a un problema industrial.",
+      "datos": "Imágenes de superficies de acero con varios tipos de defecto.",
+      "herramientas": [
+        "Python",
+        "PyTorch o TensorFlow"
+      ],
+      "metrica": "Exactitud y matriz de confusión.",
+      "esquema": [
+        "Obtener y revisar las imágenes.",
+        "Cargar una red preentrenada.",
+        "Reentrenar la última capa.",
+        "Evaluar.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Imágenes de laboratorio, con iluminación controlada.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "defect detection",
+        "visión artificial",
+        "computer vision"
+      ],
+      "bloque": "redes"
+    },
+    {
+      "id": "cnn-plantas-incendios",
+      "titulo": "Plantas enfermas o detección de humo e incendios",
+      "estado": "idea",
+      "nivel": "avanzado",
+      "area": "visión artificial",
+      "tipo": "Clasificación de imágenes",
+      "tecnica": "CNN con transferencia de aprendizaje",
+      "descripcion": "Clasificar imágenes de hojas enfermas o de humo en el monte.",
+      "dataset": {
+        "nombre": "Por elegir (PlantVillage u otro; por verificar)",
+        "url": "",
+        "verificado": false
+      },
+      "objetivo": "Aprender los límites de las imágenes tomadas en laboratorio frente a las del campo.",
+      "datos": "Conjunto de imágenes a elegir.",
+      "herramientas": [
+        "Python",
+        "PyTorch o TensorFlow"
+      ],
+      "metrica": "Exactitud y matriz de confusión.",
+      "esquema": [
+        "Elegir y verificar el conjunto.",
+        "Preparar imágenes.",
+        "Entrenar con transferencia.",
+        "Probar con fotos propias.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Las imágenes de laboratorio suelen funcionar peor en el campo.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "plant disease",
+        "enfermedad",
+        "wildfire",
+        "incendio",
+        "humo"
+      ],
+      "bloque": "redes"
+    },
+    {
+      "id": "sensor-propio-esp32",
+      "titulo": "Mi propio sensor: línea base de un ventilador",
+      "estado": "idea",
+      "area": "mantenimiento",
+      "tipo": "Anomalías",
+      "tecnica": "Sensores propios y detección de anomalías",
+      "descripcion": "Medir la vibración y la temperatura de una máquina real con un microcontrolador y aprender su comportamiento normal.",
+      "dataset": {
+        "nombre": "Datos propios (grabados con el proyecto)",
+        "url": "",
+        "verificado": false
+      },
+      "objetivo": "Pasar de datos ajenos a datos propios: construir el sensor, grabar y detectar cambios.",
+      "datos": "Vibración y temperatura de un ventilador, grabadas con un acelerómetro y un ESP32.",
+      "herramientas": [
+        "Python",
+        "ESP32",
+        "scikit-learn"
+      ],
+      "metrica": "Falsas alarmas y avisos a tiempo.",
+      "esquema": [
+        "Montar el sensor y fijarlo.",
+        "Grabar días de funcionamiento normal.",
+        "Extraer características.",
+        "Entrenar la línea base.",
+        "Provocar un cambio controlado y ver el aviso."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Un solo equipo y pocos días de datos.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "edge",
+        "sensor",
+        "esp32",
+        "condition monitoring"
+      ],
+      "bloque": "experto",
+      "nivel": "experto"
+    },
+    {
+      "id": "gemelo-hibrido-motor",
+      "titulo": "Gemelo digital híbrido de un motor",
+      "estado": "idea",
+      "area": "mantenimiento",
+      "tipo": "Regresión",
+      "tecnica": "Modelo físico + aprendizaje automático",
+      "descripcion": "Combinar un modelo físico sencillo de un turbofán con un modelo de datos que corrige sus errores.",
+      "dataset": {
+        "nombre": "NASA C-MAPSS",
+        "url": "https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/",
+        "verificado": false
+      },
+      "objetivo": "Ver cuándo la física y los datos se complementan mejor que por separado.",
+      "datos": "Datos simulados de motores turbofán.",
+      "herramientas": [
+        "Python",
+        "SciPy",
+        "PyTorch o scikit-learn"
+      ],
+      "metrica": "RMSE frente a modelo solo físico y modelo solo de datos.",
+      "esquema": [
+        "Elegir un modelo físico simple.",
+        "Medir sus errores con los datos.",
+        "Entrenar un corrector.",
+        "Comparar los tres.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Datos simulados; el modelo físico es una simplificación.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "digital twin",
+        "gemelo digital",
+        "physics-informed"
+      ],
+      "bloque": "experto",
+      "nivel": "experto"
+    },
+    {
+      "id": "refuerzo-control",
+      "titulo": "Aprendizaje por refuerzo: control de un péndulo y un dron",
+      "estado": "idea",
+      "area": "robótica",
+      "tipo": "Control",
+      "tecnica": "Aprendizaje por refuerzo",
+      "descripcion": "Entrenar un agente en simulación para mantener en equilibrio un sistema.",
+      "dataset": {
+        "nombre": "Entornos de simulación Gymnasium (por confirmar)",
+        "url": "",
+        "verificado": false
+      },
+      "objetivo": "Entender recompensa, política y exploración.",
+      "datos": "Simulación, sin datos externos.",
+      "herramientas": [
+        "Python",
+        "Gymnasium",
+        "PyTorch"
+      ],
+      "metrica": "Recompensa acumulada y estabilidad.",
+      "esquema": [
+        "Instalar el entorno.",
+        "Probar un agente aleatorio.",
+        "Entrenar con un algoritmo estándar.",
+        "Medir la estabilidad.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "En simulación: pasar a un sistema real es otro problema.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "reinforcement learning",
+        "aprendizaje por refuerzo",
+        "robot"
+      ],
+      "bloque": "experto",
+      "nivel": "experto"
+    },
+    {
+      "id": "vision-en-el-borde",
+      "titulo": "Visión artificial en un dispositivo pequeño",
+      "estado": "idea",
+      "area": "visión artificial",
+      "tipo": "Detección de objetos",
+      "tecnica": "Redes de detección optimizadas para el borde",
+      "descripcion": "Detectar defectos con una cámara y un dispositivo de bajo coste, sin conexión a internet.",
+      "dataset": {
+        "nombre": "Defectos de superficie (por elegir y verificar)",
+        "url": "",
+        "verificado": false
+      },
+      "objetivo": "Llevar un modelo del ordenador a un dispositivo pequeño.",
+      "datos": "Imágenes de defectos y fotos propias.",
+      "herramientas": [
+        "Python",
+        "OpenCV",
+        "TensorFlow Lite o similar"
+      ],
+      "metrica": "Precisión y fotogramas por segundo.",
+      "esquema": [
+        "Elegir el conjunto de imágenes.",
+        "Entrenar un detector pequeño.",
+        "Reducir y exportar el modelo.",
+        "Ejecutarlo en el dispositivo.",
+        "Medir velocidad y fallos."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "El rendimiento depende de la luz y de la cámara.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "edge ai",
+        "computer vision",
+        "visión artificial"
+      ],
+      "bloque": "experto",
+      "nivel": "experto"
+    },
+    {
+      "id": "asistente-manuales-rag",
+      "titulo": "Asistente que responde con citas sobre manuales públicos",
+      "estado": "idea",
+      "area": "IA",
+      "tipo": "Lenguaje",
+      "tecnica": "Modelos de lenguaje y recuperación de documentos (RAG)",
+      "descripcion": "Preguntar en castellano a una colección de manuales y normas públicas y recibir respuestas con la página de origen.",
+      "dataset": {
+        "nombre": "Documentación pública (por elegir)",
+        "url": "",
+        "verificado": false
+      },
+      "objetivo": "Aprender cómo se le da información propia a un modelo de lenguaje y cómo se comprueba que no inventa.",
+      "datos": "Documentos públicos y de libre uso, nunca confidenciales.",
+      "herramientas": [
+        "Python",
+        "Un modelo de lenguaje",
+        "Base de vectores"
+      ],
+      "metrica": "Respuestas correctas con cita y tasa de «no lo sé».",
+      "esquema": [
+        "Elegir y limpiar los documentos.",
+        "Trocear e indexar.",
+        "Montar la búsqueda y el modelo.",
+        "Evaluar con preguntas con respuesta conocida.",
+        "Anotar límites."
+      ],
+      "resultados": "Pendiente.",
+      "limitaciones": "Puede equivocarse: siempre hay que comprobar la cita.",
+      "codigo": "",
+      "entrega": {},
+      "noticias_palabras": [
+        "rag",
+        "llm",
+        "language model",
+        "modelo de lenguaje"
+      ],
+      "bloque": "experto",
+      "nivel": "experto"
+    }
+  ],
+  "retos": [
+    {
+      "nombre": "Kaggle",
+      "url": "https://www.kaggle.com/competitions",
+      "descripcion": "La mayor plataforma de retos de datos: competiciones, conjuntos de datos y cuadernos con cálculo gratuito (con límites).",
+      "destacado": true
+    },
+    {
+      "nombre": "PHM Society",
+      "url": "https://phmsociety.org",
+      "descripcion": "Sociedad de gestión de la salud y pronóstico de equipos. Organiza retos anuales de datos de mantenimiento predictivo.",
+      "destacado": true
+    },
+    {
+      "nombre": "Grand Challenge",
+      "url": "https://grand-challenge.org",
+      "descripcion": "Retos de imagen médica. Solo para aprender, nunca para diagnosticar."
+    },
+    {
+      "nombre": "DrivenData",
+      "url": "https://www.drivendata.org/competitions/",
+      "descripcion": "Retos con impacto social: salud pública, clima y conservación."
+    },
+    {
+      "nombre": "AIcrowd",
+      "url": "https://www.aicrowd.com/challenges",
+      "descripcion": "Retos de inteligencia artificial, aprendizaje por refuerzo y robótica."
+    },
+    {
+      "nombre": "Zindi",
+      "url": "https://zindi.africa/competitions",
+      "descripcion": "Retos centrados en problemas reales, con mucha agricultura y clima."
+    }
+  ],
+  "recursos": [
+    {
+      "id": "modulo-1",
+      "titulo": "Módulo 1 · Regresión lineal simple",
+      "autor": "Book Profesional IA · Edición 2025-2026",
+      "archivo": "Modulo_1_nivel_basico_all.pdf",
+      "descripcion": "Apuntes de regresión lineal simple, desde cero, con ejercicios resueltos y test. Cada paso de los proyectos enlaza con la página que lo explica.",
+      "submodulos": [
+        {
+          "n": "1.1",
+          "titulo": "Práctica con datasets reales",
+          "nivel": "básico",
+          "paginas": 29
+        },
+        {
+          "n": "1.2",
+          "titulo": "Mínimos cuadrados: la matemática de la recta",
+          "nivel": "básico",
+          "paginas": 25
+        },
+        {
+          "n": "1.3",
+          "titulo": "El ecosistema del dato (Kaggle, UCI, OpenML)",
+          "nivel": "básico",
+          "paginas": 23
+        },
+        {
+          "n": "1.4",
+          "titulo": "Evaluación del modelo",
+          "nivel": "medio",
+          "paginas": 22
+        },
+        {
+          "n": "1.5",
+          "titulo": "Diagnóstico de la regresión",
+          "nivel": "básico",
+          "paginas": 15
+        },
+        {
+          "n": "1.6",
+          "titulo": "Guía de los 4 gráficos de diagnóstico",
+          "nivel": "básico",
+          "paginas": 17
+        },
+        {
+          "n": "1.7",
+          "titulo": "Aplicando el diagnóstico al proyecto energético",
+          "nivel": "básico",
+          "paginas": 15
+        },
+        {
+          "n": "1.8",
+          "titulo": "Predecir con honestidad: intervalos y train/test",
+          "nivel": "básico",
+          "paginas": 16
+        },
+        {
+          "n": "1.9",
+          "titulo": "Inferencia en la regresión simple",
+          "nivel": "básico",
+          "paginas": 16
+        }
+      ]
+    }
+  ],
+  "aprenderas": {
+    "regresion-basico": [
+      "Qué es una regresión lineal",
+      "Qué significa una pendiente",
+      "Qué es R²",
+      "Qué son MAE y RMSE",
+      "Cómo mirar los datos antes de calcular (diagrama de dispersión)",
+      "Cómo separar datos de entrenamiento y de prueba",
+      "Cómo validar un modelo",
+      "Cómo poner un rango a una predicción y por qué no extrapolar",
+      "Cómo explicar un resultado"
+    ]
   }
- ]
 }

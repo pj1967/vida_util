@@ -1,0 +1,403 @@
+{
+ "potencia-central-regresion-simple": {
+  "1": {
+   "titulo": "Entender qué es una regresión lineal simple",
+   "fuente": "Libro de consulta · Submódulo 1.1 · págs. 9–12 (secciones 5, 6 y 7)",
+   "intro": "Lee esta página despacio, de arriba abajo, siguiendo el orden del libro. Después haz el test, sube lo que quieras enseñar y marca el paso como completado.",
+   "bloques": [
+    {
+     "t": "sec",
+     "x": "1. La recta: y = m·x + b",
+     "pag": "pág. 9"
+    },
+    {
+     "t": "p",
+     "x": "La regresión lineal simple busca la recta que mejor resume la nube de puntos: y = m·x + b, donde m es la pendiente y b el intercepto."
+    },
+    {
+     "t": "etq",
+     "k": "sencilla",
+     "titulo": "Explicación sencilla",
+     "x": "Piensa en un taxi. Pagas una cantidad fija al subir (la «bajada de bandera») y luego un precio por cada kilómetro: coste = precio_por_km · km + bajada_de_bandera."
+    },
+    {
+     "t": "ul",
+     "x": [
+      "m (pendiente) = cuánto sube Y cuando X sube 1 unidad. En el taxi, el precio por km.",
+      "b (intercepto) = el valor de Y cuando X vale 0. En el taxi, la bajada de bandera."
+     ]
+    },
+    {
+     "t": "p",
+     "x": "En los salarios del libro, m será «cuántos dólares más por cada año de experiencia». En nuestro proyecto, m será «cuántos MW cambia la potencia por cada grado de temperatura»."
+    },
+    {
+     "t": "tabla",
+     "cab": [
+      "Si la pendiente m es…",
+      "La recta…",
+      "Significa"
+     ],
+     "filas": [
+      [
+       "Positiva",
+       "Sube",
+       "Más X, más Y (experiencia → salario)"
+      ],
+      [
+       "Negativa",
+       "Baja",
+       "Más X, menos Y"
+      ],
+      [
+       "Cercana a 0",
+       "Es casi horizontal",
+       "X apenas ayuda a predecir Y"
+      ]
+     ],
+     "pie": null,
+     "nota": null
+    },
+    {
+     "t": "sec",
+     "x": "2. Cómo se encuentra la mejor recta",
+     "pag": "pág. 10"
+    },
+    {
+     "t": "p",
+     "x": "Hay infinitas rectas posibles. ¿Cuál es «la mejor»? Cada recta se equivoca en cada punto: esa distancia vertical entre el dato real y la recta es el residuo (error)."
+    },
+    {
+     "t": "p",
+     "x": "Para medir el error total se elevan los residuos al cuadrado (así no se cancelan positivos con negativos y se castigan más los errores grandes) y se suman: SSE (suma de errores al cuadrado). La mejor recta es la que tiene el SSE más pequeño: es el método de mínimos cuadrados."
+    },
+    {
+     "t": "fig",
+     "svg": "<svg viewBox=\"0 0 420 250\" role=\"img\" aria-label=\"Cinco puntos, la recta de mínimos cuadrados y los residuos\" class=\"fig-svg\"><line x1=\"44\" y1=\"212\" x2=\"404\" y2=\"212\" stroke=\"#64748b\"/><line x1=\"44\" y1=\"16\" x2=\"44\" y2=\"212\" stroke=\"#64748b\"/><text x=\"80\" y=\"228\" text-anchor=\"middle\" font-size=\"11\" fill=\"#94a3b8\">1</text><text x=\"152\" y=\"228\" text-anchor=\"middle\" font-size=\"11\" fill=\"#94a3b8\">2</text><text x=\"224\" y=\"228\" text-anchor=\"middle\" font-size=\"11\" fill=\"#94a3b8\">3</text><text x=\"296\" y=\"228\" text-anchor=\"middle\" font-size=\"11\" fill=\"#94a3b8\">4</text><text x=\"368\" y=\"228\" text-anchor=\"middle\" font-size=\"11\" fill=\"#94a3b8\">5</text><text x=\"36\" y=\"216\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">1</text><line x1=\"44\" y1=\"212\" x2=\"404\" y2=\"212\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"36\" y=\"177\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">2</text><line x1=\"44\" y1=\"173\" x2=\"404\" y2=\"173\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"36\" y=\"138\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">3</text><line x1=\"44\" y1=\"134\" x2=\"404\" y2=\"134\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"36\" y=\"98\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">4</text><line x1=\"44\" y1=\"94\" x2=\"404\" y2=\"94\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"36\" y=\"59\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">5</text><line x1=\"44\" y1=\"55\" x2=\"404\" y2=\"55\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"36\" y=\"20\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">6</text><line x1=\"44\" y1=\"16\" x2=\"404\" y2=\"16\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"224\" y=\"246\" text-anchor=\"middle\" font-size=\"12\" fill=\"#cbd5e1\">horas de estudio (x)</text><text x=\"12\" y=\"114\" transform=\"rotate(-90 12 114)\" text-anchor=\"middle\" font-size=\"12\" fill=\"#cbd5e1\">nota (y)</text><line x1=\"58\" y1=\"148\" x2=\"390\" y2=\"40\" stroke=\"#38bdf8\" stroke-width=\"2.2\"/><line x1=\"80\" y1=\"173\" x2=\"80\" y2=\"141\" stroke=\"#fb7185\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/><circle cx=\"80\" cy=\"173\" r=\"5\" fill=\"#fbbf24\" stroke=\"#0b1220\"/><line x1=\"152\" y1=\"94\" x2=\"152\" y2=\"118\" stroke=\"#fb7185\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/><circle cx=\"152\" cy=\"94\" r=\"5\" fill=\"#fbbf24\" stroke=\"#0b1220\"/><line x1=\"224\" y1=\"55\" x2=\"224\" y2=\"94\" stroke=\"#fb7185\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/><circle cx=\"224\" cy=\"55\" r=\"5\" fill=\"#fbbf24\" stroke=\"#0b1220\"/><line x1=\"296\" y1=\"94\" x2=\"296\" y2=\"71\" stroke=\"#fb7185\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/><circle cx=\"296\" cy=\"94\" r=\"5\" fill=\"#fbbf24\" stroke=\"#0b1220\"/><line x1=\"368\" y1=\"55\" x2=\"368\" y2=\"47\" stroke=\"#fb7185\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/><circle cx=\"368\" cy=\"55\" r=\"5\" fill=\"#fbbf24\" stroke=\"#0b1220\"/><text x=\"310\" y=\"86\" font-size=\"12\" fill=\"#7dd3fc\">ŷ = 0,6·x + 2,2</text></svg>",
+     "x": "Gráfico del ejemplo del libro (5 estudiantes: horas de estudio → nota). En amarillo los datos; en azul la recta de mínimos cuadrados; en rojo, los residuos. En el libro (Figura 4) se comparan tres rectas posibles: la de mínimos cuadrados es la que tiene el menor SSE."
+    },
+    {
+     "t": "sec",
+     "x": "2.1 Calcularla a mano con 5 datos",
+     "pag": "págs. 10–11"
+    },
+    {
+     "t": "p",
+     "x": "Datos: 5 estudiantes con horas de estudio x = 1, 2, 3, 4, 5 y nota y = 2, 4, 5, 4, 5. Las fórmulas son:"
+    },
+    {
+     "t": "ul",
+     "x": [
+      "m = Sxy / Sxx, donde Sxy = Σ(x − x̄)(y − ȳ) y Sxx = Σ(x − x̄)². Aquí x̄ = media(x) = (1+2+3+4+5)/5 = 3.",
+      "b = ȳ − m·x̄ (la recta siempre pasa por el punto central (x̄, ȳ)). Aquí ȳ = media(y) = (2+4+5+4+5)/5 = 4."
+     ]
+    },
+    {
+     "t": "tabla",
+     "cab": [
+      "x",
+      "y",
+      "x − x̄",
+      "y − ȳ",
+      "(x−x̄)(y−ȳ)",
+      "(x−x̄)²",
+      "ŷ = 0,6x + 2,2",
+      "residuo = y − ŷ"
+     ],
+     "filas": [
+      [
+       "1",
+       "2",
+       "−2",
+       "−2",
+       "4",
+       "4",
+       "2,8",
+       "−0,8"
+      ],
+      [
+       "2",
+       "4",
+       "−1",
+       "0",
+       "0",
+       "1",
+       "3,4",
+       "+0,6"
+      ],
+      [
+       "3",
+       "5",
+       "0",
+       "1",
+       "0",
+       "0",
+       "4,0",
+       "+1,0"
+      ],
+      [
+       "4",
+       "4",
+       "1",
+       "0",
+       "0",
+       "1",
+       "4,6",
+       "−0,6"
+      ],
+      [
+       "5",
+       "5",
+       "2",
+       "1",
+       "2",
+       "4",
+       "5,2",
+       "−0,2"
+      ]
+     ],
+     "pie": [
+      "Suma",
+      "",
+      "",
+      "",
+      "Sxy = 6",
+      "Sxx = 10",
+      "",
+      "≈ 0"
+     ],
+     "nota": "m = Sxy ÷ Sxx = 6 ÷ 10 = 0,6  ·  b = 4 − 0,6·3 = 2,2"
+    },
+    {
+     "t": "p",
+     "x": "Medias: x̄ = 3, ȳ = 4. Entonces m = 6/10 = 0,6 y b = 4 − 0,6·3 = 2,2: la recta es nota = 0,6·horas + 2,2. Cada hora de estudio sube la nota esperada 0,6 puntos."
+    },
+    {
+     "t": "code",
+     "titulo": "Código Python (copiar y ejecutar)",
+     "x": "import numpy as np\n# 5 estudiantes: horas de estudio (x) y nota del examen (y)\nx = np.array([1, 2, 3, 4, 5])\ny = np.array([2, 4, 5, 4, 5])\nx_med, y_med = x.mean(), y.mean()          # los \"centros\" de la nube\nSxy = np.sum((x - x_med) * (y - y_med))    # cuánto se mueven JUNTAS x e y\nSxx = np.sum((x - x_med) ** 2)             # cuánto se mueve x por sí sola\nm = Sxy / Sxx                              # pendiente\nb = y_med - m * x_med                      # intercepto: la recta pasa por (x̄, ȳ)\nprint(f\"x̄ = {x_med}, ȳ = {y_med}, Sxy = {Sxy}, Sxx = {Sxx}\")\nprint(f\"Pendiente m = {Sxy}/{Sxx} = {m} | Intercepto b = {y_med} - {m}·{x_med} = {b}\")\ny_pred = m * x + b                         # lo que predice la recta\nresid = y - y_pred                         # lo que se le escapa\nSSE = np.sum(resid ** 2)                   # error de la recta\nSST = np.sum((y - y_med) ** 2)             # error si solo usáramos la media\nprint(\"\\nPredicciones:\", y_pred.round(2), \"| Residuos:\", resid.round(2))\nprint(f\"SSE = {SSE:.2f} | SST = {SST:.2f} | R² = 1 - SSE/SST = {1 - SSE/SST:.2f}\")\nprint(f\"Predicción para 6 horas: {m*6 + b:.1f} puntos\")"
+    },
+    {
+     "t": "salida",
+     "x": "x̄ = 3.0, ȳ = 4.0, Sxy = 6.0, Sxx = 10.0\nPendiente m = 6.0/10.0 = 0.6 | Intercepto b = 4.0 - 0.6·3.0 = 2.2\nPredicciones: [2.8 3.4 4. 4.6 5.2] | Residuos: [-0.8 0.6 1. -0.6 -0.2]\nSSE = 2.40 | SST = 6.00 | R² = 1 - SSE/SST = 0.60\nPredicción para 6 horas: 5.8 puntos"
+    },
+    {
+     "t": "etq",
+     "k": "sencilla",
+     "titulo": "Explicación sencilla",
+     "x": "Los residuos suman ≈ 0 siempre que la recta tenga intercepto: lo que sobra por un lado compensa lo que falta por el otro. SSE = 2,40 es el error total de nuestra recta. ¿Es mucho o poco? Para saberlo necesitamos un punto de comparación: R²."
+    },
+    {
+     "t": "sec",
+     "x": "3. R²: ¿cuánto explica la recta?",
+     "pag": "págs. 12"
+    },
+    {
+     "t": "p",
+     "x": "R² compara dos errores: el de la recta (SSE) y el que tendrías si no usaras X y predijeras siempre la media de Y (SST, suma total de cuadrados). La fórmula es R² = 1 − SSE / SST."
+    },
+    {
+     "t": "p",
+     "x": "Con los datos del ejemplo: SST = 6 (error si solo usamos la media) y SSE = 2,4 (error con la recta). Así R² = 1 − 2,4/6 = 0,60."
+    },
+    {
+     "t": "etq",
+     "k": "sencilla",
+     "titulo": "Explicación sencilla",
+     "x": "R² = 0,60 significa: la recta elimina el 60 % del error que tendrías sin ella; o, dicho de forma habitual, «explica el 60 % de la variación de Y». R² = 1 es un ajuste perfecto; R² = 0, una recta que no mejora a la media."
+    },
+    {
+     "t": "tabla",
+     "cab": [
+      "R²",
+      "Lectura habitual",
+      "Ejemplo del libro"
+     ],
+     "filas": [
+      [
+       "Cerca de 1 (> 0,9)",
+       "Relación muy fuerte",
+       "Años de experiencia → salario: 0,957"
+      ],
+      [
+       "0,5 a 0,9",
+       "Moderada o buena",
+       "Peso del coche → consumo: 0,693"
+      ],
+      [
+       "0,2 a 0,5",
+       "Modesta",
+       "Cuenta → propina: 0,457"
+      ],
+      [
+       "Cerca de 0",
+       "La recta apenas ayuda",
+       "Gasto en periódico → ventas: 0,052"
+      ]
+     ],
+     "pie": null,
+     "nota": null
+    },
+    {
+     "t": "etq",
+     "k": "atencion",
+     "titulo": "Atención",
+     "x": "«Bueno» o «malo» depende del problema: en datos de personas, un R² de 0,3 puede ser útil; en física, uno de 0,9 puede ser insuficiente."
+    },
+    {
+     "t": "etq",
+     "k": "nota",
+     "titulo": "Nota",
+     "x": "Relación con r: en regresión simple R² = r². Con r = 0,7746, r² = 0,60."
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 8,
+    "preguntas": [
+     {
+      "q": "En la recta y = m·x + b, ¿qué es m?",
+      "ok": "La pendiente: cuánto cambia Y cuando X sube 1 unidad",
+      "mal": [
+       "El valor de Y cuando X vale 0",
+       "El error total de la recta",
+       "La media de los datos"
+      ],
+      "exp": "m es la pendiente. En el taxi del libro, el precio por kilómetro."
+     },
+     {
+      "q": "En la recta y = m·x + b, ¿qué es b?",
+      "ok": "El valor de Y cuando X vale 0 (el punto de partida)",
+      "mal": [
+       "Cuánto sube Y por cada unidad de X",
+       "La suma de los errores al cuadrado",
+       "El número de datos"
+      ],
+      "exp": "b es el intercepto. En el taxi, la bajada de bandera."
+     },
+     {
+      "q": "Si la pendiente es negativa, la recta…",
+      "ok": "Baja: a más X, menos Y",
+      "mal": [
+       "Sube: a más X, más Y",
+       "Es horizontal",
+       "No pasa por la media"
+      ],
+      "exp": "Pendiente negativa = recta descendente. Cercana a 0 = casi horizontal (X apenas ayuda)."
+     },
+     {
+      "q": "En el proyecto de la central, la pendiente sale −2 MW/°C. ¿Qué significa?",
+      "ok": "Por cada grado más de temperatura, la potencia baja unos 2 MW",
+      "mal": [
+       "Por cada grado más, la potencia sube unos 2 MW",
+       "La central produce −2 MW cuando hace 0 °C",
+       "El error medio es de 2 MW"
+      ],
+      "exp": "La pendiente dice cuánto cambia Y por cada unidad de X. El signo menos indica que baja. (El valor −2 es solo un ejemplo para practicar.)"
+     },
+     {
+      "q": "¿Qué es un residuo?",
+      "ok": "La distancia vertical entre el dato real y la recta",
+      "mal": [
+       "La distancia entre dos puntos cualesquiera",
+       "La media de todos los datos",
+       "El valor de la pendiente"
+      ],
+      "exp": "El residuo (error) es lo que se le escapa a la recta en cada punto: y − ŷ."
+     },
+     {
+      "q": "¿Por qué se elevan los residuos al cuadrado?",
+      "ok": "Para que no se cancelen positivos con negativos y para castigar más los errores grandes",
+      "mal": [
+       "Para que salgan números más pequeños",
+       "Para que la recta pase por el origen",
+       "Porque lo manda Python"
+      ],
+      "exp": "Sin elevar al cuadrado, los errores de signo opuesto se compensarían. Además, un error grande pesa mucho más."
+     },
+     {
+      "q": "¿Cuál es «la mejor recta» según mínimos cuadrados?",
+      "ok": "La que tiene el SSE (suma de errores al cuadrado) más pequeño",
+      "mal": [
+       "La que pasa por más puntos",
+       "La que tiene la pendiente más grande",
+       "La que pasa por el origen"
+      ],
+      "exp": "Mínimos cuadrados = la recta con la menor suma de errores al cuadrado."
+     },
+     {
+      "q": "Con Sxy = 6 y Sxx = 10, ¿cuánto vale la pendiente?",
+      "ok": "0,6",
+      "mal": [
+       "60",
+       "1,67",
+       "4"
+      ],
+      "exp": "m = Sxy / Sxx = 6/10 = 0,6."
+     },
+     {
+      "q": "Con x̄ = 3, ȳ = 4 y m = 0,6, ¿cuánto vale el intercepto b?",
+      "ok": "2,2",
+      "mal": [
+       "4",
+       "0,6",
+       "1,8"
+      ],
+      "exp": "b = ȳ − m·x̄ = 4 − 0,6·3 = 2,2. La recta siempre pasa por el punto (x̄, ȳ)."
+     },
+     {
+      "q": "Con la recta nota = 0,6·horas + 2,2, ¿qué nota se predice para 6 horas?",
+      "ok": "5,8",
+      "mal": [
+       "3,6",
+       "6,4",
+       "2,8"
+      ],
+      "exp": "0,6·6 + 2,2 = 3,6 + 2,2 = 5,8."
+     },
+     {
+      "q": "R² = 0,60 significa que…",
+      "ok": "La recta explica el 60 % de la variación de Y",
+      "mal": [
+       "La recta acierta el 60 % de las veces",
+       "El error es de 0,60 unidades",
+       "La pendiente vale 0,60"
+      ],
+      "exp": "R² es la parte de la variación de Y que explica la recta (1 − SSE/SST)."
+     },
+     {
+      "q": "¿Qué indica un R² cercano a 0?",
+      "ok": "Que la recta apenas mejora a predecir siempre la media",
+      "mal": [
+       "Que el ajuste es perfecto",
+       "Que la pendiente es negativa",
+       "Que hay demasiados datos"
+      ],
+      "exp": "R² = 1 es ajuste perfecto; R² = 0 es una recta que no mejora a la media."
+     },
+     {
+      "q": "¿Cómo se calcula R²?",
+      "ok": "R² = 1 − SSE / SST",
+      "mal": [
+       "R² = SSE · SST",
+       "R² = m / b",
+       "R² = SSE + SST"
+      ],
+      "exp": "Compara el error de la recta (SSE) con el de predecir siempre la media (SST)."
+     },
+     {
+      "q": "En regresión simple, R² es igual a…",
+      "ok": "r² (el coeficiente de correlación al cuadrado)",
+      "mal": [
+       "2·r",
+       "1 − r",
+       "r + b"
+      ],
+      "exp": "Relación con r: en regresión simple R² = r². Con r = 0,7746, r² = 0,60."
+     }
+    ]
+   },
+   "evidencias": "Aquí puedes enseñar lo que hagas en este paso: el código del cálculo a mano, un gráfico de los 5 puntos con la recta, tus notas…"
+  }
+ }
+}
