@@ -45,12 +45,40 @@ jobs:
         continue-on-error: true
         run: pip install -r requirements-traduccion.txt
 
+      - name: Comprobar que están los archivos
+        run: |
+          faltan=""
+          for f in build.py feeds.json requirements.txt; do
+            [ -f "$f" ] || faltan="$faltan $f"
+          done
+          if [ -n "$faltan" ]; then
+            echo "::error title=Faltan archivos en la raiz del repositorio::$faltan"
+            exit 1
+          fi
+          ls -la
+
       - name: Descargar noticias, traducir y generar la web
         run: |
-          python build.py || { echo "::warning::Falló con traducción; reintento sin traducir"; python build.py --sin-traduccion; }
+          set +e
+          python build.py > salida.log 2>&1
+          codigo=$?
+          cat salida.log
+          if [ $codigo -ne 0 ]; then
+            echo "::warning::Falló con traducción; reintento sin traducir"
+            python build.py --sin-traduccion > salida.log 2>&1
+            codigo=$?
+            cat salida.log
+          fi
+          if [ $codigo -ne 0 ]; then
+            msg=$(tail -n 12 salida.log | tr -d '\r' | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
+            echo "::error title=build.py fallo (codigo $codigo)::$msg"
+            exit 1
+          fi
 
       - name: Guardar cambios
         run: |
+          set -e
+          trap 'echo "::error title=Fallo al guardar cambios (git)::linea $LINENO"' ERR
           git config user.name "actualizador-noticias"
           git config user.email "actions@users.noreply.github.com"
           git add data docs
