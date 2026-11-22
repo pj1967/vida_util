@@ -185,6 +185,16 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .proyecto:hover{transform:translateY(-2px);border-color:var(--acento);box-shadow:0 10px 28px rgba(0,0,0,.45)}
 .proyecto a.ir::after{content:"";position:absolute;inset:0;border-radius:14px}
 .destacado h2{margin-top:26px}
+.nivel-bloque{margin:18px 0 6px}
+.nivel-bloque h3{display:flex;align-items:baseline;gap:10px;margin:18px 0 2px;font-size:1.05rem;color:var(--c)}
+.nivel-bloque h3 small{font-weight:400;color:var(--suave);font-size:.84rem}
+.compacta p{display:none}
+.compacta{padding:13px 16px}
+.num{font-size:.72rem;font-weight:700;color:var(--suave)}
+.cabecera-card{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.esquema{margin:8px 0 8px 20px;padding:0}
+.esquema li{margin:4px 0}
+.nota-dato{color:#fbbf24;font-size:.82rem}
 .ver-todos{display:inline-block;margin:2px 0 8px;font-weight:600}
 .migas{margin:22px 0 0;font-size:.88rem}
 .ficha-tec{display:grid;grid-template-columns:170px 1fr;gap:0;margin:12px 0;background:var(--superficie);
@@ -764,13 +774,13 @@ class Sitio:
         temas_html = "".join(
             f'<a href="{raiz}tema/{k}.html" style="--c:{self.color(k)}">'
             f'<span class="punto"></span>{esc(n)}</a>' for k, n in self.temas.items())
-        desplegable_act = " activo" if activo in self.temas else ""
+        desplegable_act = " activo" if (activo in self.temas or activo == "noticias") else ""
         enlaces = [
             f'<a href="{raiz}index.html"{act("portada")}>Portada</a>',
             f'<a href="{raiz}proyectos.html"{act("proyectos")}>Proyectos</a>',
             f'<a href="{raiz}retos.html"{act("retos")}>Retos de datos</a>',
             f'<details class="desplegable{desplegable_act}"><summary>Noticias</summary>'
-            f'<div class="panel">{temas_html}</div></details>',
+            f'<div class="panel"><a href="{raiz}noticias.html">Todas las noticias</a>{temas_html}</div></details>',
             f'<a href="{raiz}resumenes.html"{act("resumenes")}>Resúmenes</a>',
             f'<a href="{raiz}archivo/index.html"{act("archivo")}>Archivo</a>',
             f'<a href="{raiz}sobre.html"{act("sobre")}>Sobre el proyecto</a>',
@@ -919,67 +929,77 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
         if texto:
             cuerpo = f'<p class="resumen">{esc(texto)}</p>' + self.chips_fuentes(fuentes)
         else:
-            propios = [a for a in self.articulos if a["tema"] == clave]
-            elegidos = self.seleccion_portada(propios, dias, 3, 2)
-            if elegidos:
-                cuerpo = ('<p class="nota">Resumen semanal en preparación. Últimos titulares:</p>'
-                          '<ul class="lista">' + "".join(self.item(a) for a in elegidos) + "</ul>")
-            else:
-                cuerpo = '<p class="vacio">Aún no hay noticias de este tema.</p>'
+            cuerpo = ('<p class="nota">Resumen semanal en preparación. '
+                      'Pulsa para ver los titulares de este tema.</p>')
         return (f'<section class="tema-card bloque" id="{clave}" style="--c:{self.color(clave)}">'
                 f'<a class="enlace-tema" href="tema/{clave}.html" '
                 f'aria-label="Todas las noticias de {esc(nombre)}"></a>'
                 f'<header><span class="punto"></span><h2>{esc(nombre)}</h2>'
                 f'<span class="cuenta">{n} esta semana</span></header>'
-                f'{cuerpo}<span class="mas">Ver todas las noticias →</span></section>')
+                f'{cuerpo}<span class="mas">Ver las noticias →</span></section>')
+
+    NIVELES = (("inicial", "#4ade80", "Inicial", "estadística y aprendizaje automático básico"),
+               ("intermedio", "#fbbf24", "Intermedio", "árboles, clasificación, series y anomalías"),
+               ("avanzado", "#fb7185", "Avanzado", "aprendizaje profundo"))
+
+    def proyectos_por_nivel(self, raiz, compacta):
+        partes = []
+        for clave, color, nombre, sub in self.NIVELES:
+            propios = [p for p in self.proyectos if (p.get("nivel") or "").lower() == clave]
+            if not propios:
+                continue
+            tarjetas = "".join(self.tarjeta_proyecto(p, raiz, compacta) for p in propios)
+            partes.append(f'<div class="nivel-bloque" style="--c:{color}"><h3>Nivel {nombre}'
+                          f'<small>{esc(sub)}</small></h3><div class="tarjetas">{tarjetas}</div></div>')
+        return "".join(partes)
 
     def portada(self):
         sitio = self.cfg["sitio"]
         dias = sitio.get("dias_portada", 7)
-        max_flujo = sitio.get("max_flujo_portada", 60)
         tarjetas = "".join(self.tarjeta_tema(k, n, dias) for k, n in self.temas.items())
         if self.ultimo:
             semana = f'Semana del {rango_semana(self.ultimo["desde"], self.ultimo["hasta"])}'
         else:
-            semana = "Lo más reciente"
+            semana = "Resumen semanal"
+        cuerpo = (
+            '<h2 id="aprende" style="--c:#4ade80">Aprende haciendo'
+            '<small>de la regresión simple a las redes convolucionales, con datos reales y abiertos</small></h2>'
+            + self.proyectos_por_nivel("", True)
+            + '<a class="ver-todos" href="proyectos.html">Ver todos los proyectos →</a>'
+            f'<h2 id="resumen" style="--c:#818cf8">Noticias de la semana<small>{esc(semana)}. '
+            'Pulsa un tema para ver sus noticias</small></h2>'
+            f'<div class="rejilla">{tarjetas}</div>'
+            '<p><a class="ver-todos" href="noticias.html">Todas las noticias, con buscador y filtros →</a></p>')
+        self.escribir("index.html", self.pagina(
+            "Portada", cuerpo, "", "portada",
+            descripcion="Proyectos paso a paso y noticias de inteligencia artificial, robótica y automatización, en castellano."))
+
+    def pagina_noticias(self):
+        sitio = self.cfg["sitio"]
+        max_flujo = sitio.get("max_flujo_noticias", 150)
         chips = ('<button class="chip-tema activo" data-tema="todas" type="button">Todas</button>'
                  + "".join(f'<button class="chip-tema" data-tema="{k}" type="button" '
                            f'style="--c:{self.color(k)}">{esc(n)}</button>'
                            for k, n in self.temas.items()))
+        tiempo = ('<div class="chips tiempo"><button class="chip-tiempo activo" data-horas="0" type="button">Todo</button>'
+                  '<button class="chip-tiempo" data-horas="24" type="button">Últimas 24 horas</button>'
+                  '<button class="chip-tiempo" data-horas="168" type="button">Esta semana</button>'
+                  '<button class="chip-tiempo" data-horas="720" type="button">Este mes</button></div>')
         flujo = limitar_por_fuente_dia(self.articulos, sitio.get("max_por_fuente_dia", 4))[:max_flujo]
         if flujo:
             lista = ('<ul class="lista flujo" id="flujo">'
                      + "".join(self.item(a, con_tema=True) for a in flujo) + "</ul>")
         else:
             lista = '<p class="vacio">Aún no hay noticias. Aparecerán tras la primera actualización.</p>'
-        tiempo = ('<div class="chips tiempo"><button class="chip-tiempo activo" data-horas="0" type="button">Todo</button>'
-                  '<button class="chip-tiempo" data-horas="24" type="button">Últimas 24 horas</button>'
-                  '<button class="chip-tiempo" data-horas="168" type="button">Esta semana</button>'
-                  '<button class="chip-tiempo" data-horas="720" type="button">Este mes</button></div>')
-        proy = "".join(self.tarjeta_proyecto(p, "") for p in self.proyectos[:3])
-        bloque_proy = (
-            '<div class="destacado"><h2 id="aprende" style="--c:#4ade80">Aprende haciendo'
-            '<small>proyectos paso a paso, con datos reales y abiertos</small></h2>'
-            f'<div class="tarjetas">{proy}</div>'
-            '<a class="ver-todos" href="proyectos.html">Ver todos los proyectos →</a></div>'
-        ) if proy else ""
-        cuerpo = (
-            bloque_proy +
-            f'<h2 id="resumen" style="--c:#818cf8">Noticias de la semana<small>{esc(semana)}. '
-            'Pulsa un tema para ver todas sus noticias</small></h2>'
-            f'<div class="rejilla">{tarjetas}</div>'
-            '<h2 id="ultimas" style="--c:#38bdf8">Últimas noticias<small>de todos los temas</small></h2>'
-            '<div class="buscador"><input id="buscar" type="search" autocomplete="off" '
-            'placeholder="Buscar en las últimas noticias… (pulsa / para buscar)"></div>'
-            f'<div class="chips">{chips}</div>'
-            f'{tiempo}'
-            f'{lista}'
-            '<p id="sin-resultados" class="vacio oculto">No hay noticias con ese filtro.</p>'
-            '<button id="mas" class="boton-mas oculto" type="button">Cargar más noticias</button>'
-        )
-        self.escribir("index.html", self.pagina(
-            "Portada", cuerpo, "", "portada",
-            descripcion="Proyectos paso a paso y noticias de inteligencia artificial, robótica y automatización, en castellano."))
+        cuerpo = ('<h2 id="ultimas" style="--c:#38bdf8">Noticias<small>de todos los temas, de más nueva a más antigua</small></h2>'
+                  '<div class="buscador"><input id="buscar" type="search" autocomplete="off" '
+                  'placeholder="Buscar en las noticias… (pulsa / para buscar)"></div>'
+                  f'<div class="chips">{chips}</div>{tiempo}{lista}'
+                  '<p id="sin-resultados" class="vacio oculto">No hay noticias con ese filtro.</p>'
+                  '<button id="mas" class="boton-mas oculto" type="button">Cargar más noticias</button>')
+        self.escribir("noticias.html", self.pagina(
+            "Noticias", cuerpo, "", "noticias",
+            descripcion="Noticias de inteligencia artificial, robótica y automatización."))
 
     # -- temas
     def paginas_tema(self):
@@ -1044,23 +1064,30 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             t.append(f'<span class="tag nivel-{esc(nivel)}">Nivel: {esc(nivel)}</span>')
         if area:
             t.append(f'<span class="tag area">Área: {esc(area)}</span>')
+        if p.get("tipo"):
+            t.append(f'<span class="tag">Tipo: {esc(p["tipo"])}</span>')
+        if p.get("tecnica"):
+            t.append(f'<span class="tag">Técnica: {esc(p["tecnica"])}</span>')
         return f'<div class="etiquetas">{"".join(t)}</div>' if t else ""
 
-    def tarjeta_proyecto(self, p, raiz):
+    def tarjeta_proyecto(self, p, raiz, compacta=False):
         est = p.get("estado", "idea")
-        return (f'<article class="proyecto"><span class="estado {esc(est)}">'
-                f'{esc(self.ESTADOS.get(est, est))}</span><h3>{esc(p.get("titulo", ""))}</h3>'
+        n = self.proyectos.index(p) + 1
+        clase = " compacta" if compacta else ""
+        return (f'<article class="proyecto{clase}"><div class="cabecera-card"><span class="num">Proyecto {n}</span>'
+                f'<span class="estado {esc(est)}">{esc(self.ESTADOS.get(est, est))}</span></div>'
+                f'<h3>{esc(p.get("titulo", ""))}</h3>'
                 f'{self.etiquetas(p)}<p>{esc(p.get("descripcion", ""))}</p>'
                 f'<a class="ir" href="{raiz}proyectos/{esc(p["id"])}.html">Ver ficha del proyecto →</a></article>')
 
     def pagina_proyectos(self):
-        tarjetas = "".join(self.tarjeta_proyecto(p, "") for p in self.proyectos)
+        tarjetas = self.proyectos_por_nivel("", False)
         cuerpo = ('<h2 style="--c:#4ade80">Proyectos<small>aprende haciendo</small></h2>'
                   '<p class="desc">Programas útiles explicados paso a paso, con datos reales y abiertos. '
                   'Cada proyecto tiene su ficha técnica, indica el nivel y el área, explica cada paso desde '
                   'cero (cómo, por qué y para qué) y recoge siempre las fuentes de los datos y los límites '
                   'del resultado.</p>'
-                  f'<div class="tarjetas">{tarjetas}</div>')
+                  + tarjetas)
         self.escribir("proyectos.html", self.pagina(
             "Proyectos", cuerpo, "", "proyectos",
             descripcion="Programas explicados paso a paso con datos reales y abiertos."))
@@ -1091,11 +1118,15 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             if url.startswith("http"):
                 dataset += (f' · <a href="{esc(url)}" target="_blank" rel="noopener noreferrer">'
                             f'enlace oficial ↗</a>')
+            if ds.get("verificado") is False:
+                dataset += ' <span class="nota-dato">(conjunto y enlace por confirmar antes de empezar)</span>'
         herr = "".join(f'<span class="tag">{esc(h)}</span> ' for h in p.get("herramientas", []))
         est = p.get("estado", "idea")
         ficha = ('<dl class="ficha-tec">'
                  + fila("Nivel", esc(p.get("nivel", "")).capitalize())
                  + fila("Área", esc(p.get("area", "")).capitalize())
+                 + fila("Tipo de problema", esc(p.get("tipo", "")))
+                 + fila("Técnica", esc(p.get("tecnica", "")))
                  + fila("Dataset", dataset)
                  + fila("Objetivo", esc(p.get("objetivo", "")))
                  + fila("Datos usados", esc(p.get("datos", "")))
@@ -1111,6 +1142,12 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                 if st.get(clave):
                     partes.append(f"<p><b>{etiqueta}:</b> {esc(st[clave])}</p>")
             pasos.append("<li>" + "".join(partes) + "</li>")
+        if p.get("esquema") and not pasos:
+            esquema = ('<p class="desc">Esquema previsto. Los pasos se explicarán uno a uno, desde cero, '
+                       'cuando hagamos el proyecto.</p><ol class="esquema">'
+                       + "".join(f"<li>{esc(t)}</li>" for t in p["esquema"]) + "</ol>")
+        else:
+            esquema = ""
         cod = enlace_seguro(p.get("codigo"))
         codigo = (f'<a href="{esc(cod)}" target="_blank" rel="noopener noreferrer">Ver el código ↗</a>'
                   if cod.startswith("http") else '<span class="vacio">Aún no publicado.</span>')
@@ -1142,7 +1179,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
               '<small>explicados desde cero</small></h2>'
             + (f'<p class="desc">Medimos el resultado con: {esc(p.get("metrica", ""))}</p>'
                if p.get("metrica") else "")
-            + f'<ol class="pasos">{"".join(pasos)}</ol>'
+            + (f'<ol class="pasos">{"".join(pasos)}</ol>' if pasos else esquema)
             + '<h2 style="--c:#4ade80">Resultados</h2>'
             + f'<p>{esc(p.get("resultados") or "Pendiente.")}</p>'
             + '<h2 style="--c:#fb7185">Limitaciones</h2>'
@@ -1271,6 +1308,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
         self.escribir("interactivo.js", JS)
         self.escribir(".nojekyll", "")
         self.portada()
+        self.pagina_noticias()
         self.paginas_tema()
         self.pagina_resumenes()
         self.pagina_proyectos()
