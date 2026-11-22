@@ -1,0 +1,70 @@
+name: Actualizar noticias
+
+on:
+  schedule:
+    - cron: "0 5 * * *"     # cada día, 05:00 UTC
+    - cron: "0 17 * * *"    # y a las 17:00 UTC
+    - cron: "30 7 * * 1"    # los lunes, además, prepara el borrador del resumen semanal
+  workflow_dispatch:
+    inputs:
+      borrador:
+        description: "¿Crear también el borrador del resumen semanal?"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: actualizar-noticias
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements*.txt
+
+      - name: Instalar dependencias básicas
+        run: pip install -r requirements.txt
+
+      - name: Guardar en caché el modelo de traducción
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/argos-translate
+          key: argos-en-es-v1
+
+      - name: Instalar traductor (opcional; si falla, la web sigue en el idioma original)
+        continue-on-error: true
+        run: pip install -r requirements-traduccion.txt
+
+      - name: Descargar noticias, traducir y generar la web
+        run: |
+          python build.py || { echo "::warning::Falló con traducción; reintento sin traducir"; python build.py --sin-traduccion; }
+
+      - name: Guardar cambios
+        run: |
+          git config user.name "actualizador-noticias"
+          git config user.email "actions@users.noreply.github.com"
+          git add data docs
+          if git diff --cached --quiet; then
+            echo "Sin cambios."
+          else
+            git commit -m "Actualización automática $(date -u +'%Y-%m-%d %H:%M') UTC"
+            git push
+          fi
+
+      - name: Borrador del resumen semanal (te avisa GitHub por correo)
+        if: github.event.schedule == '30 7 * * 1' || inputs.borrador == true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python build.py --borrador-semanal --borrador borrador.md
+          gh issue create --title "Borrador del resumen semanal ($(date -u +%Y-%m-%d))" --body-file borrador.md
