@@ -208,6 +208,15 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .tabla-libro{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
 .tabla-libro th,.tabla-libro td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--linea)}
 .tabla-libro th{color:var(--suave);font-weight:600;font-size:.82rem}
+.visor{width:min(1000px,96vw);height:92vh;max-width:none;padding:0;border:1px solid var(--linea);border-radius:12px;
+ background:var(--superficie);color:var(--tinta);overflow:hidden}
+.visor[open]{display:flex;flex-direction:column}
+.visor::backdrop{background:rgba(0,0,0,.7)}
+.visor-barra{display:flex;align-items:center;gap:14px;padding:10px 14px;border-bottom:1px solid var(--linea);font-size:.9rem}
+.visor-titulo{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.visor-cerrar{font:inherit;cursor:pointer;padding:5px 12px;border-radius:8px;border:1px solid var(--linea);background:var(--superficie2);color:var(--tinta)}
+.visor-marco{flex:1;min-height:0}
+.visor-marco iframe{width:100%;height:100%;border:0;background:#fff}
 .nivel-bloque{margin:18px 0 6px}
 .nivel-bloque h3{display:flex;align-items:baseline;gap:10px;margin:18px 0 2px;font-size:1.05rem;color:var(--c)}
 .nivel-bloque h3 small{font-weight:400;color:var(--suave);font-size:.84rem}
@@ -259,7 +268,7 @@ ol.pasos p b{color:var(--acento)}
  .rejilla,.tarjetas,.cats{display:block}
  .subcols{display:block}
  .tema-card,.bloque-resumen,.proyecto,ol.pasos>li{break-inside:avoid;margin-bottom:12px}
- .chips.tiempo,.proyecto a.ir::after{display:none!important}
+ .chips.tiempo,.proyecto a.ir::after,.visor{display:none!important}
  ol.pasos>li::before{background:#fff!important;border:1px solid #000}
  li.item{break-inside:avoid}
 }
@@ -343,6 +352,34 @@ JS = """
   });
   document.addEventListener('click',function(e){
     $$('details.desplegable').forEach(function(d){ if(!d.contains(e.target)) d.removeAttribute('open'); });
+  });
+
+  /* Visor de PDF dentro de la página */
+  var visor=null;
+  function crearVisor(){
+    visor=document.createElement('dialog'); visor.className='visor';
+    visor.innerHTML='<div class="visor-barra"><span class="visor-titulo"></span>'+
+      '<a class="visor-nueva" target="_blank" rel="noopener noreferrer">Abrir en pestaña nueva</a>'+
+      '<button type="button" class="visor-cerrar" aria-label="Cerrar">Cerrar ✕</button></div>'+
+      '<div class="visor-marco"></div>';
+    document.body.appendChild(visor);
+    $('.visor-cerrar',visor).addEventListener('click',function(){visor.close();});
+    visor.addEventListener('click',function(e){ if(e.target===visor) visor.close(); });
+    visor.addEventListener('close',function(){ $('.visor-marco',visor).innerHTML=''; });
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest ? e.target.closest('a.ver-pdf') : null;
+    if(!a || e.ctrlKey || e.metaKey || e.shiftKey || e.button>0) return;
+    if(typeof HTMLDialogElement==='undefined') return;
+    e.preventDefault();
+    if(!visor) crearVisor();
+    $('.visor-titulo',visor).textContent=a.textContent;
+    $('.visor-nueva',visor).setAttribute('href',a.getAttribute('href'));
+    var marco=$('.visor-marco',visor); marco.innerHTML='';
+    var f=document.createElement('iframe');
+    f.setAttribute('title',a.textContent); f.setAttribute('src',a.getAttribute('href'));
+    marco.appendChild(f);
+    if(!visor.open) visor.showModal();
   });
 })();
 """
@@ -1426,7 +1463,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             pag = ini + int(a.get("p", 1)) - 1
             texto = f'{esc(a.get("s", ""))} · {esc(a.get("t", ""))} (pág. {int(a.get("p", 1))})'
             if r["_existe"]:
-                trozos.append(f'<a href="{raiz}recursos/{esc(r["archivo"])}#page={pag}" target="_blank" '
+                trozos.append(f'<a class="ver-pdf" href="{raiz}recursos/{esc(r["archivo"])}#page={pag}" target="_blank" '
                               f'rel="noopener noreferrer">{texto}</a>')
             else:
                 trozos.append(texto)
@@ -1444,7 +1481,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                 ini, n = r["_subs"][sm["n"]]
                 t = esc(sm["titulo"])
                 if r["_existe"]:
-                    t = f'<a href="recursos/{esc(r["archivo"])}#page={ini}" target="_blank" rel="noopener noreferrer">{t}</a>'
+                    t = f'<a class="ver-pdf" href="recursos/{esc(r["archivo"])}#page={ini}" target="_blank" rel="noopener noreferrer">{t}</a>'
                 filas.append(f'<tr><td>{esc(sm["n"])}</td><td>{t}</td><td>{esc(sm.get("nivel", ""))}</td>'
                              f'<td>{n} págs.</td></tr>')
             dl = (f'<p><a href="recursos/{esc(r["archivo"])}" target="_blank" rel="noopener noreferrer">'
