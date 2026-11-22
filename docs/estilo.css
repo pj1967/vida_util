@@ -144,6 +144,14 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .cats .tema-card h2{font-size:1.3rem}
 .mini{margin:0;padding-left:18px;color:var(--suave);font-size:.88rem}
 .mini li{margin:2px 0}
+.ayuda{margin:8px 0 2px!important;padding:8px 12px;border-left:3px solid #38bdf8;background:rgba(56,189,248,.06);
+ border-radius:0 8px 8px 0;font-size:.88rem!important;max-width:none}
+.ayuda b{color:#38bdf8}
+.ayuda a{white-space:normal}
+.ayuda .sep{color:var(--suave);margin:0 6px}
+.tabla-libro{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+.tabla-libro th,.tabla-libro td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--linea)}
+.tabla-libro th{color:var(--suave);font-weight:600;font-size:.82rem}
 .nivel-bloque{margin:18px 0 6px}
 .nivel-bloque h3{display:flex;align-items:baseline;gap:10px;margin:18px 0 2px;font-size:1.05rem;color:var(--c)}
 .nivel-bloque h3 small{font-weight:400;color:var(--suave);font-size:.84rem}
