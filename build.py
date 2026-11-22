@@ -352,7 +352,7 @@ def esc(s):
 
 
 def a_local(iso):
-    return datetime.fromisoformat(iso).astimezone(ZONA)
+    return dt_iso(iso).astimezone(ZONA)
 
 
 def fecha_corta(dt):
@@ -417,6 +417,12 @@ def clasificar(texto, patrones, temas):
     return "ia" if "ia" in temas else next(iter(temas))
 
 
+def dt_iso(iso):
+    """Fecha ISO → datetime con zona horaria (si venía sin zona, se toma como UTC)."""
+    d = datetime.fromisoformat(iso)
+    return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
+
+
 # ----------------------------------------------------------------- titulares repetidos
 STOP_SIM = {"the", "and", "for", "with", "from", "that", "this", "into", "how", "new", "will",
             "una", "uno", "los", "las", "del", "que", "con", "para", "por", "sus", "como", "mas",
@@ -434,11 +440,11 @@ def agrupar_similares(articulos, umbral=0.5, horas=72):
     kept, toks = [], []
     for a in articulos:
         t = _tokens(a.get("titulo_es") or a["titulo"]) | _tokens(a["titulo"])
-        f = datetime.fromisoformat(a["fecha"])
+        f = dt_iso(a["fecha"])
         dup = None
         if len(t) >= 3:
             for k, tk in zip(reversed(kept), reversed(toks)):
-                if (datetime.fromisoformat(k["fecha"]) - f).total_seconds() > horas * 3600:
+                if (dt_iso(k["fecha"]) - f).total_seconds() > horas * 3600:
                     break
                 union = len(t | tk)
                 if union and len(t & tk) / union >= umbral:
@@ -858,7 +864,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
 
     def item(self, a, con_fecha=True, con_tema=False):
         nuevo = ""
-        if self.ahora - datetime.fromisoformat(a["fecha"]) < timedelta(hours=48):
+        if self.ahora - dt_iso(a["fecha"]) < timedelta(hours=48):
             nuevo = '<span class="nuevo">nuevo</span>'
         partes = []
         if con_tema:
@@ -878,7 +884,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             tambien = ('<span class="tambien">También en: ' + ", ".join(
                 f'<a href="{esc(o["enlace"])}" target="_blank" rel="noopener noreferrer">'
                 f'{esc(o["fuente"])}</a>' for o in otros[:3]) + "</span>")
-        ts = int(datetime.fromisoformat(a["fecha"]).timestamp())
+        ts = int(dt_iso(a["fecha"]).timestamp())
         return (f'<li class="item" data-tema="{esc(a["tema"])}" data-ts="{ts}" '
                 f'style="--c:{self.color(a["tema"])}">'
                 f'<a class="titular" href="{esc(a["enlace"])}" target="_blank" '
@@ -918,13 +924,13 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
     def conteo_semana(self, clave, dias):
         limite = self.ahora - timedelta(days=dias)
         return sum(1 for a in self.articulos if a["tema"] == clave
-                   and datetime.fromisoformat(a["fecha"]) >= limite)
+                   and dt_iso(a["fecha"]) >= limite)
 
     def seleccion_portada(self, propios, dias, maximo, max_fuente):
         limite = self.ahora - timedelta(days=dias)
         elegidos, por_fuente = [], defaultdict(int)
         for a in propios:
-            if datetime.fromisoformat(a["fecha"]) < limite:
+            if dt_iso(a["fecha"]) < limite:
                 break
             if por_fuente[a["fuente"]] >= max_fuente:
                 continue
@@ -1429,7 +1435,10 @@ def main():
         escribir_borrador(articulos, config, args.borrador)
         return
     if not args.sin_descarga and not args.sin_traduccion:
-        traducir_titulares(articulos, config)
+        try:
+            traducir_titulares(articulos, config)
+        except Exception as e:  # la traducción nunca debe impedir que la web se actualice
+            print(f"  [AVISO] La traducción falló ({type(e).__name__}: {e}); se sigue sin traducir.")
     if not args.sin_descarga or ruta_datos.exists():
         guardar_datos(ruta_datos, articulos)
 
