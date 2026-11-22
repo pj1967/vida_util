@@ -70,4 +70,32 @@
   document.addEventListener('click',function(e){
     $$('details.desplegable').forEach(function(d){ if(!d.contains(e.target)) d.removeAttribute('open'); });
   });
+
+  /* Visor de PDF dentro de la página */
+  var visor=null;
+  function crearVisor(){
+    visor=document.createElement('dialog'); visor.className='visor';
+    visor.innerHTML='<div class="visor-barra"><span class="visor-titulo"></span>'+
+      '<a class="visor-nueva" target="_blank" rel="noopener noreferrer">Abrir en pestaña nueva</a>'+
+      '<button type="button" class="visor-cerrar" aria-label="Cerrar">Cerrar ✕</button></div>'+
+      '<div class="visor-marco"></div>';
+    document.body.appendChild(visor);
+    $('.visor-cerrar',visor).addEventListener('click',function(){visor.close();});
+    visor.addEventListener('click',function(e){ if(e.target===visor) visor.close(); });
+    visor.addEventListener('close',function(){ $('.visor-marco',visor).innerHTML=''; });
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest ? e.target.closest('a.ver-pdf') : null;
+    if(!a || e.ctrlKey || e.metaKey || e.shiftKey || e.button>0) return;
+    if(typeof HTMLDialogElement==='undefined') return;
+    e.preventDefault();
+    if(!visor) crearVisor();
+    $('.visor-titulo',visor).textContent=a.textContent;
+    $('.visor-nueva',visor).setAttribute('href',a.getAttribute('href'));
+    var marco=$('.visor-marco',visor); marco.innerHTML='';
+    var f=document.createElement('iframe');
+    f.setAttribute('title',a.textContent); f.setAttribute('src',a.getAttribute('href'));
+    marco.appendChild(f);
+    if(!visor.open) visor.showModal();
+  });
 })();

@@ -152,6 +152,15 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .tabla-libro{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
 .tabla-libro th,.tabla-libro td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--linea)}
 .tabla-libro th{color:var(--suave);font-weight:600;font-size:.82rem}
+.visor{width:min(1000px,96vw);height:92vh;max-width:none;padding:0;border:1px solid var(--linea);border-radius:12px;
+ background:var(--superficie);color:var(--tinta);overflow:hidden}
+.visor[open]{display:flex;flex-direction:column}
+.visor::backdrop{background:rgba(0,0,0,.7)}
+.visor-barra{display:flex;align-items:center;gap:14px;padding:10px 14px;border-bottom:1px solid var(--linea);font-size:.9rem}
+.visor-titulo{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.visor-cerrar{font:inherit;cursor:pointer;padding:5px 12px;border-radius:8px;border:1px solid var(--linea);background:var(--superficie2);color:var(--tinta)}
+.visor-marco{flex:1;min-height:0}
+.visor-marco iframe{width:100%;height:100%;border:0;background:#fff}
 .nivel-bloque{margin:18px 0 6px}
 .nivel-bloque h3{display:flex;align-items:baseline;gap:10px;margin:18px 0 2px;font-size:1.05rem;color:var(--c)}
 .nivel-bloque h3 small{font-weight:400;color:var(--suave);font-size:.84rem}
@@ -203,7 +212,7 @@ ol.pasos p b{color:var(--acento)}
  .rejilla,.tarjetas,.cats{display:block}
  .subcols{display:block}
  .tema-card,.bloque-resumen,.proyecto,ol.pasos>li{break-inside:avoid;margin-bottom:12px}
- .chips.tiempo,.proyecto a.ir::after{display:none!important}
+ .chips.tiempo,.proyecto a.ir::after,.visor{display:none!important}
  ol.pasos>li::before{background:#fff!important;border:1px solid #000}
  li.item{break-inside:avoid}
 }
