@@ -41,16 +41,49 @@ jobs:
           path: ~/.local/share/argos-translate
           key: argos-en-es-v1
 
-      - name: Instalar traductor (opcional; si falla, la web sigue en el idioma original)
-        continue-on-error: true
-        run: pip install -r requirements-traduccion.txt
+      - name: Instalar traductor (opcional; si no se puede, la web sigue en el idioma original)
+        run: |
+          if pip install -r requirements-traduccion.txt > pip_traductor.log 2>&1; then
+            echo "Traductor instalado."
+          else
+            tail -n 8 pip_traductor.log
+            echo "::warning title=Traductor no instalado::la web se actualiza igualmente, con los titulares en su idioma original"
+          fi
+
+      - name: Comprobar que están los archivos
+        run: |
+          faltan=""
+          for f in build.py feeds.json requirements.txt; do
+            [ -f "$f" ] || faltan="$faltan $f"
+          done
+          if [ -n "$faltan" ]; then
+            echo "::error title=Faltan archivos en la raiz del repositorio::$faltan"
+            exit 1
+          fi
+          ls -la
 
       - name: Descargar noticias, traducir y generar la web
         run: |
-          python build.py || { echo "::warning::Falló con traducción; reintento sin traducir"; python build.py --sin-traduccion; }
+          set +e
+          python build.py > salida.log 2>&1
+          codigo=$?
+          cat salida.log
+          if [ $codigo -ne 0 ]; then
+            echo "::warning::Falló con traducción; reintento sin traducir"
+            python build.py --sin-traduccion > salida.log 2>&1
+            codigo=$?
+            cat salida.log
+          fi
+          if [ $codigo -ne 0 ]; then
+            msg=$(tail -n 12 salida.log | tr -d '\r' | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
+            echo "::error title=build.py fallo (codigo $codigo)::$msg"
+            exit 1
+          fi
 
       - name: Guardar cambios
         run: |
+          set -e
+          trap 'echo "::error title=Fallo al guardar cambios (git)::linea $LINENO"' ERR
           git config user.name "actualizador-noticias"
           git config user.email "actions@users.noreply.github.com"
           git add data docs
