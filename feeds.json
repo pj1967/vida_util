@@ -430,7 +430,7 @@
    "id": "potencia-central-regresion-simple",
    "titulo": "Potencia de una central según la temperatura",
    "estado": "proximo",
-   "nivel": "inicial",
+   "nivel": "basico",
    "area": "energía",
    "tipo": "Regresión",
    "tecnica": "Regresión lineal simple",
@@ -451,7 +451,7 @@
    "metrica": "R² (cuánta variación explica la recta), RMSE y MAE (error medio en MW).",
    "esquema": null,
    "resultados": "Pendiente.",
-   "limitaciones": "Es una sola variable: la recta no explica todo lo que influye en la potencia (eso lo mejora el proyecto 3). Los datos son de una única central.",
+   "limitaciones": "Es una sola variable: la recta no explica todo lo que influye en la potencia (eso lo mejora el proyecto de regresión múltiple con la misma central). Los datos son de una única central.",
    "codigo": "",
    "entrega": {},
    "noticias_palabras": [
@@ -520,13 +520,14 @@
      "porque": "Un resultado sin sus límites engaña, aunque sea sin querer.",
      "para": "Dejar el proyecto honesto y preparar el siguiente: añadir más variables."
     }
-   ]
+   ],
+   "bloque": "regresion"
   },
   {
    "id": "consumo-coche-peso",
    "titulo": "Consumo de un coche según su peso",
    "estado": "idea",
-   "nivel": "inicial",
+   "nivel": "basico",
    "area": "ingeniería",
    "tipo": "Regresión",
    "tecnica": "Regresión lineal simple",
@@ -560,13 +561,55 @@
     "consumo",
     "eficiencia",
     "fuel efficiency"
-   ]
+   ],
+   "bloque": "regresion"
+  },
+  {
+   "id": "hormigon-cemento",
+   "titulo": "Resistencia del hormigón según el cemento",
+   "estado": "idea",
+   "area": "ingeniería",
+   "tipo": "Regresión",
+   "tecnica": "Regresión lineal simple",
+   "descripcion": "Predecir la resistencia del hormigón a partir de la cantidad de cemento.",
+   "dataset": {
+    "nombre": "Concrete Compressive Strength (UCI)",
+    "url": "https://archive.ics.uci.edu/dataset/165/concrete+compressive+strength",
+    "verificado": false
+   },
+   "objetivo": "Practicar la recta simple con datos de ingeniería civil y ver cuándo una sola variable se queda corta.",
+   "datos": "Ensayos reales de laboratorio de mezclas de hormigón.",
+   "herramientas": [
+    "Python",
+    "pandas",
+    "scikit-learn",
+    "matplotlib"
+   ],
+   "metrica": "R², RMSE y MAE.",
+   "esquema": [
+    "Cargar los datos y revisarlos.",
+    "Dibujar resistencia frente a cemento.",
+    "Ajustar la recta y evaluar con datos de prueba.",
+    "Comparar con otra variable de entrada.",
+    "Anotar límites."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Ensayos de laboratorio de unas mezclas concretas.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "hormigón",
+    "concrete",
+    "construcción"
+   ],
+   "bloque": "regresion",
+   "nivel": "basico"
   },
   {
    "id": "potencia-central-regresion-multiple",
    "titulo": "Potencia de la central con 4 variables",
    "estado": "idea",
-   "nivel": "inicial",
+   "nivel": "medio",
    "area": "energía",
    "tipo": "Regresión",
    "tecnica": "Regresión lineal múltiple",
@@ -577,15 +620,15 @@
     "verificado": true
    },
    "objetivo": "Entender por qué más variables mejoran el modelo y cómo se interpretan varios coeficientes a la vez.",
-   "datos": "Los mismos datos del proyecto 1, con las cuatro variables de entrada.",
+   "datos": "Los mismos datos del proyecto de la recta simple, con las cuatro variables de entrada.",
    "herramientas": [
     "Python",
     "pandas",
     "scikit-learn"
    ],
-   "metrica": "R², RMSE y MAE, comparados con el proyecto 1.",
+   "metrica": "R², RMSE y MAE, comparados con el modelo de la recta simple.",
    "esquema": [
-    "Repasar el proyecto 1 como punto de partida.",
+    "Repasar el proyecto de la recta simple como punto de partida.",
     "Mirar la correlación entre variables.",
     "Ajustar la regresión múltiple.",
     "Comparar el error con el del modelo simple.",
@@ -599,13 +642,14 @@
     "power plant",
     "central eléctrica",
     "ciclo combinado"
-   ]
+   ],
+   "bloque": "regresion"
   },
   {
    "id": "bateria-nasa",
    "titulo": "Capacidad de una batería según los ciclos",
    "estado": "idea",
-   "nivel": "inicial",
+   "nivel": "medio",
    "area": "energía",
    "tipo": "Regresión",
    "tecnica": "Regresión polinómica",
@@ -640,13 +684,14 @@
     "batería",
     "lithium",
     "litio"
-   ]
+   ],
+   "bloque": "regresion"
   },
   {
    "id": "demanda-electrica",
    "titulo": "Demanda eléctrica según la temperatura",
    "estado": "idea",
-   "nivel": "inicial",
+   "nivel": "medio",
    "area": "energía",
    "tipo": "Regresión",
    "tecnica": "Regresión múltiple con variables de calendario",
@@ -682,13 +727,14 @@
     "energy forecasting",
     "solar",
     "smart grid"
-   ]
+   ],
+   "bloque": "regresion"
   },
   {
    "id": "ruido-perfil-aerodinamico",
    "titulo": "Ruido de un perfil aerodinámico",
    "estado": "idea",
-   "nivel": "intermedio",
+   "nivel": "avanzado",
    "area": "aeronáutica",
    "tipo": "Regresión",
    "tecnica": "Random Forest y comparación de modelos",
@@ -723,13 +769,14 @@
     "aerodinámic",
     "noise",
     "ruido"
-   ]
+   ],
+   "bloque": "regresion"
   },
   {
    "id": "motor-nasa",
    "titulo": "Vida útil de un motor, con datos de la NASA",
    "estado": "proximo",
-   "nivel": "intermedio",
+   "nivel": "avanzado",
    "area": "mantenimiento",
    "descripcion": "Estimar cuántos ciclos de vuelo le quedan a un motor turbofán a partir de sus sensores, con datos abiertos de la NASA.",
    "dataset": {
@@ -833,13 +880,172 @@
     "motor de avión"
    ],
    "tipo": "Regresión",
-   "tecnica": "Random Forest con ventanas de tiempo"
+   "tecnica": "Random Forest con ventanas de tiempo",
+   "bloque": "regresion"
+  },
+  {
+   "id": "emisiones-turbina-gas",
+   "titulo": "Emisiones de una turbina de gas",
+   "estado": "idea",
+   "area": "energía",
+   "tipo": "Regresión",
+   "tecnica": "Gradient boosting con regularización",
+   "descripcion": "Predecir las emisiones de CO y NOx de una turbina de gas a partir de sus sensores.",
+   "dataset": {
+    "nombre": "Gas Turbine CO and NOx Emission (UCI)",
+    "url": "https://archive.ics.uci.edu/dataset/551/gas+turbine+co+and+nox+emission+data+set",
+    "verificado": false
+   },
+   "objetivo": "Usar modelos de árboles potenciados y aprender a evitar el sobreajuste.",
+   "datos": "Sensores reales de una turbina de gas durante varios años.",
+   "herramientas": [
+    "Python",
+    "pandas",
+    "scikit-learn",
+    "matplotlib"
+   ],
+   "metrica": "RMSE y R², con validación cruzada por años.",
+   "esquema": [
+    "Cargar y separar por años.",
+    "Modelo de referencia lineal.",
+    "Gradient boosting y ajuste de parámetros.",
+    "Validar por años, no al azar.",
+    "Anotar límites."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Una sola turbina; las condiciones cambian con los años.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "gas turbine",
+    "turbina de gas",
+    "emisiones"
+   ],
+   "bloque": "regresion",
+   "nivel": "avanzado"
+  },
+  {
+   "id": "iris-clasificacion",
+   "titulo": "Reconocer tres especies de flor",
+   "estado": "idea",
+   "area": "IA",
+   "tipo": "Clasificación",
+   "tecnica": "K vecinos más cercanos",
+   "descripcion": "El ejemplo clásico para entender qué es clasificar.",
+   "dataset": {
+    "nombre": "Iris (UCI)",
+    "url": "https://archive.ics.uci.edu/dataset/53/iris",
+    "verificado": false
+   },
+   "objetivo": "Entender la idea de clasificar: clases, entrenamiento, prueba y acierto.",
+   "datos": "150 flores medidas por un botánico, con tres especies.",
+   "herramientas": [
+    "Python",
+    "pandas",
+    "scikit-learn"
+   ],
+   "metrica": "Exactitud y matriz de confusión.",
+   "esquema": [
+    "Cargar y dibujar los datos.",
+    "Separar entrenamiento y prueba.",
+    "Entrenar k vecinos.",
+    "Evaluar con matriz de confusión.",
+    "Anotar límites."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Conjunto muy pequeño y muy fácil: sirve para aprender, no para sacar conclusiones.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "clasificación",
+    "classification"
+   ],
+   "bloque": "clasificacion",
+   "nivel": "basico"
+  },
+  {
+   "id": "calidad-vino",
+   "titulo": "Calidad de un vino según su química",
+   "estado": "idea",
+   "area": "IA",
+   "tipo": "Clasificación",
+   "tecnica": "Regresión logística",
+   "descripcion": "Decidir si un vino es bueno o no a partir de análisis químicos.",
+   "dataset": {
+    "nombre": "Wine Quality (UCI)",
+    "url": "https://archive.ics.uci.edu/dataset/186/wine+quality",
+    "verificado": false
+   },
+   "objetivo": "Aprender la regresión logística y qué es un umbral de decisión.",
+   "datos": "Análisis físico-químicos reales de vinos y notas de catadores.",
+   "herramientas": [
+    "Python",
+    "pandas",
+    "scikit-learn"
+   ],
+   "metrica": "Exactitud, precisión y recall.",
+   "esquema": [
+    "Cargar y convertir la nota en bueno o no bueno.",
+    "Revisar las variables.",
+    "Ajustar la regresión logística.",
+    "Evaluar y ajustar el umbral.",
+    "Anotar límites."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Las notas de los catadores son subjetivas.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "calidad",
+    "quality"
+   ],
+   "bloque": "clasificacion",
+   "nivel": "basico"
+  },
+  {
+   "id": "enfriador-hidraulico-binario",
+   "titulo": "¿Enfriador sano o degradado?",
+   "estado": "idea",
+   "area": "mantenimiento",
+   "tipo": "Clasificación",
+   "tecnica": "Clasificación binaria con árboles",
+   "descripcion": "Decidir con los sensores de un banco hidráulico si el enfriador funciona bien.",
+   "dataset": {
+    "nombre": "Condition monitoring of hydraulic systems (UCI)",
+    "url": "https://archive.ics.uci.edu/dataset/447/condition+monitoring+of+hydraulic+systems",
+    "verificado": true
+   },
+   "objetivo": "Primera clasificación con sensores reales y dos clases.",
+   "datos": "Banco de pruebas hidráulico real: ciclos de trabajo y estado de cada componente.",
+   "herramientas": [
+    "Python",
+    "pandas",
+    "scikit-learn"
+   ],
+   "metrica": "Exactitud y matriz de confusión.",
+   "esquema": [
+    "Cargar sensores y etiqueta del enfriador.",
+    "Resumir cada ciclo en pocas cifras.",
+    "Entrenar un árbol de decisión.",
+    "Evaluar y mirar qué sensores pesan.",
+    "Anotar límites."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Banco de pruebas, no un circuito en servicio.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "hydraulic",
+    "hidráulic"
+   ],
+   "bloque": "clasificacion",
+   "nivel": "basico"
   },
   {
    "id": "estado-circuito-hidraulico",
    "titulo": "Estado de un circuito hidráulico",
    "estado": "idea",
-   "nivel": "intermedio",
+   "nivel": "medio",
    "area": "mantenimiento",
    "tipo": "Clasificación",
    "tecnica": "Regresión logística y árboles",
@@ -872,13 +1078,14 @@
     "hydraulic",
     "hidráulic",
     "condition monitoring"
-   ]
+   ],
+   "bloque": "clasificacion"
   },
   {
    "id": "fallo-maquina-clases-desequilibradas",
    "titulo": "Fallo de máquina con pocos casos de avería",
    "estado": "idea",
-   "nivel": "intermedio",
+   "nivel": "medio",
    "area": "mantenimiento",
    "tipo": "Clasificación",
    "tecnica": "Clasificación con clases desequilibradas",
@@ -910,13 +1117,94 @@
    "noticias_palabras": [
     "predictive maintenance",
     "mantenimiento predictivo"
-   ]
+   ],
+   "bloque": "clasificacion"
+  },
+  {
+   "id": "fallos-planchas-acero",
+   "titulo": "Fallos en planchas de acero",
+   "estado": "idea",
+   "area": "ingeniería",
+   "tipo": "Clasificación",
+   "tecnica": "Random Forest y SVM",
+   "descripcion": "Clasificar el tipo de defecto de una plancha de acero a partir de medidas.",
+   "dataset": {
+    "nombre": "Steel Plates Faults (UCI)",
+    "url": "https://archive.ics.uci.edu/dataset/198/steel+plates+faults",
+    "verificado": false
+   },
+   "objetivo": "Clasificar con varias clases y comparar modelos.",
+   "datos": "Medidas reales de planchas de acero con siete tipos de defecto.",
+   "herramientas": [
+    "Python",
+    "pandas",
+    "scikit-learn"
+   ],
+   "metrica": "Exactitud y matriz de confusión.",
+   "esquema": [
+    "Cargar y revisar las clases.",
+    "Modelo de referencia.",
+    "Random Forest y SVM.",
+    "Comparar con validación cruzada.",
+    "Anotar límites."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Una sola fábrica y un solo tipo de acero.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "steel",
+    "acero",
+    "defect"
+   ],
+   "bloque": "clasificacion",
+   "nivel": "medio"
+  },
+  {
+   "id": "actividad-movil",
+   "titulo": "Reconocer actividades con sensores de un móvil",
+   "estado": "idea",
+   "area": "IA",
+   "tipo": "Clasificación",
+   "tecnica": "Gradient boosting y validación por persona",
+   "descripcion": "Distinguir andar, subir escaleras o estar sentado con el acelerómetro de un móvil.",
+   "dataset": {
+    "nombre": "Human Activity Recognition Using Smartphones (UCI)",
+    "url": "https://archive.ics.uci.edu/dataset/240/human+activity+recognition+using+smartphones",
+    "verificado": false
+   },
+   "objetivo": "Trabajar con señales de sensores y validar por persona para no engañarse.",
+   "datos": "Medidas reales del acelerómetro y el giroscopio de varios voluntarios.",
+   "herramientas": [
+    "Python",
+    "pandas",
+    "scikit-learn"
+   ],
+   "metrica": "Exactitud por persona y matriz de confusión.",
+   "esquema": [
+    "Cargar las características ya calculadas.",
+    "Separar por personas, no al azar.",
+    "Entrenar un modelo de boosting.",
+    "Evaluar con personas nuevas.",
+    "Anotar límites."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Pocas personas; el resultado puede no generalizarse.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "sensor",
+    "wearable",
+    "activity recognition"
+   ],
+   "bloque": "clasificacion",
+   "nivel": "avanzado"
   },
   {
    "id": "linea-base-anomalias",
    "titulo": "Máquina sana frente a anómala",
    "estado": "idea",
-   "nivel": "intermedio",
+   "nivel": "avanzado",
    "area": "mantenimiento",
    "descripcion": "Aprender cómo se comporta una máquina sana y avisar cuando se aleja de ello.",
    "dataset": {
@@ -954,34 +1242,189 @@
     "Entrenar un detector solo con datos sanos.",
     "Probar con datos con fallo.",
     "Anotar límites."
-   ]
+   ],
+   "bloque": "clasificacion"
+  },
+  {
+   "id": "fallos-semiconductores",
+   "titulo": "Fallos en fabricación de semiconductores",
+   "estado": "idea",
+   "area": "ingeniería",
+   "tipo": "Clasificación",
+   "tecnica": "Selección de variables y clases desequilibradas",
+   "descripcion": "Predecir fallos de producción con cientos de sensores y muy pocos fallos.",
+   "dataset": {
+    "nombre": "SECOM (UCI)",
+    "url": "https://archive.ics.uci.edu/dataset/179/secom",
+    "verificado": false
+   },
+   "objetivo": "Aprender a manejar muchas variables, huecos y pocos casos positivos.",
+   "datos": "Medidas reales de un proceso de fabricación de semiconductores.",
+   "herramientas": [
+    "Python",
+    "pandas",
+    "scikit-learn"
+   ],
+   "metrica": "Precisión, recall y F1.",
+   "esquema": [
+    "Cargar y tratar los valores que faltan.",
+    "Quitar variables inútiles.",
+    "Entrenar con clases desequilibradas.",
+    "Evaluar con validación cruzada.",
+    "Anotar límites."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Datos anónimos: no se sabe qué mide cada sensor.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "semiconductor",
+    "manufactur",
+    "fabricación"
+   ],
+   "bloque": "clasificacion",
+   "nivel": "avanzado"
+  },
+  {
+   "id": "mlp-digitos",
+   "titulo": "Mi primera red neuronal: dígitos escritos a mano",
+   "estado": "idea",
+   "area": "IA",
+   "tipo": "Clasificación de imágenes",
+   "tecnica": "Perceptrón multicapa (MLP)",
+   "descripcion": "Una red neuronal sencilla para reconocer dígitos.",
+   "dataset": {
+    "nombre": "MNIST (por confirmar)",
+    "url": "",
+    "verificado": false
+   },
+   "objetivo": "Entender qué es una neurona, una capa y el entrenamiento por épocas.",
+   "datos": "70.000 imágenes de dígitos escritos a mano.",
+   "herramientas": [
+    "Python",
+    "PyTorch o TensorFlow"
+   ],
+   "metrica": "Exactitud y curvas de entrenamiento.",
+   "esquema": [
+    "Cargar las imágenes.",
+    "Definir una red de dos capas.",
+    "Entrenar y dibujar el aprendizaje.",
+    "Evaluar y ver los fallos.",
+    "Anotar límites."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Imágenes muy limpias; es un ejercicio de aprendizaje.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "neural network",
+    "red neuronal"
+   ],
+   "bloque": "redes",
+   "nivel": "basico"
+  },
+  {
+   "id": "mlp-potencia-central",
+   "titulo": "Red neuronal para la potencia de la central",
+   "estado": "idea",
+   "area": "energía",
+   "tipo": "Regresión",
+   "tecnica": "Perceptrón multicapa (MLP)",
+   "descripcion": "Resolver con una red neuronal el problema de la central y compararlo con la regresión múltiple.",
+   "dataset": {
+    "nombre": "Central eléctrica de ciclo combinado (UCI)",
+    "url": "https://archive.ics.uci.edu/dataset/294/combined+cycle+power+plant",
+    "verificado": true
+   },
+   "objetivo": "Ver si una red mejora a un modelo lineal y a qué coste.",
+   "datos": "Los mismos datos de la central.",
+   "herramientas": [
+    "Python",
+    "PyTorch o TensorFlow"
+   ],
+   "metrica": "RMSE comparado con el modelo lineal.",
+   "esquema": [
+    "Preparar y escalar los datos.",
+    "Definir una red pequeña.",
+    "Entrenar y vigilar el sobreajuste.",
+    "Comparar con la regresión múltiple.",
+    "Anotar límites."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Con pocas variables una red rara vez gana a un buen modelo sencillo.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "neural network",
+    "red neuronal"
+   ],
+   "bloque": "redes",
+   "nivel": "basico"
+  },
+  {
+   "id": "mlp-circuito-hidraulico",
+   "titulo": "Red neuronal para el estado hidráulico",
+   "estado": "idea",
+   "area": "mantenimiento",
+   "tipo": "Clasificación",
+   "tecnica": "Perceptrón multicapa (MLP)",
+   "descripcion": "Clasificar el estado de los componentes hidráulicos con una red y compararla con los árboles.",
+   "dataset": {
+    "nombre": "Condition monitoring of hydraulic systems (UCI)",
+    "url": "https://archive.ics.uci.edu/dataset/447/condition+monitoring+of+hydraulic+systems",
+    "verificado": true
+   },
+   "objetivo": "Aplicar una red a datos de sensores y comparar con modelos clásicos.",
+   "datos": "Los mismos del banco hidráulico.",
+   "herramientas": [
+    "Python",
+    "PyTorch o TensorFlow"
+   ],
+   "metrica": "Exactitud y matriz de confusión.",
+   "esquema": [
+    "Preparar y escalar sensores.",
+    "Definir la red.",
+    "Entrenar con validación.",
+    "Comparar con los árboles.",
+    "Anotar límites."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Banco de pruebas, no un circuito en servicio.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "hydraulic",
+    "hidráulic"
+   ],
+   "bloque": "redes",
+   "nivel": "basico"
   },
   {
    "id": "lstm-vida-util",
    "titulo": "Vida útil con redes recurrentes",
    "estado": "idea",
-   "nivel": "avanzado",
+   "nivel": "medio",
    "area": "mantenimiento",
    "tipo": "Regresión",
    "tecnica": "LSTM / GRU",
-   "descripcion": "Resolver el problema del proyecto 7 con redes neuronales recurrentes y comparar resultados.",
+   "descripcion": "Resolver el problema del proyecto de vida útil con Random Forest con redes neuronales recurrentes y comparar resultados.",
    "dataset": {
     "nombre": "NASA C-MAPSS (los cuatro subconjuntos)",
     "url": "https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/",
     "verificado": false
    },
    "objetivo": "Aprender a usar redes sobre series temporales y ver si mejoran al Random Forest.",
-   "datos": "Los mismos datos simulados del proyecto 7, ampliados.",
+   "datos": "Los mismos datos simulados del proyecto de vida útil con Random Forest, ampliados.",
    "herramientas": [
     "Python",
     "PyTorch o TensorFlow"
    ],
-   "metrica": "RMSE y puntuación de la NASA, comparados con el proyecto 7.",
+   "metrica": "RMSE y puntuación de la NASA, comparados con el proyecto de vida útil con Random Forest.",
    "esquema": [
     "Preparar secuencias de entrada.",
     "Definir una LSTM pequeña.",
     "Entrenar y vigilar el sobreajuste.",
-    "Comparar con el proyecto 7.",
+    "Comparar con el proyecto de vida útil con Random Forest.",
     "Anotar límites."
    ],
    "resultados": "Pendiente.",
@@ -992,13 +1435,14 @@
     "lstm",
     "remaining useful life",
     "prognostics"
-   ]
+   ],
+   "bloque": "redes"
   },
   {
    "id": "autoencoder-hidraulico",
    "titulo": "Anomalías con un autoencoder",
    "estado": "idea",
-   "nivel": "avanzado",
+   "nivel": "medio",
    "area": "mantenimiento",
    "tipo": "Anomalías",
    "tecnica": "Red neuronal autoencoder",
@@ -1009,7 +1453,7 @@
     "verificado": true
    },
    "objetivo": "Entrenar una red que aprende a reconstruir lo normal y marca lo que no sabe reconstruir.",
-   "datos": "Los mismos datos del proyecto 8.",
+   "datos": "Los mismos datos del proyecto del circuito hidráulico.",
    "herramientas": [
     "Python",
     "PyTorch o TensorFlow"
@@ -1030,7 +1474,47 @@
     "autoencoder",
     "anomaly detection",
     "detección de anomalías"
-   ]
+   ],
+   "bloque": "redes"
+  },
+  {
+   "id": "temperatura-series-jena",
+   "titulo": "Predecir la temperatura con series temporales",
+   "estado": "idea",
+   "area": "energía",
+   "tipo": "Regresión",
+   "tecnica": "Redes recurrentes (GRU)",
+   "descripcion": "Predecir la temperatura de las próximas horas con datos meteorológicos reales.",
+   "dataset": {
+    "nombre": "Jena Climate (Instituto Max Planck, por confirmar)",
+    "url": "https://www.bgc-jena.mpg.de/wetter/",
+    "verificado": false
+   },
+   "objetivo": "Aprender a preparar series y comparar una red con una referencia ingenua.",
+   "datos": "Medidas meteorológicas cada diez minutos de una estación real.",
+   "herramientas": [
+    "Python",
+    "PyTorch o TensorFlow"
+   ],
+   "metrica": "MAE frente a «repetir el último valor».",
+   "esquema": [
+    "Cargar y reducir la frecuencia.",
+    "Crear ventanas de tiempo.",
+    "Referencia ingenua.",
+    "Entrenar una GRU.",
+    "Anotar límites."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Una estación, una ciudad.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "weather",
+    "clima",
+    "meteorolog"
+   ],
+   "bloque": "redes",
+   "nivel": "medio"
   },
   {
    "id": "cnn-espectrogramas-rodamientos",
@@ -1070,7 +1554,8 @@
     "cnn",
     "vibration",
     "vibración"
-   ]
+   ],
+   "bloque": "redes"
   },
   {
    "id": "cnn-defectos-acero",
@@ -1108,7 +1593,8 @@
     "defect detection",
     "visión artificial",
     "computer vision"
-   ]
+   ],
+   "bloque": "redes"
   },
   {
    "id": "cnn-plantas-incendios",
@@ -1148,7 +1634,210 @@
     "wildfire",
     "incendio",
     "humo"
-   ]
+   ],
+   "bloque": "redes"
+  },
+  {
+   "id": "sensor-propio-esp32",
+   "titulo": "Mi propio sensor: línea base de un ventilador",
+   "estado": "idea",
+   "area": "mantenimiento",
+   "tipo": "Anomalías",
+   "tecnica": "Sensores propios y detección de anomalías",
+   "descripcion": "Medir la vibración y la temperatura de una máquina real con un microcontrolador y aprender su comportamiento normal.",
+   "dataset": {
+    "nombre": "Datos propios (grabados con el proyecto)",
+    "url": "",
+    "verificado": false
+   },
+   "objetivo": "Pasar de datos ajenos a datos propios: construir el sensor, grabar y detectar cambios.",
+   "datos": "Vibración y temperatura de un ventilador, grabadas con un acelerómetro y un ESP32.",
+   "herramientas": [
+    "Python",
+    "ESP32",
+    "scikit-learn"
+   ],
+   "metrica": "Falsas alarmas y avisos a tiempo.",
+   "esquema": [
+    "Montar el sensor y fijarlo.",
+    "Grabar días de funcionamiento normal.",
+    "Extraer características.",
+    "Entrenar la línea base.",
+    "Provocar un cambio controlado y ver el aviso."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Un solo equipo y pocos días de datos.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "edge",
+    "sensor",
+    "esp32",
+    "condition monitoring"
+   ],
+   "bloque": "experto",
+   "nivel": "experto"
+  },
+  {
+   "id": "gemelo-hibrido-motor",
+   "titulo": "Gemelo digital híbrido de un motor",
+   "estado": "idea",
+   "area": "mantenimiento",
+   "tipo": "Regresión",
+   "tecnica": "Modelo físico + aprendizaje automático",
+   "descripcion": "Combinar un modelo físico sencillo de un turbofán con un modelo de datos que corrige sus errores.",
+   "dataset": {
+    "nombre": "NASA C-MAPSS",
+    "url": "https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/",
+    "verificado": false
+   },
+   "objetivo": "Ver cuándo la física y los datos se complementan mejor que por separado.",
+   "datos": "Datos simulados de motores turbofán.",
+   "herramientas": [
+    "Python",
+    "SciPy",
+    "PyTorch o scikit-learn"
+   ],
+   "metrica": "RMSE frente a modelo solo físico y modelo solo de datos.",
+   "esquema": [
+    "Elegir un modelo físico simple.",
+    "Medir sus errores con los datos.",
+    "Entrenar un corrector.",
+    "Comparar los tres.",
+    "Anotar límites."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Datos simulados; el modelo físico es una simplificación.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "digital twin",
+    "gemelo digital",
+    "physics-informed"
+   ],
+   "bloque": "experto",
+   "nivel": "experto"
+  },
+  {
+   "id": "refuerzo-control",
+   "titulo": "Aprendizaje por refuerzo: control de un péndulo y un dron",
+   "estado": "idea",
+   "area": "robótica",
+   "tipo": "Control",
+   "tecnica": "Aprendizaje por refuerzo",
+   "descripcion": "Entrenar un agente en simulación para mantener en equilibrio un sistema.",
+   "dataset": {
+    "nombre": "Entornos de simulación Gymnasium (por confirmar)",
+    "url": "",
+    "verificado": false
+   },
+   "objetivo": "Entender recompensa, política y exploración.",
+   "datos": "Simulación, sin datos externos.",
+   "herramientas": [
+    "Python",
+    "Gymnasium",
+    "PyTorch"
+   ],
+   "metrica": "Recompensa acumulada y estabilidad.",
+   "esquema": [
+    "Instalar el entorno.",
+    "Probar un agente aleatorio.",
+    "Entrenar con un algoritmo estándar.",
+    "Medir la estabilidad.",
+    "Anotar límites."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "En simulación: pasar a un sistema real es otro problema.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "reinforcement learning",
+    "aprendizaje por refuerzo",
+    "robot"
+   ],
+   "bloque": "experto",
+   "nivel": "experto"
+  },
+  {
+   "id": "vision-en-el-borde",
+   "titulo": "Visión artificial en un dispositivo pequeño",
+   "estado": "idea",
+   "area": "visión artificial",
+   "tipo": "Detección de objetos",
+   "tecnica": "Redes de detección optimizadas para el borde",
+   "descripcion": "Detectar defectos con una cámara y un dispositivo de bajo coste, sin conexión a internet.",
+   "dataset": {
+    "nombre": "Defectos de superficie (por elegir y verificar)",
+    "url": "",
+    "verificado": false
+   },
+   "objetivo": "Llevar un modelo del ordenador a un dispositivo pequeño.",
+   "datos": "Imágenes de defectos y fotos propias.",
+   "herramientas": [
+    "Python",
+    "OpenCV",
+    "TensorFlow Lite o similar"
+   ],
+   "metrica": "Precisión y fotogramas por segundo.",
+   "esquema": [
+    "Elegir el conjunto de imágenes.",
+    "Entrenar un detector pequeño.",
+    "Reducir y exportar el modelo.",
+    "Ejecutarlo en el dispositivo.",
+    "Medir velocidad y fallos."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "El rendimiento depende de la luz y de la cámara.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "edge ai",
+    "computer vision",
+    "visión artificial"
+   ],
+   "bloque": "experto",
+   "nivel": "experto"
+  },
+  {
+   "id": "asistente-manuales-rag",
+   "titulo": "Asistente que responde con citas sobre manuales públicos",
+   "estado": "idea",
+   "area": "IA",
+   "tipo": "Lenguaje",
+   "tecnica": "Modelos de lenguaje y recuperación de documentos (RAG)",
+   "descripcion": "Preguntar en castellano a una colección de manuales y normas públicas y recibir respuestas con la página de origen.",
+   "dataset": {
+    "nombre": "Documentación pública (por elegir)",
+    "url": "",
+    "verificado": false
+   },
+   "objetivo": "Aprender cómo se le da información propia a un modelo de lenguaje y cómo se comprueba que no inventa.",
+   "datos": "Documentos públicos y de libre uso, nunca confidenciales.",
+   "herramientas": [
+    "Python",
+    "Un modelo de lenguaje",
+    "Base de vectores"
+   ],
+   "metrica": "Respuestas correctas con cita y tasa de «no lo sé».",
+   "esquema": [
+    "Elegir y limpiar los documentos.",
+    "Trocear e indexar.",
+    "Montar la búsqueda y el modelo.",
+    "Evaluar con preguntas con respuesta conocida.",
+    "Anotar límites."
+   ],
+   "resultados": "Pendiente.",
+   "limitaciones": "Puede equivocarse: siempre hay que comprobar la cita.",
+   "codigo": "",
+   "entrega": {},
+   "noticias_palabras": [
+    "rag",
+    "llm",
+    "language model",
+    "modelo de lenguaje"
+   ],
+   "bloque": "experto",
+   "nivel": "experto"
   }
  ],
  "retos": [
