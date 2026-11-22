@@ -200,6 +200,14 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .cats .tema-card h2{font-size:1.3rem}
 .mini{margin:0;padding-left:18px;color:var(--suave);font-size:.88rem}
 .mini li{margin:2px 0}
+.ayuda{margin:8px 0 2px!important;padding:8px 12px;border-left:3px solid #38bdf8;background:rgba(56,189,248,.06);
+ border-radius:0 8px 8px 0;font-size:.88rem!important;max-width:none}
+.ayuda b{color:#38bdf8}
+.ayuda a{white-space:normal}
+.ayuda .sep{color:var(--suave);margin:0 6px}
+.tabla-libro{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+.tabla-libro th,.tabla-libro td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--linea)}
+.tabla-libro th{color:var(--suave);font-weight:600;font-size:.82rem}
 .nivel-bloque{margin:18px 0 6px}
 .nivel-bloque h3{display:flex;align-items:baseline;gap:10px;margin:18px 0 2px;font-size:1.05rem;color:var(--c)}
 .nivel-bloque h3 small{font-weight:400;color:var(--suave);font-size:.84rem}
@@ -772,6 +780,16 @@ class Sitio:
         for a in self.articulos:
             a.pop("_tambien", None)
         self.articulos = agrupar_similares(self.articulos)
+        self.recursos = {}
+        for r in config.get("recursos", []):
+            if not re.fullmatch(r"[a-z0-9-]+", r.get("id", "")):
+                continue
+            ini, subs = 1, {}
+            for sm in r.get("submodulos", []):
+                subs[sm["n"]] = (ini, sm.get("paginas", 1))
+                ini += sm.get("paginas", 1)
+            r = dict(r, _subs=subs, _total=ini - 1, _existe=self.localizar_recurso(r.get("archivo", "")) is not None)
+            self.recursos[r["id"]] = r
         self.proyectos = [p for p in config.get("proyectos", [])
                           if re.fullmatch(r"[a-z0-9-]+", p.get("id", ""))]
         self.resumenes = resumenes or []
@@ -802,6 +820,7 @@ class Sitio:
             f'<a href="{raiz}index.html"{act("portada")}>Portada</a>',
             f'<a href="{raiz}proyectos.html"{act("proyectos")}>Proyectos</a>',
             f'<a href="{raiz}retos.html"{act("retos")}>Retos de datos</a>',
+            *([f'<a href="{raiz}biblioteca.html"{act("biblioteca")}>Biblioteca</a>'] if self.recursos else []),
             f'<details class="desplegable{desplegable_act}"><summary>Noticias</summary>'
             f'<div class="panel"><a href="{raiz}noticias.html">Todas las noticias</a>{temas_html}</div></details>',
             f'<a href="{raiz}resumenes.html"{act("resumenes")}>Resúmenes</a>',
@@ -1219,6 +1238,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                                     ("porque", "Por qué"), ("para", "Para qué")):
                 if st.get(clave):
                     partes.append(f"<p><b>{etiqueta}:</b> {esc(st[clave])}</p>")
+            partes.append(self.ayuda_html(st.get("ayuda"), "../"))
             pasos.append("<li>" + "".join(partes) + "</li>")
         if p.get("esquema") and not pasos:
             esquema = ('<p class="desc">Esquema previsto. Los pasos se explicarán uno a uno, desde cero, '
@@ -1386,6 +1406,68 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                           self.pagina(f"{MESES[m - 1].capitalize()} {y}", cuerpo, raiz,
                                       "archivo", buscador=True))
 
+    @staticmethod
+    def localizar_recurso(nombre):
+        if not nombre or "/" in nombre or "\\" in nombre or not nombre.lower().endswith(".pdf"):
+            return None
+        for carpeta in (RAIZ, RAIZ / "recursos"):
+            f = carpeta / nombre
+            if f.is_file():
+                return f
+        return None
+
+    def ayuda_html(self, ayudas, raiz):
+        trozos = []
+        for a in ayudas or []:
+            r = self.recursos.get(a.get("r"))
+            if not r:
+                continue
+            ini, _ = r["_subs"].get(a.get("s"), (1, 1))
+            pag = ini + int(a.get("p", 1)) - 1
+            texto = f'{esc(a.get("s", ""))} · {esc(a.get("t", ""))} (pág. {int(a.get("p", 1))})'
+            if r["_existe"]:
+                trozos.append(f'<a href="{raiz}recursos/{esc(r["archivo"])}#page={pag}" target="_blank" '
+                              f'rel="noopener noreferrer">{texto}</a>')
+            else:
+                trozos.append(texto)
+        if not trozos:
+            return ""
+        return '<p class="ayuda"><b>Ayuda en el libro:</b> ' + '<span class="sep">·</span>'.join(trozos) + "</p>"
+
+    def pagina_biblioteca(self):
+        if not self.recursos:
+            return
+        bloques = []
+        for r in self.recursos.values():
+            filas = []
+            for sm in r.get("submodulos", []):
+                ini, n = r["_subs"][sm["n"]]
+                t = esc(sm["titulo"])
+                if r["_existe"]:
+                    t = f'<a href="recursos/{esc(r["archivo"])}#page={ini}" target="_blank" rel="noopener noreferrer">{t}</a>'
+                filas.append(f'<tr><td>{esc(sm["n"])}</td><td>{t}</td><td>{esc(sm.get("nivel", ""))}</td>'
+                             f'<td>{n} págs.</td></tr>')
+            dl = (f'<p><a href="recursos/{esc(r["archivo"])}" target="_blank" rel="noopener noreferrer">'
+                  f'Abrir o descargar el PDF completo ↗</a></p>') if r["_existe"] else \
+                 '<p class="vacio">El PDF aún no está publicado.</p>'
+            bloques.append(f'<h3>{esc(r["titulo"])}</h3><p class="desc">{esc(r.get("autor", ""))}. '
+                           f'{esc(r.get("descripcion", ""))}</p>{dl}'
+                           '<table class="tabla-libro"><tr><th>Nº</th><th>Submódulo</th><th>Nivel</th><th>Extensión</th></tr>'
+                           + "".join(filas) + "</table>")
+        cuerpo = ('<h2 style="--c:#38bdf8">Biblioteca<small>apuntes de apoyo a los proyectos</small></h2>'
+                  + "".join(bloques))
+        self.escribir("biblioteca.html", self.pagina(
+            "Biblioteca", cuerpo, "", "biblioteca", descripcion="Apuntes de apoyo a los proyectos."))
+
+    def copiar_recursos(self):
+        for r in self.recursos.values():
+            f = self.localizar_recurso(r.get("archivo", ""))
+            if f:
+                (self.salida / "recursos").mkdir(exist_ok=True)
+                shutil.copy(f, self.salida / "recursos" / f.name)
+            else:
+                print(f"  [AVISO] Falta el PDF {r.get('archivo')} (súbelo a la raíz del repositorio).")
+
     def generar(self):
         if self.salida.exists():
             shutil.rmtree(self.salida)
@@ -1400,6 +1482,8 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
         self.pagina_proyectos()
         self.pagina_retos()
         self.sobre()
+        self.copiar_recursos()
+        self.pagina_biblioteca()
         self.archivo()
 
 
