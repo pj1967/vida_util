@@ -332,6 +332,29 @@ figure.fig figcaption{font-size:.84rem;color:var(--suave);margin-top:8px}
  details.codigo>summary{display:none}
  pre.cod,pre.salida{white-space:pre-wrap;border:1px solid #bbb!important}
 }
+.labr{margin:16px 0;padding:18px;border-radius:16px;border:1px solid #4ade8066;
+ background:radial-gradient(520px 220px at 100% 0%,rgba(74,222,128,.11),transparent 70%),var(--superficie)}
+.labr h3{margin:0 0 4px;font-size:1.05rem}
+.labr .labr-sub{margin:0 0 12px;color:var(--suave);font-size:.9rem;max-width:none}
+.labr-cuerpo{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(240px,1fr);gap:18px;align-items:start}
+.labr canvas{width:100%;display:block;border-radius:12px;border:1px solid var(--linea);background:#0a1626;touch-action:none}
+.labr-ctl label{display:flex;justify-content:space-between;font-size:.9rem;margin-top:10px}
+.labr-ctl label b{color:var(--acento);font-family:ui-monospace,Menlo,Consolas,monospace}
+.labr-ctl input[type=range]{width:100%;accent-color:#38bdf8}
+.labr-ctl .chk{display:flex;gap:8px;align-items:flex-start;margin-top:10px;font-size:.85rem;color:var(--suave)}
+.labr-ctl select{margin-top:6px;width:100%;padding:6px 8px;border-radius:8px;background:var(--superficie2);color:var(--tinta);border:1px solid var(--linea)}
+.labr-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.labr-kpi{padding:8px 10px;border-radius:10px;background:var(--superficie2);text-align:center}
+.labr-kpi small{display:block;color:var(--suave);font-size:.68rem;text-transform:uppercase;letter-spacing:.07em}
+.labr-kpi strong{font:800 1.15rem ui-monospace,Menlo,Consolas,monospace}
+.labr-eq{margin-top:12px;padding:10px;text-align:center;border-radius:10px;background:#0a1626;border:1px dashed #38bdf866;
+ font:700 1rem ui-monospace,Menlo,Consolas,monospace}
+.labr-barra{height:8px;border-radius:99px;background:var(--linea);overflow:hidden;margin-top:6px}
+.labr-barra i{display:block;height:100%;width:50%;background:#4ade80;transition:width .15s,background .15s}
+.labr-msg{margin-top:10px;font-size:.88rem;color:var(--suave);min-height:2.8em}
+.labr-falta{padding:14px;border:1px dashed var(--linea);border-radius:10px;color:var(--suave);font-size:.9rem}
+@media(max-width:760px){.labr-cuerpo{grid-template-columns:1fr}}
+@media print{.labr-ctl{display:none!important}.labr canvas{border:1px solid #888!important}}
 @media print{
  *{background:#fff!important;color:#000!important;box-shadow:none!important;
    border-color:#bbb!important;text-shadow:none!important;transform:none!important}
@@ -441,6 +464,108 @@ JS = """
     visor.addEventListener('close',function(){ $('.visor-marco',visor).innerHTML=''; });
   }
 
+
+  /* ---- laboratorio con datos reales: nube de puntos y recta ---- */
+  function fmt(v,d){ return v.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+  function iniciaLab(box){
+    var src=box.getAttribute('data-src'), modo=box.getAttribute('data-modo')||'recta';
+    var cuerpo=$('.labr-cuerpo',box);
+    fetch(src).then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }).then(function(D){
+      var N=D.t.length, T=D.t, P=D.p, E=D.e;
+      var tmin=Math.min.apply(null,T), tmax=Math.max.apply(null,T), pmin=Math.min.apply(null,P), pmax=Math.max.apply(null,P);
+      var cv=$('canvas',box), cx=cv.getContext('2d');
+      var sM=$('.m',box), sB=$('.b',box), vM=$('.mv',box), vB=$('.bv',box);
+      var selG=$('select',box), chkPiv=$('.piv',box), chkRec=$('.rec',box);
+      var mo=D.m, bo=D.b, msg=$('.labr-msg',box);
+      var tr=0, xm=0, ym=0;
+      for(var i=0;i<N;i++){ if(!E[i]){ tr++; xm+=T[i]; ym+=P[i]; } }
+      xm/=tr; ym/=tr;
+      if(modo==='recta'){
+        sM.min=(mo-3).toFixed(2); sM.max=(mo+3).toFixed(2); sM.step='0.01';
+        sB.min=(bo-120).toFixed(1); sB.max=(bo+120).toFixed(1); sB.step='0.1';
+        sM.value=0; sB.value=ym.toFixed(1);
+      }
+      var cor=(function(){ var st=0,sp=0,stp=0,stt=0,spp=0,mt=0,mp=0,i; for(i=0;i<N;i++){mt+=T[i];mp+=P[i];} mt/=N; mp/=N;
+        for(i=0;i<N;i++){ stp+=(T[i]-mt)*(P[i]-mp); stt+=(T[i]-mt)*(T[i]-mt); spp+=(P[i]-mp)*(P[i]-mp); } return stp/Math.sqrt(stt*spp); })();
+      function sel(i){ var g=selG?selG.value:'todos'; return g==='todos' || (g==='train' && !E[i]) || (g==='test' && E[i]); }
+      function calc(m,b){
+        var n=0,sse=0,sae=0,sp=0,i,r;
+        for(i=0;i<N;i++){ if(!sel(i)) continue; n++; sp+=P[i]; r=P[i]-(m*T[i]+b); sse+=r*r; sae+=Math.abs(r); }
+        var pm=sp/n, sst=0; for(i=0;i<N;i++){ if(!sel(i)) continue; sst+=(P[i]-pm)*(P[i]-pm); }
+        return {n:n,sse:sse,rmse:Math.sqrt(sse/n),mae:sae/n,r2:1-sse/sst};
+      }
+      var geo={};
+      function dibuja(){
+        var W=cv.clientWidth, H=Math.round(W*0.62), dpr=window.devicePixelRatio||1;
+        cv.width=W*dpr; cv.height=H*dpr; cv.style.height=H+'px'; cx.setTransform(dpr,0,0,dpr,0,0);
+        var L=54,Rr=12,Tt=12,Bb=40;
+        var x0=tmin-1,x1=tmax+1,y0=pmin-6,y1=pmax+6;
+        var X=function(x){ return L+(x-x0)*(W-L-Rr)/(x1-x0); }, Y=function(y){ return H-Bb-(y-y0)*(H-Tt-Bb)/(y1-y0); };
+        cx.clearRect(0,0,W,H);
+        cx.font='11px sans-serif'; cx.fillStyle='#8896ad'; cx.strokeStyle='#1d2b44'; cx.lineWidth=1;
+        var k,v;
+        for(k=0;k<=5;k++){ v=y0+(y1-y0)*k/5; cx.beginPath(); cx.moveTo(L,Y(v)); cx.lineTo(W-Rr,Y(v)); cx.stroke(); cx.textAlign='right'; cx.fillText(Math.round(v),L-6,Y(v)+4); }
+        for(k=0;k<=6;k++){ v=x0+(x1-x0)*k/6; cx.textAlign='center'; cx.fillText(Math.round(v),X(v),H-Bb+16); }
+        cx.fillStyle='#cbd5e1'; cx.textAlign='center'; cx.fillText('Temperatura ambiente (°C)',(L+W-Rr)/2,H-6);
+        cx.save(); cx.translate(13,(Tt+H-Bb)/2); cx.rotate(-Math.PI/2); cx.fillText('Potencia (MW)',0,0); cx.restore();
+        var i, g=selG?selG.value:'todos';
+        for(i=0;i<N;i++){
+          var on=sel(i); cx.globalAlpha=on?0.28:0.05;
+          cx.fillStyle=(g==='todos' && E[i])?'#fbbf24':'#38bdf8';
+          cx.beginPath(); cx.arc(X(T[i]),Y(P[i]),1.9,0,6.2832); cx.fill();
+        }
+        cx.globalAlpha=1;
+        var m=sM?+sM.value:0, b=sB?+sB.value:0;
+        if(modo==='recta'){
+          var paso=Math.max(1,Math.floor(N/45)), c=0;
+          cx.strokeStyle='#fb7185'; cx.lineWidth=1.4;
+          for(i=0;i<N;i+=paso){ if(!sel(i)) continue; cx.beginPath(); cx.moveTo(X(T[i]),Y(P[i])); cx.lineTo(X(T[i]),Y(m*T[i]+b)); cx.stroke(); c++; }
+          cx.setLineDash([7,5]); cx.strokeStyle='#4ade80'; cx.lineWidth=2;
+          cx.beginPath(); cx.moveTo(X(tmin),Y(mo*tmin+bo)); cx.lineTo(X(tmax),Y(mo*tmax+bo)); cx.stroke(); cx.setLineDash([]);
+          cx.fillStyle='#4ade80'; cx.textAlign='left'; cx.fillText('recta del programa',X(tmin)+6,Y(mo*tmin+bo)-8);
+          cx.strokeStyle='#38bdf8'; cx.lineWidth=3;
+          cx.beginPath(); cx.moveTo(X(x0),Y(m*x0+b)); cx.lineTo(X(x1),Y(m*x1+b)); cx.stroke();
+        } else if(chkRec && chkRec.checked){
+          cx.strokeStyle='#4ade80'; cx.lineWidth=3;
+          cx.beginPath(); cx.moveTo(X(tmin),Y(mo*tmin+bo)); cx.lineTo(X(tmax),Y(mo*tmax+bo)); cx.stroke();
+        }
+      }
+      function refresca(){
+        if(modo==='recta'){
+          var m=+sM.value, b;
+          if(chkPiv && chkPiv.checked){ b=ym-m*xm; sB.value=b.toFixed(1); } else b=+sB.value;
+          sB.disabled=!!(chkPiv && chkPiv.checked);
+          vM.textContent=fmt(m,2); vB.textContent=fmt(b,1);
+          var c=calc(m,b), o=calc(mo,bo);
+          $('.k-sse',box).textContent=fmt(c.sse,0); $('.k-rmse',box).textContent=fmt(c.rmse,2)+' MW';
+          $('.k-mae',box).textContent=fmt(c.mae,2)+' MW'; $('.k-r2',box).textContent=fmt(c.r2,3);
+          $('.k-eq',box).textContent='Potencia = '+fmt(m,2)+' · T '+(b<0?'− ':'+ ')+fmt(Math.abs(b),1);
+          var ratio=c.sse/o.sse, pct=Math.max(4,Math.min(100,100/ratio));
+          var bar=$('.labr-barra i',box); bar.style.width=pct+'%'; bar.style.background=ratio<1.02?'#4ade80':(ratio<2?'#fbbf24':'#fb7185');
+          $('.k-ratio',box).textContent='Tu error es ×'+fmt(ratio,2)+' el de la recta del programa';
+          var cerca=Math.abs(m-mo)<0.03 && Math.abs(b-bo)<0.8;
+          msg.textContent= cerca ? '🏆 ¡Has encontrado la recta de mínimos cuadrados! Coincide con la del programa.' :
+            (ratio>5 ? 'Muy lejos. Los segmentos rojos son los errores: busca que sean lo más cortos posibles. Pista: la pendiente debería ser negativa (más calor, menos potencia).' :
+             'Cada segmento rojo es un error (residuo). El SSE suma todos al cuadrado. Intenta bajar la barra hasta que llegue al 100 %.');
+        } else {
+          var cu=calc(mo,bo);
+          $('.k-n',box).textContent=fmt(cu.n,0);
+          $('.k-cor',box).textContent=fmt(cor,3);
+          $('.k-rt',box).textContent=fmt(tmin,1)+' a '+fmt(tmax,1)+' °C';
+          $('.k-rp',box).textContent=fmt(pmin,0)+' a '+fmt(pmax,0)+' MW';
+        }
+        dibuja();
+      }
+      [sM,sB,selG,chkPiv,chkRec].forEach(function(el){ if(el){ el.addEventListener('input',refresca); el.addEventListener('change',refresca); } });
+      var bs=$('.b-sol',box); if(bs) bs.addEventListener('click',function(){ if(chkPiv) chkPiv.checked=false; sM.value=mo.toFixed(2); sB.value=bo.toFixed(1); refresca(); });
+      var b0=$('.b-cero',box); if(b0) b0.addEventListener('click',function(){ sM.value=0; sB.value=ym.toFixed(1); if(chkPiv) chkPiv.checked=false; refresca(); });
+      window.addEventListener('resize',dibuja);
+      refresca();
+    }, function(){
+      cuerpo.innerHTML='<div class="labr-falta">Todavía no están los datos reales de este gráfico. Ejecuta el cuaderno de Colab y sube el archivo <b>datos--'+(box.getAttribute('data-id')||'')+'.json</b> a la raíz del repositorio.</div>';
+    });
+  }
+  $$('.labr').forEach(iniciaLab);
   /* ---- progreso por pasos y test (se guarda solo en este navegador) ---- */
   function lee(k){ try{ return window.localStorage.getItem(k); }catch(e){ return null; } }
   function guarda(k,v){ try{ window.localStorage.setItem(k,v); }catch(e){} }
@@ -1650,7 +1775,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
         return (f'<div class="aprenderas"><h3>Al terminar este {que} sabrás:</h3><ul>'
                 + "".join(f"<li>{esc(x)}</li>" for x in lista) + "</ul></div>")
 
-    def bloques_html(self, bloques):
+    def bloques_html(self, bloques, pid=""):
         out = []
         for b in bloques:
             t = b.get("t")
@@ -1682,6 +1807,8 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                            f'<button class="copiar" type="button">Copiar</button><pre class="cod"><code>{esc(x)}</code></pre></details>')
             elif t == "salida":
                 out.append(f'<p class="etiqueta-salida">Salida real del programa</p><pre class="salida">{esc(b.get("x", ""))}</pre>')
+            elif t == "lab":
+                out.append(self.lab_html(pid, b))
             elif t == "fig":
                 out.append(f'<figure class="fig">{b.get("svg", "")}<figcaption>{esc(b.get("x", ""))}</figcaption></figure>')
         return "".join(out)
@@ -1732,8 +1859,51 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
         d.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(origen, d)
 
+    def lab_html(self, pid, b):
+        modo = "nube" if b.get("modo") == "nube" else "recta"
+        titulo = esc(b.get("titulo") or ("La nube de puntos real" if modo == "nube" else "Laboratorio: mueve la recta"))
+        sub = esc(b.get("x") or "")
+        sel = ('<label>Datos que se miden<select><option value="train">Entrenamiento (80 %)</option>'
+               '<option value="test">Prueba (20 %)</option><option value="todos">Todos</option></select></label>')
+        if modo == "nube":
+            ctl = ('<label>Datos que se ven<select><option value="todos">Todos</option>'
+                   '<option value="train">Entrenamiento (80 %)</option><option value="test">Prueba (20 %)</option></select></label>'
+                   + '<div class="chk"><input class="rec" type="checkbox" id="rec-' + esc(pid) + '"><label for="rec-' + esc(pid) + '" style="display:inline;margin:0">Dibujar la recta que calculará el programa</label></div>'
+                   '<div class="labr-kpis"><div class="labr-kpi"><small>Registros</small><strong class="k-n">–</strong></div>'
+                   '<div class="labr-kpi"><small>Correlación</small><strong class="k-cor">–</strong></div>'
+                   '<div class="labr-kpi"><small>Temperatura</small><strong class="k-rt" style="font-size:.85rem">–</strong></div>'
+                   '<div class="labr-kpi"><small>Potencia</small><strong class="k-rp" style="font-size:.85rem">–</strong></div></div>')
+        else:
+            ctl = ('<label>Pendiente m (MW por °C) <b class="mv">–</b></label><input class="m" type="range" min="-5" max="1" step="0.01" value="0">'
+                   '<label>Intercepto b (MW) <b class="bv">–</b></label><input class="b" type="range" min="300" max="700" step="0.1" value="450">'
+                   '<div class="chk"><input class="piv" type="checkbox" id="piv-' + esc(pid) + '"><label for="piv-' + esc(pid) + '" style="display:inline;margin:0">'
+                   'Que la recta gire alrededor del centro de los datos (siempre pasa por la media)</label></div>'
+                   + sel +
+                   '<div class="labr-eq k-eq">–</div>'
+                   '<div class="labr-kpis"><div class="labr-kpi"><small>SSE</small><strong class="k-sse">–</strong></div>'
+                   '<div class="labr-kpi"><small>R²</small><strong class="k-r2">–</strong></div>'
+                   '<div class="labr-kpi"><small>RMSE</small><strong class="k-rmse">–</strong></div>'
+                   '<div class="labr-kpi"><small>MAE</small><strong class="k-mae">–</strong></div></div>'
+                   '<div class="labr-barra"><i></i></div><div class="k-ratio" style="font-size:.8rem;color:var(--suave);margin-top:4px"></div>'
+                   '<button class="boton verde b-sol" type="button">✨ Ir a la solución del programa</button>'
+                   '<button class="boton b-cero" type="button">↺ Empezar con una recta plana</button>')
+        return (f'<div class="labr" data-src="../datos/{esc(pid)}.json" data-modo="{modo}" data-id="{esc(pid)}">'
+                f'<h3>{"📊" if modo == "nube" else "🧪"} {titulo}</h3>'
+                + (f'<p class="labr-sub">{sub}</p>' if sub else "")
+                + f'<div class="labr-cuerpo"><canvas role="img" aria-label="Nube de puntos de temperatura y potencia"></canvas>'
+                  f'<div class="labr-ctl">{ctl}<div class="labr-msg"></div></div></div></div>')
+
+    def copiar_datos(self, pid):
+        origen = RAIZ / f"datos--{pid}.json"
+        if origen.is_file():
+            self.copiar(origen, f"datos/{pid}.json")
+        else:
+            print(f"  [AVISO] Falta datos--{pid}.json (súbelo a la raíz del repositorio) para los gráficos con datos reales.")
+
     def paginas_pasos(self):
         for p in self.proyectos:
+            if any(self.ayuda_paso(p['id'], n) for n in range(1, len(p.get('pasos') or []) + 1)):
+                self.copiar_datos(p['id'])
             pasos = p.get("pasos") or []
             for n in range(1, len(pasos) + 1):
                 d = self.ayuda_paso(p["id"], n)
@@ -1762,7 +1932,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                     f'<p class="fuente">{esc(d.get("fuente", ""))}</p>'
                     f'<p>{esc(d.get("intro", ""))}</p>'
                     '<section><h2 style="--c:#38bdf8">1 · Lee la ayuda<small>extraída del libro, en su mismo orden</small></h2>'
-                    + self.bloques_html(d["bloques"]) + '</section>'
+                    + self.bloques_html(d["bloques"], p["id"]) + '</section>'
                     + caja_test
                     + '<section class="caja-paso"><h2 style="--c:#fb7185">3 · Enseña tu trabajo'
                       '<small>código, gráficos, notas</small></h2>'
