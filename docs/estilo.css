@@ -276,6 +276,29 @@ figure.fig figcaption{font-size:.84rem;color:var(--suave);margin-top:8px}
  details.codigo>summary{display:none}
  pre.cod,pre.salida{white-space:pre-wrap;border:1px solid #bbb!important}
 }
+.labr{margin:16px 0;padding:18px;border-radius:16px;border:1px solid #4ade8066;
+ background:radial-gradient(520px 220px at 100% 0%,rgba(74,222,128,.11),transparent 70%),var(--superficie)}
+.labr h3{margin:0 0 4px;font-size:1.05rem}
+.labr .labr-sub{margin:0 0 12px;color:var(--suave);font-size:.9rem;max-width:none}
+.labr-cuerpo{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(240px,1fr);gap:18px;align-items:start}
+.labr canvas{width:100%;display:block;border-radius:12px;border:1px solid var(--linea);background:#0a1626;touch-action:none}
+.labr-ctl label{display:flex;justify-content:space-between;font-size:.9rem;margin-top:10px}
+.labr-ctl label b{color:var(--acento);font-family:ui-monospace,Menlo,Consolas,monospace}
+.labr-ctl input[type=range]{width:100%;accent-color:#38bdf8}
+.labr-ctl .chk{display:flex;gap:8px;align-items:flex-start;margin-top:10px;font-size:.85rem;color:var(--suave)}
+.labr-ctl select{margin-top:6px;width:100%;padding:6px 8px;border-radius:8px;background:var(--superficie2);color:var(--tinta);border:1px solid var(--linea)}
+.labr-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.labr-kpi{padding:8px 10px;border-radius:10px;background:var(--superficie2);text-align:center}
+.labr-kpi small{display:block;color:var(--suave);font-size:.68rem;text-transform:uppercase;letter-spacing:.07em}
+.labr-kpi strong{font:800 1.15rem ui-monospace,Menlo,Consolas,monospace}
+.labr-eq{margin-top:12px;padding:10px;text-align:center;border-radius:10px;background:#0a1626;border:1px dashed #38bdf866;
+ font:700 1rem ui-monospace,Menlo,Consolas,monospace}
+.labr-barra{height:8px;border-radius:99px;background:var(--linea);overflow:hidden;margin-top:6px}
+.labr-barra i{display:block;height:100%;width:50%;background:#4ade80;transition:width .15s,background .15s}
+.labr-msg{margin-top:10px;font-size:.88rem;color:var(--suave);min-height:2.8em}
+.labr-falta{padding:14px;border:1px dashed var(--linea);border-radius:10px;color:var(--suave);font-size:.9rem}
+@media(max-width:760px){.labr-cuerpo{grid-template-columns:1fr}}
+@media print{.labr-ctl{display:none!important}.labr canvas{border:1px solid #888!important}}
 @media print{
  *{background:#fff!important;color:#000!important;box-shadow:none!important;
    border-color:#bbb!important;text-shadow:none!important;transform:none!important}
