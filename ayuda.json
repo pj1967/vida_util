@@ -548,6 +548,64 @@
        "k": "sencilla",
        "titulo": "Cómo se lee",
        "x": "(9568, 2) significa 9.568 filas (registros) y 2 columnas (variables). Son los datos de varios años de una central real."
+      },
+      {
+       "t": "h",
+       "x": "Gráfico: de la tabla de UCI a nuestra tabla"
+      },
+      {
+       "t": "flujo"
+      },
+      {
+       "t": "leer",
+       "ver": "Tres cajas: la tabla original de UCI (5 columnas), lo que nos quedamos (2) y la tabla df resultante.",
+       "leer": "De izquierda a derecha es lo que hace el código: descarga, elige dos columnas y las guarda en df. Cada fila es una hora de funcionamiento de la central; cada columna, una medida.",
+       "dice": "Tenemos la materia prima del proyecto: una entrada (temperatura) y una salida (potencia), con 9.568 registros. Es una tabla pequeña: unos 19.000 números en total."
+      },
+      {
+       "t": "h",
+       "x": "Las cinco primeras filas, tal como las verás"
+      },
+      {
+       "t": "tabla",
+       "cab": [
+        "Fila",
+        "Temperatura (°C)",
+        "Potencia (MW)"
+       ],
+       "filas": [
+        [
+         "0",
+         "14,96",
+         "463,26"
+        ],
+        [
+         "1",
+         "25,18",
+         "444,37"
+        ],
+        [
+         "2",
+         "5,11",
+         "488,56"
+        ],
+        [
+         "3",
+         "20,86",
+         "446,48"
+        ],
+        [
+         "4",
+         "10,82",
+         "473,90"
+        ]
+       ]
+      },
+      {
+       "t": "leer",
+       "ver": "Cinco registros de la tabla df: a cada temperatura le corresponde una potencia.",
+       "leer": "Lee cada fila de izquierda a derecha: «cuando hacía 14,96 °C, la central generó 463,26 MW».",
+       "dice": "Fíjate: a 5 °C la potencia es 488,6 MW; a 25 °C, 444,4 MW. Con solo cinco filas ya se intuye que más calor significa menos potencia. Lo comprobaremos con un gráfico en el paso 4."
       }
      ]
     },
@@ -835,6 +893,37 @@
          "Mediana de la potencia: 451,55 MW"
         ]
        ]
+      },
+      {
+       "t": "h",
+       "x": "Gráficos: cómo se reparten los datos"
+      },
+      {
+       "t": "graf",
+       "modo": "hist",
+       "var": "t",
+       "titulo": "Histograma de la temperatura",
+       "x": "Mueve el deslizador para agrupar los datos en más o menos barras."
+      },
+      {
+       "t": "leer",
+       "ver": "Barras: cada una cuenta cuántos registros caen en un tramo de temperatura. Línea amarilla: la media (19,65 °C). Línea verde: la mediana (20,34 °C), el valor que deja la mitad de los datos a cada lado.",
+       "leer": "Cuanto más alta es una barra, más registros hay en ese tramo. Si las barras forman una «montaña», los valores típicos están en el centro; las barras bajas de los extremos son valores raros.",
+       "dice": "Tenemos datos de 1,8 a 37,1 °C, y la mayoría entre 13 y 26 °C. Hay pocos registros por debajo de 5 °C o por encima de 32 °C: ahí el modelo tendrá menos información y será menos fiable.",
+       "ojo": "Media y mediana casi iguales indican una forma bastante simétrica."
+      },
+      {
+       "t": "graf",
+       "modo": "hist",
+       "var": "p",
+       "titulo": "Histograma de la potencia",
+       "x": "Lo mismo, ahora con lo que queremos predecir: la potencia."
+      },
+      {
+       "t": "leer",
+       "ver": "Cada barra cuenta cuántos registros tienen una potencia en ese tramo. Amarillo: la media (454,4 MW); verde: la mediana (451,6 MW).",
+       "leer": "Se lee igual que el anterior, pero ahora en el eje horizontal está la salida (y), en megavatios.",
+       "dice": "La potencia va de 420 a 496 MW, con dos zonas donde se concentran más datos (alrededor de 440 y de 470 MW). Un rango de solo 76 MW explica por qué los errores del modelo serán de unos pocos MW."
       }
      ]
     },
@@ -1097,11 +1186,6 @@
      "c": "#4ade80",
      "bloques": [
       {
-       "t": "lab",
-       "modo": "nube",
-       "x": "Cada punto es una hora de funcionamiento de la central. Prueba a ver solo entrenamiento o prueba, y a dibujar la recta que calculará el programa."
-      },
-      {
        "t": "salida",
        "x": "Correlación: -0.948"
       },
@@ -1110,6 +1194,48 @@
        "k": "sencilla",
        "titulo": "Cómo se lee",
        "x": "La nube baja de izquierda a derecha en forma casi recta: al subir la temperatura, baja la potencia. La correlación −0,948 resume esa relación: negativa y muy fuerte."
+      },
+      {
+       "t": "lab",
+       "modo": "nube",
+       "x": "Cada punto es una hora de funcionamiento de la central. Prueba a ver solo entrenamiento o prueba, y a dibujar la recta que calculará el programa."
+      },
+      {
+       "t": "leer",
+       "ver": "Cada punto es una hora de funcionamiento: su posición horizontal es la temperatura y la vertical, la potencia. La nube tiene 9.568 puntos.",
+       "leer": "Mira hacia dónde va la nube: si baja de izquierda a derecha, la relación es negativa; si sube, positiva. Cuanto más estrecha es la nube, más fuerte es la relación. La correlación resume todo en un número entre −1 y +1.",
+       "dice": "La nube baja casi en línea recta: a más temperatura, menos potencia. La correlación es −0,948 (muy cerca de −1). Una recta es una muy buena idea para este problema.",
+       "ojo": "Ver una relación no prueba que la temperatura sea la causa única de la potencia; solo que van juntas."
+      },
+      {
+       "t": "h",
+       "x": "Compara con tres casos típicos"
+      },
+      {
+       "t": "nubes3"
+      },
+      {
+       "t": "leer",
+       "ver": "Tres nubes de ejemplo: una que sube, una redonda y una que baja.",
+       "leer": "Compara la forma de tu nube con estas tres para decidir si una recta tiene sentido. La nube redonda no tiene relación: ninguna recta ayudaría.",
+       "dice": "La nuestra se parece a la tercera: relación negativa y bastante estrecha. Por eso la regresión lineal simple va a funcionar bien."
+      },
+      {
+       "t": "glosa",
+       "filas": [
+        [
+         "Correlación cercana a −1",
+         "La nube baja formando casi una línea recta (nuestro caso: −0,948)"
+        ],
+        [
+         "Correlación cercana a 0",
+         "La nube es redonda: no hay relación lineal"
+        ],
+        [
+         "Correlación cercana a +1",
+         "La nube sube formando casi una línea recta"
+        ]
+       ]
       }
      ]
     },
@@ -1367,10 +1493,28 @@
        "x": "Datos de entrenamiento: 7654\nDatos de prueba: 1914"
       },
       {
+       "t": "graf",
+       "modo": "reparto",
+       "x": "Cada cuadradito es un registro (una muestra de 200 de los 9.568). Azul: entrenamiento. Ámbar: prueba."
+      },
+      {
+       "t": "leer",
+       "ver": "200 cuadraditos que representan la tabla: azules para los datos de entrenamiento (80 %) y ámbar para los de prueba (20 %). Debajo, la barra de proporciones.",
+       "leer": "Los azules son con los que el modelo «estudia»; los ámbar los guardamos sin enseñárselos, como las preguntas nuevas de un examen.",
+       "dice": "Con test_size = 0,20 quedan 7.654 datos para entrenar y 1.914 para probar. Están mezclados al azar, no separados por zonas: así el examen es justo.",
+       "ojo": "random_state=42 hace que el reparto sea siempre el mismo; si lo cambias, saldrá otro reparto y los números variarán un poco."
+      },
+      {
        "t": "lab",
        "modo": "nube",
        "titulo": "Así quedan repartidos los puntos",
        "x": "Elige «Todos»: en azul los de entrenamiento y en ámbar los de prueba, mezclados al azar."
+      },
+      {
+       "t": "leer",
+       "ver": "La misma nube de antes, pero con «Todos» seleccionado: azul para entrenamiento y ámbar para prueba.",
+       "leer": "Si los puntos ámbar están repartidos por toda la nube, la prueba representa bien a todos los datos. Si estuvieran todos en una esquina, el examen no sería representativo.",
+       "dice": "Los ámbar aparecen por toda la nube, en todas las temperaturas: la prueba es representativa. Cambia a «Entrenamiento» o «Prueba» para ver cada grupo por separado."
       }
      ]
     },
@@ -1644,9 +1788,28 @@
        ]
       },
       {
+       "t": "graf",
+       "modo": "anatomia",
+       "x": "Mueve el deslizador y mira qué le pasa a la potencia cuando la temperatura sube."
+      },
+      {
+       "t": "leer",
+       "ver": "La nube de puntos con la recta del programa. El punto rojo es el intercepto b; el triángulo amarillo muestra la pendiente m.",
+       "leer": "b es dónde la recta toca el eje vertical, a 0 °C. m es la «bajada» por cada grado que subes: el triángulo mide cuánto cambia la potencia (lado vertical) al subir unos grados (lado horizontal).",
+       "dice": "b = 497,15 MW: la potencia estimada a 0 °C. m = −2,18 MW/°C: por cada grado más, la potencia baja unos 2,18 MW; con +5 °C baja casi 11 MW.",
+       "ojo": "El intercepto a 0 °C está fuera de nuestros datos (empiezan en 1,8 °C): es un punto de partida matemático de la recta, no una predicción fiable."
+      },
+      {
        "t": "lab",
        "modo": "recta",
        "x": "Mueve la pendiente y el intercepto sobre los datos reales de entrenamiento. Los segmentos rojos son los errores; la barra te dice cuánto te alejas de la recta del programa. Prueba la casilla de girar alrededor del centro."
+      },
+      {
+       "t": "leer",
+       "ver": "La nube de entrenamiento, tu recta (azul), la del programa (verde, punteada) y segmentos rojos: los errores.",
+       "leer": "Cada segmento rojo es la distancia entre un dato real y tu recta. El SSE suma todos esos errores elevados al cuadrado. La barra inferior compara tu error con el mínimo posible: al 100 % has igualado al programa.",
+       "dice": "Mover la pendiente gira la recta y mover el intercepto la sube o la baja. Solo hay una combinación (m = −2,18; b = 497,15) con el menor error posible: esa es la recta de mínimos cuadrados.",
+       "ojo": "Prueba la casilla «que la recta gire alrededor del centro»: la recta de mínimos cuadrados siempre pasa por la temperatura media y la potencia media."
       }
      ]
     },
@@ -1954,6 +2117,18 @@
        "k": "atencion",
        "titulo": "Atención",
        "x": "R² = 0,90 no significa que el 90 % de las predicciones sean correctas: significa que la recta explica el 90 % de la variación de la potencia."
+      },
+      {
+       "t": "graf",
+       "modo": "realpred",
+       "x": "Cada punto es un dato de prueba. Mueve la tolerancia para ver cuántas predicciones caen cerca del valor real."
+      },
+      {
+       "t": "leer",
+       "ver": "Cada punto es un dato de prueba: en horizontal lo que predijo la recta y en vertical la potencia que midió la central. La línea verde es la predicción perfecta; las amarillas, la zona de ±tolerancia.",
+       "leer": "Cuanto más pegados a la diagonal verde, mejor. Un punto por encima: la recta se quedó corta. Un punto por debajo: la recta se pasó. Los puntos rojos son los que se alejan más que la tolerancia.",
+       "dice": "La nube es una banda estrecha alrededor de la diagonal: la recta predice muy bien. Con ±5 MW cae el 65 % de los datos de prueba y con ±10 MW, el 94 %. R² = 0,90 y el error típico (RMSE) es de 5,4 MW.",
+       "ojo": "R² = 0,90 no significa «acierta el 90 % de las veces»: significa que la recta explica el 90 % de la variación de la potencia."
       }
      ]
     },
@@ -2209,18 +2384,6 @@
      "c": "#4ade80",
      "bloques": [
       {
-       "t": "lab",
-       "modo": "nube",
-       "rec": true,
-       "titulo": "La recta sobre los datos",
-       "x": "La recta verde es la que calculó el programa."
-      },
-      {
-       "t": "lab",
-       "modo": "residuos",
-       "x": "Cada punto es un error de predicción en los datos de prueba. La línea roja es error cero; las amarillas marcan donde cae el ≈ 95 % de los errores."
-      },
-      {
        "t": "etq",
        "k": "sencilla",
        "titulo": "Cómo se lee",
@@ -2231,6 +2394,57 @@
        "k": "atencion",
        "titulo": "Límites del modelo",
        "x": "Usa una sola variable (no recoge presión, humedad ni vacío) y los datos son de una única central. La regresión simple no demuestra que la temperatura sea la única causa de los cambios de potencia."
+      },
+      {
+       "t": "lab",
+       "modo": "nube",
+       "rec": true,
+       "titulo": "La recta sobre los datos",
+       "x": "La recta verde es la que calculó el programa."
+      },
+      {
+       "t": "leer",
+       "ver": "La nube de puntos con la recta verde del programa por encima.",
+       "leer": "Una buena recta atraviesa la nube por el medio, con tantos puntos por encima como por debajo, de un extremo a otro.",
+       "dice": "La recta sigue bien la tendencia en todo el rango. Si te fijas, en los extremos (muy frío o muy caluroso) los puntos se separan un poco más: aquí hay menos datos."
+      },
+      {
+       "t": "lab",
+       "modo": "residuos",
+       "x": "Cada punto es un error de predicción en los datos de prueba. La línea roja es error cero; las amarillas marcan donde cae el ≈ 95 % de los errores."
+      },
+      {
+       "t": "leer",
+       "ver": "Cada punto es un error (residuo = real − predicho) de un dato de prueba. En horizontal, la potencia que predijo la recta. Línea roja: error cero. Líneas amarillas: donde cae el 95 % de los errores.",
+       "leer": "Lo que buscamos es una nube sin forma, repartida al azar alrededor de la línea roja. Si dibujan una curva o un abanico, la recta se está dejando algo sin explicar.",
+       "dice": "Los errores se reparten alrededor de cero (error medio −0,03 MW) y el 95 % cae entre unos −10,5 y +10,5 MW. Hay una ligera pauta: la recta se queda un poco corta con potencias bajas y se pasa con las medias.",
+       "ojo": "Un error máximo de 29,9 MW es un dato raro: conviene mirarlo antes de decidir si es un fallo de medida."
+      },
+      {
+       "t": "graf",
+       "modo": "hist",
+       "var": "r",
+       "titulo": "Histograma de los errores",
+       "x": "Cuántos errores caen en cada tramo. Debería parecerse a una campana centrada en cero."
+      },
+      {
+       "t": "leer",
+       "ver": "Barras con el número de errores de cada tamaño. Línea amarilla: error medio; verde: mediana.",
+       "leer": "Si es una campana simétrica centrada en 0, los errores son «normales»: unos por encima y otros por debajo, sin sesgo.",
+       "dice": "Casi perfecta: la campana está centrada en cero (media −0,03 MW) y es casi simétrica. La mayoría de los errores son pequeños; los grandes son raros."
+      },
+      {
+       "t": "h",
+       "x": "Cómo reconocer un mal gráfico de residuos"
+      },
+      {
+       "t": "patrones"
+      },
+      {
+       "t": "leer",
+       "ver": "Tres gráficos de residuos de ejemplo: aleatorio, en curva y en abanico.",
+       "leer": "Compara el gráfico de residuos de arriba con estos tres. Solo el primero indica que la recta es suficiente.",
+       "dice": "El nuestro se parece más al primero, con una leve curvatura. Es una buena señal, aunque no perfecta."
       }
      ]
     },
@@ -2543,6 +2757,74 @@
        "k": "atencion",
        "titulo": "Fuera de rango",
        "x": "Si aplicáramos la ecuación a 45 °C saldría ≈ 399 MW, un valor por debajo de cualquier potencia observada (mínimo 420 MW): una señal de que extrapolar es peligroso."
+      },
+      {
+       "t": "salida",
+       "x": "Temperatura: 25 °C\nPotencia estimada: 442.7 MW\nRango del 95 %:    de 432.1 a 453.4 MW\n\n===============================================================================\n                  coef    std err          t      P>|t|      [0.025      0.975]\n-------------------------------------------------------------------------------\nconst         497.1542      0.175   2833.564      0.000     496.810     497.498\nTemperatura    -2.1771      0.008   -260.392      0.000      -2.193      -2.161\n===============================================================================\n\nRango de temperaturas con datos: 1.8 a 37.1 °C\n¿25 °C está dentro del rango? True"
+      },
+      {
+       "t": "kpis",
+       "items": [
+        {
+         "v": "442,7 MW",
+         "x": "potencia estimada a 25 °C",
+         "c": "#4ade80"
+        },
+        {
+         "v": "432,1 MW",
+         "x": "límite inferior (95 %)",
+         "c": "#fbbf24"
+        },
+        {
+         "v": "453,4 MW",
+         "x": "límite superior (95 %)",
+         "c": "#fbbf24"
+        }
+       ]
+      },
+      {
+       "t": "tabla",
+       "cab": [
+        "Coeficiente",
+        "Valor",
+        "Intervalo del 95 %"
+       ],
+       "filas": [
+        [
+         "Intercepto (const)",
+         "497,1542",
+         "496,810 a 497,498"
+        ],
+        [
+         "Pendiente (Temperatura)",
+         "−2,1771",
+         "−2,193 a −2,161"
+        ]
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Cómo se lee",
+       "x": "A 25 °C esperamos unos 443 MW, y el 95 % de las veces la potencia real debería quedar entre 432 y 453 MW. La mitad de la anchura del rango (≈ 10,6 MW) es aproximadamente el doble del RMSE. P>|t| = 0,000 indica que la relación con la temperatura es estadísticamente significativa."
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Fuera de rango",
+       "x": "Si aplicáramos la ecuación a 45 °C saldría ≈ 399 MW, un valor por debajo de cualquier potencia observada (mínimo 420 MW): una señal de que extrapolar es peligroso."
+      },
+      {
+       "t": "graf",
+       "modo": "banda",
+       "x": "Mueve la temperatura: la predicción es el punto blanco y su rango del 95 %, la barra amarilla. Prueba con 45 °C."
+      },
+      {
+       "t": "leer",
+       "ver": "La recta azul, los datos de entrenamiento (puntos tenues) y una banda verde: el rango dentro del cual esperamos que caiga el 95 % de las mediciones nuevas. Las zonas rosadas son temperaturas de las que no tenemos datos.",
+       "leer": "Elige una temperatura: el punto blanco es lo que predice la recta y la barra amarilla, el rango del 95 %. Cuanto más ancha es la barra, más incertidumbre.",
+       "dice": "A 25 °C: 442,7 MW, con un rango de 432,1 a 453,4 MW (unos ±10,7 MW). Con 45 °C la recta daría 399 MW, pero nuestros datos acaban en 37 °C: es una extrapolación y no hay garantía de que la relación siga siendo una recta.",
+       "ojo": "Una predicción sin rango parece más segura de lo que es. Predecir fuera del rango de datos es el error más común."
       }
      ]
     },
@@ -2836,6 +3118,35 @@
        "k": "nota",
        "titulo": "Retos para consolidar",
        "x": "1) Básico: cambia 25 °C por 15, 20, 30 y 35 °C y compara las predicciones. 2) Intermedio: cambia test_size (0.30, 0.10) y mira cómo cambian R², RMSE y MAE. 3) Avanzado: añade presión, humedad y vacío como entradas: es la regresión múltiple, el siguiente proyecto."
+      },
+      {
+       "t": "salida",
+       "x": "1. Pregunta: ¿cuánta potencia produce la central según la temperatura ambiente?\n2. Datos: 9568 registros reales de una central de ciclo combinado, con temperaturas entre 1.8 y 37.1 °C.\n3. Resultado: por cada grado más de temperatura, la potencia baja unos 2.18 MW (R² = 0.90: la temperatura explica el 90 % de la variación).\n4. Limitaciones: solo es fiable entre 2 y 37 °C; con una sola variable y una sola central no explica todo (presión, humedad…).\n5. Conclusión: a 25 °C estimamos 443 MW, con un error típico de unos 4.3 MW (MAE)."
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Frase que no debes escribir",
+       "x": "«La temperatura es la única causa de la potencia.» La regresión simple muestra una relación, no prueba la causa única."
+      },
+      {
+       "t": "etq",
+       "k": "nota",
+       "titulo": "Retos para consolidar",
+       "x": "1) Básico: cambia 25 °C por 15, 20, 30 y 35 °C y compara las predicciones. 2) Intermedio: cambia test_size (0.30, 0.10) y mira cómo cambian R², RMSE y MAE. 3) Avanzado: añade presión, humedad y vacío como entradas: es la regresión múltiple, el siguiente proyecto."
+      },
+      {
+       "t": "graf",
+       "temp": 25,
+       "modo": "banda",
+       "titulo": "El resultado final en una imagen",
+       "x": "La recta, el rango del 95 % y la predicción a 25 °C. Puedes mover la temperatura."
+      },
+      {
+       "t": "leer",
+       "ver": "La recta del modelo con todos los datos de entrenamiento, el rango del 95 % y la predicción a 25 °C.",
+       "leer": "Es el resumen de todo el proyecto: la tendencia (recta), la incertidumbre (banda) y una respuesta concreta (el punto).",
+       "dice": "«A 25 °C estimamos 443 MW, entre 432 y 453 MW; solo es fiable entre 2 y 37 °C.» Esa frase, con este gráfico al lado, es un buen informe."
       }
      ]
     },
