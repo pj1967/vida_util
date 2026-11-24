@@ -355,6 +355,37 @@ figure.fig figcaption{font-size:.84rem;color:var(--suave);margin-top:8px}
 .labr-falta{padding:14px;border:1px dashed var(--linea);border-radius:10px;color:var(--suave);font-size:.9rem}
 @media(max-width:760px){.labr-cuerpo{grid-template-columns:1fr}}
 @media print{.labr-ctl{display:none!important}.labr canvas{border:1px solid #888!important}}
+.cards4{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:12px 0}
+.cards4>div{padding:12px 14px;border-radius:12px;background:var(--superficie2);border-top:3px solid var(--c);font-size:.92rem}
+.cards4 b{display:block;color:var(--c);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+table.lineas td:first-child{font-family:ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;color:#7dd3fc;font-size:.84rem;width:44%;vertical-align:top}
+.colab{margin:12px 0;padding:14px 16px;border-radius:12px;border:1px solid #fbbf2466;background:rgba(251,191,36,.07)}
+.colab ol{margin:8px 0 0;padding-left:20px;font-size:.92rem}
+.colab a.boton{text-decoration:none;color:var(--tinta)}
+.esperado{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:10px 0}
+.esp{padding:10px 12px;border-radius:10px;border:1px solid #4ade8066;background:rgba(74,222,128,.07)}
+.esp small{display:block;color:var(--suave);font-size:.72rem;text-transform:uppercase;letter-spacing:.07em}
+.esp strong{font:800 1.1rem ui-monospace,Menlo,Consolas,monospace;color:#4ade80}
+.res4{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:12px 0}
+.res4>div{padding:14px;border-radius:14px;background:var(--superficie);border:1px solid var(--linea);text-align:center}
+.res4 strong{display:block;font:800 1.7rem ui-monospace,Menlo,Consolas,monospace;color:var(--c)}
+.res4 small{color:var(--suave);font-size:.8rem}
+.sec-paso{margin:30px 0}
+.cpp{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0 6px}
+.cpp div{padding:12px 14px;border-radius:12px;background:var(--superficie2);border-top:3px solid var(--c);font-size:.92rem}
+.cpp b{display:block;color:var(--c);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.kpis-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:14px 0}
+.kpi-g{padding:16px 12px;border-radius:14px;background:var(--superficie);border:1px solid var(--linea);text-align:center;border-top:3px solid var(--c)}
+.kpi-g strong{display:block;font:800 1.9rem ui-monospace,Menlo,Consolas,monospace;color:var(--c)}
+.kpi-g small{display:block;color:var(--suave);font-size:.82rem;margin-top:2px}
+table.glosa{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9rem}
+table.glosa td{padding:7px 10px;border-bottom:1px solid var(--linea);vertical-align:top}
+table.glosa td:first-child{width:42%;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem;color:#7dd3fc;word-break:break-word}
+.btn-colab{display:inline-block;margin:6px 0;padding:11px 20px;border-radius:10px;font-weight:700;color:#04121f!important;
+ background:linear-gradient(90deg,#fbbf24,#fb923c);text-decoration:none!important}
+.btn-colab:hover{filter:brightness(1.08)}
+.pasos-img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--linea);display:block}
+@media print{table.glosa td:first-child{color:#000!important}.btn-colab{display:none!important}}
 @media print{
  *{background:#fff!important;color:#000!important;box-shadow:none!important;
    border-color:#bbb!important;text-shadow:none!important;transform:none!important}
@@ -530,6 +561,32 @@ JS = """
           cx.beginPath(); cx.moveTo(X(tmin),Y(mo*tmin+bo)); cx.lineTo(X(tmax),Y(mo*tmax+bo)); cx.stroke();
         }
       }
+      function dibujaRes(){
+        var W=cv.clientWidth, H=Math.round(W*0.5), dpr=window.devicePixelRatio||1;
+        cv.width=W*dpr; cv.height=H*dpr; cv.style.height=H+'px'; cx.setTransform(dpr,0,0,dpr,0,0);
+        var xs=[],rs=[],i,n=0,sr=0,sq=0,mx=0;
+        for(i=0;i<N;i++){ if(!sel(i)) continue; var pr=mo*T[i]+bo, r=P[i]-pr; xs.push(pr); rs.push(r); n++; sr+=r; sq+=r*r; if(Math.abs(r)>mx) mx=Math.abs(r); }
+        var media=sr/n, sd=Math.sqrt(sq/n-media*media);
+        var xa=Math.min.apply(null,xs)-4, xb=Math.max.apply(null,xs)+4, ya=-Math.ceil(mx/5)*5-2, yb=Math.ceil(mx/5)*5+2;
+        var L=54,Rr=12,Tt=12,Bb=40;
+        var X=function(x){ return L+(x-xa)*(W-L-Rr)/(xb-xa); }, Y=function(y){ return H-Bb-(y-ya)*(H-Tt-Bb)/(yb-ya); };
+        cx.clearRect(0,0,W,H); cx.font='11px sans-serif'; cx.strokeStyle='#1d2b44'; cx.lineWidth=1; cx.fillStyle='#8896ad';
+        var k,v;
+        for(k=-4;k<=4;k++){ v=k*Math.ceil(mx/20)*5; if(v<ya||v>yb) continue; cx.beginPath(); cx.moveTo(L,Y(v)); cx.lineTo(W-Rr,Y(v)); cx.stroke(); cx.textAlign='right'; cx.fillText(v,L-6,Y(v)+4); }
+        for(k=0;k<=6;k++){ v=xa+(xb-xa)*k/6; cx.textAlign='center'; cx.fillText(Math.round(v),X(v),H-Bb+16); }
+        cx.fillStyle='#cbd5e1'; cx.textAlign='center'; cx.fillText('Potencia predicha (MW)',(L+W-Rr)/2,H-6);
+        cx.save(); cx.translate(13,(Tt+H-Bb)/2); cx.rotate(-Math.PI/2); cx.fillText('Residuo = real − predicho (MW)',0,0); cx.restore();
+        cx.globalAlpha=0.3; cx.fillStyle='#38bdf8';
+        for(i=0;i<xs.length;i++){ cx.beginPath(); cx.arc(X(xs[i]),Y(rs[i]),2,0,6.2832); cx.fill(); }
+        cx.globalAlpha=1; cx.lineWidth=1.4; cx.setLineDash([5,4]); cx.strokeStyle='#fbbf24';
+        [1.96*sd,-1.96*sd].forEach(function(y){ cx.beginPath(); cx.moveTo(L,Y(y)); cx.lineTo(W-Rr,Y(y)); cx.stroke(); });
+        cx.fillStyle='#fbbf24'; cx.textAlign='left'; cx.fillText('±1,96·σ (≈95 % de los errores)',L+6,Y(1.96*sd)-5);
+        cx.strokeStyle='#fb7185'; cx.lineWidth=2; cx.beginPath(); cx.moveTo(L,Y(0)); cx.lineTo(W-Rr,Y(0)); cx.stroke(); cx.setLineDash([]);
+        cx.fillStyle='#fb7185'; cx.fillText('error cero',L+6,Y(0)-5);
+        $('.k-n',box).textContent=fmt(n,0); $('.k-rm',box).textContent=fmt(media,2)+' MW';
+        $('.k-rs',box).textContent=fmt(sd,2)+' MW'; $('.k-rx',box).textContent=fmt(mx,1)+' MW';
+      }
+      function pinta(){ if(modo==='residuos') dibujaRes(); else dibuja(); }
       function refresca(){
         if(modo==='recta'){
           var m=+sM.value, b;
@@ -547,19 +604,19 @@ JS = """
           msg.textContent= cerca ? '🏆 ¡Has encontrado la recta de mínimos cuadrados! Coincide con la del programa.' :
             (ratio>5 ? 'Muy lejos. Los segmentos rojos son los errores: busca que sean lo más cortos posibles. Pista: la pendiente debería ser negativa (más calor, menos potencia).' :
              'Cada segmento rojo es un error (residuo). El SSE suma todos al cuadrado. Intenta bajar la barra hasta que llegue al 100 %.');
-        } else {
+        } else if(modo==='nube'){
           var cu=calc(mo,bo);
           $('.k-n',box).textContent=fmt(cu.n,0);
           $('.k-cor',box).textContent=fmt(cor,3);
           $('.k-rt',box).textContent=fmt(tmin,1)+' a '+fmt(tmax,1)+' °C';
           $('.k-rp',box).textContent=fmt(pmin,0)+' a '+fmt(pmax,0)+' MW';
         }
-        dibuja();
+        pinta();
       }
       [sM,sB,selG,chkPiv,chkRec].forEach(function(el){ if(el){ el.addEventListener('input',refresca); el.addEventListener('change',refresca); } });
       var bs=$('.b-sol',box); if(bs) bs.addEventListener('click',function(){ if(chkPiv) chkPiv.checked=false; sM.value=mo.toFixed(2); sB.value=bo.toFixed(1); refresca(); });
       var b0=$('.b-cero',box); if(b0) b0.addEventListener('click',function(){ sM.value=0; sB.value=ym.toFixed(1); if(chkPiv) chkPiv.checked=false; refresca(); });
-      window.addEventListener('resize',dibuja);
+      window.addEventListener('resize',pinta);
       refresca();
     }, function(){
       cuerpo.innerHTML='<div class="labr-falta">Todavía no están los datos reales de este gráfico. Ejecuta el cuaderno de Colab y sube el archivo <b>datos--'+(box.getAttribute('data-id')||'')+'.json</b> a la raíz del repositorio.</div>';
@@ -1560,8 +1617,10 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                 if st.get(clave):
                     partes.append(f"<p><b>{etiqueta}:</b> {esc(st[clave])}</p>")
             if self.ayuda_paso(p["id"], num):
-                partes.append(f'<a class="enlace-paso" href="{esc(p["id"])}-paso-{num}.html">'
-                              'Abrir el paso: ayuda del libro, test y entrega →</a>')
+                etiqueta = ("Abrir el paso: explicación, código, resultado y test →"
+                            if self.ayuda_paso(p["id"], num).get("secciones")
+                            else "Abrir el paso: ayuda del libro, test y entrega →")
+                partes.append(f'<a class="enlace-paso" href="{esc(p["id"])}-paso-{num}.html">{etiqueta}</a>')
             else:
                 partes.append(self.ayuda_html(st.get("ayuda"), "../"))
             pasos.append(f'<li id="paso-{num}" data-paso="{esc(p["id"])}:{num}">' + "".join(partes) + "</li>")
@@ -1766,7 +1825,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
 
     def ayuda_paso(self, pid, n):
         d = (self.ayudas.get(pid) or {}).get(str(n))
-        return d if isinstance(d, dict) and d.get("bloques") else None
+        return d if isinstance(d, dict) and (d.get("bloques") or d.get("secciones")) else None
 
     @staticmethod
     def caja_aprenderas(lista, que="proyecto"):
@@ -1809,6 +1868,45 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                 out.append(f'<p class="etiqueta-salida">Salida real del programa</p><pre class="salida">{esc(b.get("x", ""))}</pre>')
             elif t == "lab":
                 out.append(self.lab_html(pid, b))
+            elif t == "kpis":
+                out.append('<div class="kpis-g">' + "".join(
+                    f'<div class="kpi-g" style="--c:{esc(k.get("c", "#38bdf8"))}"><strong>{esc(k.get("v", ""))}</strong>'
+                    f'<small>{esc(k.get("x", ""))}</small></div>' for k in b.get("items", [])) + "</div>")
+            elif t == "glosa":
+                out.append('<table class="glosa"><tbody>' + "".join(
+                    f'<tr><td>{esc(a)}</td><td>{esc(c)}</td></tr>' for a, c in b.get("filas", [])) + "</tbody></table>")
+            elif t == "img":
+                nombre = b.get("archivo", "")
+                origen = RAIZ / f"img--{pid}--{nombre}"
+                if origen.is_file():
+                    self.copiar(origen, f"img/{pid}--{nombre}")
+                    out.append(f'<figure class="fig" style="max-width:720px"><img class="pasos-img" loading="lazy" '
+                               f'src="../img/{esc(pid)}--{esc(nombre)}" alt="{esc(b.get("x", ""))}">'
+                               f'<figcaption>{esc(b.get("x", ""))}</figcaption></figure>')
+                else:
+                    out.append(f'<div class="labr-falta">Falta la imagen <b>img--{esc(pid)}--{esc(nombre)}</b> en la raíz del repositorio.</div>')
+            elif t == "cards":
+                cols = ("#38bdf8", "#fbbf24", "#4ade80", "#fb7185")
+                out.append('<div class="cards4">' + "".join(
+                    f'<div style="--c:{cols[i % 4]}"><b>{esc(c.get("t", ""))}</b>{esc(c.get("x", ""))}</div>'
+                    for i, c in enumerate(b.get("items", []))) + "</div>")
+            elif t == "lineas":
+                filas = "".join(f"<tr><td>{esc(a)}</td><td>{esc(q)}</td></tr>" for a, q in b.get("filas", []))
+                out.append('<div class="tabla-scroll"><table class="tabla-libro lineas"><thead><tr><th>En el código</th>'
+                           f'<th>Qué hace</th></tr></thead><tbody>{filas}</tbody></table></div>')
+            elif t == "colab":
+                u = enlace_seguro(b.get("url"))
+                pasos_c = "".join(f"<li>{esc(x)}</li>" for x in b.get("pasos", []))
+                boton = (f'<a class="boton verde" href="{esc(u)}" target="_blank" rel="noopener noreferrer">▶ Abrir en Google Colab</a>'
+                         if u.startswith("https://") else "")
+                out.append(f'<div class="colab">{boton}<ol>{pasos_c}</ol></div>')
+            elif t == "esperado":
+                out.append('<div class="esperado">' + "".join(
+                    f'<div class="esp"><small>{esc(a)}</small><strong>✓ {esc(v)}</strong></div>' for a, v in b.get("items", [])) + "</div>")
+            elif t == "kpis":
+                out.append('<div class="res4">' + "".join(
+                    f'<div style="--c:{esc(c.get("c", "#38bdf8"))}"><strong>{esc(c.get("v", ""))}</strong><small>{esc(c.get("x", ""))}</small></div>'
+                    for c in b.get("items", [])) + "</div>")
             elif t == "fig":
                 out.append(f'<figure class="fig">{b.get("svg", "")}<figcaption>{esc(b.get("x", ""))}</figcaption></figure>')
         return "".join(out)
@@ -1860,15 +1958,22 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
         shutil.copyfile(origen, d)
 
     def lab_html(self, pid, b):
-        modo = "nube" if b.get("modo") == "nube" else "recta"
-        titulo = esc(b.get("titulo") or ("La nube de puntos real" if modo == "nube" else "Laboratorio: mueve la recta"))
+        modo = b.get("modo") if b.get("modo") in ("nube", "residuos") else "recta"
+        titulo = esc(b.get("titulo") or {"nube": "La nube de puntos real", "residuos": "Los errores de la recta (residuos)"}.get(modo, "Laboratorio: mueve la recta"))
         sub = esc(b.get("x") or "")
-        sel = ('<label>Datos que se miden<select><option value="train">Entrenamiento (80 %)</option>'
+        sel = ('<label style="display:block">Datos que se miden<select><option value="train">Entrenamiento (80 %)</option>'
                '<option value="test">Prueba (20 %)</option><option value="todos">Todos</option></select></label>')
-        if modo == "nube":
-            ctl = ('<label>Datos que se ven<select><option value="todos">Todos</option>'
+        if modo == "residuos":
+            ctl = ('<label style="display:block">Datos que se ven<select><option value="test">Prueba (20 %)</option>'
+                   '<option value="train">Entrenamiento (80 %)</option><option value="todos">Todos</option></select></label>'
+                   '<div class="labr-kpis"><div class="labr-kpi"><small>Puntos</small><strong class="k-n">–</strong></div>'
+                   '<div class="labr-kpi"><small>Error medio</small><strong class="k-rm" style="font-size:.95rem">–</strong></div>'
+                   '<div class="labr-kpi"><small>Desviación σ</small><strong class="k-rs" style="font-size:.95rem">–</strong></div>'
+                   '<div class="labr-kpi"><small>Error máximo</small><strong class="k-rx" style="font-size:.95rem">–</strong></div></div>')
+        elif modo == "nube":
+            ctl = ('<label style="display:block">Datos que se ven<select><option value="todos">Todos</option>'
                    '<option value="train">Entrenamiento (80 %)</option><option value="test">Prueba (20 %)</option></select></label>'
-                   + '<div class="chk"><input class="rec" type="checkbox" id="rec-' + esc(pid) + '"><label for="rec-' + esc(pid) + '" style="display:inline;margin:0">Dibujar la recta que calculará el programa</label></div>'
+                   + '<div class="chk"><input class="rec" type="checkbox"' + (' checked' if b.get("rec") else '') + ' id="rec-' + esc(pid) + '"><label for="rec-' + esc(pid) + '" style="display:inline;margin:0">Dibujar la recta que calculará el programa</label></div>'
                    '<div class="labr-kpis"><div class="labr-kpi"><small>Registros</small><strong class="k-n">–</strong></div>'
                    '<div class="labr-kpi"><small>Correlación</small><strong class="k-cor">–</strong></div>'
                    '<div class="labr-kpi"><small>Temperatura</small><strong class="k-rt" style="font-size:.85rem">–</strong></div>'
@@ -1890,7 +1995,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
         return (f'<div class="labr" data-src="../datos/{esc(pid)}.json" data-modo="{modo}" data-id="{esc(pid)}">'
                 f'<h3>{"📊" if modo == "nube" else "🧪"} {titulo}</h3>'
                 + (f'<p class="labr-sub">{sub}</p>' if sub else "")
-                + f'<div class="labr-cuerpo"><canvas role="img" aria-label="Nube de puntos de temperatura y potencia"></canvas>'
+                + f'<div class="labr-cuerpo"><canvas role="img" aria-label="Gráfico con los datos reales de temperatura y potencia"></canvas>'
                   f'<div class="labr-ctl">{ctl}<div class="labr-msg"></div></div></div></div>')
 
     def copiar_datos(self, pid):
@@ -1901,50 +2006,91 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             print(f"  [AVISO] Falta datos--{pid}.json (súbelo a la raíz del repositorio) para los gráficos con datos reales.")
 
     def paginas_pasos(self):
+        repo = (self.cfg.get("sitio", {}) or {}).get("repo", "pj1967/vida_util")
         for p in self.proyectos:
-            if any(self.ayuda_paso(p['id'], n) for n in range(1, len(p.get('pasos') or []) + 1)):
-                self.copiar_datos(p['id'])
             pasos = p.get("pasos") or []
+            if any(self.ayuda_paso(p["id"], n) for n in range(1, len(pasos) + 1)):
+                self.copiar_datos(p["id"])
             for n in range(1, len(pasos) + 1):
                 d = self.ayuda_paso(p["id"], n)
                 if not d:
                     continue
-                clave = f'{p["id"]}:{n}'
-                prev = (f'<a class="enlace-paso" href="{p["id"]}-paso-{n - 1}.html">← Paso anterior</a>'
-                        if n > 1 and self.ayuda_paso(p["id"], n - 1) else "")
-                sig = (f'<a class="enlace-paso" href="{p["id"]}-paso-{n + 1}.html">Siguiente paso →</a>'
-                       if self.ayuda_paso(p["id"], n + 1) else
-                       (f'<a class="enlace-paso" href="{p["id"]}.html#paso-{n + 1}">Volver al proyecto: paso {n + 1} →</a>'
-                        if n < len(pasos) else f'<a class="enlace-paso" href="{p["id"]}.html">Volver al proyecto →</a>'))
+                pid = p["id"]
+                clave = f"{pid}:{n}"
+                prev = (f'<a class="enlace-paso" href="{pid}-paso-{n - 1}.html">← Paso anterior</a>'
+                        if n > 1 and self.ayuda_paso(pid, n - 1) else "")
+                sig = (f'<a class="enlace-paso" href="{pid}-paso-{n + 1}.html">Siguiente paso →</a>'
+                       if self.ayuda_paso(pid, n + 1) else
+                       (f'<a class="enlace-paso" href="{pid}.html#paso-{n + 1}">Volver al proyecto: paso {n + 1} →</a>'
+                        if n < len(pasos) else f'<a class="enlace-paso" href="{pid}.html">Volver al proyecto →</a>'))
                 test = d.get("test") or {}
                 if test.get("preguntas"):
                     datos = json.dumps(test, ensure_ascii=False).replace("</", "<\\/")
-                    caja_test = ('<section class="caja-paso" id="test" data-clave="' + esc(clave) + '">'
-                                 '<h2 style="--c:#fbbf24">2 · Comprueba lo aprendido'
-                                 f'<small>test de {int(test.get("cuantas", 8))} preguntas al azar; las respuestas cambian de orden cada vez</small></h2>'
-                                 f'<script type="application/json" id="test-datos">{datos}</script>'
-                                 '<div id="test-cuerpo"></div></section>')
+                    caja_test = (f'<script type="application/json" id="test-datos">{datos}</script>'
+                                 '<p class="sub-test">Test de '
+                                 f'{int(test.get("cuantas", 8))} preguntas al azar; las respuestas cambian de orden cada vez. '
+                                 f'Se aprueba con un {int(test.get("aprobado", 70))} %.</p>'
+                                 '<div id="test-cuerpo"></div>')
                 else:
                     caja_test = ""
-                cuerpo = (
-                    f'<p class="migas"><a href="{esc(p["id"])}.html#paso-{n}">← {esc(p.get("titulo", ""))}</a></p>'
-                    f'<div class="paso-pag"><h2 style="--c:#4ade80">Paso {n} de {len(pasos)} · {esc(d.get("titulo") or pasos[n - 1].get("titulo", ""))}</h2>'
-                    f'<p class="fuente">{esc(d.get("fuente", ""))}</p>'
-                    f'<p>{esc(d.get("intro", ""))}</p>'
-                    '<section><h2 style="--c:#38bdf8">1 · Lee la ayuda<small>extraída del libro, en su mismo orden</small></h2>'
-                    + self.bloques_html(d["bloques"], p["id"]) + '</section>'
-                    + caja_test
-                    + '<section class="caja-paso"><h2 style="--c:#fb7185">3 · Enseña tu trabajo'
-                      '<small>código, gráficos, notas</small></h2>'
-                    + self.evidencias_html(p["id"], n, d) + '</section>'
-                    + '<section class="caja-paso"><h2 style="--c:#4ade80">4 · Cierra el paso</h2>'
-                      '<p>Cuando hayas leído, aprobado el test y subido lo que quieras enseñar, márcalo. '
-                      'La marca se guarda en este navegador y se refleja en la página del proyecto.</p>'
-                      f'<button id="marcar-paso" class="boton verde" type="button" data-clave="{esc(clave)}">'
-                      'Marcar este paso como completado</button></section>'
-                    + f'<div class="nav-pasos"><span>{prev}</span><span>{sig}</span></div></div>')
-                self.escribir(f"proyectos/{p['id']}-paso-{n}.html", self.pagina(
-                    f"Paso {n}: {d.get('titulo') or pasos[n - 1].get('titulo', '')}", cuerpo, "../", "proyectos"))
+                nuevo = bool(d.get("codigo"))
+                partes = [f'<p class="migas"><a href="{esc(pid)}.html#paso-{n}">← {esc(p.get("titulo", ""))}</a></p>',
+                          f'<div class="paso-pag"><h2 style="--c:#4ade80">Paso {n} de {len(pasos)} · '
+                          f'{esc(d.get("titulo") or pasos[n - 1].get("titulo", ""))}</h2>',
+                          f'<p class="fuente">{esc(d.get("fuente", ""))}</p>']
+                if d.get("intro"):
+                    partes.append(f'<p>{esc(d["intro"])}</p>')
+                cpp = d.get("cpp")
+                if cpp:
+                    partes.append('<div class="cpp">'
+                                  f'<div style="--c:#38bdf8"><b>🎯 Qué hacemos</b>{esc(cpp.get("que", ""))}</div>'
+                                  f'<div style="--c:#a78bfa"><b>🔧 Cómo</b>{esc(cpp.get("como", ""))}</div>'
+                                  f'<div style="--c:#fbbf24"><b>💡 Por qué</b>{esc(cpp.get("porque", ""))}</div>'
+                                  f'<div style="--c:#4ade80"><b>🚀 Para qué</b>{esc(cpp.get("para", ""))}</div></div>')
+                if d.get("secciones"):
+                    for sc in d["secciones"]:
+                        partes.append(f'<section><h2 style="--c:{esc(sc.get("c", "#38bdf8"))}">{esc(sc.get("icono", ""))} '
+                                      f'{esc(sc.get("titulo", ""))}<small>{esc(sc.get("sub", ""))}</small></h2>'
+                                      + self.bloques_html(sc.get("bloques", []), pid) + '</section>')
+                    partes.append('<section class="caja-paso" id="test" data-clave="' + esc(clave) + '">'
+                                  '<h2 style="--c:#fb7185">🧠 Interpreta el resultado</h2>' + caja_test + '</section>')
+                elif nuevo:
+                    if d.get("explicacion"):
+                        partes.append('<section><h2 style="--c:#38bdf8">📖 Explicación<small>antes de ejecutar nada</small></h2>'
+                                      + self.bloques_html(d["explicacion"], pid) + '</section>')
+                    gl = d.get("glosa")
+                    codigo = d["codigo"]
+                    partes.append('<section><h2 style="--c:#a78bfa">💻 Código<small>el mismo que hay en el cuaderno</small></h2>'
+                                  f'<details class="codigo" open><summary>Python</summary><button class="copiar" type="button">Copiar</button>'
+                                  f'<pre class="cod"><code>{esc(codigo)}</code></pre></details>'
+                                  + (('<h4>Qué hace cada parte</h4>' + self.bloques_html([{"t": "glosa", "filas": gl}], pid)) if gl else "")
+                                  + '</section>')
+                    colab = f"https://colab.research.google.com/github/{repo}/blob/main/{pid}.ipynb"
+                    partes.append('<section><h2 style="--c:#fbbf24">▶ Ejecutar<small>en Google Colab, gratis</small></h2>'
+                                  f'<p>Abre el cuaderno y ejecuta la celda <b>{esc(d.get("celda", "Paso " + str(n)))}</b> con el botón ▶ '
+                                  '(necesitas una cuenta de Google). Las celdas anteriores tienen que estar ejecutadas.</p>'
+                                  f'<a class="btn-colab" href="{esc(colab)}" target="_blank" rel="noopener noreferrer">▶ Abrir el cuaderno en Colab</a></section>')
+                    if d.get("resultado"):
+                        partes.append('<section><h2 style="--c:#4ade80">📊 Resultado<small>lo que debe salir al ejecutar</small></h2>'
+                                      + self.bloques_html(d["resultado"], pid) + '</section>')
+                    partes.append('<section class="caja-paso" id="test" data-clave="' + esc(clave) + '">'
+                                  '<h2 style="--c:#fb7185">🧠 Interpreta el resultado</h2>'
+                                  + (self.bloques_html(d["interpreta"], pid) if d.get("interpreta") else "")
+                                  + caja_test + '</section>')
+                else:
+                    partes.append('<section><h2 style="--c:#38bdf8">1 · Lee la ayuda<small>extraída del libro, en su mismo orden</small></h2>'
+                                  + self.bloques_html(d.get("bloques", []), pid) + '</section>')
+                    if caja_test:
+                        partes.append('<section class="caja-paso" id="test" data-clave="' + esc(clave) + '">'
+                                      '<h2 style="--c:#fbbf24">2 · Comprueba lo aprendido</h2>' + caja_test + '</section>')
+                partes.append('<section class="caja-paso"><h2 style="--c:#4ade80">✓ Cierra el paso</h2>'
+                              '<p>Cuando hayas leído, ejecutado y aprobado el test, márcalo. '
+                              'La marca se guarda en este navegador y se refleja en la página del proyecto.</p>'
+                              f'<button id="marcar-paso" class="boton verde" type="button" data-clave="{esc(clave)}">'
+                              'Marcar este paso como completado</button></section>')
+                partes.append(f'<div class="nav-pasos"><span>{prev}</span><span>{sig}</span></div></div>')
+                self.escribir(f"proyectos/{pid}-paso-{n}.html", self.pagina(
+                    f"Paso {n}: {d.get('titulo') or pasos[n - 1].get('titulo', '')}", "".join(partes), "../", "proyectos"))
 
     def pagina_biblioteca(self):
         if not self.recursos:

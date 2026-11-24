@@ -398,6 +398,2603 @@
     ]
    },
    "evidencias": "Aquí puedes enseñar lo que hagas en este paso: el código del cálculo a mano, un gráfico de los 5 puntos con la recta, tus notas…"
+  },
+  "2": {
+   "titulo": "Descargar y abrir los datos",
+   "fuente": "Cuaderno de Colab · Potencia de una central eléctrica (UCI nº 294)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Descargar la tabla de la central y quedarnos con dos columnas: temperatura y potencia."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "fetch_ucirepo(id=294) pide el conjunto nº 294 al repositorio UCI. Con pandas montamos una tabla (df) con las dos columnas."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "La regresión simple usa una sola entrada (x) y una salida (y). Aquí x = temperatura ambiente e y = potencia eléctrica."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Tener los datos listos en df: con esa tabla trabajaremos en todos los pasos siguientes."
+        }
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Explicación sencilla",
+       "x": "Una tabla de datos (en pandas, un «DataFrame») es como una hoja de Excel: cada fila es un registro (aquí, una hora de funcionamiento de la central) y cada columna una variable (temperatura, potencia…)."
+      },
+      {
+       "t": "tabla",
+       "cab": [
+        "Código original",
+        "Significado",
+        "¿La usamos?"
+       ],
+       "filas": [
+        [
+         "AT",
+         "Temperatura ambiente (°C)",
+         "Sí: entrada x"
+        ],
+        [
+         "PE",
+         "Potencia eléctrica neta (MW)",
+         "Sí: salida y"
+        ],
+        [
+         "V",
+         "Vacío de escape",
+         "No (regresión múltiple)"
+        ],
+        [
+         "AP",
+         "Presión atmosférica",
+         "No (regresión múltiple)"
+        ],
+        [
+         "RH",
+         "Humedad relativa (%)",
+         "No (regresión múltiple)"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "ccpp = fetch_ucirepo(id=294)              # descargar el conjunto de datos nº 294\n\nentradas = ccpp.data.features              # columnas de entrada (AT, V, AP, RH)\nsalida = ccpp.data.targets                 # columna de salida (PE)\n\n# Nos quedamos solo con la temperatura (x) y la potencia (y), con nombres claros\ndf = pd.DataFrame({\n    \"Temperatura\": entradas[\"AT\"],         # °C\n    \"Potencia\": salida[\"PE\"],              # MW\n})\n\ndf = df.dropna()                           # quitar filas incompletas, si las hubiera\n\nprint(\"Filas y columnas:\", df.shape)"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "ccpp = fetch_ucirepo(id=294)",
+         "Descarga el conjunto de datos número 294 de UCI."
+        ],
+        [
+         "entradas = ccpp.data.features",
+         "Las columnas de entrada (AT, V, AP, RH)."
+        ],
+        [
+         "salida = ccpp.data.targets",
+         "La columna que queremos predecir (PE)."
+        ],
+        [
+         "df = pd.DataFrame({...})",
+         "Crea nuestra tabla con solo dos columnas y nombres claros."
+        ],
+        [
+         "df = df.dropna()",
+         "Quita las filas incompletas, si las hubiera."
+        ],
+        [
+         "print(df.shape)",
+         "Muestra (filas, columnas)."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/potencia-central-regresion-simple.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 2.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "lo que debe salir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "salida",
+       "x": "Filas y columnas: (9568, 2)"
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Cómo se lee",
+       "x": "(9568, 2) significa 9.568 filas (registros) y 2 columnas (variables). Son los datos de varios años de una central real."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Filas",
+         "9568"
+        ],
+        [
+         "Columnas",
+         "2"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "¿Qué es un DataFrame de pandas?",
+      "ok": "Una tabla de datos con filas y columnas, como una hoja de Excel",
+      "mal": [
+       "Un gráfico de puntos",
+       "Un modelo de inteligencia artificial",
+       "Un archivo de instalación"
+      ],
+      "exp": "Un DataFrame es la tabla con la que trabajamos: filas = registros, columnas = variables."
+     },
+     {
+      "q": "El programa muestra (9568, 2). ¿Qué significa?",
+      "ok": "9.568 filas (registros) y 2 columnas (variables)",
+      "mal": [
+       "9.568 columnas y 2 filas",
+       "2 centrales con 9.568 años de datos",
+       "9.568 aciertos y 2 errores"
+      ],
+      "exp": "shape siempre da (filas, columnas)."
+     },
+     {
+      "q": "¿Qué variable usamos como entrada (x)?",
+      "ok": "La temperatura ambiente (AT)",
+      "mal": [
+       "La potencia (PE)",
+       "La humedad (RH)",
+       "El vacío de escape (V)"
+      ],
+      "exp": "Queremos predecir la potencia a partir de la temperatura."
+     },
+     {
+      "q": "¿Cuál es la salida (y), lo que queremos predecir?",
+      "ok": "La potencia eléctrica neta (PE)",
+      "mal": [
+       "La temperatura (AT)",
+       "La presión (AP)",
+       "El número de filas"
+      ],
+      "exp": "La salida es la potencia, en megavatios (MW)."
+     },
+     {
+      "q": "¿Por qué usamos solo AT y PE y no también V, AP y RH?",
+      "ok": "Porque la regresión lineal simple usa una sola variable de entrada; las otras se usarán en la regresión múltiple",
+      "mal": [
+       "Porque V, AP y RH no existen",
+       "Porque pandas no puede leer más de dos columnas",
+       "Porque tienen valores faltantes"
+      ],
+      "exp": "Simple = una entrada. Con varias entradas pasaremos a regresión múltiple."
+     },
+     {
+      "q": "¿Para qué sirve df.dropna()?",
+      "ok": "Para quitar las filas con datos que faltan",
+      "mal": [
+       "Para borrar la columna de potencia",
+       "Para dibujar el gráfico",
+       "Para ordenar la tabla"
+      ],
+      "exp": "dropna elimina las filas incompletas."
+     },
+     {
+      "q": "Tras dropna() siguen siendo 9.568 filas. ¿Qué significa?",
+      "ok": "Que no se eliminó ninguna fila: no había datos incompletos",
+      "mal": [
+       "Que dropna() no funciona",
+       "Que se han duplicado datos",
+       "Que faltan 9.568 datos"
+      ],
+      "exp": "Si el número de filas no cambia, no había filas incompletas."
+     },
+     {
+      "q": "¿Qué hace fetch_ucirepo(id=294)?",
+      "ok": "Descarga el conjunto de datos nº 294 del repositorio UCI",
+      "mal": [
+       "Entrena el modelo de regresión",
+       "Dibuja la nube de puntos",
+       "Calcula R²"
+      ],
+      "exp": "Es la forma oficial de bajar los datos desde UCI."
+     },
+     {
+      "q": "¿Para qué se usa la biblioteca matplotlib?",
+      "ok": "Para dibujar gráficos",
+      "mal": [
+       "Para descargar datos",
+       "Para ajustar la recta",
+       "Para instalar otras bibliotecas"
+      ],
+      "exp": "matplotlib = gráficos; pandas = tablas; scikit-learn = modelos."
+     },
+     {
+      "q": "¿Qué biblioteca ajusta la recta (entrena el modelo)?",
+      "ok": "scikit-learn (LinearRegression)",
+      "mal": [
+       "matplotlib",
+       "ucimlrepo",
+       "numpy"
+      ],
+      "exp": "scikit-learn trae LinearRegression."
+     },
+     {
+      "q": "¿En qué unidades está la potencia?",
+      "ok": "Megavatios (MW)",
+      "mal": [
+       "Grados Celsius (°C)",
+       "Porcentaje (%)",
+       "Kilómetros (km)"
+      ],
+      "exp": "La temperatura va en °C y la potencia en MW."
+     },
+     {
+      "q": "¿Por qué renombramos AT y PE como «Temperatura» y «Potencia»?",
+      "ok": "Para que el código y los gráficos se entiendan mejor",
+      "mal": [
+       "Porque lo exige scikit-learn",
+       "Para que el modelo sea más preciso",
+       "Para eliminar datos"
+      ],
+      "exp": "Los nombres claros hacen el código más legible; no cambian los datos."
+     }
+    ]
+   }
+  },
+  "3": {
+   "titulo": "Revisar la tabla",
+   "fuente": "Cuaderno de Colab · Potencia de una central eléctrica (UCI nº 294)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Mirar las primeras filas y un resumen de números de la tabla."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "head() enseña las 5 primeras filas; describe() calcula mínimo, máximo, media…; isna().sum() cuenta los datos que faltan."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "Antes de calcular nada hay que conocer los datos: sus unidades, sus rangos y si hay valores raros."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Saber entre qué temperaturas es válido nuestro modelo (lo usaremos en el paso 9)."
+        }
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Atención",
+       "x": "Un modelo solo es fiable dentro del rango de datos con el que aprendió. Anota el mínimo y el máximo de la temperatura: 1,81 °C y 37,11 °C."
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "print(df.head())                            # las 5 primeras filas\nprint()\nprint(df.describe().round(2))              # resumen: media, mínimo, máximo...\nprint()\nprint(\"Valores que faltan:\")\nprint(df.isna().sum())"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "df.head()",
+         "Las 5 primeras filas de la tabla."
+        ],
+        [
+         "df.describe()",
+         "Resumen estadístico de cada columna."
+        ],
+        [
+         ".round(2)",
+         "Redondea a 2 decimales para leerlo mejor."
+        ],
+        [
+         "df.isna().sum()",
+         "Cuenta cuántos valores vacíos hay en cada columna."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/potencia-central-regresion-simple.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 3.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "lo que debe salir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "salida",
+       "x": "   Temperatura  Potencia\n0        14.96    463.26\n1        25.18    444.37\n2         5.11    488.56\n3        20.86    446.48\n4        10.82    473.90\n\n       Temperatura  Potencia\ncount      9568.00   9568.00\nmean         19.65    454.37\nstd           7.45     17.07\nmin           1.81    420.26\n25%          13.51    439.75\n50%          20.34    451.55\n75%          25.72    468.43\nmax          37.11    495.76\n\nValores que faltan:\nTemperatura    0\nPotencia       0\ndtype: int64"
+      },
+      {
+       "t": "tabla",
+       "cab": [
+        "Fila del resumen",
+        "Qué significa",
+        "Valor real aquí"
+       ],
+       "filas": [
+        [
+         "count",
+         "Cuántos datos hay",
+         "9568 (no falta ninguno)"
+        ],
+        [
+         "mean",
+         "Media",
+         "Temperatura 19,65 °C · Potencia 454,37 MW"
+        ],
+        [
+         "std",
+         "Desviación típica: cuánto se alejan los datos de la media",
+         "Temperatura 7,45 · Potencia 17,07"
+        ],
+        [
+         "min / max",
+         "Valor más bajo / más alto",
+         "Temperatura 1,81 a 37,11 °C · Potencia 420,26 a 495,76 MW"
+        ],
+        [
+         "25 % / 50 % / 75 %",
+         "Cuartiles: el 25 %, la mitad y el 75 % de los datos quedan por debajo",
+         "Mediana de la potencia: 451,55 MW"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Registros",
+         "9568"
+        ],
+        [
+         "Temperatura",
+         "1,81 a 37,11 °C"
+        ],
+        [
+         "Potencia",
+         "420,26 a 495,76 MW"
+        ],
+        [
+         "Temperatura media",
+         "19,65 °C"
+        ],
+        [
+         "Valores que faltan",
+         "0"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "¿Qué muestra df.head()?",
+      "ok": "Las primeras 5 filas de la tabla",
+      "mal": [
+       "Las 5 últimas filas",
+       "Un gráfico con 5 puntos",
+       "El resumen estadístico"
+      ],
+      "exp": "head() = «cabeza» de la tabla."
+     },
+     {
+      "q": "count = 9568 en las dos columnas indica que…",
+      "ok": "No falta ningún dato",
+      "mal": [
+       "Hay 9.568 errores",
+       "Solo se ha usado el 9 % de los datos",
+       "Hay dos centrales"
+      ],
+      "exp": "count cuenta los valores presentes; si es igual al número de filas, no falta nada."
+     },
+     {
+      "q": "¿Cuál es el rango de temperaturas de los datos?",
+      "ok": "De 1,81 a 37,11 °C",
+      "mal": [
+       "De 0 a 100 °C",
+       "De 420 a 496 °C",
+       "De −10 a 50 °C"
+      ],
+      "exp": "Está en min y max de la columna Temperatura."
+     },
+     {
+      "q": "¿Cuál es el rango de potencia?",
+      "ok": "De 420,26 a 495,76 MW",
+      "mal": [
+       "De 1,81 a 37,11 MW",
+       "De 0 a 1.000 MW",
+       "De 19 a 454 MW"
+      ],
+      "exp": "Está en min y max de la columna Potencia."
+     },
+     {
+      "q": "¿Por qué es importante conocer el rango de los datos antes de modelar?",
+      "ok": "Porque el modelo solo es fiable dentro del rango de datos con el que aprendió",
+      "mal": [
+       "Porque Python lo exige",
+       "Porque así sale mejor R²",
+       "Porque hay que borrar los extremos"
+      ],
+      "exp": "Fuera del rango estaríamos extrapolando, y eso es poco fiable."
+     },
+     {
+      "q": "La temperatura media es 19,65 °C y la mediana 20,35 °C. ¿Qué sugiere?",
+      "ok": "Que son parecidas: no hay valores extremos que distorsionen mucho la media",
+      "mal": [
+       "Que los datos están mal",
+       "Que hay muchísimos datos extremos",
+       "Que la temperatura es constante"
+      ],
+      "exp": "Media y mediana cercanas indican una distribución bastante equilibrada."
+     },
+     {
+      "q": "¿Qué mide std (desviación típica)?",
+      "ok": "Cuánto se alejan, de media, los datos respecto a su media",
+      "mal": [
+       "El número de datos",
+       "El valor máximo",
+       "La suma de los errores"
+      ],
+      "exp": "Cuanto mayor es std, más dispersos están los datos."
+     },
+     {
+      "q": "¿Qué columna tiene mayor desviación típica?",
+      "ok": "La potencia (17,07)",
+      "mal": [
+       "La temperatura (7,45)",
+       "Ninguna: son iguales",
+       "No se puede saber"
+      ],
+      "exp": "std de Potencia = 17,07; de Temperatura = 7,45."
+     },
+     {
+      "q": "El 25 % de Temperatura vale 13,51. ¿Qué significa?",
+      "ok": "Que el 25 % de los registros tiene una temperatura de 13,51 °C o menos",
+      "mal": [
+       "Que el 25 % de los datos faltan",
+       "Que la temperatura media es 13,51 °C",
+       "Que hay 13,51 filas"
+      ],
+      "exp": "Es el primer cuartil."
+     },
+     {
+      "q": "df.isna().sum() da 0 en las dos columnas. ¿Qué indica?",
+      "ok": "Que no hay valores vacíos",
+      "mal": [
+       "Que las columnas están vacías",
+       "Que hay 0 filas",
+       "Que la media es 0"
+      ],
+      "exp": "isna detecta vacíos y sum los cuenta."
+     },
+     {
+      "q": "¿Cuál de estos valores de temperatura sería sospechoso en estos datos?",
+      "ok": "85 °C",
+      "mal": [
+       "20 °C",
+       "1,9 °C",
+       "35 °C"
+      ],
+      "exp": "El máximo es 37,11 °C: 85 °C estaría muy fuera de lo normal y habría que revisarlo."
+     },
+     {
+      "q": "La mediana de la potencia es 451,55 MW. ¿Qué significa?",
+      "ok": "Que la mitad de los registros tiene una potencia inferior a 451,55 MW",
+      "mal": [
+       "Que la potencia siempre es 451,55 MW",
+       "Que el 55 % de los datos faltan",
+       "Que la potencia máxima es 451,55 MW"
+      ],
+      "exp": "La mediana (50 %) divide los datos en dos mitades."
+     }
+    ]
+   }
+  },
+  "4": {
+   "titulo": "Dibujar el diagrama de dispersión",
+   "fuente": "Cuaderno de Colab · Potencia de una central eléctrica (UCI nº 294)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Dibujar un punto por cada registro: temperatura en horizontal y potencia en vertical."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "plt.scatter(x, y). Con alpha=0.3 los puntos son transparentes y se ve dónde se acumulan."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "Hay que mirar antes de calcular. Si los puntos forman una línea, una recta es buena idea; si forman una curva, no."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Ver la tendencia a ojo. Esperamos una relación negativa: más calor, menos potencia."
+        }
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Atención",
+       "x": "Correlación no es causalidad. Que dos cosas vayan juntas no prueba que una cause la otra; hay que razonarlo con conocimiento del problema."
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "plt.figure(figsize=(9, 5.5))\nplt.scatter(df[\"Temperatura\"], df[\"Potencia\"], alpha=0.3)   # alpha: transparencia, para ver dónde se acumulan\nplt.xlabel(\"Temperatura ambiente (°C)\")\nplt.ylabel(\"Potencia eléctrica (MW)\")\nplt.title(\"Temperatura frente a potencia\")\nplt.grid(True)\nplt.show()\n\n# Un número que resume la relación: el coeficiente de correlación (de -1 a +1)\nprint(\"Correlación:\", round(df[\"Temperatura\"].corr(df[\"Potencia\"]), 3))"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "plt.scatter(x, y, alpha=0.3)",
+         "Dibuja un punto por registro, semitransparente."
+        ],
+        [
+         "plt.xlabel / plt.ylabel",
+         "Pone nombre a los ejes (con unidades)."
+        ],
+        [
+         "plt.grid(True)",
+         "Añade una cuadrícula para leer los valores."
+        ],
+        [
+         "df['Temperatura'].corr(df['Potencia'])",
+         "Calcula la correlación: un número entre −1 y +1."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/potencia-central-regresion-simple.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 4.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "gráfico real e interactivo",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "lab",
+       "modo": "nube",
+       "x": "Cada punto es una hora de funcionamiento de la central. Prueba a ver solo entrenamiento o prueba, y a dibujar la recta que calculará el programa."
+      },
+      {
+       "t": "salida",
+       "x": "Correlación: -0.948"
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Cómo se lee",
+       "x": "La nube baja de izquierda a derecha en forma casi recta: al subir la temperatura, baja la potencia. La correlación −0,948 resume esa relación: negativa y muy fuerte."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Correlación",
+         "-0.948"
+        ],
+        [
+         "Forma de la nube",
+         "descendente, casi recta"
+        ],
+        [
+         "Relación",
+         "negativa y fuerte"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "¿Qué representa cada punto del gráfico?",
+      "ok": "Un registro: la temperatura y la potencia de una hora de funcionamiento",
+      "mal": [
+       "La media de todos los datos",
+       "Un error del modelo",
+       "Una central distinta"
+      ],
+      "exp": "Cada fila de la tabla es un punto."
+     },
+     {
+      "q": "¿Qué va en el eje horizontal (x)?",
+      "ok": "La temperatura ambiente",
+      "mal": [
+       "La potencia",
+       "La humedad",
+       "El número de registro"
+      ],
+      "exp": "x = entrada = temperatura."
+     },
+     {
+      "q": "¿Qué tendencia se observa en la nube?",
+      "ok": "Al subir la temperatura, baja la potencia",
+      "mal": [
+       "Al subir la temperatura, sube la potencia",
+       "No hay ninguna tendencia",
+       "La potencia es constante"
+      ],
+      "exp": "La nube desciende: relación negativa."
+     },
+     {
+      "q": "La correlación es −0,948. ¿Cómo se interpreta?",
+      "ok": "Relación lineal negativa y muy fuerte",
+      "mal": [
+       "Relación positiva y débil",
+       "No hay relación",
+       "El modelo acierta el 94,8 %"
+      ],
+      "exp": "Cerca de −1: casi una recta descendente."
+     },
+     {
+      "q": "¿Entre qué valores se mueve siempre la correlación?",
+      "ok": "Entre −1 y +1",
+      "mal": [
+       "Entre 0 y 100",
+       "Entre 0 y 1.000",
+       "Entre −100 y +100"
+      ],
+      "exp": "−1 = recta descendente perfecta; +1 = ascendente perfecta; 0 = sin relación lineal."
+     },
+     {
+      "q": "Si la nube formara una curva en U, ¿una recta sería buena idea?",
+      "ok": "No: una recta no recoge bien una curva",
+      "mal": [
+       "Sí, siempre",
+       "Sí, si se usan más datos",
+       "Da igual la forma"
+      ],
+      "exp": "Por eso se mira el gráfico antes de calcular."
+     },
+     {
+      "q": "¿Por qué dibujamos el gráfico antes de ajustar la recta?",
+      "ok": "Para comprobar que una recta tiene sentido y detectar datos raros",
+      "mal": [
+       "Porque Python lo exige",
+       "Para mejorar R²",
+       "Para quitar la columna de potencia"
+      ],
+      "exp": "Mirar antes de calcular evita errores."
+     },
+     {
+      "q": "«Correlación no es causalidad» significa que…",
+      "ok": "Que dos magnitudes vayan juntas no prueba que una cause la otra",
+      "mal": [
+       "La correlación siempre es falsa",
+       "Solo hay causalidad si la correlación es 1",
+       "La correlación mide la causa exacta"
+      ],
+      "exp": "Hay que razonar la causa con conocimiento del problema."
+     },
+     {
+      "q": "¿Para qué sirve alpha=0.3 en plt.scatter?",
+      "ok": "Para hacer los puntos transparentes y ver dónde se acumulan",
+      "mal": [
+       "Para borrar puntos",
+       "Para cambiar el eje y",
+       "Para calcular la correlación"
+      ],
+      "exp": "Con 9.568 puntos, la transparencia muestra las zonas densas."
+     },
+     {
+      "q": "Si la correlación fuera 0,02, ¿qué pensaríamos?",
+      "ok": "Que no hay relación lineal: una recta no ayudaría",
+      "mal": [
+       "Que la relación es perfecta",
+       "Que la relación es negativa y fuerte",
+       "Que faltan datos"
+      ],
+      "exp": "Cerca de 0 = nube sin tendencia lineal."
+     },
+     {
+      "q": "El signo negativo de −0,948 indica que…",
+      "ok": "Cuando una variable sube, la otra baja",
+      "mal": [
+       "El modelo está mal",
+       "Faltan datos",
+       "La potencia es negativa"
+      ],
+      "exp": "Signo negativo = relación inversa."
+     },
+     {
+      "q": "Sobre el gráfico interactivo: ¿qué muestran los puntos ámbar al ver «Todos»?",
+      "ok": "Los datos que se reservan para la prueba (20 %)",
+      "mal": [
+       "Los datos erróneos",
+       "Los valores faltantes",
+       "Los datos de otra central"
+      ],
+      "exp": "Ámbar = prueba; azul = entrenamiento."
+     }
+    ]
+   }
+  },
+  "5": {
+   "titulo": "Separar entrenamiento y prueba",
+   "fuente": "Cuaderno de Colab · Potencia de una central eléctrica (UCI nº 294)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Dividir los datos en dos grupos: 80 % para entrenar y 20 % para examinar."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "train_test_split(X, y, test_size=0.20, random_state=42)."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "Si evaluamos el modelo con los mismos datos con los que aprendió, es como ponerle un examen con las preguntas ya vistas. Los datos de prueba son «preguntas nuevas»."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Medir con honestidad cuánto se equivoca. random_state=42 hace que el reparto sea siempre el mismo."
+        }
+       ]
+      },
+      {
+       "t": "fig",
+       "svg": "<svg viewBox=\"0 0 520 90\" class=\"fig-svg\" role=\"img\" aria-label=\"80 % entrenamiento, 20 % prueba\"><rect x=\"10\" y=\"20\" width=\"400\" height=\"44\" rx=\"8\" fill=\"#38bdf8\" opacity=\".75\"/><rect x=\"410\" y=\"20\" width=\"100\" height=\"44\" rx=\"8\" fill=\"#fbbf24\" opacity=\".85\"/><text x=\"210\" y=\"48\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\" fill=\"#04121f\">Entrenamiento · 80 % · 7.654 datos</text><text x=\"460\" y=\"48\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"700\" fill=\"#04121f\">Prueba 20 %</text><text x=\"460\" y=\"80\" text-anchor=\"middle\" font-size=\"12\" fill=\"#9aa8bf\">1.914 datos</text></svg>",
+       "x": "Reparto de los 9.568 registros."
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "X = df[[\"Temperatura\"]]                    # entrada (tabla de una columna)\ny = df[\"Potencia\"]                         # salida\n\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y,\n    test_size=0.20,                        # 20 % para prueba\n    random_state=42,                       # repartir siempre igual\n)\n\nprint(\"Datos de entrenamiento:\", len(X_train))\nprint(\"Datos de prueba:\", len(X_test))"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "X = df[['Temperatura']]",
+         "La entrada. Doble corchete: una tabla de una columna."
+        ],
+        [
+         "y = df['Potencia']",
+         "La salida: una sola columna."
+        ],
+        [
+         "test_size=0.20",
+         "El 20 % de los datos se reserva para la prueba."
+        ],
+        [
+         "random_state=42",
+         "Semilla: el reparto aleatorio sale siempre igual."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/potencia-central-regresion-simple.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 5.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "lo que debe salir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "salida",
+       "x": "Datos de entrenamiento: 7654\nDatos de prueba: 1914"
+      },
+      {
+       "t": "lab",
+       "modo": "nube",
+       "titulo": "Así quedan repartidos los puntos",
+       "x": "Elige «Todos»: en azul los de entrenamiento y en ámbar los de prueba, mezclados al azar."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Entrenamiento",
+         "7654"
+        ],
+        [
+         "Prueba",
+         "1914"
+        ],
+        [
+         "Suma",
+         "9568"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "¿Por qué separamos datos de entrenamiento y de prueba?",
+      "ok": "Para evaluar el modelo con datos que no ha visto",
+      "mal": [
+       "Para tener menos datos",
+       "Para que el programa vaya más rápido",
+       "Para borrar los datos raros"
+      ],
+      "exp": "Evaluar con datos nuevos da una nota honesta."
+     },
+     {
+      "q": "¿Cuántos datos de entrenamiento salen?",
+      "ok": "7.654",
+      "mal": [
+       "1.914",
+       "9.568",
+       "2.000"
+      ],
+      "exp": "El 80 % de 9.568 es 7.654."
+     },
+     {
+      "q": "¿Cuántos datos de prueba salen?",
+      "ok": "1.914",
+      "mal": [
+       "7.654",
+       "9.568",
+       "800"
+      ],
+      "exp": "El 20 % de 9.568 es 1.914."
+     },
+     {
+      "q": "¿Qué significa «80/20»?",
+      "ok": "El 80 % de los datos para aprender y el 20 % para examinar",
+      "mal": [
+       "El modelo acierta el 80 %",
+       "Hay 80 variables y 20 datos",
+       "Se usa el 80 % de la temperatura"
+      ],
+      "exp": "Es el reparto entre entrenamiento y prueba."
+     },
+     {
+      "q": "¿Para qué sirve random_state=42?",
+      "ok": "Para que el reparto aleatorio sea siempre el mismo y los resultados se puedan repetir",
+      "mal": [
+       "Para elegir los 42 mejores datos",
+       "Para dar más peso a ciertos datos",
+       "Para acelerar el cálculo"
+      ],
+      "exp": "Fija la semilla del azar: reproducibilidad."
+     },
+     {
+      "q": "Si evaluáramos con los mismos datos de entrenamiento, la nota saldría…",
+      "ok": "Demasiado optimista: sería un examen con las preguntas ya vistas",
+      "mal": [
+       "Más baja que la real",
+       "Exactamente igual de honesta",
+       "Imposible de calcular"
+      ],
+      "exp": "El modelo ha aprendido justo esos datos."
+     },
+     {
+      "q": "7.654 + 1.914 es igual a…",
+      "ok": "9.568: todos los datos",
+      "mal": [
+       "10.000",
+       "9.000",
+       "7.000"
+      ],
+      "exp": "Entrenamiento + prueba = total."
+     },
+     {
+      "q": "¿Con qué datos se ajusta la recta?",
+      "ok": "Con los de entrenamiento",
+      "mal": [
+       "Con los de prueba",
+       "Con ninguno",
+       "Con los de prueba y los de entrenamiento a la vez"
+      ],
+      "exp": "Los de prueba se guardan para examinar."
+     },
+     {
+      "q": "Con test_size=0.50, ¿cuántos datos de prueba habría?",
+      "ok": "4.784",
+      "mal": [
+       "9.568",
+       "1.914",
+       "2.392"
+      ],
+      "exp": "La mitad de 9.568 es 4.784."
+     },
+     {
+      "q": "En el código, ¿qué es X?",
+      "ok": "La entrada: la temperatura",
+      "mal": [
+       "La salida: la potencia",
+       "El número de datos",
+       "El error"
+      ],
+      "exp": "X = entrada (temperatura); y = salida (potencia)."
+     },
+     {
+      "q": "¿Podemos usar los datos de prueba para ajustar la recta y luego evaluar con ellos?",
+      "ok": "No: perderían su valor como examen",
+      "mal": [
+       "Sí, mejora la nota",
+       "Sí, es obligatorio",
+       "Solo si son pocos"
+      ],
+      "exp": "La prueba debe quedar «sin ver» hasta el final."
+     },
+     {
+      "q": "En el gráfico interactivo, ¿cómo se reparten los puntos de prueba?",
+      "ok": "Mezclados al azar entre los de entrenamiento",
+      "mal": [
+       "Todos a la izquierda",
+       "Todos los de temperatura baja",
+       "Todos los de potencia alta"
+      ],
+      "exp": "El reparto es aleatorio, por eso se ven mezclados."
+     }
+    ]
+   }
+  },
+  "6": {
+   "titulo": "Ajustar la recta",
+   "fuente": "Cuaderno de Colab · Potencia de una central eléctrica (UCI nº 294)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Pedirle al ordenador que encuentre la mejor recta: potencia = m · temperatura + b."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "LinearRegression().fit(X_train, y_train) aplica el método de mínimos cuadrados."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "De todas las rectas posibles, la mejor es la que deja el menor error total (SSE, suma de errores al cuadrado)."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Obtener los dos números del modelo: la pendiente m y el intercepto b."
+        }
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Explicación sencilla",
+       "x": "Como en el taxi: b es la «bajada de bandera» (la potencia estimada a 0 °C) y m el «precio por kilómetro» (cuántos MW cambia la potencia por cada grado). Aquí m será negativa: el calor resta potencia."
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "modelo = LinearRegression()\nmodelo.fit(X_train, y_train)               # «entrenar»: encontrar la mejor recta con los datos de entrenamiento\n\npendiente = modelo.coef_[0]                # m: MW que cambian por cada °C\nintercepto = modelo.intercept_             # b: potencia estimada a 0 °C\n\nprint(f\"Pendiente (m):   {pendiente:.4f} MW por °C\")\nprint(f\"Intercepto (b):  {intercepto:.4f} MW\")\nprint(f\"Ecuación:  Potencia = {pendiente:.4f} · Temperatura + {intercepto:.4f}\")"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "modelo = LinearRegression()",
+         "Crea un modelo de regresión lineal vacío."
+        ],
+        [
+         "modelo.fit(X_train, y_train)",
+         "«Entrena»: calcula la recta con los datos de entrenamiento."
+        ],
+        [
+         "modelo.coef_[0]",
+         "La pendiente m."
+        ],
+        [
+         "modelo.intercept_",
+         "El intercepto b."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/potencia-central-regresion-simple.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 6.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "la recta real y un laboratorio",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "salida",
+       "x": "Pendiente (m):   -2.1771 MW por °C\nIntercepto (b):  497.1542 MW\nEcuación:  Potencia = -2.1771 · Temperatura + 497.1542"
+      },
+      {
+       "t": "kpis",
+       "items": [
+        {
+         "v": "−2,1771",
+         "x": "pendiente m (MW por °C)",
+         "c": "#fbbf24"
+        },
+        {
+         "v": "497,1542",
+         "x": "intercepto b (MW a 0 °C)",
+         "c": "#fb7185"
+        }
+       ]
+      },
+      {
+       "t": "lab",
+       "modo": "recta",
+       "x": "Mueve la pendiente y el intercepto sobre los datos reales de entrenamiento. Los segmentos rojos son los errores; la barra te dice cuánto te alejas de la recta del programa. Prueba la casilla de girar alrededor del centro."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Pendiente",
+         "-2.1771"
+        ],
+        [
+         "Intercepto",
+         "497.1542"
+        ],
+        [
+         "Ecuación",
+         "Potencia = -2.1771 · T + 497.1542"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "La pendiente es −2,1771. ¿Qué significa?",
+      "ok": "Por cada grado más de temperatura, la potencia estimada baja unos 2,18 MW",
+      "mal": [
+       "Por cada grado más, la potencia sube 2,18 MW",
+       "La potencia es siempre −2,18 MW",
+       "El error medio es 2,18 MW"
+      ],
+      "exp": "La pendiente dice cuánto cambia y por cada unidad de x; el signo negativo indica que baja."
+     },
+     {
+      "q": "El intercepto es 497,15. ¿Qué representa?",
+      "ok": "La potencia estimada cuando la temperatura es 0 °C",
+      "mal": [
+       "La temperatura media",
+       "El error del modelo",
+       "La potencia máxima"
+      ],
+      "exp": "b es el valor de y cuando x = 0."
+     },
+     {
+      "q": "¿Qué potencia estima la recta a 20 °C?",
+      "ok": "Unos 453,6 MW",
+      "mal": [
+       "Unos 440,1 MW",
+       "Unos 497,2 MW",
+       "Unos 410,0 MW"
+      ],
+      "exp": "−2,1771 · 20 + 497,1542 ≈ 453,6."
+     },
+     {
+      "q": "¿Qué potencia estima la recta a 30 °C?",
+      "ok": "Unos 431,8 MW",
+      "mal": [
+       "Unos 453,6 MW",
+       "Unos 410,2 MW",
+       "Unos 497,2 MW"
+      ],
+      "exp": "−2,1771 · 30 + 497,1542 ≈ 431,8."
+     },
+     {
+      "q": "El signo negativo de la pendiente indica que la recta…",
+      "ok": "Baja: a más temperatura, menos potencia",
+      "mal": [
+       "Sube",
+       "Es horizontal",
+       "No pasa por ningún punto"
+      ],
+      "exp": "Pendiente negativa = recta descendente."
+     },
+     {
+      "q": "¿Qué método usa LinearRegression para encontrar la recta?",
+      "ok": "Mínimos cuadrados",
+      "mal": [
+       "Prueba y error al azar",
+       "Copiar la media",
+       "Elegir la recta que pasa por más puntos"
+      ],
+      "exp": "Busca la recta con menor suma de errores al cuadrado."
+     },
+     {
+      "q": "La «mejor recta» es la que tiene…",
+      "ok": "El SSE (suma de errores al cuadrado) más pequeño",
+      "mal": [
+       "La pendiente más grande",
+       "El intercepto más alto",
+       "El mayor número de puntos encima"
+      ],
+      "exp": "Menor SSE = menor error total."
+     },
+     {
+      "q": "¿Con qué datos se ajusta la recta?",
+      "ok": "Con los de entrenamiento",
+      "mal": [
+       "Con los de prueba",
+       "Con ninguno",
+       "Con los datos inventados"
+      ],
+      "exp": "El ajuste usa X_train e y_train."
+     },
+     {
+      "q": "A la temperatura media (≈ 19,6 °C), ¿qué predice la recta aproximadamente?",
+      "ok": "La potencia media (≈ 454,4 MW)",
+      "mal": [
+       "0 MW",
+       "La potencia máxima",
+       "El intercepto (497 MW)"
+      ],
+      "exp": "La recta de mínimos cuadrados siempre pasa por el punto (media de x, media de y)."
+     },
+     {
+      "q": "Si la temperatura sube 10 °C, la potencia estimada…",
+      "ok": "Baja unos 21,8 MW",
+      "mal": [
+       "Sube unos 21,8 MW",
+       "Baja unos 2,2 MW",
+       "No cambia"
+      ],
+      "exp": "10 · (−2,1771) ≈ −21,8 MW."
+     },
+     {
+      "q": "En el laboratorio, si desplazas la recta hacia arriba sin girarla, ¿qué número cambia?",
+      "ok": "El intercepto b",
+      "mal": [
+       "La pendiente m",
+       "Los dos igual",
+       "Ninguno"
+      ],
+      "exp": "b sube o baja la recta; m la gira."
+     },
+     {
+      "q": "En el laboratorio, si giras la recta, ¿qué número cambia?",
+      "ok": "La pendiente m",
+      "mal": [
+       "El intercepto solo",
+       "El número de datos",
+       "El R²"
+      ],
+      "exp": "La pendiente controla la inclinación."
+     }
+    ]
+   }
+  },
+  "7": {
+   "titulo": "Evaluar con datos nuevos",
+   "fuente": "Cuaderno de Colab · Potencia de una central eléctrica (UCI nº 294)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Usar la recta para predecir los datos de prueba y medir cuánto se equivoca."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "predict(X_test) y tres medidas: R², RMSE y MAE."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "R² dice cuánto de la variación explica la recta; MAE es el error medio en MW; RMSE es parecido pero castiga más los errores grandes."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Saber si el modelo es fiable. Cuidado: R² no es un «porcentaje de aciertos»."
+        }
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Atención",
+       "x": "Todas las medidas se calculan con los datos de prueba, los que el modelo no vio al aprender."
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "y_pred = modelo.predict(X_test)            # lo que predice la recta para los datos de prueba\n\ncomparacion = pd.DataFrame({\n    \"Temperatura\": X_test[\"Temperatura\"].values,\n    \"Potencia real\": y_test.values,\n    \"Potencia predicha\": y_pred.round(2),\n})\nprint(comparacion.head(8))\nprint()\n\nr2 = r2_score(y_test, y_pred)\nrmse = np.sqrt(mean_squared_error(y_test, y_pred))\nmae = mean_absolute_error(y_test, y_pred)\n\nprint(\"RESULTADOS DEL MODELO (datos de prueba)\")\nprint(f\"R²:    {r2:.4f}\")\nprint(f\"RMSE:  {rmse:.3f} MW\")\nprint(f\"MAE:   {mae:.3f} MW\")"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "y_pred = modelo.predict(X_test)",
+         "La potencia que predice la recta para cada dato de prueba."
+        ],
+        [
+         "r2_score(y_test, y_pred)",
+         "R²: parte de la variación que explica la recta."
+        ],
+        [
+         "np.sqrt(mean_squared_error(...))",
+         "RMSE: error típico, en MW, castigando los errores grandes."
+        ],
+        [
+         "mean_absolute_error(...)",
+         "MAE: error medio absoluto, en MW."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/potencia-central-regresion-simple.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 7.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "lo que debe salir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "salida",
+       "x": "   Temperatura  Potencia real  Potencia predicha\n0        19.64         455.27             454.40\n1        28.26         436.31             435.63\n2        27.98         440.68             436.24\n3        28.64         434.40             434.80\n4         9.34         482.06             476.82\n5        25.50         436.07             441.64\n6        21.96         452.48             449.35\n7        27.17         435.22             438.00\n\nRESULTADOS DEL MODELO (datos de prueba)\nR²:    0.9003\nRMSE:  5.377 MW\nMAE:   4.277 MW"
+      },
+      {
+       "t": "kpis",
+       "items": [
+        {
+         "v": "0,9003",
+         "x": "R² · explica el 90 % de la variación",
+         "c": "#4ade80"
+        },
+        {
+         "v": "4,277 MW",
+         "x": "MAE · error medio",
+         "c": "#fbbf24"
+        },
+        {
+         "v": "5,377 MW",
+         "x": "RMSE · error típico",
+         "c": "#fb7185"
+        }
+       ]
+      },
+      {
+       "t": "tabla",
+       "cab": [
+        "Métrica",
+        "Qué nos indica",
+        "Mejor cuando…"
+       ],
+       "filas": [
+        [
+         "R²",
+         "Cuánta variación de la potencia explica la recta",
+         "se acerca a 1"
+        ],
+        [
+         "MAE",
+         "Error medio de las predicciones, en MW",
+         "es menor"
+        ],
+        [
+         "RMSE",
+         "Error típico, en MW; pesa más los errores grandes",
+         "es menor"
+        ]
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Atención",
+       "x": "R² = 0,90 no significa que el 90 % de las predicciones sean correctas: significa que la recta explica el 90 % de la variación de la potencia."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "R²",
+         "0.9003"
+        ],
+        [
+         "RMSE",
+         "5.377 MW"
+        ],
+        [
+         "MAE",
+         "4.277 MW"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "R² = 0,9003. ¿Qué significa?",
+      "ok": "La recta explica cerca del 90 % de la variación de la potencia",
+      "mal": [
+       "El modelo acierta el 90 % de las predicciones",
+       "El error es del 90 %",
+       "La pendiente es 0,90"
+      ],
+      "exp": "R² compara el error de la recta con el de predecir siempre la media."
+     },
+     {
+      "q": "¿R² es el porcentaje de predicciones correctas?",
+      "ok": "No: mide cuánta variación explica la recta",
+      "mal": [
+       "Sí, exactamente",
+       "Solo si es mayor que 0,5",
+       "Solo en regresión múltiple"
+      ],
+      "exp": "Es un error muy común confundirlos."
+     },
+     {
+      "q": "MAE = 4,277 MW. ¿Cómo se interpreta?",
+      "ok": "De media, las predicciones se desvían unos 4,3 MW de la potencia real",
+      "mal": [
+       "El modelo falla el 4,3 % de las veces",
+       "La potencia mínima es 4,3 MW",
+       "La pendiente es 4,3"
+      ],
+      "exp": "MAE = error absoluto medio, en las unidades de y."
+     },
+     {
+      "q": "RMSE (5,377) es mayor que MAE (4,277). ¿Por qué?",
+      "ok": "Porque el RMSE castiga más los errores grandes",
+      "mal": [
+       "Porque está mal calculado",
+       "Porque usa más datos",
+       "Porque se mide en otras unidades"
+      ],
+      "exp": "Al elevar al cuadrado, los errores grandes pesan más; RMSE ≥ MAE siempre."
+     },
+     {
+      "q": "Un MAE menor significa…",
+      "ok": "Mejor modelo: se equivoca menos",
+      "mal": [
+       "Peor modelo",
+       "Que hay menos datos",
+       "Que R² es negativo"
+      ],
+      "exp": "Menos error = mejores predicciones."
+     },
+     {
+      "q": "¿Con qué datos se calculan estas medidas?",
+      "ok": "Con los datos de prueba",
+      "mal": [
+       "Con los de entrenamiento",
+       "Con todos",
+       "Con ninguno"
+      ],
+      "exp": "Son los que el modelo no ha visto."
+     },
+     {
+      "q": "En la primera fila de prueba, real = 455,27 y predicha = 454,40 MW. ¿Cuál es el error?",
+      "ok": "Unos 0,87 MW",
+      "mal": [
+       "Unos 8,7 MW",
+       "Unos 455 MW",
+       "Cero"
+      ],
+      "exp": "455,27 − 454,40 = 0,87."
+     },
+     {
+      "q": "MAE ≈ 4,3 MW sobre una potencia media de ≈ 454 MW. ¿Cómo es ese error en proporción?",
+      "ok": "Pequeño: menos del 1 %",
+      "mal": [
+       "Muy grande: más del 50 %",
+       "Del 10 %",
+       "Imposible de saber"
+      ],
+      "exp": "4,3 / 454 ≈ 0,9 %."
+     },
+     {
+      "q": "Si R² fuera 1…",
+      "ok": "El ajuste sería perfecto: todos los puntos sobre la recta",
+      "mal": [
+       "La recta no explicaría nada",
+       "El error sería enorme",
+       "Faltarían datos"
+      ],
+      "exp": "R² = 1 es el ajuste perfecto."
+     },
+     {
+      "q": "Si R² fuera 0…",
+      "ok": "La recta no mejora a predecir siempre la media",
+      "mal": [
+       "Sería un ajuste perfecto",
+       "La pendiente sería 0 y el modelo, el mejor",
+       "No habría datos"
+      ],
+      "exp": "R² = 0 = igual que la media."
+     },
+     {
+      "q": "¿Qué métrica de las tres NO tiene unidades?",
+      "ok": "R²",
+      "mal": [
+       "RMSE",
+       "MAE",
+       "Ninguna: todas están en MW"
+      ],
+      "exp": "R² es un cociente entre errores; RMSE y MAE están en MW."
+     },
+     {
+      "q": "Si el MAE fuera 40 MW con potencias entre 420 y 496 MW, el modelo sería…",
+      "ok": "Poco útil: el error es muy grande respecto al rango",
+      "mal": [
+       "Excelente",
+       "Perfecto",
+       "Mejor que el actual"
+      ],
+      "exp": "El rango de potencia es de unos 75 MW: un error de 40 MW es enorme."
+     }
+    ]
+   }
+  },
+  "8": {
+   "titulo": "Mirar los errores y poner límites",
+   "fuente": "Cuaderno de Colab · Potencia de una central eléctrica (UCI nº 294)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Dibujar la recta sobre los datos y representar los residuos (real − predicho)."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "plt.plot para la recta; plt.scatter(predicho, residuo) para los errores."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "Un buen R² no basta. Si los errores forman un patrón (una curva, un abanico), la recta se deja algo sin explicar."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Conocer las limitaciones del modelo antes de fiarnos de él."
+        }
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Explicación sencilla",
+       "x": "Si los residuos se reparten al azar alrededor de cero, es buena señal. Si ves un patrón claro, existe una relación que la recta no está capturando."
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "# 1) La recta sobre los datos de prueba\nx_linea = np.linspace(X[\"Temperatura\"].min(), X[\"Temperatura\"].max(), 100).reshape(-1, 1)\nx_linea = pd.DataFrame(x_linea, columns=[\"Temperatura\"])\ny_linea = modelo.predict(x_linea)\n\nplt.figure(figsize=(9, 5.5))\nplt.scatter(X_test[\"Temperatura\"], y_test, alpha=0.35, label=\"Datos reales\")\nplt.plot(x_linea[\"Temperatura\"], y_linea, color=\"red\", linewidth=2, label=\"Recta de regresión\")\nplt.xlabel(\"Temperatura (°C)\")\nplt.ylabel(\"Potencia (MW)\")\nplt.title(\"Modelo de regresión lineal simple\")\nplt.legend()\nplt.grid(True)\nplt.show()\n\n# 2) Los residuos: lo que se le escapa a la recta\nresiduos = y_test - y_pred\nplt.figure(figsize=(9, 4.5))\nplt.scatter(y_pred, residuos, alpha=0.35)\nplt.axhline(0, color=\"red\", linestyle=\"--\")       # línea de error cero\nplt.xlabel(\"Potencia predicha (MW)\")\nplt.ylabel(\"Residuo (MW)\")\nplt.title(\"Análisis de residuos\")\nplt.grid(True)\nplt.show()"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "np.linspace(min, max, 100)",
+         "100 temperaturas equiespaciadas para dibujar la recta."
+        ],
+        [
+         "modelo.predict(x_linea)",
+         "La potencia que da la recta en cada una."
+        ],
+        [
+         "residuos = y_test - y_pred",
+         "El error de cada predicción."
+        ],
+        [
+         "plt.axhline(0, ...)",
+         "Línea horizontal en error cero."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/potencia-central-regresion-simple.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 8.",
+        "Compara lo que sale con el resultado de abajo.",
+        "Esta celda no escribe texto: dibuja dos gráficos."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "gráficos reales e interactivos",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "lab",
+       "modo": "nube",
+       "rec": true,
+       "titulo": "La recta sobre los datos",
+       "x": "La recta verde es la que calculó el programa."
+      },
+      {
+       "t": "lab",
+       "modo": "residuos",
+       "x": "Cada punto es un error de predicción en los datos de prueba. La línea roja es error cero; las amarillas marcan donde cae el ≈ 95 % de los errores."
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Cómo se lee",
+       "x": "Los errores están centrados en cero (error medio ≈ −0,03 MW) y cerca del 95 % cae entre −10,5 y +10,5 MW. Pero hay una ligera pauta: en la zona de potencias predichas más bajas (temperaturas muy altas) los residuos tienden a ser positivos, es decir, la recta se queda un poco corta ahí. Hay algún error extremo (hasta 29,9 MW)."
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Límites del modelo",
+       "x": "Usa una sola variable (no recoge presión, humedad ni vacío) y los datos son de una única central. La regresión simple no demuestra que la temperatura sea la única causa de los cambios de potencia."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Error medio",
+         "≈ −0,03 MW"
+        ],
+        [
+         "Desviación σ",
+         "≈ 5,38 MW"
+        ],
+        [
+         "Error máximo",
+         "29,9 MW"
+        ],
+        [
+         "Forma",
+         "centrada en 0, con ligera pauta en los extremos"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "¿Qué es un residuo?",
+      "ok": "La diferencia entre el valor real y el predicho",
+      "mal": [
+       "La pendiente de la recta",
+       "El valor medio de y",
+       "El número de datos"
+      ],
+      "exp": "Residuo = real − predicho."
+     },
+     {
+      "q": "Si los residuos se reparten al azar alrededor de cero, es una señal…",
+      "ok": "Favorable: la recta captura bien la relación",
+      "mal": [
+       "Mala",
+       "Que faltan datos",
+       "Que hay que quitar la recta"
+      ],
+      "exp": "Sin patrón = no queda estructura sin explicar."
+     },
+     {
+      "q": "Si los residuos forman una curva clara, ¿qué sugiere?",
+      "ok": "Que existe una relación que la recta no está capturando",
+      "mal": [
+       "Que el modelo es perfecto",
+       "Que no hay datos",
+       "Que R² es 1"
+      ],
+      "exp": "Un patrón en los residuos indica un modelo mejorable."
+     },
+     {
+      "q": "El error medio es ≈ −0,03 MW. ¿Qué indica?",
+      "ok": "Que los errores positivos y negativos se compensan: la recta no está sesgada en conjunto",
+      "mal": [
+       "Que el modelo falla siempre",
+       "Que hay 0,03 datos",
+       "Que la potencia es negativa"
+      ],
+      "exp": "Un error medio casi cero indica que no hay sesgo global."
+     },
+     {
+      "q": "El error máximo es 29,9 MW. ¿Qué conviene hacer?",
+      "ok": "Mirar ese dato: puede ser un caso raro que la recta no explica",
+      "mal": [
+       "Ignorar todo el modelo",
+       "Borrar la recta",
+       "Sumar 29,9 a todas las predicciones"
+      ],
+      "exp": "Los errores extremos merecen una revisión."
+     },
+     {
+      "q": "¿Una recta con R² = 0,90 es perfecta?",
+      "ok": "No: todavía quedan errores (RMSE ≈ 5,4 MW)",
+      "mal": [
+       "Sí, siempre",
+       "Sí, si hay muchos datos",
+       "Solo si la pendiente es negativa"
+      ],
+      "exp": "R² alto no elimina los errores."
+     },
+     {
+      "q": "¿Por qué dibujamos los residuos frente a la potencia predicha?",
+      "ok": "Para ver si el error depende del nivel de potencia",
+      "mal": [
+       "Para calcular R²",
+       "Para quitar datos",
+       "Para cambiar la pendiente"
+      ],
+      "exp": "Así se detectan patrones en los errores."
+     },
+     {
+      "q": "¿Qué limitación tiene este modelo?",
+      "ok": "Usa solo una variable: no recoge presión, humedad ni vacío",
+      "mal": [
+       "Solo funciona con 10 datos",
+       "No tiene pendiente",
+       "No usa la temperatura"
+      ],
+      "exp": "Es una regresión simple."
+     },
+     {
+      "q": "¿Esta regresión demuestra que la temperatura es la única causa de los cambios de potencia?",
+      "ok": "No: muestra una relación, no prueba la causa única",
+      "mal": [
+       "Sí, porque R² es alto",
+       "Sí, porque la pendiente es negativa",
+       "Sí, porque hay muchos datos"
+      ],
+      "exp": "La central depende también de otras variables."
+     },
+     {
+      "q": "Los datos son de una sola central. ¿Qué implica?",
+      "ok": "Que no debemos generalizar el modelo a otras centrales sin comprobarlo",
+      "mal": [
+       "Que vale para cualquier central",
+       "Que el modelo es inválido",
+       "Que hay que triplicar los datos"
+      ],
+      "exp": "Un modelo vale para el tipo de datos con el que se entrenó."
+     },
+     {
+      "q": "¿Qué representa la línea roja del gráfico de residuos?",
+      "ok": "El error cero",
+      "mal": [
+       "La potencia media",
+       "La temperatura máxima",
+       "El 95 % de los datos"
+      ],
+      "exp": "Sobre ella: la predicción acertó exactamente."
+     },
+     {
+      "q": "En la zona de potencias predichas más bajas, el residuo medio es positivo. ¿Qué significa?",
+      "ok": "Que la potencia real suele ser algo mayor que la que predice la recta",
+      "mal": [
+       "Que la recta se pasa de alta",
+       "Que no hay datos",
+       "Que el modelo es perfecto ahí"
+      ],
+      "exp": "Residuo positivo = real mayor que predicho."
+     }
+    ]
+   }
+  },
+  "9": {
+   "titulo": "Poner un rango a la predicción",
+   "fuente": "Cuaderno de Colab · Potencia de una central eléctrica (UCI nº 294)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Predecir la potencia a 25 °C y dar un intervalo: «entre tanto y tanto, con un 95 % de confianza»."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "Con statsmodels, que además de la recta calcula la incertidumbre (get_prediction)."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "Una predicción sin margen de error parece más segura de lo que es. Y solo debemos predecir dentro del rango de temperaturas que vimos (paso 3)."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Dar una respuesta honesta."
+        }
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Regla de oro",
+       "x": "Interpolar sí, extrapolar con cuidado. Predecir a una temperatura dentro de 1,81–37,11 °C es razonable; fuera de ese rango, no."
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "# statsmodels necesita añadir explícitamente la columna del intercepto («const»)\nX_stats = sm.add_constant(X_train)\nmodelo_stats = sm.OLS(y_train, X_stats).fit()\n\nnueva = pd.DataFrame({\"const\": [1.0], \"Temperatura\": [25.0]})       # queremos predecir a 25 °C\npred = modelo_stats.get_prediction(nueva).summary_frame(alpha=0.05)  # 95 % de confianza\n\nprint(f\"Temperatura: 25 °C\")\nprint(f\"Potencia estimada: {pred['mean'].iloc[0]:.1f} MW\")\nprint(f\"Rango del 95 %:    de {pred['obs_ci_lower'].iloc[0]:.1f} a {pred['obs_ci_upper'].iloc[0]:.1f} MW\")\nprint()\nprint(modelo_stats.summary().tables[1])         # coeficientes con su intervalo de confianza del 95 %\nprint()\nprint(f\"Rango de temperaturas con datos: {df['Temperatura'].min():.1f} a {df['Temperatura'].max():.1f} °C\")\nprint(\"¿25 °C está dentro del rango?\", df['Temperatura'].min() <= 25 <= df['Temperatura'].max())"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "sm.add_constant(X_train)",
+         "Añade la columna del intercepto («const») que necesita statsmodels."
+        ],
+        [
+         "sm.OLS(y_train, X_stats).fit()",
+         "Ajusta la misma recta, pero con estadística completa."
+        ],
+        [
+         "get_prediction(nueva).summary_frame(alpha=0.05)",
+         "Predicción con intervalo del 95 %."
+        ],
+        [
+         "obs_ci_lower / obs_ci_upper",
+         "Límite inferior y superior del rango."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/potencia-central-regresion-simple.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 9.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "lo que debe salir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "salida",
+       "x": "Temperatura: 25 °C\nPotencia estimada: 442.7 MW\nRango del 95 %:    de 432.1 a 453.4 MW\n\n===============================================================================\n                  coef    std err          t      P>|t|      [0.025      0.975]\n-------------------------------------------------------------------------------\nconst         497.1542      0.175   2833.564      0.000     496.810     497.498\nTemperatura    -2.1771      0.008   -260.392      0.000      -2.193      -2.161\n===============================================================================\n\nRango de temperaturas con datos: 1.8 a 37.1 °C\n¿25 °C está dentro del rango? True"
+      },
+      {
+       "t": "kpis",
+       "items": [
+        {
+         "v": "442,7 MW",
+         "x": "potencia estimada a 25 °C",
+         "c": "#4ade80"
+        },
+        {
+         "v": "432,1 MW",
+         "x": "límite inferior (95 %)",
+         "c": "#fbbf24"
+        },
+        {
+         "v": "453,4 MW",
+         "x": "límite superior (95 %)",
+         "c": "#fbbf24"
+        }
+       ]
+      },
+      {
+       "t": "tabla",
+       "cab": [
+        "Coeficiente",
+        "Valor",
+        "Intervalo del 95 %"
+       ],
+       "filas": [
+        [
+         "Intercepto (const)",
+         "497,1542",
+         "496,810 a 497,498"
+        ],
+        [
+         "Pendiente (Temperatura)",
+         "−2,1771",
+         "−2,193 a −2,161"
+        ]
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Cómo se lee",
+       "x": "A 25 °C esperamos unos 443 MW, y el 95 % de las veces la potencia real debería quedar entre 432 y 453 MW. La mitad de la anchura del rango (≈ 10,6 MW) es aproximadamente el doble del RMSE. P>|t| = 0,000 indica que la relación con la temperatura es estadísticamente significativa."
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Fuera de rango",
+       "x": "Si aplicáramos la ecuación a 45 °C saldría ≈ 399 MW, un valor por debajo de cualquier potencia observada (mínimo 420 MW): una señal de que extrapolar es peligroso."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Potencia a 25 °C",
+         "442.7 MW"
+        ],
+        [
+         "Rango del 95 %",
+         "432.1 a 453.4 MW"
+        ],
+        [
+         "¿Dentro del rango?",
+         "True"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "¿Qué potencia estima el modelo a 25 °C?",
+      "ok": "Unos 442,7 MW",
+      "mal": [
+       "Unos 497,2 MW",
+       "Unos 420,3 MW",
+       "Unos 453,4 MW"
+      ],
+      "exp": "−2,1771 · 25 + 497,1542 ≈ 442,7."
+     },
+     {
+      "q": "¿Cuál es el rango del 95 % para 25 °C?",
+      "ok": "De 432,1 a 453,4 MW",
+      "mal": [
+       "De 442,7 a 497,2 MW",
+       "De 420,3 a 495,8 MW",
+       "De 0 a 1.000 MW"
+      ],
+      "exp": "Son los límites inferior y superior que calcula statsmodels."
+     },
+     {
+      "q": "¿Qué significa «rango del 95 %»?",
+      "ok": "Que esperamos que la potencia real caiga dentro en unos 95 de cada 100 casos similares",
+      "mal": [
+       "Que el modelo acierta el 95 %",
+       "Que faltan el 5 % de los datos",
+       "Que la pendiente es 0,95"
+      ],
+      "exp": "Es un intervalo de predicción."
+     },
+     {
+      "q": "¿Por qué damos un rango y no solo un número?",
+      "ok": "Porque un número solo parece más seguro de lo que realmente es",
+      "mal": [
+       "Porque queda más largo",
+       "Porque lo manda Python",
+       "Porque el número es siempre incorrecto"
+      ],
+      "exp": "El rango expresa la incertidumbre."
+     },
+     {
+      "q": "La mitad de la anchura del rango (≈ 10,6 MW) es aproximadamente…",
+      "ok": "El doble del RMSE (≈ 2 × 5,4)",
+      "mal": [
+       "La mitad del MAE",
+       "La pendiente",
+       "El intercepto"
+      ],
+      "exp": "Un intervalo del 95 % ronda ± 2 veces el error típico."
+     },
+     {
+      "q": "¿25 °C está dentro del rango de temperaturas de los datos (1,81–37,11 °C)?",
+      "ok": "Sí: es una interpolación, razonable",
+      "mal": [
+       "No: es una extrapolación",
+       "No se puede saber",
+       "Solo en verano"
+      ],
+      "exp": "Dentro del rango se puede predecir con más confianza."
+     },
+     {
+      "q": "¿Qué es peligroso hacer con este modelo?",
+      "ok": "Predecir a 45 °C, fuera del rango de datos (extrapolar)",
+      "mal": [
+       "Predecir a 20 °C",
+       "Predecir a 25 °C",
+       "Predecir a 30 °C"
+      ],
+      "exp": "Fuera del rango, el modelo no ha visto datos."
+     },
+     {
+      "q": "A 45 °C la ecuación da ≈ 399 MW. ¿Por qué es una señal de alarma?",
+      "ok": "Porque está por debajo de cualquier potencia observada (mínimo 420 MW)",
+      "mal": [
+       "Porque 399 es un número feo",
+       "Porque la pendiente es positiva",
+       "Porque 45 es mayor que 25"
+      ],
+      "exp": "Un valor fuera de todo lo visto indica que extrapolamos."
+     },
+     {
+      "q": "El intervalo del 95 % de la pendiente es [−2,193; −2,161]. ¿Qué indica?",
+      "ok": "Que la pendiente real está, con mucha probabilidad, entre esos valores",
+      "mal": [
+       "Que la pendiente es 0",
+       "Que la temperatura no influye",
+       "Que hay 2 pendientes"
+      ],
+      "exp": "Es un intervalo estrecho: la pendiente está muy bien estimada."
+     },
+     {
+      "q": "P>|t| = 0,000 para la temperatura indica que…",
+      "ok": "La relación es estadísticamente significativa: no parece casualidad",
+      "mal": [
+       "Que no hay relación",
+       "Que faltan datos",
+       "Que el modelo es perfecto"
+      ],
+      "exp": "Un p-valor casi 0 descarta que sea azar."
+     },
+     {
+      "q": "¿Qué biblioteca calcula aquí el intervalo de predicción?",
+      "ok": "statsmodels",
+      "mal": [
+       "matplotlib",
+       "ucimlrepo",
+       "pandas"
+      ],
+      "exp": "get_prediction está en statsmodels."
+     },
+     {
+      "q": "¿Cuál es el valor central del rango de 25 °C?",
+      "ok": "442,7 MW: la predicción de la recta",
+      "mal": [
+       "432,1 MW",
+       "453,4 MW",
+       "497,2 MW"
+      ],
+      "exp": "La predicción puntual queda en el centro del intervalo."
+     }
+    ]
+   }
+  },
+  "10": {
+   "titulo": "Contar el resultado en cinco frases",
+   "fuente": "Cuaderno de Colab · Potencia de una central eléctrica (UCI nº 294)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Resumir todo el proyecto con una plantilla de 5 frases: pregunta, datos, resultado, limitaciones y conclusión."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "El cuaderno rellena la plantilla con tus propios números."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "Saber contar un resultado a otra persona es tan importante como calcularlo."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Copiar este texto en tu informe, en un correo o en la web."
+        }
+       ]
+      },
+      {
+       "t": "tabla",
+       "cab": [
+        "#",
+        "Frase",
+        "Qué debe incluir"
+       ],
+       "filas": [
+        [
+         "1",
+         "Pregunta",
+         "¿qué queríamos saber?"
+        ],
+        [
+         "2",
+         "Datos",
+         "cuántos registros, qué variables y qué rango"
+        ],
+        [
+         "3",
+         "Resultado",
+         "la recta con unidades y el R², explicado"
+        ],
+        [
+         "4",
+         "Limitaciones",
+         "rango de validez y lo que el modelo no sabe"
+        ],
+        [
+         "5",
+         "Conclusión",
+         "respuesta a la pregunta, con cautela"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "rango_ini, rango_fin = df[\"Temperatura\"].min(), df[\"Temperatura\"].max()\nsigno = \"baja\" if pendiente < 0 else \"sube\"\n\nprint(\"1. Pregunta: ¿cuánta potencia produce la central según la temperatura ambiente?\")\nprint(f\"2. Datos: {len(df)} registros reales de una central de ciclo combinado, con temperaturas entre {rango_ini:.1f} y {rango_fin:.1f} °C.\")\nprint(f\"3. Resultado: por cada grado más de temperatura, la potencia {signo} unos {abs(pendiente):.2f} MW (R² = {r2:.2f}: la temperatura explica el {r2*100:.0f} % de la variación).\")\nprint(f\"4. Limitaciones: solo es fiable entre {rango_ini:.0f} y {rango_fin:.0f} °C; con una sola variable y una sola central no explica todo (presión, humedad…).\")\nprint(f\"5. Conclusión: a 25 °C estimamos {pred['mean'].iloc[0]:.0f} MW, con un error típico de unos {mae:.1f} MW (MAE).\")"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "signo = 'baja' if pendiente < 0 else 'sube'",
+         "Elige la palabra correcta según el signo de la pendiente."
+        ],
+        [
+         "f'...{pendiente:.2f}...'",
+         "Mete tus números dentro de la frase."
+        ],
+        [
+         "abs(pendiente)",
+         "Valor absoluto: quita el signo."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/potencia-central-regresion-simple.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 10.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "tu informe de 5 frases",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "salida",
+       "x": "1. Pregunta: ¿cuánta potencia produce la central según la temperatura ambiente?\n2. Datos: 9568 registros reales de una central de ciclo combinado, con temperaturas entre 1.8 y 37.1 °C.\n3. Resultado: por cada grado más de temperatura, la potencia baja unos 2.18 MW (R² = 0.90: la temperatura explica el 90 % de la variación).\n4. Limitaciones: solo es fiable entre 2 y 37 °C; con una sola variable y una sola central no explica todo (presión, humedad…).\n5. Conclusión: a 25 °C estimamos 443 MW, con un error típico de unos 4.3 MW (MAE)."
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Frase que no debes escribir",
+       "x": "«La temperatura es la única causa de la potencia.» La regresión simple muestra una relación, no prueba la causa única."
+      },
+      {
+       "t": "etq",
+       "k": "nota",
+       "titulo": "Retos para consolidar",
+       "x": "1) Básico: cambia 25 °C por 15, 20, 30 y 35 °C y compara las predicciones. 2) Intermedio: cambia test_size (0.30, 0.10) y mira cómo cambian R², RMSE y MAE. 3) Avanzado: añade presión, humedad y vacío como entradas: es la regresión múltiple, el siguiente proyecto."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Pendiente",
+         "−2,18 MW por °C"
+        ],
+        [
+         "R²",
+         "0.90"
+        ],
+        [
+         "A 25 °C",
+         "443 MW"
+        ],
+        [
+         "Error típico (MAE)",
+         "4.3 MW"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "¿Cuántas frases tiene la plantilla del informe?",
+      "ok": "Cinco",
+      "mal": [
+       "Tres",
+       "Diez",
+       "Una"
+      ],
+      "exp": "Pregunta, datos, resultado, limitaciones y conclusión."
+     },
+     {
+      "q": "¿Cuál es el orden de las cinco frases?",
+      "ok": "Pregunta, datos, resultado, limitaciones, conclusión",
+      "mal": [
+       "Conclusión, datos, pregunta, resultado, limitaciones",
+       "Resultado, pregunta, conclusión, datos, limitaciones",
+       "Datos, conclusión, pregunta, limitaciones, resultado"
+      ],
+      "exp": "Va de lo que queríamos saber a lo que hemos concluido."
+     },
+     {
+      "q": "¿Qué frase de resultado es correcta?",
+      "ok": "«Por cada grado más, la potencia baja unos 2,18 MW (R² = 0,90)»",
+      "mal": [
+       "«El modelo acierta el 90 % de las veces»",
+       "«La temperatura causa el 90 % de la potencia»",
+       "«Por cada MW más, la temperatura sube 2,18 °C»"
+      ],
+      "exp": "Pendiente con unidades y R² bien explicado."
+     },
+     {
+      "q": "¿Qué debe decir la frase de limitaciones?",
+      "ok": "Que el modelo es fiable solo entre ≈ 2 y 37 °C, con una sola variable y una sola central",
+      "mal": [
+       "Que el modelo es perfecto",
+       "Que no hay limitaciones",
+       "Que hay que usar más pantalla"
+      ],
+      "exp": "Hay que ser honesto con lo que el modelo no sabe."
+     },
+     {
+      "q": "¿Por qué incluir el rango de temperaturas en el informe?",
+      "ok": "Para que el lector sepa dónde es fiable el modelo",
+      "mal": [
+       "Para rellenar",
+       "Porque lo pide Python",
+       "Para que R² sea mayor"
+      ],
+      "exp": "Fuera del rango no debe usarse."
+     },
+     {
+      "q": "La conclusión debe…",
+      "ok": "Responder a la pregunta inicial, con la cautela debida",
+      "mal": [
+       "Prometer que el modelo es perfecto",
+       "Repetir el código",
+       "Ocultar el error"
+      ],
+      "exp": "Respuesta + honestidad."
+     },
+     {
+      "q": "¿Qué error típico se cita en la conclusión?",
+      "ok": "El MAE: unos 4,3 MW",
+      "mal": [
+       "El R²",
+       "La pendiente",
+       "El número de datos"
+      ],
+      "exp": "El MAE se entiende bien: error medio en MW."
+     },
+     {
+      "q": "¿Qué predicción da el informe para 25 °C?",
+      "ok": "Unos 443 MW",
+      "mal": [
+       "Unos 497 MW",
+       "Unos 420 MW",
+       "Unos 4 MW"
+      ],
+      "exp": "Es la predicción puntual del paso 9."
+     },
+     {
+      "q": "¿Qué frase NO deberías escribir en un informe de este proyecto?",
+      "ok": "«La temperatura es la única causa de la potencia»",
+      "mal": [
+       "«Existe una relación negativa y fuerte»",
+       "«El modelo es válido entre 2 y 37 °C»",
+       "«A 25 °C estimamos unos 443 MW»"
+      ],
+      "exp": "Una regresión simple no demuestra causa única."
+     },
+     {
+      "q": "¿Qué reto avanzado se propone después?",
+      "ok": "Añadir presión, humedad y vacío: regresión múltiple",
+      "mal": [
+       "Quitar la temperatura",
+       "Dibujar más gráficos",
+       "Cambiar la central"
+      ],
+      "exp": "Es el siguiente proyecto."
+     },
+     {
+      "q": "¿Por qué es importante saber contar un resultado?",
+      "ok": "Porque un resultado que nadie entiende no sirve para decidir",
+      "mal": [
+       "Porque Python lo exige",
+       "Porque se ven más datos",
+       "Porque así R² sube"
+      ],
+      "exp": "Comunicar bien es parte del trabajo."
+     },
+     {
+      "q": "Si cambias test_size a 0.30 (reto intermedio), ¿qué esperas ver?",
+      "ok": "Que R², RMSE y MAE cambian un poco al evaluar con otros datos",
+      "mal": [
+       "Que la pendiente se vuelva positiva",
+       "Que desaparezca la correlación",
+       "Que los datos aumenten"
+      ],
+      "exp": "Otro reparto = otros datos de prueba = métricas ligeramente distintas."
+     }
+    ]
+   }
   }
  }
 }
