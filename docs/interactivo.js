@@ -151,6 +151,32 @@
           cx.beginPath(); cx.moveTo(X(tmin),Y(mo*tmin+bo)); cx.lineTo(X(tmax),Y(mo*tmax+bo)); cx.stroke();
         }
       }
+      function dibujaRes(){
+        var W=cv.clientWidth, H=Math.round(W*0.5), dpr=window.devicePixelRatio||1;
+        cv.width=W*dpr; cv.height=H*dpr; cv.style.height=H+'px'; cx.setTransform(dpr,0,0,dpr,0,0);
+        var xs=[],rs=[],i,n=0,sr=0,sq=0,mx=0;
+        for(i=0;i<N;i++){ if(!sel(i)) continue; var pr=mo*T[i]+bo, r=P[i]-pr; xs.push(pr); rs.push(r); n++; sr+=r; sq+=r*r; if(Math.abs(r)>mx) mx=Math.abs(r); }
+        var media=sr/n, sd=Math.sqrt(sq/n-media*media);
+        var xa=Math.min.apply(null,xs)-4, xb=Math.max.apply(null,xs)+4, ya=-Math.ceil(mx/5)*5-2, yb=Math.ceil(mx/5)*5+2;
+        var L=54,Rr=12,Tt=12,Bb=40;
+        var X=function(x){ return L+(x-xa)*(W-L-Rr)/(xb-xa); }, Y=function(y){ return H-Bb-(y-ya)*(H-Tt-Bb)/(yb-ya); };
+        cx.clearRect(0,0,W,H); cx.font='11px sans-serif'; cx.strokeStyle='#1d2b44'; cx.lineWidth=1; cx.fillStyle='#8896ad';
+        var k,v;
+        for(k=-4;k<=4;k++){ v=k*Math.ceil(mx/20)*5; if(v<ya||v>yb) continue; cx.beginPath(); cx.moveTo(L,Y(v)); cx.lineTo(W-Rr,Y(v)); cx.stroke(); cx.textAlign='right'; cx.fillText(v,L-6,Y(v)+4); }
+        for(k=0;k<=6;k++){ v=xa+(xb-xa)*k/6; cx.textAlign='center'; cx.fillText(Math.round(v),X(v),H-Bb+16); }
+        cx.fillStyle='#cbd5e1'; cx.textAlign='center'; cx.fillText('Potencia predicha (MW)',(L+W-Rr)/2,H-6);
+        cx.save(); cx.translate(13,(Tt+H-Bb)/2); cx.rotate(-Math.PI/2); cx.fillText('Residuo = real − predicho (MW)',0,0); cx.restore();
+        cx.globalAlpha=0.3; cx.fillStyle='#38bdf8';
+        for(i=0;i<xs.length;i++){ cx.beginPath(); cx.arc(X(xs[i]),Y(rs[i]),2,0,6.2832); cx.fill(); }
+        cx.globalAlpha=1; cx.lineWidth=1.4; cx.setLineDash([5,4]); cx.strokeStyle='#fbbf24';
+        [1.96*sd,-1.96*sd].forEach(function(y){ cx.beginPath(); cx.moveTo(L,Y(y)); cx.lineTo(W-Rr,Y(y)); cx.stroke(); });
+        cx.fillStyle='#fbbf24'; cx.textAlign='left'; cx.fillText('±1,96·σ (≈95 % de los errores)',L+6,Y(1.96*sd)-5);
+        cx.strokeStyle='#fb7185'; cx.lineWidth=2; cx.beginPath(); cx.moveTo(L,Y(0)); cx.lineTo(W-Rr,Y(0)); cx.stroke(); cx.setLineDash([]);
+        cx.fillStyle='#fb7185'; cx.fillText('error cero',L+6,Y(0)-5);
+        $('.k-n',box).textContent=fmt(n,0); $('.k-rm',box).textContent=fmt(media,2)+' MW';
+        $('.k-rs',box).textContent=fmt(sd,2)+' MW'; $('.k-rx',box).textContent=fmt(mx,1)+' MW';
+      }
+      function pinta(){ if(modo==='residuos') dibujaRes(); else dibuja(); }
       function refresca(){
         if(modo==='recta'){
           var m=+sM.value, b;
@@ -168,19 +194,19 @@
           msg.textContent= cerca ? '🏆 ¡Has encontrado la recta de mínimos cuadrados! Coincide con la del programa.' :
             (ratio>5 ? 'Muy lejos. Los segmentos rojos son los errores: busca que sean lo más cortos posibles. Pista: la pendiente debería ser negativa (más calor, menos potencia).' :
              'Cada segmento rojo es un error (residuo). El SSE suma todos al cuadrado. Intenta bajar la barra hasta que llegue al 100 %.');
-        } else {
+        } else if(modo==='nube'){
           var cu=calc(mo,bo);
           $('.k-n',box).textContent=fmt(cu.n,0);
           $('.k-cor',box).textContent=fmt(cor,3);
           $('.k-rt',box).textContent=fmt(tmin,1)+' a '+fmt(tmax,1)+' °C';
           $('.k-rp',box).textContent=fmt(pmin,0)+' a '+fmt(pmax,0)+' MW';
         }
-        dibuja();
+        pinta();
       }
       [sM,sB,selG,chkPiv,chkRec].forEach(function(el){ if(el){ el.addEventListener('input',refresca); el.addEventListener('change',refresca); } });
       var bs=$('.b-sol',box); if(bs) bs.addEventListener('click',function(){ if(chkPiv) chkPiv.checked=false; sM.value=mo.toFixed(2); sB.value=bo.toFixed(1); refresca(); });
       var b0=$('.b-cero',box); if(b0) b0.addEventListener('click',function(){ sM.value=0; sB.value=ym.toFixed(1); if(chkPiv) chkPiv.checked=false; refresca(); });
-      window.addEventListener('resize',dibuja);
+      window.addEventListener('resize',pinta);
       refresca();
     }, function(){
       cuerpo.innerHTML='<div class="labr-falta">Todavía no están los datos reales de este gráfico. Ejecuta el cuaderno de Colab y sube el archivo <b>datos--'+(box.getAttribute('data-id')||'')+'.json</b> a la raíz del repositorio.</div>';
