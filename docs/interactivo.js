@@ -212,7 +212,161 @@
       cuerpo.innerHTML='<div class="labr-falta">Todavía no están los datos reales de este gráfico. Ejecuta el cuaderno de Colab y sube el archivo <b>datos--'+(box.getAttribute('data-id')||'')+'.json</b> a la raíz del repositorio.</div>';
     });
   }
-  $$('.labr').forEach(iniciaLab);
+  $$('.labr:not(.grx)').forEach(iniciaLab);
+  /* ---- gráficos explicados con los datos reales (histograma, real vs predicho, banda, reparto, anatomía) ---- */
+  var cacheDatos={};
+  function cargaDatos(src){ if(!cacheDatos[src]) cacheDatos[src]=fetch(src).then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }); return cacheDatos[src]; }
+  function iniciaGraf(box){
+    var modo=box.getAttribute('data-modo'), cuerpo=$('.labr-cuerpo',box);
+    cargaDatos(box.getAttribute('data-src')).then(function(D){
+      var N=D.t.length, T=D.t, P=D.p, E=D.e, mo=D.m, bo=D.b, cv=$('canvas',box), cx=cv.getContext('2d'), i, k;
+      var msg=$('.labr-msg',box), sl=$('.s1',box), sv=$('.v1',box), selG=$('select',box);
+      var tmin=Math.min.apply(null,T), tmax=Math.max.apply(null,T), pmin=Math.min.apply(null,P), pmax=Math.max.apply(null,P);
+      function K(c,txt){ var e=$('.'+c,box); if(e) e.textContent=txt; }
+      function lienzo(f){ var W=cv.clientWidth, H=Math.round(W*f), d=window.devicePixelRatio||1; cv.width=W*d; cv.height=H*d; cv.style.height=H+'px'; cx.setTransform(d,0,0,d,0,0); cx.clearRect(0,0,W,H); return {W:W,H:H}; }
+      function ejes(L,x0,x1,y0,y1,xl,yl,dx){
+        var W=L.W,H=L.H,l=54,r=12,t=12,b=40;
+        var X=function(x){ return l+(x-x0)*(W-l-r)/(x1-x0); }, Y=function(y){ return H-b-(y-y0)*(H-t-b)/(y1-y0); };
+        cx.font='11px sans-serif'; cx.strokeStyle='#1d2b44'; cx.lineWidth=1; cx.fillStyle='#8896ad'; cx.setLineDash([]);
+        var v;
+        for(k=0;k<=5;k++){ v=y0+(y1-y0)*k/5; cx.beginPath(); cx.moveTo(l,Y(v)); cx.lineTo(W-r,Y(v)); cx.stroke(); cx.textAlign='right'; cx.fillText(Math.round(v),l-6,Y(v)+4); }
+        for(k=0;k<=6;k++){ v=x0+(x1-x0)*k/6; cx.textAlign='center'; cx.fillText(dx?v.toFixed(dx):Math.round(v),X(v),H-b+16); }
+        cx.fillStyle='#cbd5e1'; cx.textAlign='center'; cx.fillText(xl,(l+W-r)/2,H-6);
+        cx.save(); cx.translate(13,(t+H-b)/2); cx.rotate(-Math.PI/2); cx.fillText(yl,0,0); cx.restore();
+        return {X:X,Y:Y,l:l,r:r,t:t,b:b,W:W,H:H};
+      }
+      function rotulo(txt,x,y,col,al){ cx.fillStyle=col; cx.textAlign=al||'left'; cx.font='12px sans-serif'; cx.fillText(txt,x,y); cx.font='11px sans-serif'; }
+      var pinta=function(){};
+
+      if(modo==='hist'){
+        var vr=box.getAttribute('data-var'), vals=[], etx;
+        if(vr==='t'){ vals=T.slice(); etx='Temperatura ambiente (°C)'; }
+        else if(vr==='p'){ vals=P.slice(); etx='Potencia (MW)'; }
+        else { for(i=0;i<N;i++){ if(E[i]) vals.push(P[i]-(mo*T[i]+bo)); } etx='Residuo = real − predicho (MW)'; }
+        var n=vals.length, so=vals.slice().sort(function(a,b){ return a-b; }), mn=so[0], mx=so[n-1], me=0, sd=0;
+        vals.forEach(function(v){ me+=v; }); me/=n; vals.forEach(function(v){ sd+=(v-me)*(v-me); }); sd=Math.sqrt(sd/n);
+        var med=(n%2)?so[(n-1)/2]:(so[n/2-1]+so[n/2])/2, dec=(mx-mn)>60?0:1;
+        K('k-n',fmt(n,0)); K('k-me',fmt(me,vr==='r'?2:2)); K('k-md',fmt(med,2)); K('k-sd',fmt(sd,2)); K('k-mn',fmt(mn,2)); K('k-mx',fmt(mx,2));
+        pinta=function(){
+          var nb=+sl.value; sv.textContent=nb;
+          var L=lienzo(0.55), w=(mx-mn)/nb, cnt=[]; for(k=0;k<nb;k++) cnt.push(0);
+          vals.forEach(function(v){ cnt[Math.min(nb-1,Math.floor((v-mn)/w))]++; });
+          var cm=Math.max.apply(null,cnt), top=Math.ceil(cm/50)*50;
+          var a=ejes(L,mn,mx,0,top,etx,'nº de registros',dec);
+          cx.fillStyle='rgba(56,189,248,.38)'; cx.strokeStyle='#38bdf8'; cx.lineWidth=1;
+          for(k=0;k<nb;k++){ var xa=a.X(mn+k*w), xb=a.X(mn+(k+1)*w), y=a.Y(cnt[k]); cx.fillRect(xa+1,y,xb-xa-2,a.Y(0)-y); cx.strokeRect(xa+1,y,xb-xa-2,a.Y(0)-y); }
+          cx.lineWidth=2; cx.setLineDash([6,4]);
+          cx.strokeStyle='#fbbf24'; cx.beginPath(); cx.moveTo(a.X(me),a.t); cx.lineTo(a.X(me),a.Y(0)); cx.stroke();
+          cx.strokeStyle='#4ade80'; cx.beginPath(); cx.moveTo(a.X(med),a.t); cx.lineTo(a.X(med),a.Y(0)); cx.stroke(); cx.setLineDash([]);
+          rotulo('media '+fmt(me,2),a.X(me)+(me>=med?6:-6),a.t+12,'#fbbf24',me>=med?'left':'right');
+          rotulo('mediana '+fmt(med,2),a.X(med)+(me>=med?-6:6),a.t+28,'#4ade80',me>=med?'right':'left');
+          msg.textContent='Con '+nb+' barras, la más alta reúne '+fmt(cm,0)+' registros ('+fmt(100*cm/n,1)+' % del total).';
+        };
+        sl.addEventListener('input',pinta);
+      }
+
+      else if(modo==='reparto'){
+        var tt=0; for(i=0;i<N;i++) tt+=E[i];
+        K('k-tr',fmt(N-tt,0)+' ('+fmt(100*(N-tt)/N,0)+' %)'); K('k-te',fmt(tt,0)+' ('+fmt(100*tt/N,0)+' %)');
+        pinta=function(){
+          var L=lienzo(0.46), cols=25, rows=8, W=L.W, H=L.H, pad=10, gap=3, cw=(W-2*pad-(cols-1)*gap)/cols, ch=Math.min(cw,(H-60-(rows-1)*gap)/rows);
+          for(k=0;k<cols*rows;k++){
+            var idx=Math.floor(k*N/(cols*rows)), c=k%cols, r=Math.floor(k/cols);
+            cx.fillStyle=E[idx]?'#fbbf24':'#38bdf8'; cx.globalAlpha=.85;
+            cx.fillRect(pad+c*(cw+gap),pad+r*(ch+gap),cw,ch);
+          }
+          cx.globalAlpha=1;
+          var yb=pad+rows*(ch+gap)+14, wb=W-2*pad, w1=wb*(N-tt)/N;
+          cx.fillStyle='#38bdf8'; cx.fillRect(pad,yb,w1,18); cx.fillStyle='#fbbf24'; cx.fillRect(pad+w1,yb,wb-w1,18);
+          cx.fillStyle='#04121f'; cx.font='bold 12px sans-serif'; cx.textAlign='center';
+          cx.fillText('Entrenamiento 80 %',pad+w1/2,yb+13); cx.fillText('Prueba 20 %',pad+w1+(wb-w1)/2,yb+13); cx.font='11px sans-serif';
+          msg.textContent='Cada cuadradito es una muestra de 200 registros elegidos a lo largo de toda la tabla: los de prueba (ámbar) quedan mezclados al azar entre los de entrenamiento (azul).';
+        };
+      }
+
+      else if(modo==='realpred'){
+        pinta=function(){
+          var g=selG.value, tol=+sl.value; sv.textContent=tol;
+          var xs=[], ys=[], n=0, sse=0, sae=0, sp=0, dentro=0, pr, e;
+          for(i=0;i<N;i++){ if((g==='train'&&E[i])||(g==='test'&&!E[i])) continue;
+            pr=mo*T[i]+bo; e=P[i]-pr; xs.push(pr); ys.push(P[i]); n++; sse+=e*e; sae+=Math.abs(e); sp+=P[i]; if(Math.abs(e)<=tol) dentro++; }
+          var pm=sp/n, sst=0; ys.forEach(function(y){ sst+=(y-pm)*(y-pm); });
+          var lo=pmin-8, hi=pmax+8, L=lienzo(0.66), a=ejes(L,lo,hi,lo,hi,'Potencia predicha por la recta (MW)','Potencia real medida (MW)');
+          for(i=0;i<xs.length;i++){ var ok=Math.abs(ys[i]-xs[i])<=tol; cx.globalAlpha=ok?0.25:0.7; cx.fillStyle=ok?'#38bdf8':'#fb7185';
+            cx.beginPath(); cx.arc(a.X(xs[i]),a.Y(ys[i]),1.9,0,6.2832); cx.fill(); }
+          cx.globalAlpha=1; cx.setLineDash([5,4]); cx.lineWidth=1.3; cx.strokeStyle='#fbbf24';
+          [tol,-tol].forEach(function(d){ cx.beginPath(); cx.moveTo(a.X(lo),a.Y(lo+d)); cx.lineTo(a.X(hi),a.Y(hi+d)); cx.stroke(); });
+          cx.setLineDash([8,5]); cx.lineWidth=2.4; cx.strokeStyle='#4ade80'; cx.beginPath(); cx.moveTo(a.X(lo),a.Y(lo)); cx.lineTo(a.X(hi),a.Y(hi)); cx.stroke(); cx.setLineDash([]);
+          rotulo('predicción perfecta (real = predicho)',a.X(lo)+8,a.Y(lo+(hi-lo)*0.2)-4,'#4ade80');
+          rotulo('rojo: error mayor que ±'+tol+' MW',a.X(hi)-8,a.Y(lo)-12,'#fb7185','right');
+          K('k-r2',fmt(1-sse/sst,4)); K('k-rmse',fmt(Math.sqrt(sse/n),3)+' MW'); K('k-mae',fmt(sae/n,3)+' MW'); K('k-in',fmt(100*dentro/n,1)+' %');
+          msg.textContent='El '+fmt(100*dentro/n,1)+' % de las predicciones queda a menos de '+tol+' MW del valor real.';
+        };
+        sl.addEventListener('input',pinta); selG.addEventListener('change',pinta);
+      }
+
+      else if(modo==='banda'){
+        var tn=0, xb0=0, sx=0, sse0=0;
+        for(i=0;i<N;i++){ if(!E[i]){ tn++; xb0+=T[i]; } } xb0/=tn;
+        for(i=0;i<N;i++){ if(!E[i]){ sx+=(T[i]-xb0)*(T[i]-xb0); var rr=P[i]-(mo*T[i]+bo); sse0+=rr*rr; } }
+        var s0=Math.sqrt(sse0/(tn-2));
+        var t0=box.getAttribute('data-t'); if(t0) sl.value=t0;
+        var inter=function(x){ var h=mo*x+bo, mg=1.9603*s0*Math.sqrt(1+1/tn+(x-xb0)*(x-xb0)/sx); return {h:h,lo:h-mg,hi:h+mg,mg:mg}; };
+        pinta=function(){
+          var x=+sl.value; sv.textContent=fmt(x,1);
+          var L=lienzo(0.62), xa=0, xz=45, a=ejes(L,xa,xz,380,520,'Temperatura ambiente (°C)','Potencia (MW)');
+          cx.fillStyle='rgba(251,113,133,.10)';
+          cx.fillRect(a.X(xa),a.t,a.X(tmin)-a.X(xa),a.Y(380)-a.t); cx.fillRect(a.X(tmax),a.t,a.X(xz)-a.X(tmax),a.Y(380)-a.t);
+          rotulo('sin datos',a.X(xa)+6,a.t+14,'#fb7185'); rotulo('sin datos',a.X(xz)-6,a.t+14,'#fb7185','right');
+          cx.globalAlpha=.16; cx.fillStyle='#38bdf8';
+          for(i=0;i<N;i++){ if(E[i]) continue; cx.beginPath(); cx.arc(a.X(T[i]),a.Y(P[i]),1.7,0,6.2832); cx.fill(); }
+          cx.globalAlpha=1; cx.beginPath();
+          for(k=0;k<=45;k++){ var q=inter(k); if(k===0) cx.moveTo(a.X(k),a.Y(q.hi)); else cx.lineTo(a.X(k),a.Y(q.hi)); }
+          for(k=45;k>=0;k--){ cx.lineTo(a.X(k),a.Y(inter(k).lo)); }
+          cx.closePath(); cx.fillStyle='rgba(74,222,128,.17)'; cx.fill(); cx.setLineDash([5,4]); cx.strokeStyle='#4ade80'; cx.lineWidth=1.3; cx.stroke(); cx.setLineDash([]);
+          cx.strokeStyle='#38bdf8'; cx.lineWidth=2.6; cx.beginPath(); cx.moveTo(a.X(xa),a.Y(mo*xa+bo)); cx.lineTo(a.X(xz),a.Y(mo*xz+bo)); cx.stroke();
+          var q2=inter(x);
+          cx.strokeStyle='rgba(230,237,247,.55)'; cx.setLineDash([3,4]); cx.lineWidth=1; cx.beginPath(); cx.moveTo(a.X(x),a.t); cx.lineTo(a.X(x),a.Y(380)); cx.stroke(); cx.setLineDash([]);
+          cx.strokeStyle='#fbbf24'; cx.lineWidth=5; cx.lineCap='round'; cx.beginPath(); cx.moveTo(a.X(x),a.Y(q2.lo)); cx.lineTo(a.X(x),a.Y(q2.hi)); cx.stroke(); cx.lineCap='butt';
+          cx.fillStyle='#fff'; cx.strokeStyle='#04121f'; cx.lineWidth=2; cx.beginPath(); cx.arc(a.X(x),a.Y(q2.h),6,0,6.2832); cx.fill(); cx.stroke();
+          var dentro=(x>=tmin&&x<=tmax);
+          K('k-h',fmt(q2.h,1)+' MW'); K('k-lo',fmt(q2.lo,1)+' MW'); K('k-hi',fmt(q2.hi,1)+' MW'); K('k-es',dentro?'Dentro ✓':'Fuera ⚠');
+          var es=$('.k-es',box); if(es) es.style.color=dentro?'#4ade80':'#fb7185';
+          msg.textContent=dentro?('A '+fmt(x,1)+' °C esperamos '+fmt(q2.h,1)+' MW; el 95 % de las veces la potencia real quedará entre '+fmt(q2.lo,1)+' y '+fmt(q2.hi,1)+' MW.')
+            :('⚠ A '+fmt(x,1)+' °C no hay datos reales (solo de '+fmt(tmin,1)+' a '+fmt(tmax,1)+' °C). La recta da '+fmt(q2.h,1)+' MW, pero es una extrapolación: no te fíes.');
+        };
+        sl.addEventListener('input',pinta);
+      }
+
+      else if(modo==='anatomia'){
+        K('k-m',fmt(mo,4)+' MW/°C'); K('k-b',fmt(bo,2)+' MW');
+        pinta=function(){
+          var d=+sl.value; sv.textContent=d;
+          var L=lienzo(0.62), a=ejes(L,0,40,400,505,'Temperatura ambiente (°C)','Potencia (MW)');
+          cx.globalAlpha=.16; cx.fillStyle='#38bdf8';
+          for(i=0;i<N;i++){ cx.beginPath(); cx.arc(a.X(T[i]),a.Y(P[i]),1.7,0,6.2832); cx.fill(); }
+          cx.globalAlpha=1; cx.strokeStyle='#38bdf8'; cx.lineWidth=3; cx.beginPath(); cx.moveTo(a.X(0),a.Y(bo)); cx.lineTo(a.X(40),a.Y(mo*40+bo)); cx.stroke();
+          cx.fillStyle='#fb7185'; cx.beginPath(); cx.arc(a.X(0),a.Y(bo),6,0,6.2832); cx.fill();
+          rotulo('b = '+fmt(bo,1)+' MW  (la recta, a 0 °C)',a.X(0)+10,a.Y(bo)-10,'#fb7185');
+          var x1=15, y1=mo*x1+bo, x2=x1+d, y2=mo*x2+bo;
+          cx.fillStyle='rgba(251,191,36,.18)'; cx.strokeStyle='#fbbf24'; cx.lineWidth=2; cx.setLineDash([5,4]);
+          cx.beginPath(); cx.moveTo(a.X(x1),a.Y(y1)); cx.lineTo(a.X(x2),a.Y(y1)); cx.lineTo(a.X(x2),a.Y(y2)); cx.closePath(); cx.fill(); cx.stroke(); cx.setLineDash([]);
+          rotulo('+'+d+' °C',(a.X(x1)+a.X(x2))/2,a.Y(y1)-8,'#fbbf24','center');
+          rotulo(fmt(mo*d,1)+' MW',a.X(x2)+8,(a.Y(y1)+a.Y(y2))/2+4,'#fbbf24');
+          K('k-d',fmt(mo*d,2)+' MW');
+          msg.textContent='Si la temperatura sube '+d+' °C, la potencia estimada cambia '+fmt(mo*d,2)+' MW (pendiente × '+d+').';
+        };
+        sl.addEventListener('input',pinta);
+      }
+
+      window.addEventListener('resize',pinta);
+      pinta();
+    }, function(){
+      cuerpo.innerHTML='<div class="labr-falta">Todavía no están los datos reales de este gráfico. Sube el archivo <b>datos--'+(box.getAttribute('data-id')||'')+'.json</b> a la raíz del repositorio.</div>';
+    });
+  }
+  $$('.grx').forEach(iniciaGraf);
+
   /* ---- progreso por pasos y test (se guarda solo en este navegador) ---- */
   function lee(k){ try{ return window.localStorage.getItem(k); }catch(e){ return null; } }
   function guarda(k,v){ try{ window.localStorage.setItem(k,v); }catch(e){} }
