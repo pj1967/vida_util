@@ -1186,6 +1186,22 @@
      "c": "#4ade80",
      "bloques": [
       {
+       "t": "h",
+       "x": "La gráfica que dibuja tu código en Colab"
+      },
+      {
+       "t": "img",
+       "archivo": "cuaderno-dispersion.png",
+       "x": "Salida real de plt.scatter(): temperatura frente a potencia con los 9.568 datos."
+      },
+      {
+       "t": "leer",
+       "ver": "Un punto por cada hora de funcionamiento. La rejilla (plt.grid) sirve para leer valores; alpha=0.4 hace los puntos semitransparentes.",
+       "leer": "Eje horizontal: temperatura (la x). Eje vertical: potencia (la y). Donde se ve más azul oscuro, se acumulan más puntos.",
+       "dice": "Es la gráfica que obtienes al ejecutar la celda del paso 4. Baja de izquierda a derecha y casi en línea recta: pista de que la regresión lineal va a funcionar. Debajo tienes la versión interactiva del mismo gráfico.",
+       "ojo": "Hay unos pocos puntos sueltos muy por debajo de la nube (potencias de 420–450 MW con temperaturas bajas): son valores raros que conviene vigilar."
+      },
+      {
        "t": "salida",
        "x": "Correlación: -0.948"
       },
@@ -2383,6 +2399,33 @@
      "sub": "gráficos reales e interactivos",
      "c": "#4ade80",
      "bloques": [
+      {
+       "t": "h",
+       "x": "Las gráficas que dibuja tu código en Colab"
+      },
+      {
+       "t": "img",
+       "archivo": "cuaderno-recta.png",
+       "x": "Salida real: datos de prueba (puntos) y la recta de regresión (línea)."
+      },
+      {
+       "t": "leer",
+       "ver": "Los puntos son datos de prueba (los que el modelo no vio al entrenar) y la línea es la recta y = m·x + b calculada con los datos de entrenamiento.",
+       "leer": "Si la línea atraviesa la nube por el medio, de punta a punta, el modelo capta la tendencia. Si los puntos se alejan mucho de la línea, hay más error.",
+       "dice": "La recta baja con la nube y deja puntos por encima y por debajo: la recta resume bien la relación temperatura-potencia incluso con datos que no usó."
+      },
+      {
+       "t": "img",
+       "archivo": "cuaderno-residuos.png",
+       "x": "Salida real de plt.scatter(y_pred, residuos): análisis de residuos."
+      },
+      {
+       "t": "leer",
+       "ver": "Cada punto es un error: residuo = potencia real − potencia predicha. La línea discontinua es el error cero (acierto exacto).",
+       "leer": "Busca una nube sin forma, repartida alrededor de la línea de cero. Si dibujara una curva, un abanico o una pendiente, la recta se dejaría algo sin explicar.",
+       "dice": "Los errores se reparten alrededor de 0, casi todos entre −10 y +10 MW. Hay una ligera tendencia a errores positivos en potencias bajas, y un par de valores atípicos (−30 y −24 MW).",
+       "ojo": "Dos puntos muy alejados no invalidan el modelo, pero conviene preguntarse si son fallos de medida."
+      },
       {
        "t": "etq",
        "k": "sencilla",
