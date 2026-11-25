@@ -451,10 +451,12 @@
       ],
       "metrica": "R² (cuánta variación explica la recta), RMSE y MAE (error medio en MW).",
       "esquema": null,
-      "resultados": "Pendiente.",
-      "limitaciones": "Es una sola variable: la recta no explica todo lo que influye en la potencia (eso lo mejora el proyecto de regresión múltiple con la misma central). Los datos son de una única central.",
-      "codigo": "",
-      "entrega": {},
+      "resultados": "La recta ajustada es potencia = −2,177 × temperatura + 497,15. Por cada grado más de temperatura, la central pierde unos 2,2 MW. Con datos de prueba (que el modelo no vio): R² = 0,90 (la recta explica el 90 % de la variación), RMSE = 5,38 MW y MAE = 4,28 MW. A 25 °C predice 442,7 MW, con un rango del 95 % de 432,1 a 453,4 MW.",
+      "limitaciones": "Usa una sola variable: la presión, la humedad y el vacío del escape también influyen y la recta no los ve. Los datos van de 1,8 a 37,1 °C: fuera de ese rango la predicción es una extrapolación sin garantías. Los errores crecen un poco en los extremos y hay valores atípicos aislados (hasta 30 MW de error).",
+      "codigo": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/potencia-central-regresion-simple.ipynb",
+      "entrega": {
+        "notebook": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/potencia-central-regresion-simple.ipynb"
+      },
       "noticias_palabras": [
         "power plant",
         "central eléctrica",
@@ -773,7 +775,8 @@
           "salida (y) · MW"
         ]
       },
-      "registros": "9.568 registros reales · UCI"
+      "registros": "9.568 registros reales · UCI",
+      "conclusion": "La temperatura sola ya permite predecir la potencia con un error típico de unos 5 MW sobre un rango de 76 MW. Para afinar más, el siguiente paso es sumar variables (proyecto de regresión múltiple)."
     },
     {
       "id": "consumo-coche-peso",

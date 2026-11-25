@@ -188,6 +188,17 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .pie-card a.ir{margin-top:0}
 .tiempo{font-size:.8rem;font-weight:700;color:var(--nv,#38bdf8);background:var(--superficie2);border:1px solid var(--linea);border-radius:999px;padding:3px 10px;white-space:nowrap}
 .intro-bloque{font-size:1.02rem;color:var(--tinta);margin:6px 0 14px;max-width:760px}
+.stats-cab{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;font-size:.82rem}
+.stats-cab span{padding:3px 12px;border-radius:99px;border:1px solid var(--linea);background:var(--superficie2);color:var(--suave)}
+.stats-cab b{color:#4ade80}
+.esperado-g{margin:14px 0;padding:18px;border-radius:18px;border:1px solid #4ade8066;background:radial-gradient(500px 220px at 100% 0%,rgba(74,222,128,.12),transparent 70%),var(--superficie)}
+.esperado-g h2{margin:0 0 4px}
+.esperado-g svg{width:100%;height:auto;border-radius:12px;background:#0a1626;border:1px solid var(--linea);margin-top:8px}
+.kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+.kg div{padding:10px 12px;border-radius:12px;background:var(--superficie2);text-align:center}
+.kg small{display:block;color:var(--suave);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
+.kg strong{font:800 1.3rem ui-monospace,monospace}
+.concl{margin-top:12px;padding:12px 16px;border-radius:12px;border-left:4px solid #4ade80;background:rgba(74,222,128,.09)}
 .btn-descarga{display:inline-block;padding:10px 18px;border-radius:999px;background:#4ade80;color:#04121f!important;font-weight:800;margin-right:12px}
 .botones-pdf{margin:12px 0}
 .btn-ayuda{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--superficie);border:1px solid #4ade80;border-radius:14px;padding:12px 16px;margin:12px 0}
@@ -1457,6 +1468,11 @@ class Sitio:
         partes = self.titulo.rsplit(" ", 1)
         marca = (f'{esc(partes[0])} <span>{esc(partes[1])}</span>'
                  if len(partes) == 2 else esc(self.titulo))
+        n_guias = sum(1 for pp in self.proyectos if any(a.get("secciones") for a in (self.ayudas.get(pp["id"]) or {}).values() if isinstance(a, dict)))
+        stats = ('<p class="stats-cab">'
+                 f'<span><b>{len(self.proyectos)}</b> proyectos</span>'
+                 f'<span><b>{n_guias}</b> con guía completa</span>'
+                 f'<span><b>{len(self.articulos)}</b> noticias analizadas</span></p>')
         lema = f'<p class="lema">{esc(self.lema)}</p>' if self.lema else ""
         sub = f'<p class="subtitulo">{esc(self.subtitulo)}</p>' if self.subtitulo else ""
         autor = f'<p class="autor">por <b>{esc(self.autor)}</b></p>' if self.autor else ""
@@ -1482,7 +1498,7 @@ class Sitio:
 </head><body>
 <header class="sitio"><div class="contenedor"><div class="hero">
 <a class="logo" href="{raiz}index.html" aria-label="{esc(self.titulo)}, inicio">{LOGO_SVG}</a>
-<div><h1><a href="{raiz}index.html">{marca}</a></h1>{lema}{sub}{autor}</div>
+<div><h1><a href="{raiz}index.html">{marca}</a></h1>{lema}{sub}{autor}{stats}</div>
 </div></div></header>
 <div class="barra"><div class="contenedor"><nav class="menu">{menu}</nav></div></div>
 <main><div class="contenedor">
@@ -1915,7 +1931,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             esquema = ""
         cod = enlace_seguro(p.get("codigo"))
         codigo = (f'<a href="{esc(cod)}" target="_blank" rel="noopener noreferrer">Ver el código ↗</a>'
-                  if cod.startswith("http") else '<span class="vacio">Aún no publicado.</span>')
+                  if cod.startswith("http") else '<span class="vacio">Se publicará con el proyecto.</span>')
         entrega_items = []
         ent = p.get("entrega") or {}
         for clave, nombre in (("notebook", "Notebook"), ("repositorio", "Repositorio"),
@@ -1944,6 +1960,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
         cuerpo = (
             migas +
             self.hero_proyecto(p, len(p.get("pasos", [])))
+            + self.resultado_final(p)
             + self.caja_aprenderas(p.get("aprenderas") or self.cfg.get("aprenderas", {}).get(
                 f'{p.get("bloque")}-{p.get("nivel")}'))
             + '<h2 style="--c:#38bdf8">Ficha técnica</h2>' + ficha
@@ -1957,9 +1974,10 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             + self.red_progreso(p["id"], [st.get("titulo", "") for st in p.get("pasos", [])])
             + (f'<ol class="pasos">{"".join(pasos)}</ol>' if pasos else esquema)
             + '<h2 style="--c:#4ade80">Resultados</h2>'
-            + f'<p>{esc(p.get("resultados") or "Pendiente.")}</p>'
+            + self.resultado_final(p, "El resultado final de este proyecto", "Resultado final")
+            + f'<p>{esc(p.get("resultados") or "Este proyecto aún no está completado: aquí aparecerán la gráfica final, la ecuación, el R² y la conclusión.")}</p>'
             + '<h2 style="--c:#fb7185">Limitaciones</h2>'
-            + f'<p>{esc(p.get("limitaciones") or "Se indicarán al completar el proyecto.")}</p>'
+            + f'<p>{esc(p.get("limitaciones") or "Se explicarán al completar el proyecto: qué no cubre el modelo y en qué casos no conviene fiarse de él.")}</p>'
             + '<h2 style="--c:#818cf8">Código</h2>' + f"<p>{codigo}</p>"
             + '<h2 style="--c:#c084fc">Entrega<small>notebook, repositorio, demo o artículo</small></h2>'
             + f'<ul class="entrega">{"".join(entrega_items)}</ul>'
@@ -2137,6 +2155,47 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                 + caja(152, 96, 38, 114, f["modelo"], "#38bdf8", True)
                 + '<line x1="250" y1="95" x2="288" y2="95" stroke="#38bdf8" stroke-width="2" marker-end="url(#fh)"/>'
                 + caja(290, 104, 52, 86, f["salida"], "#4ade80") + '</svg>')
+
+    def resultado_final(self, p, titulo="Si completas este proyecto llegarás a esto", tag="Resultado esperado"):
+        f = RAIZ / f"datos--{p['id']}.json"
+        if not f.is_file():
+            return ""
+        try:
+            D = json.loads(f.read_text(encoding="utf-8"))
+            T, P, E = D["t"], D["p"], D["e"]
+            m, b, r2, rmse, mae = D["m"], D["b"], D["r2"], D["rmse"], D["mae"]
+        except (ValueError, KeyError, OSError):
+            return ""
+        x0, x1, y0, y1 = 0.0, 40.0, 415.0, 500.0
+        W, H, ml, mb = 720, 380, 56, 44
+        X = lambda v: ml + (v - x0) / (x1 - x0) * (W - ml - 12)
+        Y = lambda v: 12 + (y1 - v) / (y1 - y0) * (H - mb - 12)
+        pts = "".join(f'<circle cx="{X(T[i]):.1f}" cy="{Y(P[i]):.1f}" r="2.3" fill="{"#fbbf24" if E[i] else "#38bdf8"}" fill-opacity=".45"/>'
+                      for i in range(0, len(T), 9))
+        ejes = "".join(f'<line x1="{X(v):.0f}" y1="12" x2="{X(v):.0f}" y2="{H - mb}" stroke="#22304a"/>'
+                       f'<text x="{X(v):.0f}" y="{H - mb + 18}" text-anchor="middle" fill="#9aa8bf" font-size="12">{v}</text>'
+                       for v in (0, 10, 20, 30, 40))
+        ejes += "".join(f'<line x1="{ml}" y1="{Y(v):.0f}" x2="{W - 12}" y2="{Y(v):.0f}" stroke="#22304a"/>'
+                        f'<text x="{ml - 8}" y="{Y(v) + 4:.0f}" text-anchor="end" fill="#9aa8bf" font-size="12">{v}</text>'
+                        for v in (420, 440, 460, 480, 500))
+        recta = f'<line x1="{X(1.8):.1f}" y1="{Y(m * 1.8 + b):.1f}" x2="{X(37.1):.1f}" y2="{Y(m * 37.1 + b):.1f}" stroke="#4ade80" stroke-width="3.5"/>'
+        ecu = f'y = {m:.3f}·x + {b:.2f}'.replace(".", ",").replace("-", "−")
+        svg = (f'<svg viewBox="0 0 {W} {H}" role="img" aria-label="Nube de puntos y recta de regresión">{ejes}{pts}{recta}'
+               f'<rect x="{X(21)}" y="{Y(497)}" width="248" height="30" rx="8" fill="#0f2747" stroke="#4ade80"/>'
+               f'<text x="{X(21) + 124}" y="{Y(497) + 20}" text-anchor="middle" fill="#e6edf7" font-size="15" font-weight="700" font-family="monospace">{esc(ecu)}</text>'
+               f'<text x="{(W + ml) / 2}" y="{H - 6}" text-anchor="middle" fill="#9aa8bf" font-size="12">Temperatura (°C)</text>'
+               f'<text x="14" y="{H / 2 - 20}" fill="#9aa8bf" font-size="12" transform="rotate(-90 14 {H / 2 - 20})">Potencia (MW)</text></svg>')
+        num = lambda v, d=2: f"{v:.{d}f}".replace(".", ",")
+        kg = ('<div class="kg">'
+              f'<div><small>Ecuación</small><strong style="color:#4ade80;font-size:1rem">{esc(ecu)}</strong></div>'
+              f'<div><small>R² (prueba)</small><strong style="color:#38bdf8">{num(r2)}</strong></div>'
+              f'<div><small>RMSE</small><strong style="color:#fbbf24">{num(rmse)} MW</strong></div>'
+              f'<div><small>MAE</small><strong style="color:#fb7185">{num(mae)} MW</strong></div></div>')
+        concl = f'<div class="concl"><b>Conclusión:</b> {esc(p.get("conclusion") or p.get("resultados", ""))}</div>'
+        return (f'<section class="esperado-g"><span class="etq" style="color:#4ade80;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700">{esc(tag)}</span>'
+                f'<h2 style="--c:#4ade80">{esc(titulo)}</h2>'
+                '<p class="sub" style="color:var(--suave);margin:0">Puntos azules: datos de entrenamiento · puntos ámbar: datos de prueba · línea verde: la recta que calcularás.</p>'
+                f'{svg}{kg}{concl}</section>')
 
     def hero_proyecto(self, p, npasos):
         est = p.get("estado", "idea")
