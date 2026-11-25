@@ -1422,7 +1422,7 @@ class Sitio:
                 for carpeta in (RAIZ, RAIZ / "recursos"):
                     for f in sorted(carpeta.glob("*.pdf")) if carpeta.is_dir() else []:
                         norm = re.sub(r"[^a-z0-9]+", " ", unicodedata.normalize("NFKD", f.name.lower()).encode("ascii", "ignore").decode())
-                        if "regresion" in norm and ("modulo" in norm or "nivel" in norm or "lineal" in norm):
+                        if ("modulo" in norm and "nivel" in norm) or ("regresion" in norm and ("modulo" in norm or "nivel" in norm or "lineal" in norm)):
                             r = dict(r, archivo=f.name)
                             break
             r = dict(r, _subs=subs, _total=ini - 1, _existe=self.localizar_recurso(r.get("archivo", "")) is not None)
@@ -1940,7 +1940,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
         else:
             esquema = ""
         cod = enlace_seguro(p.get("codigo"))
-        codigo = (f'<a href="{esc(cod)}" target="_blank" rel="noopener noreferrer">Ver el código ↗</a>'
+        codigo = (f'<a class="btn-descarga" href="{esc(cod)}" target="_blank" rel="noopener noreferrer">▶ Abrir el código en Colab</a>'
                   if cod.startswith("http") else '<span class="vacio">Se publicará con el proyecto.</span>')
         entrega_items = []
         ent = p.get("entrega") or {}
@@ -1990,9 +1990,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             + '<h2 style="--c:#fb7185">Limitaciones</h2>'
             + f'<p>{esc(p.get("limitaciones") or "Se explicarán al completar el proyecto: qué no cubre el modelo y en qué casos no conviene fiarse de él.")}</p>'
             + '<h2 style="--c:#818cf8">Código</h2>' + f"<p>{codigo}</p>"
-            + '<h2 style="--c:#c084fc">Entrega<small>notebook, repositorio, demo o artículo</small></h2>'
-            + f'<ul class="entrega">{"".join(entrega_items)}</ul>'
-            + f'<p class="desc">Si quieres corregir o mejorar este proyecto, será bienvenido.{contacto}</p>'
+            + f'<p class="desc">¿Has encontrado un error o tienes una mejora? Será bienvenida.{contacto}</p>'
             + noticias)
         self.escribir(f"proyectos/{p['id']}.html", self.pagina(
             p.get("titulo", ""), cuerpo, "../", "proyectos", descripcion=p.get("descripcion", "")))
