@@ -198,6 +198,9 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .grafs-res figure{margin:0;padding:14px;border-radius:16px;background:var(--superficie);border:1px solid var(--linea)}
 .grafs-res h4{margin:0 0 6px;color:#4ade80}
 .grafs-res img{width:100%;height:auto;border-radius:10px;background:#fff}
+.fig-cuaderno{margin:10px 0;padding:12px;border-radius:16px;background:var(--superficie);border:1px solid var(--linea)}
+.fig-cuaderno img{width:100%;height:auto;border-radius:10px;background:#fff;display:block}
+.fig-cuaderno figcaption{margin-top:6px;font-size:.85rem;color:var(--suave)}
 .sec-g{margin:18px 0 0;font-size:1.05rem;color:#4ade80}
 .grafs-res svg{width:100%;height:auto;border-radius:10px;background:#0a1626;border:1px solid var(--linea)}
 .grafs-res figcaption{margin-top:8px;font-size:.88rem;color:var(--suave)}
@@ -2206,6 +2209,15 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                 f'{svg}{kg}{concl}</section>')
 
     def graficos_resultado(self, p):
+        if (RAIZ / f"img--{p['id']}--cuaderno.png").is_file():
+            self.copiar(RAIZ / f"img--{p['id']}--cuaderno.png", f"img/{p['id']}--cuaderno.png")
+            ex = [("1 · Nube de puntos", "Cada punto es una hora de funcionamiento. La nube baja casi en línea recta: una recta tiene sentido."),
+                  ("2 · Recta de regresión", "La línea es la recta calculada con los datos de entrenamiento y dibujada sobre los de prueba. Cuanto más pegados, mejor predice."),
+                  ("3 · Análisis de residuos", "El error de cada predicción (real − predicho). Repartido al azar alrededor del cero indica que la recta es suficiente.")]
+            return ('<h3 class="sec-g">Las gráficas que genera el código del proyecto</h3>'
+                    f'<figure class="fig-cuaderno"><img src="../img/{esc(p["id"])}--cuaderno.png" alt="Gráficas generadas por el código: nube de puntos, recta de regresión y residuos" loading="lazy">'
+                    '<figcaption>Salida real del código ejecutado en Colab.</figcaption></figure>'
+                    '<div class="grafs-res">' + "".join(f'<figure><h4>{esc(t)}</h4><figcaption>{esc(c)}</figcaption></figure>' for t, c in ex) + '</div>')
         reales = []
         for nombre, titulo, texto in (
                 ("cuaderno-dispersion.png", "1 · Nube de puntos (plt.scatter)",
@@ -2215,6 +2227,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                 ("cuaderno-residuos.png", "3 · Análisis de residuos",
                  "Salida real del código: el error de cada predicción (real − predicho). Si se reparten al azar alrededor del cero, la recta es suficiente; una curva o un abanico indicarían que falta algo.")):
             if (RAIZ / f"img--{p['id']}--{nombre}").is_file():
+                self.copiar(RAIZ / f"img--{p['id']}--{nombre}", f"img/{p['id']}--{nombre}")
                 reales.append(f'<figure><h4>{esc(titulo)}</h4><img src="../img/{esc(p["id"])}--{esc(nombre)}" alt="{esc(titulo)}" loading="lazy">'
                               f'<figcaption>{esc(texto)}</figcaption></figure>')
         if reales:
@@ -2381,6 +2394,9 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             elif t == "img":
                 nombre = b.get("archivo", "")
                 origen = RAIZ / f"img--{pid}--{nombre}"
+                if not origen.is_file() and nombre.startswith("cuaderno-") and (RAIZ / f"img--{pid}--cuaderno.png").is_file():
+                    nombre = "cuaderno.png"
+                    origen = RAIZ / f"img--{pid}--{nombre}"
                 if origen.is_file():
                     self.copiar(origen, f"img/{pid}--{nombre}")
                     out.append(f'<figure class="fig" style="max-width:720px"><img class="pasos-img" loading="lazy" '
