@@ -776,7 +776,8 @@
         ]
       },
       "registros": "9.568 registros reales · UCI",
-      "conclusion": "La temperatura sola ya permite predecir la potencia con un error típico de unos 5 MW sobre un rango de 76 MW. Para afinar más, el siguiente paso es sumar variables (proyecto de regresión múltiple)."
+      "conclusion": "La temperatura sola ya permite predecir la potencia con un error típico de unos 5 MW sobre un rango de 76 MW. Para afinar más, el siguiente paso es sumar variables (proyecto de regresión múltiple).",
+      "dificultad": 1
     },
     {
       "id": "consumo-coche-peso",
@@ -818,7 +819,8 @@
         "fuel efficiency"
       ],
       "bloque": "regresion",
-      "tiempo": "45 min"
+      "tiempo": "45 min",
+      "dificultad": 2
     },
     {
       "id": "hormigon-cemento",
@@ -860,7 +862,8 @@
       ],
       "bloque": "regresion",
       "nivel": "basico",
-      "tiempo": "45 min"
+      "tiempo": "45 min",
+      "dificultad": 3
     },
     {
       "id": "potencia-central-regresion-multiple",
@@ -901,7 +904,8 @@
         "ciclo combinado"
       ],
       "bloque": "regresion",
-      "tiempo": "1 h"
+      "tiempo": "1 h",
+      "dificultad": 1
     },
     {
       "id": "bateria-nasa",
@@ -944,7 +948,8 @@
         "litio"
       ],
       "bloque": "regresion",
-      "tiempo": "1 h 15 min"
+      "tiempo": "1 h 15 min",
+      "dificultad": 2
     },
     {
       "id": "demanda-electrica",
@@ -988,7 +993,8 @@
         "smart grid"
       ],
       "bloque": "regresion",
-      "tiempo": "1 h 15 min"
+      "tiempo": "1 h 15 min",
+      "dificultad": 3
     },
     {
       "id": "ruido-perfil-aerodinamico",
@@ -1031,7 +1037,8 @@
         "ruido"
       ],
       "bloque": "regresion",
-      "tiempo": "1 h 30 min"
+      "tiempo": "1 h 30 min",
+      "dificultad": 1
     },
     {
       "id": "motor-nasa",
@@ -1143,7 +1150,8 @@
       "tipo": "Regresión",
       "tecnica": "Random Forest con ventanas de tiempo",
       "bloque": "regresion",
-      "tiempo": "2 h"
+      "tiempo": "2 h",
+      "dificultad": 2
     },
     {
       "id": "emisiones-turbina-gas",
@@ -1185,7 +1193,8 @@
       ],
       "bloque": "regresion",
       "nivel": "avanzado",
-      "tiempo": "1 h 45 min"
+      "tiempo": "1 h 45 min",
+      "dificultad": 3
     },
     {
       "id": "iris-clasificacion",
@@ -1225,7 +1234,8 @@
       ],
       "bloque": "clasificacion",
       "nivel": "basico",
-      "tiempo": "30 min"
+      "tiempo": "30 min",
+      "dificultad": 1
     },
     {
       "id": "calidad-vino",
@@ -1265,7 +1275,8 @@
       ],
       "bloque": "clasificacion",
       "nivel": "basico",
-      "tiempo": "45 min"
+      "tiempo": "45 min",
+      "dificultad": 2
     },
     {
       "id": "enfriador-hidraulico-binario",
@@ -1305,7 +1316,8 @@
       ],
       "bloque": "clasificacion",
       "nivel": "basico",
-      "tiempo": "45 min"
+      "tiempo": "45 min",
+      "dificultad": 3
     },
     {
       "id": "estado-circuito-hidraulico",
@@ -1346,7 +1358,8 @@
         "condition monitoring"
       ],
       "bloque": "clasificacion",
-      "tiempo": "1 h 15 min"
+      "tiempo": "1 h 15 min",
+      "dificultad": 1
     },
     {
       "id": "fallo-maquina-clases-desequilibradas",
@@ -1386,7 +1399,8 @@
         "mantenimiento predictivo"
       ],
       "bloque": "clasificacion",
-      "tiempo": "1 h 30 min"
+      "tiempo": "1 h 30 min",
+      "dificultad": 2
     },
     {
       "id": "fallos-planchas-acero",
@@ -1427,7 +1441,8 @@
       ],
       "bloque": "clasificacion",
       "nivel": "medio",
-      "tiempo": "1 h 15 min"
+      "tiempo": "1 h 15 min",
+      "dificultad": 3
     },
     {
       "id": "actividad-movil",
@@ -1468,7 +1483,8 @@
       ],
       "bloque": "clasificacion",
       "nivel": "avanzado",
-      "tiempo": "2 h"
+      "tiempo": "2 h",
+      "dificultad": 1
     },
     {
       "id": "linea-base-anomalias",
@@ -1514,7 +1530,8 @@
         "Anotar límites."
       ],
       "bloque": "clasificacion",
-      "tiempo": "2 h"
+      "tiempo": "2 h",
+      "dificultad": 2
     },
     {
       "id": "fallos-semiconductores",
@@ -1555,7 +1572,8 @@
       ],
       "bloque": "clasificacion",
       "nivel": "avanzado",
-      "tiempo": "2 h 30 min"
+      "tiempo": "2 h 30 min",
+      "dificultad": 3
     },
     {
       "id": "mlp-digitos",
@@ -1594,7 +1612,8 @@
       ],
       "bloque": "redes",
       "nivel": "basico",
-      "tiempo": "45 min"
+      "tiempo": "45 min",
+      "dificultad": 1
     },
     {
       "id": "mlp-potencia-central",
@@ -1633,7 +1652,8 @@
       ],
       "bloque": "redes",
       "nivel": "basico",
-      "tiempo": "1 h"
+      "tiempo": "1 h",
+      "dificultad": 2
     },
     {
       "id": "mlp-circuito-hidraulico",
@@ -1672,7 +1692,8 @@
       ],
       "bloque": "redes",
       "nivel": "basico",
-      "tiempo": "1 h 15 min"
+      "tiempo": "1 h 15 min",
+      "dificultad": 3
     },
     {
       "id": "lstm-vida-util",
@@ -1712,7 +1733,8 @@
         "prognostics"
       ],
       "bloque": "redes",
-      "tiempo": "2 h"
+      "tiempo": "2 h",
+      "dificultad": 1
     },
     {
       "id": "autoencoder-hidraulico",
@@ -1752,7 +1774,8 @@
         "detección de anomalías"
       ],
       "bloque": "redes",
-      "tiempo": "2 h"
+      "tiempo": "2 h",
+      "dificultad": 2
     },
     {
       "id": "temperatura-series-jena",
@@ -1792,7 +1815,8 @@
       ],
       "bloque": "redes",
       "nivel": "medio",
-      "tiempo": "2 h 30 min"
+      "tiempo": "2 h 30 min",
+      "dificultad": 3
     },
     {
       "id": "cnn-espectrogramas-rodamientos",
@@ -1834,7 +1858,8 @@
         "vibración"
       ],
       "bloque": "redes",
-      "tiempo": "3 h"
+      "tiempo": "3 h",
+      "dificultad": 1
     },
     {
       "id": "cnn-defectos-acero",
@@ -1874,7 +1899,8 @@
         "computer vision"
       ],
       "bloque": "redes",
-      "tiempo": "3 h"
+      "tiempo": "3 h",
+      "dificultad": 2
     },
     {
       "id": "cnn-plantas-incendios",
@@ -1916,7 +1942,8 @@
         "humo"
       ],
       "bloque": "redes",
-      "tiempo": "3 h"
+      "tiempo": "3 h",
+      "dificultad": 3
     },
     {
       "id": "sensor-propio-esp32",
@@ -1958,7 +1985,8 @@
       ],
       "bloque": "experto",
       "nivel": "experto",
-      "tiempo": "4 h"
+      "tiempo": "4 h",
+      "dificultad": 3
     },
     {
       "id": "gemelo-hibrido-motor",
@@ -1999,7 +2027,8 @@
       ],
       "bloque": "experto",
       "nivel": "experto",
-      "tiempo": "5 h"
+      "tiempo": "5 h",
+      "dificultad": 3
     },
     {
       "id": "refuerzo-control",
@@ -2040,7 +2069,8 @@
       ],
       "bloque": "experto",
       "nivel": "experto",
-      "tiempo": "5 h"
+      "tiempo": "5 h",
+      "dificultad": 3
     },
     {
       "id": "vision-en-el-borde",
@@ -2081,7 +2111,8 @@
       ],
       "bloque": "experto",
       "nivel": "experto",
-      "tiempo": "4 h"
+      "tiempo": "4 h",
+      "dificultad": 3
     },
     {
       "id": "asistente-manuales-rag",
@@ -2123,7 +2154,8 @@
       ],
       "bloque": "experto",
       "nivel": "experto",
-      "tiempo": "4 h"
+      "tiempo": "4 h",
+      "dificultad": 3
     }
   ],
   "retos": [
@@ -2246,9 +2278,25 @@
     ]
   },
   "intros": {
-    "regresion": "Aprende a construir modelos capaces de predecir valores continuos a partir de datos reales.",
-    "clasificacion": "Aprende a construir modelos que deciden a qué grupo pertenece algo a partir de datos reales: sano o averiado, una especie u otra.",
-    "redes": "Aprende cómo una red neuronal descubre por sí sola las pautas de los datos, empezando por redes pequeñas y llegando a imágenes y series temporales.",
+    "regresion": "Aprende a predecir valores numéricos a partir de datos reales: cuánta potencia dará una central, cuánto consume un coche, cuánto aguanta un material.",
+    "clasificacion": "Aprende a que un programa decida a qué grupo pertenece algo: una flor, un vino, una máquina sana o averiada.",
+    "redes": "Aprende cómo una red neuronal descubre por sí sola las pautas de los datos: de las redes más pequeñas a las que ven imágenes y series temporales.",
     "experto": "Proyectos de toda índole para cuando domines lo anterior: sensores propios, gemelos digitales, refuerzo y visión en dispositivos pequeños."
+  },
+  "intros_nivel": {
+    "regresion-basico": "Aprende a predecir valores numéricos utilizando datos reales. En este nivel construirás tus primeros modelos de regresión lineal paso a paso.",
+    "regresion-medio": "Da el siguiente paso: usa varias variables a la vez, compara modelos y aprende a medir cuándo uno es mejor que otro.",
+    "regresion-avanzado": "Enfrenta datos más difíciles y técnicas más potentes: modelos no lineales, ruido, emisiones y vida útil de máquinas reales.",
+    "clasificacion-basico": "Aprende a clasificar: tu primer modelo que decide entre grupos (especies, calidades, sano o degradado) y cómo saber si acierta.",
+    "clasificacion-medio": "Clasificación con casos más reales: estados de un circuito, averías poco frecuentes y defectos industriales, donde acertar no es tan sencillo.",
+    "clasificacion-avanzado": "Clasificación con señales de sensores, detección de anomalías y datos industriales complejos.",
+    "redes-basico": "Tu primera red neuronal: aprende cómo funciona por dentro, cómo se entrena y qué mejora frente a una recta.",
+    "redes-medio": "Redes con memoria y compresión de información: series temporales, vida útil y detección de anomalías.",
+    "redes-avanzado": "Redes que ven: imágenes de vibración, superficies de acero y plantas, con redes convolucionales."
+  },
+  "dificultad_txt": {
+    "1": "🟢 Fácil",
+    "2": "🟡 Medio",
+    "3": "🔴 Avanzado"
   }
 }

@@ -186,6 +186,8 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .icono-card{font-size:1.5rem;line-height:1}
 .pie-card{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:6px;border-top:1px dashed var(--linea)}
 .pie-card a.ir{margin-top:0}
+.dif{font-size:.74rem;font-weight:700;padding:2px 10px;border-radius:999px;border:1px solid;background:var(--superficie2)}
+.leyenda-dif{font-size:.85rem;color:var(--suave);margin:4px 0 10px}
 .tiempo{font-size:.8rem;font-weight:700;color:var(--nv,#38bdf8);background:var(--superficie2);border:1px solid var(--linea);border-radius:999px;padding:3px 10px;white-space:nowrap}
 .intro-bloque{font-size:1.02rem;color:var(--tinta);margin:6px 0 14px;max-width:760px}
 .stats-cab{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;font-size:.82rem}
@@ -1695,15 +1697,16 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                     continue
                 cards.append(self.cat_card(f"{clave}-{nv}.html", self.NIVEL_COLOR[nv],
                                            f"Nivel {self.NIVEL_TXT[nv]}", self.NIVEL_DESC[nv],
-                                           len(pn), [p["titulo"] + (" · ⏱ " + p["tiempo"] if p.get("tiempo") else "") for p in pn]))
+                                           len(pn), [self.DIF.get(p.get("dificultad"), ("",))[0] + " " + p["titulo"] + (" · ⏱ " + p["tiempo"] if p.get("tiempo") else "") for p in pn]))
                 cuerpo = ('<p class="migas"><a href="' + f'{clave}.html">← {esc(nombre)}</a></p>'
                           f'<h2 style="--c:{self.NIVEL_COLOR[nv]}">{esc(nombre)} · nivel {self.NIVEL_TXT[nv]}'
                           f'<small>{esc(self.NIVEL_DESC[nv])}</small></h2>'
-                          + f'<p class="intro-bloque">{esc(self.cfg.get("intros", {}).get(clave, ""))}</p>'
+                          + f'<p class="intro-bloque">{esc(self.cfg.get("intros_nivel", {}).get(f"{clave}-{nv}") or self.cfg.get("intros", {}).get(clave, ""))}</p>'
+                          + '<p class="leyenda-dif">Dificultad dentro de este nivel: 🟢 Fácil · 🟡 Medio · 🔴 Avanzado. Todos los proyectos de un nivel son asequibles; la marca solo ayuda a elegir por dónde empezar.</p>'
                           + self.caja_ayuda_pdf(f"{clave}-{nv}")
                           + self.caja_aprenderas(self.cfg.get("aprenderas", {}).get(f"{clave}-{nv}"), "nivel")
                           + '<div class="tarjetas">'
-                          + "".join(self.tarjeta_proyecto(p, "") for p in pn) + "</div>")
+                          + "".join(self.tarjeta_proyecto(p, "") for p in sorted(pn, key=lambda q: q.get("dificultad", 9))) + "</div>")
                 self.escribir(f"proyectos/{clave}-{nv}.html",
                               self.pagina(f"{nombre}, nivel {self.NIVEL_TXT[nv]}", cuerpo, "../", "proyectos"))
             cuerpo = ('<p class="migas"><a href="../proyectos.html">← Proyectos</a></p>'
@@ -1848,6 +1851,13 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
     ICONO_AREA = {"energía": "⚡", "aeronáutica": "✈️", "ingeniería": "⚙️", "mantenimiento": "🔧", "robótica": "🤖",
                   "visión artificial": "👁️", "ia": "🧠"}
 
+    DIF = {1: ("🟢", "Fácil", "#4ade80"), 2: ("🟡", "Medio", "#fbbf24"), 3: ("🔴", "Avanzado", "#fb7185")}
+
+    def dif_badge(self, p):
+        d = self.DIF.get(p.get("dificultad"))
+        return (f'<span class="dif" style="color:{d[2]};border-color:{d[2]}88" title="Dificultad dentro de este nivel">'
+                f'{d[0]} {d[1]}</span>') if d else ""
+
     def tarjeta_proyecto(self, p, base, compacta=False):
         est = p.get("estado", "idea")
         n = self.proyectos.index(p) + 1
@@ -1857,7 +1867,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
         icono = self.ICONO_AREA.get((p.get("area") or "").strip().lower(), "🧠")
         tiempo = (f'<span class="tiempo" title="Tiempo estimado">⏱ {esc(p["tiempo"])}</span>' if p.get("tiempo") else "")
         return (f'<article class="proyecto{clase}" style="--nv:{col}"><div class="cabecera-card">'
-                f'<span class="icono-card">{icono}</span><span class="num">Proyecto {n}</span>'
+                f'<span class="icono-card">{icono}</span><span class="num">Proyecto {n}</span>{self.dif_badge(p)}'
                 f'<span class="estado {esc(est)}">{esc(self.ESTADOS.get(est, est))}</span></div>'
                 f'<h3>{esc(p.get("titulo", ""))}</h3>'
                 f'{self.etiquetas(p, compacta)}<p>{esc(p.get("descripcion", ""))}</p>'
