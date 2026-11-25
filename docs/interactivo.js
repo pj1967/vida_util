@@ -88,10 +88,24 @@
 
   /* ---- laboratorio con datos reales: nube de puntos y recta ---- */
   function fmt(v,d){ return v.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+  var cacheDatos={};
+  function cargaDatos(src){
+    if(!cacheDatos[src]) cacheDatos[src]=new Promise(function(ok,fail){
+      function porScript(){
+        var js=src.replace(/[.]json$/,'.js'), s=document.createElement('script'), id=src.split('/').pop().replace(/[.]json$/,'');
+        s.onload=function(){ if(window.MMD&&window.MMD[id]) ok(window.MMD[id]); else fail(new Error('no')); };
+        s.onerror=function(){ fail(new Error('no')); };
+        s.src=js; document.head.appendChild(s);
+      }
+      if(location.protocol==='file:'){ porScript(); return; }
+      fetch(src).then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }).then(ok,porScript);
+    });
+    return cacheDatos[src];
+  }
   function iniciaLab(box){
     var src=box.getAttribute('data-src'), modo=box.getAttribute('data-modo')||'recta';
     var cuerpo=$('.labr-cuerpo',box);
-    fetch(src).then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }).then(function(D){
+    cargaDatos(src).then(function(D){
       var N=D.t.length, T=D.t, P=D.p, E=D.e;
       var tmin=Math.min.apply(null,T), tmax=Math.max.apply(null,T), pmin=Math.min.apply(null,P), pmax=Math.max.apply(null,P);
       var cv=$('canvas',box), cx=cv.getContext('2d');
@@ -214,8 +228,6 @@
   }
   $$('.labr:not(.grx)').forEach(iniciaLab);
   /* ---- gráficos explicados con los datos reales (histograma, real vs predicho, banda, reparto, anatomía) ---- */
-  var cacheDatos={};
-  function cargaDatos(src){ if(!cacheDatos[src]) cacheDatos[src]=fetch(src).then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }); return cacheDatos[src]; }
   function iniciaGraf(box){
     var modo=box.getAttribute('data-modo'), cuerpo=$('.labr-cuerpo',box);
     cargaDatos(box.getAttribute('data-src')).then(function(D){
@@ -366,6 +378,23 @@
     });
   }
   $$('.grx').forEach(iniciaGraf);
+
+  (function(){
+    function lee(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+    function pinta(){
+      $$('.red[data-red]').forEach(function(r){
+        var pid=r.getAttribute('data-red'), prev=true;
+        $$('.rn',r).forEach(function(g){
+          var i=g.getAttribute('data-i'), ok=lee('mm-ok:'+pid+':'+i)==='1', c=g.querySelector('circle');
+          c.setAttribute('fill', ok?'#14532d':'#16213a'); c.setAttribute('stroke', ok?'#4ade80':(prev?'#38bdf8':'#22304a'));
+          prev=ok;
+          var ln=r.querySelector('.rl[data-i="'+(parseInt(i,10)-1)+'"]');
+          if(ln){ ln.setAttribute('stroke', ok?'#38bdf8':'#22304a'); ln.setAttribute('stroke-width', ok?'2.4':'1.6'); }
+        });
+      });
+    }
+    pinta(); document.addEventListener('click',function(){ setTimeout(pinta,50); }); window.addEventListener('storage',pinta);
+  })();
 
   /* ---- progreso por pasos y test (se guarda solo en este navegador) ---- */
   function lee(k){ try{ return window.localStorage.getItem(k); }catch(e){ return null; } }
