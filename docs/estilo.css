@@ -130,6 +130,8 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .icono-card{font-size:1.5rem;line-height:1}
 .pie-card{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:6px;border-top:1px dashed var(--linea)}
 .pie-card a.ir{margin-top:0}
+.dif{font-size:.74rem;font-weight:700;padding:2px 10px;border-radius:999px;border:1px solid;background:var(--superficie2)}
+.leyenda-dif{font-size:.85rem;color:var(--suave);margin:4px 0 10px}
 .tiempo{font-size:.8rem;font-weight:700;color:var(--nv,#38bdf8);background:var(--superficie2);border:1px solid var(--linea);border-radius:999px;padding:3px 10px;white-space:nowrap}
 .intro-bloque{font-size:1.02rem;color:var(--tinta);margin:6px 0 14px;max-width:760px}
 .stats-cab{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;font-size:.82rem}
