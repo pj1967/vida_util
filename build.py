@@ -194,6 +194,13 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .esperado-g{margin:14px 0;padding:18px;border-radius:18px;border:1px solid #4ade8066;background:radial-gradient(500px 220px at 100% 0%,rgba(74,222,128,.12),transparent 70%),var(--superficie)}
 .esperado-g h2{margin:0 0 4px}
 .esperado-g svg{width:100%;height:auto;border-radius:12px;background:#0a1626;border:1px solid var(--linea);margin-top:8px}
+.grafs-res{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:16px 0}
+.grafs-res figure{margin:0;padding:14px;border-radius:16px;background:var(--superficie);border:1px solid var(--linea)}
+.grafs-res h4{margin:0 0 6px;color:#4ade80}
+.grafs-res img{width:100%;height:auto;border-radius:10px;background:#fff}
+.sec-g{margin:18px 0 0;font-size:1.05rem;color:#4ade80}
+.grafs-res svg{width:100%;height:auto;border-radius:10px;background:#0a1626;border:1px solid var(--linea)}
+.grafs-res figcaption{margin-top:8px;font-size:.88rem;color:var(--suave)}
 .kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
 .kg div{padding:10px 12px;border-radius:12px;background:var(--superficie2);text-align:center}
 .kg small{display:block;color:var(--suave);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
@@ -1975,6 +1982,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             + (f'<ol class="pasos">{"".join(pasos)}</ol>' if pasos else esquema)
             + '<h2 style="--c:#4ade80">Resultados</h2>'
             + self.resultado_final(p, "El resultado final de este proyecto", "Resultado final")
+            + self.graficos_resultado(p)
             + f'<p>{esc(p.get("resultados") or "Este proyecto aún no está completado: aquí aparecerán la gráfica final, la ecuación, el R² y la conclusión.")}</p>'
             + '<h2 style="--c:#fb7185">Limitaciones</h2>'
             + f'<p>{esc(p.get("limitaciones") or "Se explicarán al completar el proyecto: qué no cubre el modelo y en qué casos no conviene fiarse de él.")}</p>'
@@ -2196,6 +2204,71 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                 f'<h2 style="--c:#4ade80">{esc(titulo)}</h2>'
                 '<p class="sub" style="color:var(--suave);margin:0">Puntos azules: datos de entrenamiento · puntos ámbar: datos de prueba · línea verde: la recta que calcularás.</p>'
                 f'{svg}{kg}{concl}</section>')
+
+    def graficos_resultado(self, p):
+        reales = []
+        for nombre, titulo, texto in (
+                ("cuaderno-dispersion.png", "1 · Nube de puntos (plt.scatter)",
+                 "Salida real del código en Colab. Cada punto es una hora de funcionamiento: la nube baja casi en línea recta, así que una recta tiene sentido."),
+                ("cuaderno-recta.png", "2 · Recta de regresión",
+                 "Salida real del código: los datos de prueba (puntos) y la recta calculada con los datos de entrenamiento. Cuanto más pegados a la línea, mejor predice."),
+                ("cuaderno-residuos.png", "3 · Análisis de residuos",
+                 "Salida real del código: el error de cada predicción (real − predicho). Si se reparten al azar alrededor del cero, la recta es suficiente; una curva o un abanico indicarían que falta algo.")):
+            if (RAIZ / f"img--{p['id']}--{nombre}").is_file():
+                reales.append(f'<figure><h4>{esc(titulo)}</h4><img src="../img/{esc(p["id"])}--{esc(nombre)}" alt="{esc(titulo)}" loading="lazy">'
+                              f'<figcaption>{esc(texto)}</figcaption></figure>')
+        if reales:
+            return ('<h3 class="sec-g">Las gráficas que genera el código del proyecto</h3><div class="grafs-res">' + "".join(reales) + '</div>')
+        f = RAIZ / f"datos--{p['id']}.json"
+        if not f.is_file():
+            return ""
+        try:
+            D = json.loads(f.read_text(encoding="utf-8"))
+            T, P, E = D["t"], D["p"], D["e"]
+            m, b = D["m"], D["b"]
+        except (ValueError, KeyError, OSError):
+            return ""
+        W, H, ml, mb = 520, 320, 52, 40
+
+        def panel(xmin, xmax, ymin, ymax, xt, yt, xl, yl, cuerpo_fn):
+            X = lambda v: ml + (v - xmin) / (xmax - xmin) * (W - ml - 10)
+            Y = lambda v: 10 + (ymax - v) / (ymax - ymin) * (H - mb - 10)
+            g = "".join(f'<line x1="{X(v):.0f}" y1="10" x2="{X(v):.0f}" y2="{H - mb}" stroke="#22304a"/>'
+                        f'<text x="{X(v):.0f}" y="{H - mb + 16}" text-anchor="middle" fill="#9aa8bf" font-size="11">{v}</text>' for v in xt)
+            g += "".join(f'<line x1="{ml}" y1="{Y(v):.0f}" x2="{W - 10}" y2="{Y(v):.0f}" stroke="#22304a"/>'
+                         f'<text x="{ml - 6}" y="{Y(v) + 4:.0f}" text-anchor="end" fill="#9aa8bf" font-size="11">{v}</text>' for v in yt)
+            return (f'<svg viewBox="0 0 {W} {H}" role="img" aria-label="{esc(xl)} frente a {esc(yl)}">{g}{cuerpo_fn(X, Y)}'
+                    f'<text x="{(W + ml) / 2}" y="{H - 6}" text-anchor="middle" fill="#9aa8bf" font-size="11">{esc(xl)}</text>'
+                    f'<text x="12" y="{H / 2 - 20}" fill="#9aa8bf" font-size="11" transform="rotate(-90 12 {H / 2 - 20})">{esc(yl)}</text></svg>')
+
+        def nube(X, Y):
+            return "".join(f'<circle cx="{X(T[i]):.1f}" cy="{Y(P[i]):.1f}" r="2.2" fill="#38bdf8" fill-opacity=".45"/>'
+                           for i in range(0, len(T), 8))
+
+        def recta(X, Y):
+            l = (f'<line x1="{X(1.8):.1f}" y1="{Y(m * 1.8 + b):.1f}" x2="{X(37.1):.1f}" y2="{Y(m * 37.1 + b):.1f}" '
+                 'stroke="#4ade80" stroke-width="3.5"/>')
+            return "".join(f'<circle cx="{X(T[i]):.1f}" cy="{Y(P[i]):.1f}" r="2.2" fill="#fbbf24" fill-opacity=".35"/>'
+                           for i in range(0, len(T), 8) if E[i]) + l
+
+        idx = [i for i in range(len(T)) if E[i]]
+        res = [(m * T[i] + b, P[i] - (m * T[i] + b)) for i in idx]
+
+        def resid(X, Y):
+            c = "".join(f'<circle cx="{X(a):.1f}" cy="{Y(r):.1f}" r="2.2" fill="#a78bfa" fill-opacity=".5"/>' for a, r in res[::2])
+            return (c + f'<line x1="{X(425)}" y1="{Y(0):.1f}" x2="{X(495)}" y2="{Y(0):.1f}" stroke="#fb7185" stroke-width="2.5"/>'
+                    + "".join(f'<line x1="{X(425)}" y1="{Y(v):.1f}" x2="{X(495)}" y2="{Y(v):.1f}" stroke="#fbbf24" stroke-dasharray="5 4"/>' for v in (-10.5, 10.5)))
+
+        tarjetas = [
+            ("1 · Nube de puntos", panel(0, 40, 415, 500, (0, 10, 20, 30, 40), (420, 440, 460, 480, 500), "Temperatura (°C)", "Potencia (MW)", nube),
+             "Cada punto es una hora de funcionamiento. La nube baja casi en línea recta: a más calor, menos potencia. Así sabemos, antes de calcular nada, que una recta tiene sentido."),
+            ("2 · Recta de regresión", panel(0, 40, 415, 500, (0, 10, 20, 30, 40), (420, 440, 460, 480, 500), "Temperatura (°C)", "Potencia (MW)", recta),
+             "La línea verde es la recta que calculas con el código (y = −2,177·x + 497,15) sobre los datos de prueba, que el modelo no vio al aprender. Cuanto más pegados a la línea, mejor predice."),
+            ("3 · Análisis de residuos", panel(425, 495, -32, 32, (430, 450, 470, 490), (-30, -20, -10, 0, 10, 20, 30), "Potencia predicha (MW)", "Error (MW)", resid),
+             "Cada punto es el error de una predicción. Si se reparten al azar alrededor de la línea roja (error 0) y casi todos caen entre las amarillas (±10,5 MW), el modelo no tiene sesgo y la recta es suficiente."),
+        ]
+        return ('<div class="grafs-res">' + "".join(
+            f'<figure><h4>{t}</h4>{svg}<figcaption>{esc(c)}</figcaption></figure>' for t, svg, c in tarjetas) + '</div>')
 
     def hero_proyecto(self, p, npasos):
         est = p.get("estado", "idea")
