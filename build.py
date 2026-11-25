@@ -188,6 +188,8 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .pie-card a.ir{margin-top:0}
 .tiempo{font-size:.8rem;font-weight:700;color:var(--nv,#38bdf8);background:var(--superficie2);border:1px solid var(--linea);border-radius:999px;padding:3px 10px;white-space:nowrap}
 .intro-bloque{font-size:1.02rem;color:var(--tinta);margin:6px 0 14px;max-width:760px}
+.btn-descarga{display:inline-block;padding:10px 18px;border-radius:999px;background:#4ade80;color:#04121f!important;font-weight:800;margin-right:12px}
+.botones-pdf{margin:12px 0}
 .btn-ayuda{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--superficie);border:1px solid #4ade80;border-radius:14px;padding:12px 16px;margin:12px 0}
 .btn-ayuda b{display:block}
 .btn-ayuda a{margin-left:auto;font-weight:700;border:1px solid #4ade80;border-radius:999px;padding:6px 14px;white-space:nowrap}
@@ -1395,6 +1397,13 @@ class Sitio:
                 if self.localizar_recurso(alt):
                     r = dict(r, archivo=alt)
                     break
+            if not self.localizar_recurso(r.get("archivo", "")):
+                for carpeta in (RAIZ, RAIZ / "recursos"):
+                    for f in sorted(carpeta.glob("*.pdf")) if carpeta.is_dir() else []:
+                        norm = re.sub(r"[^a-z0-9]+", " ", unicodedata.normalize("NFKD", f.name.lower()).encode("ascii", "ignore").decode())
+                        if "regresion" in norm and ("modulo" in norm or "nivel" in norm or "lineal" in norm):
+                            r = dict(r, archivo=f.name)
+                            break
             r = dict(r, _subs=subs, _total=ini - 1, _existe=self.localizar_recurso(r.get("archivo", "")) is not None)
             self.recursos[r["id"]] = r
         self.ayudas = cargar_json(RAIZ / "ayuda.json", {})
@@ -1620,7 +1629,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
         for r in self.recursos.values():
             if r.get("ayuda_nivel") == clave_nivel:
                 if r["_existe"]:
-                    href = f'../recursos/{esc(r["archivo"])}'
+                    href = "../recursos/" + quote(r["archivo"])
                     txt = "Descargar PDF ↓"
                     extra = ' download'
                 else:
@@ -2087,7 +2096,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             pag = ini + int(a.get("p", 1)) - 1
             texto = f'{esc(a.get("s", ""))} · {esc(a.get("t", ""))} (pág. {int(a.get("p", 1))})'
             if r["_existe"]:
-                trozos.append(f'<a class="ver-pdf" href="{raiz}recursos/{esc(r["archivo"])}#page={pag}" target="_blank" '
+                trozos.append(f'<a class="ver-pdf" href="{raiz}recursos/{quote(r["archivo"])}#page={pag}" target="_blank" '
                               f'rel="noopener noreferrer">{texto}</a>')
             else:
                 trozos.append(texto)
@@ -2549,11 +2558,12 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                 ini, n = r["_subs"][sm["n"]]
                 t = esc(sm["titulo"])
                 if r["_existe"]:
-                    t = f'<a class="ver-pdf" href="recursos/{esc(r["archivo"])}#page={ini}" target="_blank" rel="noopener noreferrer">{t}</a>'
+                    t = f'<a class="ver-pdf" href="recursos/{quote(r["archivo"])}#page={ini}" target="_blank" rel="noopener noreferrer">{t}</a>'
                 filas.append(f'<tr><td>{esc(sm["n"])}</td><td>{t}</td><td>{esc(sm.get("nivel", ""))}</td>'
                              f'<td>{n} págs.</td></tr>')
-            dl = (f'<p><a href="recursos/{esc(r["archivo"])}" target="_blank" rel="noopener noreferrer">'
-                  f'Abrir o descargar el PDF completo ↗</a></p>') if r["_existe"] else \
+            u = "recursos/" + quote(r["archivo"]) if r["_existe"] else ""
+            dl = (f'<p class="botones-pdf"><a class="btn-descarga" href="{u}" download="{esc(r["archivo"])}">⬇ Descargar PDF · {esc(r["titulo"])}</a> '
+                  f'<a class="ver-pdf" href="{u}" target="_blank" rel="noopener noreferrer">Abrir en el navegador ↗</a></p>') if r["_existe"] else \
                  '<p class="vacio">El PDF aún no está publicado.</p>'
             bloques.append(f'<h3>{esc(r["titulo"])}</h3><p class="desc">{esc(r.get("autor", ""))}. '
                            f'{esc(r.get("descripcion", ""))}</p>{dl}'
