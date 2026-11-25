@@ -142,6 +142,9 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .grafs-res figure{margin:0;padding:14px;border-radius:16px;background:var(--superficie);border:1px solid var(--linea)}
 .grafs-res h4{margin:0 0 6px;color:#4ade80}
 .grafs-res img{width:100%;height:auto;border-radius:10px;background:#fff}
+.fig-cuaderno{margin:10px 0;padding:12px;border-radius:16px;background:var(--superficie);border:1px solid var(--linea)}
+.fig-cuaderno img{width:100%;height:auto;border-radius:10px;background:#fff;display:block}
+.fig-cuaderno figcaption{margin-top:6px;font-size:.85rem;color:var(--suave)}
 .sec-g{margin:18px 0 0;font-size:1.05rem;color:#4ade80}
 .grafs-res svg{width:100%;height:auto;border-radius:10px;background:#0a1626;border:1px solid var(--linea)}
 .grafs-res figcaption{margin-top:8px;font-size:.88rem;color:var(--suave)}
