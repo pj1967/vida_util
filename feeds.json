@@ -755,7 +755,25 @@
         }
       ],
       "bloque": "regresion",
-      "tiempo": "30 min"
+      "tiempo": "30 min",
+      "flujo": {
+        "entrada": [
+          "🌡️",
+          "Temperatura",
+          "entrada (x)"
+        ],
+        "modelo": [
+          "⚙️",
+          "Recta",
+          "y = m·x + b"
+        ],
+        "salida": [
+          "⚡",
+          "Potencia",
+          "salida (y) · MW"
+        ]
+      },
+      "registros": "9.568 registros reales · UCI"
     },
     {
       "id": "consumo-coche-peso",

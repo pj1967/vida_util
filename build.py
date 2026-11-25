@@ -182,6 +182,15 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .tag.nivel-avanzado{color:#fb7185;border-color:#7d2f3d}
 .tag.nivel-experto{color:#c084fc;border-color:#6b3d93}
 .tag.area{color:var(--acento);border-color:#1d5b78}
+.proyecto{border-top:3px solid var(--nv,var(--linea))}
+.icono-card{font-size:1.5rem;line-height:1}
+.pie-card{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:6px;border-top:1px dashed var(--linea)}
+.pie-card a.ir{margin-top:0}
+.tiempo{font-size:.8rem;font-weight:700;color:var(--nv,#38bdf8);background:var(--superficie2);border:1px solid var(--linea);border-radius:999px;padding:3px 10px;white-space:nowrap}
+.intro-bloque{font-size:1.02rem;color:var(--tinta);margin:6px 0 14px;max-width:760px}
+.btn-ayuda{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--superficie);border:1px solid #4ade80;border-radius:14px;padding:12px 16px;margin:12px 0}
+.btn-ayuda b{display:block}
+.btn-ayuda a{margin-left:auto;font-weight:700;border:1px solid #4ade80;border-radius:999px;padding:6px 14px;white-space:nowrap}
 .proyecto{position:relative;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
 .proyecto:hover{transform:translateY(-2px);border-color:var(--acento);box-shadow:0 10px 28px rgba(0,0,0,.45)}
 .proyecto a.ir::after{content:"";position:absolute;inset:0;border-radius:14px}
@@ -259,6 +268,30 @@ ol.pasos p b{color:var(--acento)}
  .rejilla,.tarjetas{grid-template-columns:1fr}
  .panel{min-width:230px}
 }
+
+/* === REDISEÑO === */
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:26px;padding:26px;margin:10px 0 18px;border-radius:18px;border:1px solid var(--linea);
+ background:radial-gradient(500px 240px at 0% 0%,rgba(56,189,248,.18),transparent 70%),radial-gradient(400px 240px at 100% 100%,rgba(167,139,250,.16),transparent 70%),var(--superficie)}
+.hero h1,.hero h2.hero-t{font-size:1.9rem;line-height:1.15;margin:.2em 0 .3em;border:0;padding:0}
+.hero .etq{display:inline-block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#38bdf8;font-weight:700}
+.hero .sub{color:var(--suave);margin:0 0 6px}
+.hero .chips2{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.hero .chip2{padding:3px 11px;border-radius:99px;border:1px solid;font-size:.8rem}
+.hero .cta{display:inline-block;margin-top:10px;padding:9px 18px;border-radius:999px;background:#4ade80;color:#04121f;font-weight:800}
+.hero .flujo-h svg{width:100%;height:auto}
+.ap{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:12px 0}
+.ap div{padding:14px 12px;border-radius:14px;background:var(--superficie);border:1px solid var(--linea);text-align:center;font-size:.88rem;position:relative;overflow:hidden}
+.ap div::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--c)}
+.ap i{display:block;font-style:normal;font-size:1.6rem;margin-bottom:4px}
+.ap-t{margin:16px 0 0;font-size:1.05rem;color:#4ade80}
+.red{padding:16px;margin:12px 0;border-radius:16px;border:1px solid var(--linea);background:var(--superficie)}
+.red svg{width:100%;height:auto;display:block}
+.red p{margin:6px 0 0;font-size:.86rem;color:var(--suave)}
+.red a{cursor:pointer}
+.gauge-b{max-width:230px;margin:12px auto;padding:14px;border-radius:16px;background:var(--superficie);border:1px solid var(--linea);text-align:center}
+.gauge-b svg{width:100%;height:auto}
+.gauge-b small{color:var(--suave);font-size:.85rem}
+@media(max-width:760px){.hero{grid-template-columns:1fr}}
 .aprenderas{margin:14px 0;padding:16px 20px;border:1px solid #4ade8055;border-left:4px solid #4ade80;border-radius:10px;
  background:rgba(74,222,128,.06)}
 .aprenderas h3{margin:0 0 8px;font-size:1.05rem;color:#4ade80}
@@ -511,10 +544,24 @@ JS = """
 
   /* ---- laboratorio con datos reales: nube de puntos y recta ---- */
   function fmt(v,d){ return v.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+  var cacheDatos={};
+  function cargaDatos(src){
+    if(!cacheDatos[src]) cacheDatos[src]=new Promise(function(ok,fail){
+      function porScript(){
+        var js=src.replace(/[.]json$/,'.js'), s=document.createElement('script'), id=src.split('/').pop().replace(/[.]json$/,'');
+        s.onload=function(){ if(window.MMD&&window.MMD[id]) ok(window.MMD[id]); else fail(new Error('no')); };
+        s.onerror=function(){ fail(new Error('no')); };
+        s.src=js; document.head.appendChild(s);
+      }
+      if(location.protocol==='file:'){ porScript(); return; }
+      fetch(src).then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }).then(ok,porScript);
+    });
+    return cacheDatos[src];
+  }
   function iniciaLab(box){
     var src=box.getAttribute('data-src'), modo=box.getAttribute('data-modo')||'recta';
     var cuerpo=$('.labr-cuerpo',box);
-    fetch(src).then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }).then(function(D){
+    cargaDatos(src).then(function(D){
       var N=D.t.length, T=D.t, P=D.p, E=D.e;
       var tmin=Math.min.apply(null,T), tmax=Math.max.apply(null,T), pmin=Math.min.apply(null,P), pmax=Math.max.apply(null,P);
       var cv=$('canvas',box), cx=cv.getContext('2d');
@@ -637,8 +684,6 @@ JS = """
   }
   $$('.labr:not(.grx)').forEach(iniciaLab);
   /* ---- gráficos explicados con los datos reales (histograma, real vs predicho, banda, reparto, anatomía) ---- */
-  var cacheDatos={};
-  function cargaDatos(src){ if(!cacheDatos[src]) cacheDatos[src]=fetch(src).then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }); return cacheDatos[src]; }
   function iniciaGraf(box){
     var modo=box.getAttribute('data-modo'), cuerpo=$('.labr-cuerpo',box);
     cargaDatos(box.getAttribute('data-src')).then(function(D){
@@ -789,6 +834,23 @@ JS = """
     });
   }
   $$('.grx').forEach(iniciaGraf);
+
+  (function(){
+    function lee(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+    function pinta(){
+      $$('.red[data-red]').forEach(function(r){
+        var pid=r.getAttribute('data-red'), prev=true;
+        $$('.rn',r).forEach(function(g){
+          var i=g.getAttribute('data-i'), ok=lee('mm-ok:'+pid+':'+i)==='1', c=g.querySelector('circle');
+          c.setAttribute('fill', ok?'#14532d':'#16213a'); c.setAttribute('stroke', ok?'#4ade80':(prev?'#38bdf8':'#22304a'));
+          prev=ok;
+          var ln=r.querySelector('.rl[data-i="'+(parseInt(i,10)-1)+'"]');
+          if(ln){ ln.setAttribute('stroke', ok?'#38bdf8':'#22304a'); ln.setAttribute('stroke-width', ok?'2.4':'1.6'); }
+        });
+      });
+    }
+    pinta(); document.addEventListener('click',function(){ setTimeout(pinta,50); }); window.addEventListener('storage',pinta);
+  })();
 
   /* ---- progreso por pasos y test (se guarda solo en este navegador) ---- */
   function lee(k){ try{ return window.localStorage.getItem(k); }catch(e){ return null; } }
@@ -1329,6 +1391,10 @@ class Sitio:
             for sm in r.get("submodulos", []):
                 subs[sm["n"]] = (ini, sm.get("paginas", 1))
                 ini += sm.get("paginas", 1)
+            for alt in [r.get("archivo", "")] + list(r.get("alternativos", [])):
+                if self.localizar_recurso(alt):
+                    r = dict(r, archivo=alt)
+                    break
             r = dict(r, _subs=subs, _total=ini - 1, _existe=self.localizar_recurso(r.get("archivo", "")) is not None)
             self.recursos[r["id"]] = r
         self.ayudas = cargar_json(RAIZ / "ayuda.json", {})
@@ -1550,6 +1616,22 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                 f'<p class="resumen">{esc(sub[:1].upper() + sub[1:])}</p>{lista}'
                 f'<span class="mas">Ver →</span></section>')
 
+    def caja_ayuda_pdf(self, clave_nivel):
+        for r in self.recursos.values():
+            if r.get("ayuda_nivel") == clave_nivel:
+                if r["_existe"]:
+                    href = f'../recursos/{esc(r["archivo"])}'
+                    txt = "Descargar PDF ↓"
+                    extra = ' download'
+                else:
+                    href = "../biblioteca.html"
+                    txt = "Ver en la Biblioteca →"
+                    extra = ""
+                return (f'<div class="btn-ayuda"><span style="font-size:1.6rem">📘</span><div><b>Ayuda: {esc(r["titulo"])}</b>'
+                        f'<small>Apuntes en PDF para estudiar y consultar mientras haces los proyectos de este nivel.</small></div>'
+                        f'<a href="{href}"{extra}>{txt}</a></div>')
+        return ""
+
     def categorias_html(self, carpeta):
         out = []
         for clave, color, nombre, sub in self.categorias():
@@ -1566,7 +1648,8 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             if clave == "experto":
                 cuerpo = ('<p class="migas"><a href="../proyectos.html">← Proyectos</a></p>'
                           f'<h2 style="--c:{color}">{esc(nombre)}<small>{esc(sub)}</small></h2>'
-                          '<div class="tarjetas">'
+                          + f'<p class="intro-bloque">{esc(self.cfg.get("intros", {}).get(clave, ""))}</p>'
+                          + '<div class="tarjetas">'
                           + "".join(self.tarjeta_proyecto(p, "") for p in ps) + "</div>")
                 self.escribir(f"proyectos/{clave}.html", self.pagina(nombre, cuerpo, "../", "proyectos"))
                 continue
@@ -1577,10 +1660,12 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                     continue
                 cards.append(self.cat_card(f"{clave}-{nv}.html", self.NIVEL_COLOR[nv],
                                            f"Nivel {self.NIVEL_TXT[nv]}", self.NIVEL_DESC[nv],
-                                           len(pn), [p["titulo"] for p in pn]))
+                                           len(pn), [p["titulo"] + (" · ⏱ " + p["tiempo"] if p.get("tiempo") else "") for p in pn]))
                 cuerpo = ('<p class="migas"><a href="' + f'{clave}.html">← {esc(nombre)}</a></p>'
                           f'<h2 style="--c:{self.NIVEL_COLOR[nv]}">{esc(nombre)} · nivel {self.NIVEL_TXT[nv]}'
                           f'<small>{esc(self.NIVEL_DESC[nv])}</small></h2>'
+                          + f'<p class="intro-bloque">{esc(self.cfg.get("intros", {}).get(clave, ""))}</p>'
+                          + self.caja_ayuda_pdf(f"{clave}-{nv}")
                           + self.caja_aprenderas(self.cfg.get("aprenderas", {}).get(f"{clave}-{nv}"), "nivel")
                           + '<div class="tarjetas">'
                           + "".join(self.tarjeta_proyecto(p, "") for p in pn) + "</div>")
@@ -1588,6 +1673,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                               self.pagina(f"{nombre}, nivel {self.NIVEL_TXT[nv]}", cuerpo, "../", "proyectos"))
             cuerpo = ('<p class="migas"><a href="../proyectos.html">← Proyectos</a></p>'
                       f'<h2 style="--c:{color}">{esc(nombre)}<small>{esc(sub)}</small></h2>'
+                      f'<p class="intro-bloque">{esc(self.cfg.get("intros", {}).get(clave, ""))}</p>'
                       '<p class="desc">Elige un nivel.</p>'
                       f'<div class="cats">{"".join(cards)}</div>')
             self.escribir(f"proyectos/{clave}.html", self.pagina(nombre, cuerpo, "../", "proyectos"))
@@ -1600,7 +1686,20 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             semana = f'Semana del {rango_semana(self.ultimo["desde"], self.ultimo["hasta"])}'
         else:
             semana = "Resumen semanal"
+        p1 = self.proyectos[0] if self.proyectos else None
+        hero = ""
+        if p1:
+            hero = ('<section class="hero"><div><span class="etq">Aprende haciendo</span>'
+                    '<h2 class="hero-t">De tu taller a tus datos, paso a paso</h2>'
+                    '<p class="sub">Inteligencia artificial, robótica y automatización explicadas desde cero, con datos reales y abiertos. '
+                    'Cada proyecto es una secuencia de pasos pequeños: explicación, código en Colab, gráficos y un test.</p>'
+                    '<div class="chips2"><span class="chip2" style="color:#4ade80;border-color:#4ade8077">32 proyectos</span>'
+                    '<span class="chip2" style="color:#38bdf8;border-color:#38bdf877">Regresión · Clasificación · Redes</span>'
+                    '<span class="chip2" style="color:#fbbf24;border-color:#fbbf2477">Gratis y en castellano</span></div>'
+                    f'<a class="cta" href="proyectos/{esc(p1["id"])}.html">Empieza aquí: {esc(p1["titulo"])} · ⏱ {esc(p1.get("tiempo", ""))} →</a></div>'
+                    f'<div class="flujo-h">{self.svg_flujo_hero(p1.get("flujo"))}</div></section>')
         cuerpo = (
+            hero +
             '<h2 id="aprende" style="--c:#4ade80">Aprende haciendo'
             '<small>de la regresión simple a las redes convolucionales, con datos reales y abiertos. Elige una familia</small></h2>'
             + self.categorias_html("proyectos/")
@@ -1711,15 +1810,23 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             t.append(f'<span class="tag">Técnica: {esc(p["tecnica"])}</span>')
         return f'<div class="etiquetas">{"".join(t)}</div>' if t else ""
 
+    ICONO_AREA = {"energía": "⚡", "aeronáutica": "✈️", "ingeniería": "⚙️", "mantenimiento": "🔧", "robótica": "🤖",
+                  "visión artificial": "👁️", "ia": "🧠"}
+
     def tarjeta_proyecto(self, p, base, compacta=False):
         est = p.get("estado", "idea")
         n = self.proyectos.index(p) + 1
         clase = " compacta" if compacta else ""
-        return (f'<article class="proyecto{clase}"><div class="cabecera-card"><span class="num">Proyecto {n}</span>'
+        nivel = (p.get("nivel") or "").strip().lower()
+        col = self.NIVEL_COLOR.get(nivel, "#38bdf8")
+        icono = self.ICONO_AREA.get((p.get("area") or "").strip().lower(), "🧠")
+        tiempo = (f'<span class="tiempo" title="Tiempo estimado">⏱ {esc(p["tiempo"])}</span>' if p.get("tiempo") else "")
+        return (f'<article class="proyecto{clase}" style="--nv:{col}"><div class="cabecera-card">'
+                f'<span class="icono-card">{icono}</span><span class="num">Proyecto {n}</span>'
                 f'<span class="estado {esc(est)}">{esc(self.ESTADOS.get(est, est))}</span></div>'
                 f'<h3>{esc(p.get("titulo", ""))}</h3>'
                 f'{self.etiquetas(p, compacta)}<p>{esc(p.get("descripcion", ""))}</p>'
-                f'<a class="ir" href="{base}{esc(p["id"])}.html">Ver ficha del proyecto →</a></article>')
+                f'<div class="pie-card">{tiempo}<a class="ir" href="{base}{esc(p["id"])}.html">Abrir proyecto →</a></div></article>')
 
     def pagina_proyectos(self):
         tarjetas = self.categorias_html("proyectos/")
@@ -1827,10 +1934,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                         + "".join(self.item(a, con_tema=True) for a in rel) + "</ul>")
         cuerpo = (
             migas +
-            f'<h2 style="--c:#4ade80">{esc(p.get("titulo", ""))}</h2>'
-            f'<span class="estado {esc(est)}">{esc(self.ESTADOS.get(est, est))}</span> '
-            f'{self.etiquetas(p)}'
-            f'<p class="desc">{esc(p.get("descripcion", ""))}</p>'
+            self.hero_proyecto(p, len(p.get("pasos", [])))
             + self.caja_aprenderas(p.get("aprenderas") or self.cfg.get("aprenderas", {}).get(
                 f'{p.get("bloque")}-{p.get("nivel")}'))
             + '<h2 style="--c:#38bdf8">Ficha técnica</h2>' + ficha
@@ -1841,6 +1945,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
             + ('<p class="prog"><span class="prog-barra"><i></i></span>'
                f'<span><b class="prog-n">0</b> de {len(pasos)} pasos completados (se guarda en este navegador)</span></p>'
                if pasos else "")
+            + self.red_progreso(p["id"], [st.get("titulo", "") for st in p.get("pasos", [])])
             + (f'<ol class="pasos">{"".join(pasos)}</ol>' if pasos else esquema)
             + '<h2 style="--c:#4ade80">Resultados</h2>'
             + f'<p>{esc(p.get("resultados") or "Pendiente.")}</p>'
@@ -1998,8 +2103,75 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
     def caja_aprenderas(lista, que="proyecto"):
         if not lista:
             return ""
-        return (f'<div class="aprenderas"><h3>Al terminar este {que} sabrás:</h3><ul>'
-                + "".join(f"<li>{esc(x)}</li>" for x in lista) + "</ul></div>")
+        ico = ["📈", "📐", "🎯", "📏", "✅", "🗣️", "🔍", "🧪", "🧭", "💡"]
+        col = ["#38bdf8", "#fbbf24", "#4ade80", "#fb7185", "#a78bfa", "#38bdf8"]
+        return (f'<h3 class="ap-t">Al terminar este {que} sabrás:</h3><div class="ap">'
+                + "".join(f'<div style="--c:{col[i % len(col)]}"><i>{ico[i % len(ico)]}</i>{esc(x)}</div>'
+                          for i, x in enumerate(lista)) + "</div>")
+
+    @staticmethod
+    def svg_flujo_hero(f):
+        f = f or {"entrada": ["📥", "Datos", "entrada (x)"], "modelo": ["⚙️", "Modelo", "aprende de los datos"],
+                  "salida": ["🎯", "Resultado", "salida (y)"]}
+        def caja(x, w, y, h, d, col, grande=False):
+            t = [esc(v) for v in d]
+            relleno = "#0f2747" if grande else "#16213a"
+            grosor = ' stroke-width="2"' if grande else ""
+            return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="14" fill="{relleno}" stroke="{col}"{grosor}/>'
+                    f'<text x="{x + w // 2}" y="{y + 30}" text-anchor="middle" font-size="26">{t[0]}</text>'
+                    f'<text x="{x + w // 2}" y="{y + 54}" text-anchor="middle" fill="#e6edf7" font-size="13" font-weight="700">{t[1]}</text>'
+                    f'<text x="{x + w // 2}" y="{y + 72}" text-anchor="middle" fill="#9aa8bf" font-size="11">{t[2]}</text>')
+        return ('<svg viewBox="0 0 400 190" role="img" aria-label="Entrada, modelo, salida"><defs>'
+                '<marker id="fh" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#38bdf8"/></marker></defs>'
+                + caja(6, 104, 52, 86, f["entrada"], "#fbbf24")
+                + '<line x1="112" y1="95" x2="150" y2="95" stroke="#38bdf8" stroke-width="2" marker-end="url(#fh)"/>'
+                + caja(152, 96, 38, 114, f["modelo"], "#38bdf8", True)
+                + '<line x1="250" y1="95" x2="288" y2="95" stroke="#38bdf8" stroke-width="2" marker-end="url(#fh)"/>'
+                + caja(290, 104, 52, 86, f["salida"], "#4ade80") + '</svg>')
+
+    def hero_proyecto(self, p, npasos):
+        est = p.get("estado", "idea")
+        nivel = (p.get("nivel") or "").strip().lower()
+        chips = [("c1", f'Nivel {self.NIVEL_TXT.get(nivel, nivel)}', "#4ade80")]
+        if p.get("area"):
+            chips.append(("c2", str(p["area"]).capitalize(), "#38bdf8"))
+        if p.get("tecnica"):
+            chips.append(("c3", p["tecnica"], "#fbbf24"))
+        if p.get("registros"):
+            chips.append(("c4", p["registros"], "#a78bfa"))
+        ch = "".join(f'<span class="chip2" style="color:{c};border-color:{c}77">{esc(t)}</span>' for _, t, c in chips)
+        meta = []
+        if p.get("tiempo"):
+            meta.append(f'⏱ ≈ {esc(p["tiempo"])}')
+        if npasos:
+            meta.append(f'{npasos} pasos')
+        if p.get("herramientas"):
+            meta.append(esc(", ".join(p["herramientas"])))
+        return (f'<section class="hero"><div><span class="etq">{esc(self.BLOQUES_TXT.get(p.get("bloque"), "Proyecto"))} · '
+                f'{esc(self.NIVEL_TXT.get(nivel, nivel))} · {esc(self.ESTADOS.get(est, est))}</span>'
+                f'<h1>{esc(p.get("titulo", ""))}</h1><p class="sub">{esc(p.get("descripcion", ""))}</p>'
+                f'<div class="chips2">{ch}</div><p class="sub">{" · ".join(meta)}</p></div>'
+                f'<div class="flujo-h">{self.svg_flujo_hero(p.get("flujo"))}</div></section>')
+
+    BLOQUES_TXT = {"regresion": "Regresión", "clasificacion": "Clasificación", "redes": "Redes neuronales", "experto": "Experto"}
+
+    @staticmethod
+    def red_progreso(pid, titulos):
+        n = len(titulos)
+        if n < 2:
+            return ""
+        ys = [75, 40, 105, 55, 95, 40, 110, 60, 90, 75]
+        X = lambda i: 60 + i * (840 / (n - 1))
+        Y = lambda i: ys[i % len(ys)]
+        lin = "".join(f'<line class="rl" data-i="{i}" x1="{X(i):.0f}" y1="{Y(i)}" x2="{X(i + 1):.0f}" y2="{Y(i + 1)}" stroke="#22304a" stroke-width="1.6"/>'
+                      for i in range(n - 1))
+        nod = "".join(f'<a href="#paso-{i + 1}"><g class="rn" data-i="{i + 1}"><title>{esc(t)}</title>'
+                      f'<circle cx="{X(i):.0f}" cy="{Y(i)}" r="16" fill="#16213a" stroke="#22304a" stroke-width="2"/>'
+                      f'<text x="{X(i):.0f}" y="{Y(i) + 5}" text-anchor="middle" fill="#e6edf7" font-size="13" font-weight="700">{i + 1}</text></g></a>'
+                      for i, t in enumerate(titulos))
+        return (f'<div class="red" data-red="{esc(pid)}"><h3 style="margin:0 0 6px;font-size:1.05rem">Tu recorrido: una red neuronal que se ilumina</h3>'
+                f'<svg viewBox="0 0 960 150" role="img" aria-label="Progreso por pasos">{lin}{nod}</svg>'
+                '<p>Cada nodo es un paso. Al marcarlo como completado se enciende en verde y se conecta con el siguiente. Pulsa un nodo para ir a él.</p></div>')
 
     def bloques_html(self, bloques, pid=""):
         out = []
@@ -2048,6 +2220,16 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                 out.append(self.svg_estaticos(t))
             elif t == "flujo":
                 out.append(self.svg_flujo())
+            elif t == "gauge":
+                try:
+                    v = max(0.0, min(1.0, float(b.get("valor", 0))))
+                except (TypeError, ValueError):
+                    v = 0.0
+                out.append('<div class="gauge-b"><svg viewBox="0 0 120 78"><path d="M10 68 A50 50 0 0 1 110 68" fill="none" stroke="#22304a" '
+                           'stroke-width="12" stroke-linecap="round"/><path d="M10 68 A50 50 0 0 1 110 68" fill="none" stroke="#38bdf8" '
+                           f'stroke-width="12" stroke-linecap="round" stroke-dasharray="157" stroke-dashoffset="{157 * (1 - v):.1f}"/>'
+                           f'<text x="60" y="64" text-anchor="middle" fill="#e6edf7" font-size="22" font-weight="800" font-family="monospace">'
+                           f'{str(round(v, 2)).replace(".", ",")}</text></svg><small>{esc(b.get("etq", ""))}</small></div>')
             elif t == "kpis":
                 out.append('<div class="kpis-g">' + "".join(
                     f'<div class="kpi-g" style="--c:{esc(k.get("c", "#38bdf8"))}"><strong>{esc(k.get("v", ""))}</strong>'
@@ -2266,6 +2448,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
         origen = RAIZ / f"datos--{pid}.json"
         if origen.is_file():
             self.copiar(origen, f"datos/{pid}.json")
+            self.escribir(f"datos/{pid}.js", "window.MMD=window.MMD||{};window.MMD["+json.dumps(pid)+"]="+origen.read_text(encoding="utf-8")+";")
         else:
             print(f"  [AVISO] Falta datos--{pid}.json (súbelo a la raíz del repositorio) para los gráficos con datos reales.")
 

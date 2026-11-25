@@ -2135,6 +2135,11 @@
        "x": "R² = 0,90 no significa que el 90 % de las predicciones sean correctas: significa que la recta explica el 90 % de la variación de la potencia."
       },
       {
+       "t": "gauge",
+       "valor": 0.9003,
+       "etq": "R² en datos de prueba · explica el 90 % de la variación"
+      },
+      {
        "t": "graf",
        "modo": "realpred",
        "x": "Cada punto es un dato de prueba. Mueve la tolerancia para ver cuántas predicciones caen cerca del valor real."
@@ -3177,6 +3182,11 @@
        "k": "nota",
        "titulo": "Retos para consolidar",
        "x": "1) Básico: cambia 25 °C por 15, 20, 30 y 35 °C y compara las predicciones. 2) Intermedio: cambia test_size (0.30, 0.10) y mira cómo cambian R², RMSE y MAE. 3) Avanzado: añade presión, humedad y vacío como entradas: es la regresión múltiple, el siguiente proyecto."
+      },
+      {
+       "t": "gauge",
+       "valor": 0.9003,
+       "etq": "R² final · explica el 90 % de la variación"
       },
       {
        "t": "graf",
