@@ -138,6 +138,13 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .esperado-g{margin:14px 0;padding:18px;border-radius:18px;border:1px solid #4ade8066;background:radial-gradient(500px 220px at 100% 0%,rgba(74,222,128,.12),transparent 70%),var(--superficie)}
 .esperado-g h2{margin:0 0 4px}
 .esperado-g svg{width:100%;height:auto;border-radius:12px;background:#0a1626;border:1px solid var(--linea);margin-top:8px}
+.grafs-res{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:16px 0}
+.grafs-res figure{margin:0;padding:14px;border-radius:16px;background:var(--superficie);border:1px solid var(--linea)}
+.grafs-res h4{margin:0 0 6px;color:#4ade80}
+.grafs-res img{width:100%;height:auto;border-radius:10px;background:#fff}
+.sec-g{margin:18px 0 0;font-size:1.05rem;color:#4ade80}
+.grafs-res svg{width:100%;height:auto;border-radius:10px;background:#0a1626;border:1px solid var(--linea)}
+.grafs-res figcaption{margin-top:8px;font-size:.88rem;color:var(--suave)}
 .kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
 .kg div{padding:10px 12px;border-radius:12px;background:var(--superficie2);text-align:center}
 .kg small{display:block;color:var(--suave);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
