@@ -14,7 +14,7 @@ header.sitio{padding:30px 0 22px;
 .hero{display:flex;align-items:center;gap:18px}
 .logo{flex:none;display:block;line-height:0;transition:transform .2s ease}
 .logo:hover{transform:translateY(-2px) scale(1.04)}
-.logo svg{width:84px;height:84px;overflow:visible}
+.logo svg{width:150px;height:auto;overflow:visible}
 .hero h1{margin:0;font-size:2.4rem;line-height:1.05;font-weight:800;letter-spacing:-.025em}
 .hero h1 a{color:var(--tinta);text-decoration:none}
 .hero h1 span{color:var(--acento)}
