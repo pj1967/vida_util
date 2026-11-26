@@ -134,6 +134,32 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .leyenda-dif{font-size:.85rem;color:var(--suave);margin:4px 0 10px}
 .tiempo{font-size:.8rem;font-weight:700;color:var(--nv,#38bdf8);background:var(--superficie2);border:1px solid var(--linea);border-radius:999px;padding:3px 10px;white-space:nowrap}
 .intro-bloque{font-size:1.02rem;color:var(--tinta);margin:6px 0 14px;max-width:760px}
+
+/* === REVISTA === */
+.mision{font-size:1.15rem;line-height:1.45;margin:8px 0 14px;padding:14px 18px;border-left:4px solid #4ade80;background:var(--superficie);border-radius:0 14px 14px 0}
+.revista{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin:14px 0;align-items:start}
+.rev-c{padding:16px 18px;border-radius:16px;border:1px solid var(--linea);background:var(--superficie)}
+.rev-c .etq{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#fbbf24;font-weight:700}
+.rev-c h3{margin:.3em 0 .4em;font-size:1.25rem}
+.rev-c ul{margin:.3em 0;padding-left:1.1em}
+.rev-c li{margin:.3em 0}
+.rev-c .peq{font-size:.85rem;color:var(--suave)}
+.rev-c a.lnk{font-weight:700}
+.rev-col{display:grid;gap:16px}
+.tend-mini li{display:flex;justify-content:space-between;gap:8px;list-style:none}
+.tend-mini ul{padding:0}
+.flecha-s{color:#4ade80}.flecha-b{color:#fb7185}.flecha-i{color:var(--suave)}
+.sectores{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:12px 0}
+.sector{display:block;padding:14px;border-radius:14px;border:1px solid var(--linea);background:var(--superficie);border-top:3px solid var(--c)}
+.sector.principal{border-color:var(--c);box-shadow:0 0 0 1px var(--c) inset;background:radial-gradient(400px 160px at 0% 0%,rgba(56,189,248,.16),transparent 70%),var(--superficie)}
+.sector i{font-style:normal;font-size:1.6rem}
+.sector h3{margin:.2em 0;font-size:1.05rem}
+.sector p{margin:0 0 6px;font-size:.88rem;color:var(--suave)}
+.sector small{font-size:.78rem;color:var(--c);font-weight:700}
+.barra-t{display:grid;grid-template-columns:200px 1fr 70px;gap:8px;align-items:center;margin:5px 0;font-size:.9rem}
+.barra-t div.b{height:12px;border-radius:99px;background:var(--superficie2);overflow:hidden}
+.barra-t div.b span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#38bdf8,#a78bfa)}
+@media(max-width:760px){.revista{grid-template-columns:1fr}.barra-t{grid-template-columns:110px 1fr 56px}}
 .stats-cab{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;font-size:.82rem}
 .stats-cab span{padding:3px 12px;border-radius:99px;border:1px solid var(--linea);background:var(--superficie2);color:var(--suave)}
 .stats-cab b{color:#4ade80}
