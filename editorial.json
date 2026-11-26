@@ -1,0 +1,18 @@
+{
+  "_ayuda": "Edita este archivo para la portada. 'nota_taller': tu comentario de la semana (pon publicar a true para mostrarla). 'proyecto_destacado': id de un proyecto (si lo dejas vacío se elige uno automáticamente).",
+  "nota_taller": {
+    "publicar": false,
+    "fecha": "2026-11-26",
+    "etiqueta": "La nota del taller",
+    "titulo": "Por qué el mantenimiento predictivo importa más que otro chatbot",
+    "lineas": [
+      "Predecir una avería antes de que ocurra ahorra paradas, piezas y riesgos. Es una de las aplicaciones de la IA con más retorno en la industria y en aviación.",
+      "No hace falta una red gigante: muchas veces basta una regresión bien hecha sobre datos de sensores, como en nuestro primer proyecto.",
+      "Lo difícil no es el modelo, sino tener datos limpios, saber qué mide cada sensor y no fiarse de una predicción fuera del rango en que se entrenó.",
+      "Por eso cada proyecto de esta web termina con las limitaciones del modelo, no solo con su acierto."
+    ],
+    "enlace": "proyectos/potencia-central-regresion-simple.html",
+    "enlace_texto": "Probar el primer proyecto →"
+  },
+  "proyecto_destacado": ""
+}

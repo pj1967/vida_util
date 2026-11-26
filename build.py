@@ -190,6 +190,32 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .leyenda-dif{font-size:.85rem;color:var(--suave);margin:4px 0 10px}
 .tiempo{font-size:.8rem;font-weight:700;color:var(--nv,#38bdf8);background:var(--superficie2);border:1px solid var(--linea);border-radius:999px;padding:3px 10px;white-space:nowrap}
 .intro-bloque{font-size:1.02rem;color:var(--tinta);margin:6px 0 14px;max-width:760px}
+
+/* === REVISTA === */
+.mision{font-size:1.15rem;line-height:1.45;margin:8px 0 14px;padding:14px 18px;border-left:4px solid #4ade80;background:var(--superficie);border-radius:0 14px 14px 0}
+.revista{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin:14px 0;align-items:start}
+.rev-c{padding:16px 18px;border-radius:16px;border:1px solid var(--linea);background:var(--superficie)}
+.rev-c .etq{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#fbbf24;font-weight:700}
+.rev-c h3{margin:.3em 0 .4em;font-size:1.25rem}
+.rev-c ul{margin:.3em 0;padding-left:1.1em}
+.rev-c li{margin:.3em 0}
+.rev-c .peq{font-size:.85rem;color:var(--suave)}
+.rev-c a.lnk{font-weight:700}
+.rev-col{display:grid;gap:16px}
+.tend-mini li{display:flex;justify-content:space-between;gap:8px;list-style:none}
+.tend-mini ul{padding:0}
+.flecha-s{color:#4ade80}.flecha-b{color:#fb7185}.flecha-i{color:var(--suave)}
+.sectores{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:12px 0}
+.sector{display:block;padding:14px;border-radius:14px;border:1px solid var(--linea);background:var(--superficie);border-top:3px solid var(--c)}
+.sector.principal{border-color:var(--c);box-shadow:0 0 0 1px var(--c) inset;background:radial-gradient(400px 160px at 0% 0%,rgba(56,189,248,.16),transparent 70%),var(--superficie)}
+.sector i{font-style:normal;font-size:1.6rem}
+.sector h3{margin:.2em 0;font-size:1.05rem}
+.sector p{margin:0 0 6px;font-size:.88rem;color:var(--suave)}
+.sector small{font-size:.78rem;color:var(--c);font-weight:700}
+.barra-t{display:grid;grid-template-columns:200px 1fr 70px;gap:8px;align-items:center;margin:5px 0;font-size:.9rem}
+.barra-t div.b{height:12px;border-radius:99px;background:var(--superficie2);overflow:hidden}
+.barra-t div.b span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#38bdf8,#a78bfa)}
+@media(max-width:760px){.revista{grid-template-columns:1fr}.barra-t{grid-template-columns:110px 1fr 56px}}
 .stats-cab{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;font-size:.82rem}
 .stats-cab span{padding:3px 12px;border-radius:99px;border:1px solid var(--linea);background:var(--superficie2);color:var(--suave)}
 .stats-cab b{color:#4ade80}
@@ -1465,6 +1491,7 @@ class Sitio:
             *([f'<a href="{raiz}biblioteca.html"{act("biblioteca")}>Biblioteca</a>'] if self.recursos else []),
             f'<details class="desplegable{desplegable_act}"><summary>Noticias</summary>'
             f'<div class="panel"><a href="{raiz}noticias.html">Todas las noticias</a>{temas_html}</div></details>',
+            f'<a href="{raiz}tendencias.html"{act("tendencias")}>Tendencias</a>',
             f'<a href="{raiz}resumenes.html"{act("resumenes")}>Resúmenes</a>',
             f'<a href="{raiz}archivo/index.html"{act("archivo")}>Archivo</a>',
             f'<a href="{raiz}sobre.html"{act("sobre")}>Sobre el proyecto</a>',
@@ -1484,7 +1511,8 @@ class Sitio:
         stats = ('<p class="stats-cab">'
                  f'<span><b>{len(self.proyectos)}</b> proyectos</span>'
                  f'<span><b>{n_guias}</b> con guía completa</span>'
-                 f'<span><b>{len(self.articulos)}</b> noticias analizadas</span></p>')
+                 f'<span><b>{len(self.articulos)}</b> noticias analizadas</span>'
+                 f'<span><b>{len(self.resumenes)}</b> resúmenes semanales</span></p>')
         lema = f'<p class="lema">{esc(self.lema)}</p>' if self.lema else ""
         sub = f'<p class="subtitulo">{esc(self.subtitulo)}</p>' if self.subtitulo else ""
         autor = f'<p class="autor">por <b>{esc(self.autor)}</b></p>' if self.autor else ""
@@ -1716,6 +1744,133 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                       f'<div class="cats">{"".join(cards)}</div>')
             self.escribir(f"proyectos/{clave}.html", self.pagina(nombre, cuerpo, "../", "proyectos"))
 
+    def editorial(self):
+        f = RAIZ / "editorial.json"
+        if f.is_file():
+            try:
+                return json.loads(f.read_text(encoding="utf-8"))
+            except ValueError:
+                print("  [AVISO] editorial.json mal formado: se ignora.")
+        return {}
+
+    @staticmethod
+    def _texto_art(a):
+        return (str(a.get("titulo", "")) + " " + str(a.get("titulo_es", ""))).lower()
+
+    def calcular_tendencias(self):
+        """Cuenta en cuántos titulares aparece cada empresa, modelo o tecnología (7 y 30 días, y 7 días previos)."""
+        ent = self.cfg.get("entidades", {})
+        res = {}
+        ahora = self.ahora
+        grupos = {"s7": (ahora - timedelta(days=7), ahora + timedelta(days=1)),
+                  "p7": (ahora - timedelta(days=14), ahora - timedelta(days=7)),
+                  "m30": (ahora - timedelta(days=30), ahora + timedelta(days=1))}
+        textos = [(dt_iso(a["fecha"]), self._texto_art(a)) for a in self.articulos]
+        for cat, items in ent.items():
+            filas = []
+            for nombre, alias in items.items():
+                pats = [re.compile(r"(?<![a-z0-9])" + re.escape(x.strip().lower()) + (r"" if x.endswith(" ") else r"")) for x in alias]
+                cuenta = {k: 0 for k in grupos}
+                for fecha, t in textos:
+                    if any(p.search(t) for p in pats):
+                        for k, (d0, d1) in grupos.items():
+                            if d0 <= fecha < d1:
+                                cuenta[k] += 1
+                filas.append((nombre, cuenta))
+            res[cat] = sorted(filas, key=lambda x: (-x[1]["s7"], -x[1]["m30"], x[0]))
+        return res
+
+    @staticmethod
+    def flecha(c):
+        if c["s7"] > c["p7"]:
+            return '<span class="flecha-s" title="Más que la semana anterior">▲</span>'
+        if c["s7"] < c["p7"]:
+            return '<span class="flecha-b" title="Menos que la semana anterior">▼</span>'
+        return '<span class="flecha-i" title="Igual que la semana anterior">＝</span>'
+
+    def franja_revista(self):
+        ed = self.editorial()
+        nota = ed.get("nota_taller") or {}
+        if nota.get("publicar"):
+            lineas = "".join(f"<li>{esc(x)}</li>" for x in nota.get("lineas", []))
+            enlace = (f'<p><a class="lnk" href="{esc(nota["enlace"])}">{esc(nota.get("enlace_texto", "Leer más →"))}</a></p>'
+                      if nota.get("enlace") else "")
+            principal = (f'<article class="rev-c"><span class="etq">{esc(nota.get("etiqueta", "La nota del taller"))}</span>'
+                         f'<h3>{esc(nota.get("titulo", ""))}</h3><ul>{lineas}</ul>{enlace}</article>')
+        else:
+            cand = [a for a in self.articulos if a["tema"] == "aeronautica"] or self.articulos
+            if cand:
+                a = cand[0]
+                titulo = a.get("titulo_es") or a["titulo"]
+                principal = (f'<article class="rev-c"><span class="etq">Noticia destacada</span>'
+                             f'<h3><a href="{esc(a["enlace"])}" target="_blank" rel="noopener noreferrer">{esc(titulo)}</a></h3>'
+                             f'<p class="peq">{esc(a["fuente"])} · {esc(self.color_tema_nombre(a["tema"]))}</p></article>')
+            else:
+                principal = ('<article class="rev-c"><span class="etq">La nota del taller</span>'
+                             '<h3>Próximamente</h3><p class="peq">Cada semana, un comentario sobre por qué importa una noticia o una técnica.</p></article>')
+        # proyecto destacado
+        pid = ed.get("proyecto_destacado") or ""
+        pd = next((p for p in self.proyectos if p["id"] == pid), None)
+        if pd is None:
+            pd = next((p for p in self.proyectos if any(a.get("secciones") for a in (self.ayudas.get(p["id"]) or {}).values() if isinstance(a, dict))),
+                      self.proyectos[0] if self.proyectos else None)
+        proy = ""
+        if pd:
+            d = self.DIF.get(pd.get("dificultad"))
+            proy = (f'<article class="rev-c"><span class="etq">Proyecto destacado</span><h3>{esc(pd["titulo"])}</h3>'
+                    f'<p class="peq">{esc(pd.get("descripcion", ""))}</p>'
+                    f'<p class="peq">{(d[0] + " " + d[1] + " · ") if d else ""}⏱ {esc(pd.get("tiempo", ""))}</p>'
+                    f'<a class="lnk" href="proyectos/{esc(pd["id"])}.html">Abrir proyecto →</a></article>')
+        # tendencias
+        tr = self.calcular_tendencias()
+        todas = [(n, c, cat) for cat, filas in tr.items() for n, c in filas if c["s7"] > 0]
+        todas.sort(key=lambda x: (-x[1]["s7"], x[0]))
+        if todas:
+            li = "".join(f'<li><span>{esc(n)}</span><span>{c["s7"]} {self.flecha(c)}</span></li>' for n, c, _ in todas[:5])
+        else:
+            li = '<li><span class="peq">Aún sin datos suficientes.</span></li>'
+        tend = (f'<article class="rev-c tend-mini"><span class="etq">Tendencias de la semana</span><ul>{li}</ul>'
+                '<a class="lnk" href="tendencias.html">Ver todas las tendencias →</a></article>')
+        return (f'<section class="revista">{principal}<div class="rev-col">{proy}{tend}</div></section>')
+
+    def color_tema_nombre(self, tema):
+        return self.temas.get(tema, tema)
+
+    def sectores_html(self):
+        dias = self.cfg["sitio"].get("dias_portada", 7)
+        out = []
+        for sct in self.cfg.get("sectores", []):
+            t = sct["tema"]
+            n = self.conteo_semana(t, dias)
+            areas = {x.lower() for x in sct.get("areas", [])}
+            npro = sum(1 for p in self.proyectos if (p.get("area") or "").strip().lower() in areas)
+            partes = [f"{n} noticia" + ("s" if n != 1 else "") + " esta semana"]
+            if npro:
+                partes.append(f"{npro} proyecto" + ("s" if npro != 1 else ""))
+            out.append(f'<a class="sector{" principal" if sct.get("principal") else ""}" href="tema/{esc(t)}.html" style="--c:{self.color(t)}">'
+                       f'<i>{sct.get("icono", "")}</i><h3>{esc(sct["titulo"])}</h3><p>{esc(sct.get("texto", ""))}</p>'
+                       f'<small>{" · ".join(partes)}</small></a>')
+        return ('<h2 id="sectores" style="--c:#38bdf8">Sectores que seguimos<small>donde la IA se encuentra con el taller y la industria</small></h2>'
+                f'<div class="sectores">{"".join(out)}</div>')
+
+    def pagina_tendencias(self):
+        tr = self.calcular_tendencias()
+        partes = ['<h2 style="--c:#a78bfa">Tendencias<small>qué empresas, modelos y tecnologías aparecen más en los titulares</small></h2>',
+                  '<p class="desc">Se calcula automáticamente contando en cuántos titulares aparece cada nombre. '
+                  'Es un termómetro de lo que se está hablando, no una medida de su calidad ni de su importancia real. '
+                  'La flecha compara los últimos 7 días con los 7 anteriores.</p>']
+        for cat, filas in tr.items():
+            mx = max([c["s7"] for _, c in filas] + [1])
+            mx30 = max([c["m30"] for _, c in filas] + [1])
+            semana = "".join(f'<div class="barra-t"><span>{esc(n)}</span><div class="b"><span style="width:{100 * c["s7"] / mx:.0f}%"></span></div>'
+                             f'<span>{c["s7"]} {self.flecha(c)}</span></div>' for n, c in filas if c["s7"] > 0) or '<p class="vacio">Sin menciones esta semana.</p>'
+            mes = sorted(filas, key=lambda x: (-x[1]["m30"], x[0]))
+            ranking = "".join(f'<div class="barra-t"><span>{i + 1}. {esc(n)}</span><div class="b"><span style="width:{100 * c["m30"] / mx30:.0f}%"></span></div>'
+                              f'<span>{c["m30"]}</span></div>' for i, (n, c) in enumerate(mes[:8]) if c["m30"] > 0) or '<p class="vacio">Sin menciones este mes.</p>'
+            partes.append(f'<section class="bloque"><h3>{esc(cat)}</h3><h4>Últimos 7 días</h4>{semana}<h4>Ranking de los últimos 30 días</h4>{ranking}</section>')
+        self.escribir("tendencias.html", self.pagina("Tendencias", "".join(partes), "", "tendencias",
+                      descripcion="Empresas, modelos y tecnologías más mencionados en los titulares de IA, robótica y aeronáutica."))
+
     def portada(self):
         sitio = self.cfg["sitio"]
         dias = sitio.get("dias_portada", 7)
@@ -1736,11 +1891,15 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                     '<span class="chip2" style="color:#fbbf24;border-color:#fbbf2477">Gratis y en castellano</span></div>'
                     f'<a class="cta" href="proyectos/{esc(p1["id"])}.html">Empieza aquí: {esc(p1["titulo"])} · ⏱ {esc(p1.get("tiempo", ""))} →</a></div>'
                     f'<div class="flujo-h">{self.svg_flujo_hero(p1.get("flujo"))}</div></section>')
+        mision = self.cfg["sitio"].get("mision", "")
         cuerpo = (
-            hero +
+            (f'<p class="mision">{esc(mision)}</p>' if mision else "")
+            + self.franja_revista()
+            + hero +
             '<h2 id="aprende" style="--c:#4ade80">Aprende haciendo'
             '<small>de la regresión simple a las redes convolucionales, con datos reales y abiertos. Elige una familia</small></h2>'
             + self.categorias_html("proyectos/")
+            + self.sectores_html()
             + f'<h2 id="resumen" style="--c:#818cf8">Noticias de la semana<small>{esc(semana)}. '
             'Pulsa un tema para ver sus noticias</small></h2>'
             f'<div class="rejilla">{tarjetas}</div>'
@@ -2750,6 +2909,7 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
         self.pagina_noticias()
         self.paginas_tema()
         self.pagina_resumenes()
+        self.pagina_tendencias()
         self.pagina_proyectos()
         self.paginas_pasos()
         self.pagina_retos()

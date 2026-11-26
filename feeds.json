@@ -21,7 +21,8 @@
         "No usa datos ni documentación de ningún empleo: todos los proyectos usan datos públicos y abiertos.",
         "No garantiza que los resultados de un proyecto sirvan fuera de sus datos de ejemplo."
       ]
-    }
+    },
+    "mision": "Analizamos cómo la inteligencia artificial, la robótica y la automatización están cambiando el taller, la industria y la aeronáutica, y lo explicamos paso a paso con datos reales."
   },
   "temas": {
     "ia": "Inteligencia artificial",
@@ -2298,5 +2299,185 @@
     "1": "🟢 Fácil",
     "2": "🟡 Medio",
     "3": "🔴 Avanzado"
+  },
+  "sectores": [
+    {
+      "tema": "aeronautica",
+      "icono": "✈️",
+      "titulo": "Aeronáutica",
+      "texto": "Mantenimiento predictivo, gemelos digitales y datos de vuelo: nuestro sector de referencia.",
+      "areas": [
+        "aeronáutica"
+      ],
+      "principal": true
+    },
+    {
+      "tema": "otros",
+      "icono": "🏭",
+      "titulo": "Industria y mantenimiento",
+      "texto": "Automatización industrial, predicción de fallos y optimización de recursos.",
+      "areas": [
+        "mantenimiento",
+        "ingeniería",
+        "energía"
+      ]
+    },
+    {
+      "tema": "ia",
+      "icono": "🧠",
+      "titulo": "Inteligencia artificial",
+      "texto": "Modelos, herramientas y avances explicados sin ruido.",
+      "areas": [
+        "ia"
+      ]
+    },
+    {
+      "tema": "robotica",
+      "icono": "🤖",
+      "titulo": "Robótica",
+      "texto": "Robots, drones, vehículos autónomos y automatización.",
+      "areas": [
+        "robótica"
+      ]
+    },
+    {
+      "tema": "programacion",
+      "icono": "💻",
+      "titulo": "Programación",
+      "texto": "Desarrollo de software y programación con IA.",
+      "areas": []
+    }
+  ],
+  "entidades": {
+    "Empresas": {
+      "OpenAI": [
+        "openai"
+      ],
+      "Anthropic": [
+        "anthropic"
+      ],
+      "Google": [
+        "google",
+        "deepmind",
+        "alphabet"
+      ],
+      "Microsoft": [
+        "microsoft"
+      ],
+      "Meta": [
+        "meta ai",
+        "meta platforms",
+        "facebook"
+      ],
+      "Nvidia": [
+        "nvidia"
+      ],
+      "Apple": [
+        "apple"
+      ],
+      "Amazon": [
+        "amazon",
+        "aws"
+      ],
+      "Tesla": [
+        "tesla"
+      ],
+      "Boston Dynamics": [
+        "boston dynamics"
+      ],
+      "Airbus": [
+        "airbus"
+      ],
+      "Boeing": [
+        "boeing"
+      ],
+      "Rolls-Royce": [
+        "rolls-royce",
+        "rolls royce"
+      ],
+      "NASA": [
+        "nasa"
+      ],
+      "ESA": [
+        "esa ",
+        "agencia espacial europea"
+      ],
+      "Hugging Face": [
+        "hugging face"
+      ]
+    },
+    "Modelos": {
+      "GPT / ChatGPT": [
+        "gpt",
+        "chatgpt"
+      ],
+      "Claude": [
+        "claude"
+      ],
+      "Gemini": [
+        "gemini"
+      ],
+      "Llama": [
+        "llama"
+      ],
+      "DeepSeek": [
+        "deepseek"
+      ],
+      "Mistral": [
+        "mistral"
+      ],
+      "Qwen": [
+        "qwen"
+      ],
+      "Grok": [
+        "grok"
+      ]
+    },
+    "Tecnologías": {
+      "Agentes de IA": [
+        "agent",
+        "agente"
+      ],
+      "Modelos de lenguaje (LLM)": [
+        "llm",
+        "language model",
+        "modelo de lenguaje"
+      ],
+      "Robots humanoides": [
+        "humanoid",
+        "humanoide"
+      ],
+      "Gemelo digital": [
+        "digital twin",
+        "gemelo digital"
+      ],
+      "Mantenimiento predictivo": [
+        "predictive maintenance",
+        "mantenimiento predictivo"
+      ],
+      "Visión artificial": [
+        "computer vision",
+        "visión artificial"
+      ],
+      "Vehículos autónomos": [
+        "autonomous",
+        "autónomo",
+        "self-driving"
+      ],
+      "Drones": [
+        "drone",
+        "dron"
+      ],
+      "Chips y hardware de IA": [
+        "chip",
+        "gpu",
+        "semiconduct"
+      ],
+      "IA en el borde (edge)": [
+        "edge ai",
+        "tinyml",
+        "on-device"
+      ]
+    }
   }
 }
