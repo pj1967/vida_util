@@ -3360,5 +3360,3286 @@
     ]
    }
   }
+ },
+ "consumo-coche-peso": {
+  "1": {
+   "titulo": "Entender qué es una regresión lineal simple",
+   "fuente": "Libro de consulta · Submódulo 1.1 · págs. 9–12 (secciones 5, 6 y 7)",
+   "intro": "Lee esta página despacio, de arriba abajo, siguiendo el orden del libro. Después haz el test, sube lo que quieras enseñar y marca el paso como completado.",
+   "bloques": [
+    {
+     "t": "sec",
+     "x": "1. La recta: y = m·x + b",
+     "pag": "pág. 9"
+    },
+    {
+     "t": "p",
+     "x": "La regresión lineal simple busca la recta que mejor resume la nube de puntos: y = m·x + b, donde m es la pendiente y b el intercepto."
+    },
+    {
+     "t": "etq",
+     "k": "sencilla",
+     "titulo": "Explicación sencilla",
+     "x": "Piensa en un taxi. Pagas una cantidad fija al subir (la «bajada de bandera») y luego un precio por cada kilómetro: coste = precio_por_km · km + bajada_de_bandera."
+    },
+    {
+     "t": "ul",
+     "x": [
+      "m (pendiente) = cuánto sube Y cuando X sube 1 unidad. En el taxi, el precio por km.",
+      "b (intercepto) = el valor de Y cuando X vale 0. En el taxi, la bajada de bandera."
+     ]
+    },
+    {
+     "t": "p",
+     "x": "En los salarios del libro, m será «cuántos dólares más por cada año de experiencia». En nuestro proyecto, m será «cuántos litros cada 100 km más consume un coche por cada kilo de peso»."
+    },
+    {
+     "t": "tabla",
+     "cab": [
+      "Si la pendiente m es…",
+      "La recta…",
+      "Significa"
+     ],
+     "filas": [
+      [
+       "Positiva",
+       "Sube",
+       "Más X, más Y (experiencia → salario)"
+      ],
+      [
+       "Negativa",
+       "Baja",
+       "Más X, menos Y"
+      ],
+      [
+       "Cercana a 0",
+       "Es casi horizontal",
+       "X apenas ayuda a predecir Y"
+      ]
+     ],
+     "pie": null,
+     "nota": null
+    },
+    {
+     "t": "sec",
+     "x": "2. Cómo se encuentra la mejor recta",
+     "pag": "pág. 10"
+    },
+    {
+     "t": "p",
+     "x": "Hay infinitas rectas posibles. ¿Cuál es «la mejor»? Cada recta se equivoca en cada punto: esa distancia vertical entre el dato real y la recta es el residuo (error)."
+    },
+    {
+     "t": "p",
+     "x": "Para medir el error total se elevan los residuos al cuadrado (así no se cancelan positivos con negativos y se castigan más los errores grandes) y se suman: SSE (suma de errores al cuadrado). La mejor recta es la que tiene el SSE más pequeño: es el método de mínimos cuadrados."
+    },
+    {
+     "t": "fig",
+     "svg": "<svg viewBox=\"0 0 420 250\" role=\"img\" aria-label=\"Cinco puntos, la recta de mínimos cuadrados y los residuos\" class=\"fig-svg\"><line x1=\"44\" y1=\"212\" x2=\"404\" y2=\"212\" stroke=\"#64748b\"/><line x1=\"44\" y1=\"16\" x2=\"44\" y2=\"212\" stroke=\"#64748b\"/><text x=\"80\" y=\"228\" text-anchor=\"middle\" font-size=\"11\" fill=\"#94a3b8\">1</text><text x=\"152\" y=\"228\" text-anchor=\"middle\" font-size=\"11\" fill=\"#94a3b8\">2</text><text x=\"224\" y=\"228\" text-anchor=\"middle\" font-size=\"11\" fill=\"#94a3b8\">3</text><text x=\"296\" y=\"228\" text-anchor=\"middle\" font-size=\"11\" fill=\"#94a3b8\">4</text><text x=\"368\" y=\"228\" text-anchor=\"middle\" font-size=\"11\" fill=\"#94a3b8\">5</text><text x=\"36\" y=\"216\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">1</text><line x1=\"44\" y1=\"212\" x2=\"404\" y2=\"212\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"36\" y=\"177\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">2</text><line x1=\"44\" y1=\"173\" x2=\"404\" y2=\"173\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"36\" y=\"138\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">3</text><line x1=\"44\" y1=\"134\" x2=\"404\" y2=\"134\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"36\" y=\"98\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">4</text><line x1=\"44\" y1=\"94\" x2=\"404\" y2=\"94\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"36\" y=\"59\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">5</text><line x1=\"44\" y1=\"55\" x2=\"404\" y2=\"55\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"36\" y=\"20\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">6</text><line x1=\"44\" y1=\"16\" x2=\"404\" y2=\"16\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"224\" y=\"246\" text-anchor=\"middle\" font-size=\"12\" fill=\"#cbd5e1\">horas de estudio (x)</text><text x=\"12\" y=\"114\" transform=\"rotate(-90 12 114)\" text-anchor=\"middle\" font-size=\"12\" fill=\"#cbd5e1\">nota (y)</text><line x1=\"58\" y1=\"148\" x2=\"390\" y2=\"40\" stroke=\"#38bdf8\" stroke-width=\"2.2\"/><line x1=\"80\" y1=\"173\" x2=\"80\" y2=\"141\" stroke=\"#fb7185\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/><circle cx=\"80\" cy=\"173\" r=\"5\" fill=\"#fbbf24\" stroke=\"#0b1220\"/><line x1=\"152\" y1=\"94\" x2=\"152\" y2=\"118\" stroke=\"#fb7185\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/><circle cx=\"152\" cy=\"94\" r=\"5\" fill=\"#fbbf24\" stroke=\"#0b1220\"/><line x1=\"224\" y1=\"55\" x2=\"224\" y2=\"94\" stroke=\"#fb7185\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/><circle cx=\"224\" cy=\"55\" r=\"5\" fill=\"#fbbf24\" stroke=\"#0b1220\"/><line x1=\"296\" y1=\"94\" x2=\"296\" y2=\"71\" stroke=\"#fb7185\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/><circle cx=\"296\" cy=\"94\" r=\"5\" fill=\"#fbbf24\" stroke=\"#0b1220\"/><line x1=\"368\" y1=\"55\" x2=\"368\" y2=\"47\" stroke=\"#fb7185\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/><circle cx=\"368\" cy=\"55\" r=\"5\" fill=\"#fbbf24\" stroke=\"#0b1220\"/><text x=\"310\" y=\"86\" font-size=\"12\" fill=\"#7dd3fc\">ŷ = 0,6·x + 2,2</text></svg>",
+     "x": "Gráfico del ejemplo del libro (5 estudiantes: horas de estudio → nota). En amarillo los datos; en azul la recta de mínimos cuadrados; en rojo, los residuos. En el libro (Figura 4) se comparan tres rectas posibles: la de mínimos cuadrados es la que tiene el menor SSE."
+    },
+    {
+     "t": "sec",
+     "x": "2.1 Calcularla a mano con 5 datos",
+     "pag": "págs. 10–11"
+    },
+    {
+     "t": "p",
+     "x": "Datos: 5 estudiantes con horas de estudio x = 1, 2, 3, 4, 5 y nota y = 2, 4, 5, 4, 5. Las fórmulas son:"
+    },
+    {
+     "t": "ul",
+     "x": [
+      "m = Sxy / Sxx, donde Sxy = Σ(x − x̄)(y − ȳ) y Sxx = Σ(x − x̄)². Aquí x̄ = media(x) = (1+2+3+4+5)/5 = 3.",
+      "b = ȳ − m·x̄ (la recta siempre pasa por el punto central (x̄, ȳ)). Aquí ȳ = media(y) = (2+4+5+4+5)/5 = 4."
+     ]
+    },
+    {
+     "t": "tabla",
+     "cab": [
+      "x",
+      "y",
+      "x − x̄",
+      "y − ȳ",
+      "(x−x̄)(y−ȳ)",
+      "(x−x̄)²",
+      "ŷ = 0,6x + 2,2",
+      "residuo = y − ŷ"
+     ],
+     "filas": [
+      [
+       "1",
+       "2",
+       "−2",
+       "−2",
+       "4",
+       "4",
+       "2,8",
+       "−0,8"
+      ],
+      [
+       "2",
+       "4",
+       "−1",
+       "0",
+       "0",
+       "1",
+       "3,4",
+       "+0,6"
+      ],
+      [
+       "3",
+       "5",
+       "0",
+       "1",
+       "0",
+       "0",
+       "4,0",
+       "+1,0"
+      ],
+      [
+       "4",
+       "4",
+       "1",
+       "0",
+       "0",
+       "1",
+       "4,6",
+       "−0,6"
+      ],
+      [
+       "5",
+       "5",
+       "2",
+       "1",
+       "2",
+       "4",
+       "5,2",
+       "−0,2"
+      ]
+     ],
+     "pie": [
+      "Suma",
+      "",
+      "",
+      "",
+      "Sxy = 6",
+      "Sxx = 10",
+      "",
+      "≈ 0"
+     ],
+     "nota": "m = Sxy ÷ Sxx = 6 ÷ 10 = 0,6  ·  b = 4 − 0,6·3 = 2,2"
+    },
+    {
+     "t": "p",
+     "x": "Medias: x̄ = 3, ȳ = 4. Entonces m = 6/10 = 0,6 y b = 4 − 0,6·3 = 2,2: la recta es nota = 0,6·horas + 2,2. Cada hora de estudio sube la nota esperada 0,6 puntos."
+    },
+    {
+     "t": "code",
+     "titulo": "Código Python (copiar y ejecutar)",
+     "x": "import numpy as np\n# 5 estudiantes: horas de estudio (x) y nota del examen (y)\nx = np.array([1, 2, 3, 4, 5])\ny = np.array([2, 4, 5, 4, 5])\nx_med, y_med = x.mean(), y.mean()          # los \"centros\" de la nube\nSxy = np.sum((x - x_med) * (y - y_med))    # cuánto se mueven JUNTAS x e y\nSxx = np.sum((x - x_med) ** 2)             # cuánto se mueve x por sí sola\nm = Sxy / Sxx                              # pendiente\nb = y_med - m * x_med                      # intercepto: la recta pasa por (x̄, ȳ)\nprint(f\"x̄ = {x_med}, ȳ = {y_med}, Sxy = {Sxy}, Sxx = {Sxx}\")\nprint(f\"Pendiente m = {Sxy}/{Sxx} = {m} | Intercepto b = {y_med} - {m}·{x_med} = {b}\")\ny_pred = m * x + b                         # lo que predice la recta\nresid = y - y_pred                         # lo que se le escapa\nSSE = np.sum(resid ** 2)                   # error de la recta\nSST = np.sum((y - y_med) ** 2)             # error si solo usáramos la media\nprint(\"\\nPredicciones:\", y_pred.round(2), \"| Residuos:\", resid.round(2))\nprint(f\"SSE = {SSE:.2f} | SST = {SST:.2f} | R² = 1 - SSE/SST = {1 - SSE/SST:.2f}\")\nprint(f\"Predicción para 6 horas: {m*6 + b:.1f} puntos\")"
+    },
+    {
+     "t": "salida",
+     "x": "x̄ = 3.0, ȳ = 4.0, Sxy = 6.0, Sxx = 10.0\nPendiente m = 6.0/10.0 = 0.6 | Intercepto b = 4.0 - 0.6·3.0 = 2.2\nPredicciones: [2.8 3.4 4. 4.6 5.2] | Residuos: [-0.8 0.6 1. -0.6 -0.2]\nSSE = 2.40 | SST = 6.00 | R² = 1 - SSE/SST = 0.60\nPredicción para 6 horas: 5.8 puntos"
+    },
+    {
+     "t": "etq",
+     "k": "sencilla",
+     "titulo": "Explicación sencilla",
+     "x": "Los residuos suman ≈ 0 siempre que la recta tenga intercepto: lo que sobra por un lado compensa lo que falta por el otro. SSE = 2,40 es el error total de nuestra recta. ¿Es mucho o poco? Para saberlo necesitamos un punto de comparación: R²."
+    },
+    {
+     "t": "sec",
+     "x": "3. R²: ¿cuánto explica la recta?",
+     "pag": "págs. 12"
+    },
+    {
+     "t": "p",
+     "x": "R² compara dos errores: el de la recta (SSE) y el que tendrías si no usaras X y predijeras siempre la media de Y (SST, suma total de cuadrados). La fórmula es R² = 1 − SSE / SST."
+    },
+    {
+     "t": "p",
+     "x": "Con los datos del ejemplo: SST = 6 (error si solo usamos la media) y SSE = 2,4 (error con la recta). Así R² = 1 − 2,4/6 = 0,60."
+    },
+    {
+     "t": "etq",
+     "k": "sencilla",
+     "titulo": "Explicación sencilla",
+     "x": "R² = 0,60 significa: la recta elimina el 60 % del error que tendrías sin ella; o, dicho de forma habitual, «explica el 60 % de la variación de Y». R² = 1 es un ajuste perfecto; R² = 0, una recta que no mejora a la media."
+    },
+    {
+     "t": "tabla",
+     "cab": [
+      "R²",
+      "Lectura habitual",
+      "Ejemplo del libro"
+     ],
+     "filas": [
+      [
+       "Cerca de 1 (> 0,9)",
+       "Relación muy fuerte",
+       "Años de experiencia → salario: 0,957"
+      ],
+      [
+       "0,5 a 0,9",
+       "Moderada o buena",
+       "Peso del coche → consumo: 0,693"
+      ],
+      [
+       "0,2 a 0,5",
+       "Modesta",
+       "Cuenta → propina: 0,457"
+      ],
+      [
+       "Cerca de 0",
+       "La recta apenas ayuda",
+       "Gasto en periódico → ventas: 0,052"
+      ]
+     ],
+     "pie": null,
+     "nota": null
+    },
+    {
+     "t": "etq",
+     "k": "atencion",
+     "titulo": "Atención",
+     "x": "«Bueno» o «malo» depende del problema: en datos de personas, un R² de 0,3 puede ser útil; en física, uno de 0,9 puede ser insuficiente."
+    },
+    {
+     "t": "etq",
+     "k": "nota",
+     "titulo": "Nota",
+     "x": "Relación con r: en regresión simple R² = r². Con r = 0,7746, r² = 0,60."
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 8,
+    "preguntas": [
+     {
+      "q": "En la recta y = m·x + b, ¿qué es m?",
+      "ok": "La pendiente: cuánto cambia Y cuando X sube 1 unidad",
+      "mal": [
+       "El valor de Y cuando X vale 0",
+       "El error total de la recta",
+       "La media de los datos"
+      ],
+      "exp": "m es la pendiente. En el taxi del libro, el precio por kilómetro."
+     },
+     {
+      "q": "En la recta y = m·x + b, ¿qué es b?",
+      "ok": "El valor de Y cuando X vale 0 (el punto de partida)",
+      "mal": [
+       "Cuánto sube Y por cada unidad de X",
+       "La suma de los errores al cuadrado",
+       "El número de datos"
+      ],
+      "exp": "b es el intercepto. En el taxi, la bajada de bandera."
+     },
+     {
+      "q": "Si la pendiente es negativa, la recta…",
+      "ok": "Baja: a más X, menos Y",
+      "mal": [
+       "Sube: a más X, más Y",
+       "Es horizontal",
+       "No pasa por la media"
+      ],
+      "exp": "Pendiente negativa = recta descendente. Cercana a 0 = casi horizontal (X apenas ayuda)."
+     },
+     {
+      "q": "En el proyecto de la central eléctrica (proyecto 1), la pendiente sale −2 MW/°C. ¿Qué significa?",
+      "ok": "Por cada grado más de temperatura, la potencia baja unos 2 MW",
+      "mal": [
+       "Por cada grado más, la potencia sube unos 2 MW",
+       "La central produce −2 MW cuando hace 0 °C",
+       "El error medio es de 2 MW"
+      ],
+      "exp": "La pendiente dice cuánto cambia Y por cada unidad de X. El signo menos indica que baja. (El valor −2 es solo un ejemplo para practicar.)"
+     },
+     {
+      "q": "¿Qué es un residuo?",
+      "ok": "La distancia vertical entre el dato real y la recta",
+      "mal": [
+       "La distancia entre dos puntos cualesquiera",
+       "La media de todos los datos",
+       "El valor de la pendiente"
+      ],
+      "exp": "El residuo (error) es lo que se le escapa a la recta en cada punto: y − ŷ."
+     },
+     {
+      "q": "¿Por qué se elevan los residuos al cuadrado?",
+      "ok": "Para que no se cancelen positivos con negativos y para castigar más los errores grandes",
+      "mal": [
+       "Para que salgan números más pequeños",
+       "Para que la recta pase por el origen",
+       "Porque lo manda Python"
+      ],
+      "exp": "Sin elevar al cuadrado, los errores de signo opuesto se compensarían. Además, un error grande pesa mucho más."
+     },
+     {
+      "q": "¿Cuál es «la mejor recta» según mínimos cuadrados?",
+      "ok": "La que tiene el SSE (suma de errores al cuadrado) más pequeño",
+      "mal": [
+       "La que pasa por más puntos",
+       "La que tiene la pendiente más grande",
+       "La que pasa por el origen"
+      ],
+      "exp": "Mínimos cuadrados = la recta con la menor suma de errores al cuadrado."
+     },
+     {
+      "q": "Con Sxy = 6 y Sxx = 10, ¿cuánto vale la pendiente?",
+      "ok": "0,6",
+      "mal": [
+       "60",
+       "1,67",
+       "4"
+      ],
+      "exp": "m = Sxy / Sxx = 6/10 = 0,6."
+     },
+     {
+      "q": "Con x̄ = 3, ȳ = 4 y m = 0,6, ¿cuánto vale el intercepto b?",
+      "ok": "2,2",
+      "mal": [
+       "4",
+       "0,6",
+       "1,8"
+      ],
+      "exp": "b = ȳ − m·x̄ = 4 − 0,6·3 = 2,2. La recta siempre pasa por el punto (x̄, ȳ)."
+     },
+     {
+      "q": "Con la recta nota = 0,6·horas + 2,2, ¿qué nota se predice para 6 horas?",
+      "ok": "5,8",
+      "mal": [
+       "3,6",
+       "6,4",
+       "2,8"
+      ],
+      "exp": "0,6·6 + 2,2 = 3,6 + 2,2 = 5,8."
+     },
+     {
+      "q": "R² = 0,60 significa que…",
+      "ok": "La recta explica el 60 % de la variación de Y",
+      "mal": [
+       "La recta acierta el 60 % de las veces",
+       "El error es de 0,60 unidades",
+       "La pendiente vale 0,60"
+      ],
+      "exp": "R² es la parte de la variación de Y que explica la recta (1 − SSE/SST)."
+     },
+     {
+      "q": "¿Qué indica un R² cercano a 0?",
+      "ok": "Que la recta apenas mejora a predecir siempre la media",
+      "mal": [
+       "Que el ajuste es perfecto",
+       "Que la pendiente es negativa",
+       "Que hay demasiados datos"
+      ],
+      "exp": "R² = 1 es ajuste perfecto; R² = 0 es una recta que no mejora a la media."
+     },
+     {
+      "q": "¿Cómo se calcula R²?",
+      "ok": "R² = 1 − SSE / SST",
+      "mal": [
+       "R² = SSE · SST",
+       "R² = m / b",
+       "R² = SSE + SST"
+      ],
+      "exp": "Compara el error de la recta (SSE) con el de predecir siempre la media (SST)."
+     },
+     {
+      "q": "En regresión simple, R² es igual a…",
+      "ok": "r² (el coeficiente de correlación al cuadrado)",
+      "mal": [
+       "2·r",
+       "1 − r",
+       "r + b"
+      ],
+      "exp": "Relación con r: en regresión simple R² = r². Con r = 0,7746, r² = 0,60."
+     }
+    ]
+   },
+   "evidencias": "Aquí puedes enseñar lo que hagas en este paso: el código del cálculo a mano, un gráfico de los 5 puntos con la recta, tus notas…"
+  },
+  "2": {
+   "titulo": "Descargar y abrir los datos",
+   "fuente": "Cuaderno de Colab · Consumo de un coche según su peso (UCI nº 9, Auto MPG)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Descargar la tabla de coches y quedarnos con dos columnas: peso y consumo, en unidades europeas."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "fetch_ucirepo(id=9) pide el conjunto nº 9 al repositorio UCI. El peso viene en libras y el consumo en millas por galón: lo convertimos a kilos y a litros cada 100 km."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "La regresión simple usa una sola entrada (x) y una salida (y). Aquí x = peso del coche e y = consumo."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Tener los datos listos en df: con esa tabla trabajaremos en todos los pasos siguientes."
+        }
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Explicación sencilla",
+       "x": "Una tabla de datos (en pandas, un «DataFrame») es como una hoja de Excel: cada fila es un registro (aquí, un modelo de coche) y cada columna una variable (peso, consumo…)."
+      },
+      {
+       "t": "tabla",
+       "cab": [
+        "Columna original",
+        "Significado",
+        "¿La usamos?"
+       ],
+       "filas": [
+        [
+         "weight",
+         "Peso del coche (libras)",
+         "Sí: entrada x (la pasamos a kg)"
+        ],
+        [
+         "mpg",
+         "Millas por galón",
+         "Sí: salida y (la pasamos a L/100 km)"
+        ],
+        [
+         "horsepower, displacement, cylinders…",
+         "Potencia, cilindrada, cilindros…",
+         "No (regresión múltiple)"
+        ],
+        [
+         "model_year, origin",
+         "Año del modelo y procedencia",
+         "No"
+        ]
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Atención con las unidades",
+       "x": "Millas por galón mide «cuánto avanzas con un galón»: cuanto más, mejor. Litros cada 100 km mide «cuánto gastas»: cuanto más, peor. Conviene usar la segunda, porque la relación con el peso es casi una recta (lo verás en el paso 4)."
+      },
+      {
+       "t": "tabla",
+       "cab": [
+        "Conversión",
+        "Fórmula",
+        "Ejemplo"
+       ],
+       "filas": [
+        [
+         "Libras → kg",
+         "kg = libras × 0,4536",
+         "3.504 lb → 1.589 kg"
+        ],
+        [
+         "mpg → L/100 km",
+         "L/100 km = 235,215 / mpg",
+         "18 mpg → 13,07 L/100 km"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "auto = fetch_ucirepo(id=9)                 # descargar el conjunto de datos nº 9 (Auto MPG)\n\nentradas = auto.data.features              # columnas de entrada (peso, cilindrada, potencia...)\nsalida = auto.data.targets                 # columna de salida (mpg: millas por galón)\n\n# Convertimos a unidades europeas\npeso_kg = entradas[\"weight\"] * 0.45359237      # libras -> kilos\nconsumo = 235.215 / salida[\"mpg\"]              # millas por galón -> litros cada 100 km\n\ndf = pd.DataFrame({\n    \"Peso\": peso_kg,                           # kg\n    \"Consumo\": consumo,                        # L/100 km\n})\n\ndf = df.dropna()                               # quitar filas incompletas, si las hubiera\n\nprint(\"Filas y columnas:\", df.shape)"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "auto = fetch_ucirepo(id=9)",
+         "Descarga el conjunto de datos número 9 de UCI (Auto MPG)."
+        ],
+        [
+         "entradas = auto.data.features",
+         "Las columnas de entrada (peso, cilindrada, potencia…)."
+        ],
+        [
+         "salida = auto.data.targets",
+         "La columna que queremos predecir (mpg)."
+        ],
+        [
+         "entradas['weight'] * 0.45359237",
+         "Convierte el peso de libras a kilos."
+        ],
+        [
+         "235.215 / salida['mpg']",
+         "Convierte millas por galón a litros cada 100 km."
+        ],
+        [
+         "df = pd.DataFrame({...})",
+         "Crea nuestra tabla con solo dos columnas y nombres claros."
+        ],
+        [
+         "df = df.dropna()",
+         "Quita las filas incompletas, si las hubiera."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/consumo-coche-peso.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 2.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "lo que debe salir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "salida",
+       "x": "Filas y columnas: (398, 2)"
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Cómo se lee",
+       "x": "(398, 2) significa 398 filas (coches) y 2 columnas (variables). Son modelos de coche reales de 1970 a 1982."
+      },
+      {
+       "t": "h",
+       "x": "Qué hemos hecho con los datos"
+      },
+      {
+       "t": "tabla",
+       "cab": [
+        "",
+        "Tabla original de UCI",
+        "Nuestra tabla df"
+       ],
+       "filas": [
+        [
+         "Filas",
+         "398 coches",
+         "398 coches"
+        ],
+        [
+         "Columnas",
+         "Peso, cilindrada, potencia, año… y mpg",
+         "Solo Peso (kg) y Consumo (L/100 km)"
+        ],
+        [
+         "Unidades",
+         "Libras y millas por galón",
+         "Kilos y litros cada 100 km"
+        ]
+       ]
+      },
+      {
+       "t": "leer",
+       "ver": "Comparación entre la tabla original (varias columnas, unidades de EE. UU.) y la que usamos (dos columnas, unidades europeas).",
+       "leer": "Mira cada fila de arriba abajo: no hemos quitado coches, solo hemos elegido dos columnas y cambiado las unidades.",
+       "dice": "Tenemos la materia prima del proyecto: una entrada (peso) y una salida (consumo), con 398 registros. Es una tabla pequeña: unos 800 números en total.",
+       "ojo": "Es un conjunto pequeño y antiguo (1970–1982). Sirve muy bien para aprender, pero no para predecir el consumo de un coche actual."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Filas",
+         "398"
+        ],
+        [
+         "Columnas",
+         "2"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "El programa muestra (398, 2). ¿Qué significa?",
+      "ok": "398 filas (coches) y 2 columnas (variables)",
+      "mal": [
+       "398 columnas y 2 filas",
+       "2 coches con 398 datos cada uno",
+       "398 aciertos y 2 errores"
+      ],
+      "exp": "shape siempre da (filas, columnas)."
+     },
+     {
+      "q": "¿Qué variable usamos como entrada (x)?",
+      "ok": "El peso del coche",
+      "mal": [
+       "El consumo",
+       "La potencia",
+       "El año del modelo"
+      ],
+      "exp": "Queremos predecir el consumo a partir del peso."
+     },
+     {
+      "q": "¿Cuál es la salida (y), lo que queremos predecir?",
+      "ok": "El consumo, en litros cada 100 km",
+      "mal": [
+       "El peso en kg",
+       "La cilindrada",
+       "El número de cilindros"
+      ],
+      "exp": "La salida es el consumo."
+     },
+     {
+      "q": "¿En qué unidades vienen los datos originales de peso y consumo?",
+      "ok": "Libras y millas por galón",
+      "mal": [
+       "Kilos y litros cada 100 km",
+       "Toneladas y kilómetros por hora",
+       "Newtons y vatios"
+      ],
+      "exp": "Es un conjunto de EE. UU., por eso los convertimos."
+     },
+     {
+      "q": "¿Cómo se pasa de libras a kilos?",
+      "ok": "Multiplicando por 0,4536",
+      "mal": [
+       "Dividiendo entre 10",
+       "Sumando 100",
+       "Restando 0,4536"
+      ],
+      "exp": "1 libra equivale a 0,4536 kg."
+     },
+     {
+      "q": "¿Cómo se pasa de millas por galón (mpg) a litros cada 100 km?",
+      "ok": "Dividiendo 235,215 entre los mpg",
+      "mal": [
+       "Multiplicando los mpg por 2",
+       "Restando 100 a los mpg",
+       "Sumando 235 a los mpg"
+      ],
+      "exp": "L/100 km = 235,215 / mpg."
+     },
+     {
+      "q": "Un coche hace 20 mpg. ¿Cuántos L/100 km consume, aproximadamente?",
+      "ok": "11,8 L/100 km",
+      "mal": [
+       "4,7 L/100 km",
+       "20 L/100 km",
+       "47 L/100 km"
+      ],
+      "exp": "235,215 / 20 = 11,76."
+     },
+     {
+      "q": "¿Por qué conviene usar litros cada 100 km y no millas por galón?",
+      "ok": "Porque con litros/100 km la relación con el peso se parece mucho más a una recta",
+      "mal": [
+       "Porque las millas no existen",
+       "Porque pandas no entiende mpg",
+       "Porque da menos filas"
+      ],
+      "exp": "mpg «se curva» al compararlo con el peso; L/100 km, no."
+     },
+     {
+      "q": "¿Qué es un DataFrame de pandas?",
+      "ok": "Una tabla de datos con filas y columnas, como una hoja de Excel",
+      "mal": [
+       "Un gráfico de puntos",
+       "Un modelo de inteligencia artificial",
+       "Un archivo de instalación"
+      ],
+      "exp": "Es la tabla con la que trabajamos."
+     },
+     {
+      "q": "¿Por qué usamos solo el peso y no también la potencia o la cilindrada?",
+      "ok": "Porque la regresión lineal simple usa una sola variable de entrada",
+      "mal": [
+       "Porque esas columnas no existen",
+       "Porque pandas solo lee dos columnas",
+       "Porque tienen demasiados datos"
+      ],
+      "exp": "Con varias entradas pasaremos a la regresión múltiple."
+     },
+     {
+      "q": "¿Para qué sirve df.dropna()?",
+      "ok": "Para quitar las filas con datos que faltan",
+      "mal": [
+       "Para borrar la columna de consumo",
+       "Para dibujar el gráfico",
+       "Para ordenar la tabla"
+      ],
+      "exp": "dropna elimina las filas incompletas."
+     },
+     {
+      "q": "Tras dropna() siguen siendo 398 filas. ¿Qué significa?",
+      "ok": "Que no se eliminó ninguna fila: ni el peso ni el consumo tenían huecos",
+      "mal": [
+       "Que dropna() no funciona",
+       "Que se han duplicado datos",
+       "Que faltan 398 datos"
+      ],
+      "exp": "Si el número de filas no cambia, no había filas incompletas en esas dos columnas."
+     }
+    ]
+   }
+  },
+  "3": {
+   "titulo": "Revisar la tabla",
+   "fuente": "Cuaderno de Colab · Consumo de un coche según su peso (UCI nº 9, Auto MPG)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Mirar las primeras filas y un resumen de números de la tabla, y contar los datos que faltan."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "head() enseña las 5 primeras filas; describe() calcula mínimo, máximo, media…; isna().sum() cuenta los huecos."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "Antes de calcular nada hay que conocer los datos: sus unidades, sus rangos y si hay valores vacíos."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Saber entre qué pesos es válido nuestro modelo (lo usaremos en el paso 9)."
+        }
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Atención",
+       "x": "Un modelo solo es fiable dentro del rango de datos con el que aprendió. Anota el mínimo y el máximo del peso: 732 kg y 2.331 kg."
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Un dato que falta, pero no nos afecta",
+       "x": "En la tabla original faltan 6 valores de potencia (horsepower). No la usamos, así que no nos afecta. Pero es un buen recordatorio: en datos reales siempre hay que mirar si faltan valores."
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "print(df.head())                            # las 5 primeras filas\nprint()\nprint(df.describe().round(2))              # resumen: media, mínimo, máximo...\nprint()\nprint(\"Valores que faltan en nuestras dos columnas:\")\nprint(df.isna().sum())\nprint()\nprint(\"Valores que faltan en la tabla original (potencia):\", int(entradas[\"horsepower\"].isna().sum()), \"(no la usamos)\")"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "df.head()",
+         "Las 5 primeras filas de la tabla."
+        ],
+        [
+         "df.describe()",
+         "Resumen estadístico de cada columna."
+        ],
+        [
+         ".round(2)",
+         "Redondea a 2 decimales para leerlo mejor."
+        ],
+        [
+         "df.isna().sum()",
+         "Cuenta cuántos valores vacíos hay en cada columna."
+        ],
+        [
+         "entradas['horsepower'].isna().sum()",
+         "Cuenta los huecos de la columna de potencia de la tabla original."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/consumo-coche-peso.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 3.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "lo que debe salir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "salida",
+       "x": "          Peso    Consumo\n0  1589.387664  13.067500\n1  1675.116622  15.681000\n2  1558.543383  13.067500\n3  1557.182606  14.700938\n4  1564.440084  13.836176\n\n          Peso  Consumo\ncount   398.00   398.00\nmean   1347.36    11.21\nstd     384.12     3.90\nmin     731.64     5.05\n25%    1008.68     8.11\n50%    1271.65    10.23\n75%    1636.56    13.44\nmax    2331.46    26.14\n\nValores que faltan en nuestras dos columnas:\nPeso       0\nConsumo    0\ndtype: int64\n\nValores que faltan en la tabla original (potencia): 6 (no la usamos)"
+      },
+      {
+       "t": "tabla",
+       "cab": [
+        "Dato",
+        "Peso",
+        "Consumo"
+       ],
+       "filas": [
+        [
+         "Mínimo",
+         "732 kg",
+         "5,05 L/100 km"
+        ],
+        [
+         "Media",
+         "1.347 kg",
+         "11,21 L/100 km"
+        ],
+        [
+         "Mediana",
+         "1.272 kg",
+         "10,23 L/100 km"
+        ],
+        [
+         "Máximo",
+         "2.331 kg",
+         "26,14 L/100 km"
+        ]
+       ]
+      },
+      {
+       "t": "h",
+       "x": "Gráficos: cómo se reparten los datos"
+      },
+      {
+       "t": "graf",
+       "modo": "hist",
+       "var": "t",
+       "titulo": "Histograma del peso",
+       "x": "Mueve el deslizador para agrupar los coches en más o menos barras."
+      },
+      {
+       "t": "leer",
+       "ver": "Barras: cada una cuenta cuántos coches caen en un tramo de peso. Línea amarilla: la media (1.347 kg). Línea verde: la mediana (1.272 kg).",
+       "leer": "Cuanto más alta es una barra, más coches hay en ese tramo. Si las barras se apilan a la izquierda y se alargan hacia la derecha, hay pocos coches muy pesados.",
+       "dice": "Hay muchos coches ligeros (de 900 a 1.500 kg) y pocos pesados: solo 26 de los 398 pasan de 2.000 kg. Por eso el modelo será menos fiable para los más pesados.",
+       "ojo": "La media (1.347) es mayor que la mediana (1.272): señal de que unos pocos coches muy pesados «tiran» de la media hacia arriba."
+      },
+      {
+       "t": "graf",
+       "modo": "hist",
+       "var": "p",
+       "titulo": "Histograma del consumo",
+       "x": "Lo mismo, ahora con lo que queremos predecir: el consumo."
+      },
+      {
+       "t": "leer",
+       "ver": "Cada barra cuenta cuántos coches tienen un consumo en ese tramo. Amarillo: la media (11,21 L/100 km); verde: la mediana (10,23).",
+       "leer": "Se lee igual que el anterior, pero ahora en el eje horizontal está la salida (y), en litros cada 100 km.",
+       "dice": "El consumo va de 5 a 26 L/100 km, con la mayoría entre 7 y 14. La cola larga hacia la derecha son los coches que más gastan.",
+       "ojo": "Un rango tan amplio (21 L/100 km) deja margen para que el peso explique mucho; así que esperamos un modelo bastante mejor que «predecir siempre la media»."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Peso mínimo",
+         "731.64 kg"
+        ],
+        [
+         "Peso máximo",
+         "2331.46 kg"
+        ],
+        [
+         "Consumo medio",
+         "11.21 L/100 km"
+        ],
+        [
+         "Huecos en Peso/Consumo",
+         "0 / 0"
+        ],
+        [
+         "Huecos en potencia (original)",
+         "6"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "¿Qué hace df.head()?",
+      "ok": "Muestra las 5 primeras filas de la tabla",
+      "mal": [
+       "Borra la primera fila",
+       "Dibuja un gráfico",
+       "Calcula la media"
+      ],
+      "exp": "head() sirve para echar un vistazo."
+     },
+     {
+      "q": "¿Qué hace df.describe()?",
+      "ok": "Resume cada columna: media, mínimo, máximo…",
+      "mal": [
+       "Describe el código",
+       "Entrena el modelo",
+       "Descarga datos"
+      ],
+      "exp": "Es el resumen estadístico."
+     },
+     {
+      "q": "¿Qué hace df.isna().sum()?",
+      "ok": "Cuenta cuántos valores vacíos hay en cada columna",
+      "mal": [
+       "Suma todos los números",
+       "Calcula la correlación",
+       "Quita las filas"
+      ],
+      "exp": "isna marca los huecos y sum los cuenta."
+     },
+     {
+      "q": "¿Cuál es el peso mínimo y máximo de los coches?",
+      "ok": "Unos 732 y 2.331 kg",
+      "mal": [
+       "500 y 5.000 kg",
+       "1.347 y 1.272 kg",
+       "5 y 26 kg"
+      ],
+      "exp": "Es el rango en el que el modelo es válido."
+     },
+     {
+      "q": "¿Por qué conviene anotar el rango de pesos?",
+      "ok": "Porque el modelo solo es fiable dentro de ese rango",
+      "mal": [
+       "Porque lo exige pandas",
+       "Para que el gráfico sea más bonito",
+       "Para eliminar datos"
+      ],
+      "exp": "Fuera del rango sería extrapolar."
+     },
+     {
+      "q": "La media del peso (1.347 kg) es mayor que la mediana (1.272 kg). ¿Qué sugiere?",
+      "ok": "Que hay algunos coches muy pesados que tiran de la media hacia arriba",
+      "mal": [
+       "Que faltan datos",
+       "Que hay un error de cálculo",
+       "Que todos pesan igual"
+      ],
+      "exp": "La media es sensible a los valores extremos; la mediana, no."
+     },
+     {
+      "q": "¿Qué es la mediana?",
+      "ok": "El valor que deja la mitad de los datos por debajo y la otra mitad por encima",
+      "mal": [
+       "El valor más repetido",
+       "La suma entre el número de datos",
+       "El valor más alto"
+      ],
+      "exp": "Es el valor central."
+     },
+     {
+      "q": "¿Cuántos valores de potencia faltan en la tabla original?",
+      "ok": "6",
+      "mal": [
+       "0",
+       "98",
+       "398"
+      ],
+      "exp": "Faltan 6 de potencia, pero no la usamos."
+     },
+     {
+      "q": "Si faltaran valores en Peso o Consumo, ¿qué habría que hacer?",
+      "ok": "Quitar esas filas (dropna) o completarlas con un criterio claro",
+      "mal": [
+       "Ignorarlo sin más",
+       "Inventar valores al azar",
+       "Borrar todo el conjunto"
+      ],
+      "exp": "Los huecos hay que tratarlos de forma consciente."
+     },
+     {
+      "q": "En el histograma del peso, ¿qué indica una barra alta?",
+      "ok": "Que hay muchos coches con ese peso",
+      "mal": [
+       "Que esos coches consumen más",
+       "Que son coches más nuevos",
+       "Que hay datos erróneos"
+      ],
+      "exp": "La altura es el recuento de registros."
+     },
+     {
+      "q": "¿Dónde habrá menos información para el modelo?",
+      "ok": "En los coches muy pesados (más de 2.000 kg), que son pocos",
+      "mal": [
+       "En los coches de 1.200 kg",
+       "En el centro de los datos",
+       "En ninguna parte"
+      ],
+      "exp": "Menos datos, menos fiabilidad."
+     },
+     {
+      "q": "¿Para qué sirve mirar los datos antes de calcular?",
+      "ok": "Para conocer unidades, rangos y valores raros",
+      "mal": [
+       "Para ganar tiempo",
+       "Para que R² sea mayor",
+       "No sirve para nada"
+      ],
+      "exp": "Conocer los datos evita errores."
+     }
+    ]
+   }
+  },
+  "4": {
+   "titulo": "Dibujar el diagrama de dispersión",
+   "fuente": "Cuaderno de Colab · Consumo de un coche según su peso (UCI nº 9, Auto MPG)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Dibujar un punto por coche: peso en horizontal, consumo en vertical."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "plt.scatter(x, y) dibuja la nube; df['Peso'].corr(df['Consumo']) calcula la correlación."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "Hay que mirar antes de calcular. Si los puntos forman una línea, una recta tiene sentido; si forman una curva, no."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Ver la tendencia a ojo. Esperamos una relación positiva: más peso, más consumo."
+        }
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Explicación sencilla",
+       "x": "La correlación es un número entre −1 y +1. Cerca de +1: la nube sube formando casi una recta. Cerca de −1: baja. Cerca de 0: es redonda y no hay relación lineal."
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "¿Por qué litros/100 km y no mpg?",
+       "x": "El código calcula también la correlación con millas por galón (−0,832). Es negativa porque «más peso, menos millas por galón», y más débil: la nube de mpg se curva y una recta encaja peor."
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "plt.figure(figsize=(9, 5.5))\nplt.scatter(df[\"Peso\"], df[\"Consumo\"], alpha=0.5)\nplt.xlabel(\"Peso del coche (kg)\")\nplt.ylabel(\"Consumo (L/100 km)\")\nplt.title(\"Peso frente a consumo\")\nplt.grid(True)\nplt.show()\n\n# Un número que resume la relación: el coeficiente de correlación (de -1 a +1)\nprint(\"Correlación:\", round(df[\"Peso\"].corr(df[\"Consumo\"]), 3))\n\n# ¿Y si hubiéramos usado millas por galón? La relación se curva y la recta encaja peor\nprint(\"Correlación con millas por galón:\", round(df[\"Peso\"].corr(salida[\"mpg\"]), 3))"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "plt.scatter(df['Peso'], df['Consumo'], alpha=0.5)",
+         "Dibuja un punto por coche; alpha es la transparencia."
+        ],
+        [
+         "plt.xlabel / ylabel / title",
+         "Pone nombre a los ejes y al gráfico."
+        ],
+        [
+         "plt.grid(True)",
+         "Añade una cuadrícula."
+        ],
+        [
+         "df['Peso'].corr(df['Consumo'])",
+         "Correlación entre peso y consumo."
+        ],
+        [
+         "df['Peso'].corr(salida['mpg'])",
+         "Correlación con millas por galón, para comparar."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/consumo-coche-peso.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 4.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "lo que debe salir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "h",
+       "x": "Tu diagrama de dispersión"
+      },
+      {
+       "t": "lab",
+       "modo": "nube",
+       "x": "Cada punto es un coche real. Prueba a ver solo entrenamiento o prueba, y a dibujar la recta que calculará el programa."
+      },
+      {
+       "t": "leer",
+       "ver": "Cada punto es un coche: su posición horizontal es el peso y la vertical, el consumo. La nube tiene 398 puntos.",
+       "leer": "Mira hacia dónde va la nube: si sube de izquierda a derecha, la relación es positiva. Cuanto más estrecha, más fuerte.",
+       "dice": "La nube sube con claridad: a más peso, más consumo. La correlación es 0,885, bastante cerca de +1. Una recta es una buena idea.",
+       "ojo": "La nube se abre un poco hacia la derecha: los coches pesados varían más entre sí. Lo veremos en el paso 8."
+      },
+      {
+       "t": "salida",
+       "x": "Correlación: 0.885\nCorrelación con millas por galón: -0.832"
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Cómo se lee",
+       "x": "0,885 es una correlación positiva y fuerte. La de mpg es −0,832: también fuerte, pero más débil, porque la relación se curva."
+      },
+      {
+       "t": "h",
+       "x": "Compara con tres casos típicos"
+      },
+      {
+       "t": "nubes3"
+      },
+      {
+       "t": "leer",
+       "ver": "Tres nubes de ejemplo: una que sube, una redonda y una que baja.",
+       "leer": "Compara la forma de tu nube con estas tres para decidir si una recta tiene sentido.",
+       "dice": "La nuestra se parece a la primera: relación positiva y bastante estrecha, aunque algo más dispersa que el ejemplo."
+      },
+      {
+       "t": "glosa",
+       "filas": [
+        [
+         "Correlación cercana a +1",
+         "La nube sube formando casi una línea recta (nuestro caso: 0,885)"
+        ],
+        [
+         "Correlación cercana a 0",
+         "La nube es redonda: no hay relación lineal"
+        ],
+        [
+         "Correlación cercana a −1",
+         "La nube baja formando casi una línea recta"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Correlación peso–consumo",
+         "0.885"
+        ],
+        [
+         "Correlación peso–mpg",
+         "-0.832"
+        ],
+        [
+         "Relación",
+         "positiva y fuerte"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "¿Qué dibuja plt.scatter()?",
+      "ok": "Un punto por cada registro",
+      "mal": [
+       "Una barra por registro",
+       "Una recta",
+       "Una tabla"
+      ],
+      "exp": "Es un diagrama de dispersión."
+     },
+     {
+      "q": "¿Qué va en el eje horizontal del diagrama?",
+      "ok": "El peso (x, la entrada)",
+      "mal": [
+       "El consumo",
+       "El número de coche",
+       "La correlación"
+      ],
+      "exp": "Por convención, x en horizontal."
+     },
+     {
+      "q": "La nube sube de izquierda a derecha. ¿Qué relación indica?",
+      "ok": "Positiva: a más peso, más consumo",
+      "mal": [
+       "Negativa",
+       "Ninguna",
+       "Una relación perfecta"
+      ],
+      "exp": "Si sube, es positiva."
+     },
+     {
+      "q": "¿Cuál es la correlación entre peso y consumo en este proyecto?",
+      "ok": "Aproximadamente 0,885",
+      "mal": [
+       "−0,948",
+       "0",
+       "1,000"
+      ],
+      "exp": "Es positiva y fuerte."
+     },
+     {
+      "q": "¿Entre qué valores va la correlación?",
+      "ok": "Entre −1 y +1",
+      "mal": [
+       "Entre 0 y 100",
+       "Entre 0 y 1.000",
+       "No tiene límites"
+      ],
+      "exp": "−1 y +1 son los extremos."
+     },
+     {
+      "q": "Una correlación cercana a 0 significa…",
+      "ok": "Que no hay relación lineal: la nube es redonda",
+      "mal": [
+       "Que la recta es perfecta",
+       "Que faltan datos",
+       "Que hay mucha relación"
+      ],
+      "exp": "Cerca de 0 no hay relación lineal."
+     },
+     {
+      "q": "¿Por qué la correlación con mpg es negativa?",
+      "ok": "Porque más peso significa menos millas por galón",
+      "mal": [
+       "Porque hay un error",
+       "Porque mpg está en kilos",
+       "Porque mpg no es una variable"
+      ],
+      "exp": "mpg mide lo que avanzas: más peso, menos millas."
+     },
+     {
+      "q": "La correlación con mpg (−0,832) es más débil que con L/100 km (0,885). ¿Qué indica?",
+      "ok": "Que con mpg la nube se curva y una recta encaja peor",
+      "mal": [
+       "Que mpg tiene más datos",
+       "Que L/100 km está mal calculado",
+       "Que no se pueden comparar"
+      ],
+      "exp": "Por eso convertimos a L/100 km."
+     },
+     {
+      "q": "¿Qué demuestra una correlación alta?",
+      "ok": "Que dos variables van juntas, no que una sea la única causa de la otra",
+      "mal": [
+       "Que el peso es la única causa del consumo",
+       "Que el modelo es perfecto",
+       "Que no hay errores"
+      ],
+      "exp": "Correlación no es causalidad."
+     },
+     {
+      "q": "¿Para qué sirve dibujar los datos antes de ajustar la recta?",
+      "ok": "Para comprobar que una recta tiene sentido",
+      "mal": [
+       "Para ganar tiempo",
+       "Para que R² sea mayor",
+       "No hace falta"
+      ],
+      "exp": "Si la nube fuera curva, la recta no sería buena."
+     },
+     {
+      "q": "¿Qué hace alpha=0.5 en plt.scatter?",
+      "ok": "Hace los puntos semitransparentes para ver dónde se acumulan",
+      "mal": [
+       "Cambia el color a azul",
+       "Quita la mitad de los puntos",
+       "Dibuja la recta"
+      ],
+      "exp": "alpha es la transparencia."
+     },
+     {
+      "q": "La nube se abre hacia la derecha. ¿Qué significa?",
+      "ok": "Que los coches pesados varían más en consumo",
+      "mal": [
+       "Que hay un error en el gráfico",
+       "Que faltan datos",
+       "Que la correlación es 1"
+      ],
+      "exp": "Más dispersión a mayor peso."
+     }
+    ]
+   }
+  },
+  "5": {
+   "titulo": "Separar entrenamiento y prueba",
+   "fuente": "Cuaderno de Colab · Consumo de un coche según su peso (UCI nº 9, Auto MPG)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Dividir los 398 coches en dos grupos: 80 % para entrenar y 20 % para examinar."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "train_test_split(X, y, test_size=0.20, random_state=42) los reparte al azar y siempre igual."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "Si evaluamos el modelo con los mismos coches con los que aprendió, es un examen con las preguntas ya vistas. Los coches de prueba son «preguntas nuevas»."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Medir con honestidad cuánto se equivoca el modelo ante coches que no ha visto."
+        }
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Explicación sencilla",
+       "x": "Es como estudiar con un temario y examinarte con preguntas distintas. Si el examen tuviera las mismas preguntas del temario, aprobarías sin haber aprendido nada."
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "X = df[[\"Peso\"]]                           # entrada (tabla de una columna)\ny = df[\"Consumo\"]                          # salida\n\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y,\n    test_size=0.20,                        # 20 % para prueba\n    random_state=42,                       # repartir siempre igual\n)\n\nprint(\"Coches de entrenamiento:\", len(X_train))\nprint(\"Coches de prueba:\", len(X_test))"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "X = df[['Peso']]",
+         "La entrada, como tabla de una columna (doble corchete)."
+        ],
+        [
+         "y = df['Consumo']",
+         "La salida."
+        ],
+        [
+         "train_test_split(...)",
+         "Reparte los datos en entrenamiento y prueba."
+        ],
+        [
+         "test_size=0.20",
+         "El 20 % para prueba."
+        ],
+        [
+         "random_state=42",
+         "Semilla: reparte siempre igual y los resultados se pueden repetir."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/consumo-coche-peso.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 5.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "lo que debe salir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "salida",
+       "x": "Coches de entrenamiento: 318\nCoches de prueba: 80"
+      },
+      {
+       "t": "graf",
+       "modo": "reparto",
+       "x": "Cada cuadradito es un coche (una muestra de 200 de los 398). Azul: entrenamiento. Ámbar: prueba."
+      },
+      {
+       "t": "leer",
+       "ver": "Cuadraditos que representan la tabla: azules para los coches de entrenamiento (80 %) y ámbar para los de prueba (20 %). Debajo, la barra de proporciones.",
+       "leer": "Los azules son con los que el modelo «estudia»; los ámbar los guardamos sin enseñárselos, como las preguntas nuevas de un examen.",
+       "dice": "Quedan 318 coches para entrenar y 80 para probar, mezclados al azar, no separados por zonas: así el examen es justo.",
+       "ojo": "Con solo 80 coches de prueba, las métricas variarán algo si cambias random_state: es un conjunto pequeño."
+      },
+      {
+       "t": "lab",
+       "modo": "nube",
+       "x": "Cambia entre entrenamiento y prueba: los dos grupos tienen la misma forma, solo que el de prueba tiene menos puntos."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Coches de entrenamiento",
+         "318"
+        ],
+        [
+         "Coches de prueba",
+         "80"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "¿Por qué separamos entrenamiento y prueba?",
+      "ok": "Para evaluar el modelo con coches que no ha visto",
+      "mal": [
+       "Para tener menos datos",
+       "Para que el modelo sea más rápido",
+       "Para dibujar más gráficos"
+      ],
+      "exp": "Examinar con preguntas nuevas."
+     },
+     {
+      "q": "¿Qué porcentaje usamos para entrenar?",
+      "ok": "80 %",
+      "mal": [
+       "20 %",
+       "50 %",
+       "100 %"
+      ],
+      "exp": "Entrenamos con el 80 % y probamos con el 20 %."
+     },
+     {
+      "q": "¿Cuántos coches quedan para prueba?",
+      "ok": "80",
+      "mal": [
+       "318",
+       "398",
+       "20"
+      ],
+      "exp": "398 × 0,20 ≈ 80."
+     },
+     {
+      "q": "¿Cuántos coches se usan para entrenar?",
+      "ok": "318",
+      "mal": [
+       "80",
+       "398",
+       "160"
+      ],
+      "exp": "398 − 80 = 318."
+     },
+     {
+      "q": "¿Qué hace random_state=42?",
+      "ok": "Hace que el reparto sea siempre el mismo",
+      "mal": [
+       "Elige 42 coches",
+       "Entrena 42 veces",
+       "Mejora R²"
+      ],
+      "exp": "Sirve para repetir los resultados."
+     },
+     {
+      "q": "¿Qué pasaría si evaluáramos con los mismos coches de entrenamiento?",
+      "ok": "Que el resultado sería demasiado optimista",
+      "mal": [
+       "Que el modelo fallaría más",
+       "Que no se podría calcular",
+       "Nada"
+      ],
+      "exp": "Sería un examen con preguntas ya vistas."
+     },
+     {
+      "q": "¿Por qué X lleva doble corchete (df[['Peso']])?",
+      "ok": "Porque scikit-learn espera una tabla de entradas, no una lista",
+      "mal": [
+       "Por estética",
+       "Porque lo exige matplotlib",
+       "Para duplicar los datos"
+      ],
+      "exp": "X es una tabla (aunque tenga una sola columna)."
+     },
+     {
+      "q": "¿Qué es y en el código?",
+      "ok": "La salida: el consumo que queremos predecir",
+      "mal": [
+       "La entrada",
+       "El peso",
+       "El error"
+      ],
+      "exp": "y es lo que se predice."
+     },
+     {
+      "q": "¿Qué significa test_size=0.20?",
+      "ok": "El 20 % de los datos se reserva para prueba",
+      "mal": [
+       "Se usan 20 coches",
+       "Se pierde el 20 %",
+       "El modelo entrena 20 veces"
+      ],
+      "exp": "test_size es la fracción de prueba."
+     },
+     {
+      "q": "¿Cómo se reparten los coches entre los dos grupos?",
+      "ok": "Al azar",
+      "mal": [
+       "Los más ligeros a entrenamiento",
+       "Los más pesados a prueba",
+       "Por orden alfabético"
+      ],
+      "exp": "El azar evita sesgos."
+     },
+     {
+      "q": "¿Qué inconveniente tiene que haya solo 80 coches de prueba?",
+      "ok": "Que las métricas pueden cambiar bastante si se cambia el reparto",
+      "mal": [
+       "Que no se pueda calcular R²",
+       "Que el modelo no aprenda",
+       "Ninguno"
+      ],
+      "exp": "Con pocos datos de prueba, hay más variabilidad."
+     }
+    ]
+   }
+  },
+  "6": {
+   "titulo": "Ajustar la recta",
+   "fuente": "Cuaderno de Colab · Consumo de un coche según su peso (UCI nº 9, Auto MPG)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Pedirle al ordenador la mejor recta consumo = m · peso + b."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "LinearRegression().fit(X_train, y_train) aplica mínimos cuadrados con los coches de entrenamiento."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "De todas las rectas posibles, la mejor es la que deja el menor error total (SSE)."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Obtener los dos números del modelo: la pendiente m y el intercepto b."
+        }
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Explicación sencilla",
+       "x": "m dice cuántos litros más consume un coche por cada kilo extra. Como un kilo es muy poco, se entiende mejor «por cada 100 kg»: m × 100. El intercepto b es el consumo teórico de un coche de 0 kg: no existe, es solo el punto de partida matemático de la recta."
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Atención",
+       "x": "El intercepto sale negativo (−0,96). No significa que un coche consuma «menos de nada»: la recta solo es válida entre 732 y 2.331 kg, y a 0 kg está muy lejos de ahí."
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "modelo = LinearRegression()\nmodelo.fit(X_train, y_train)               # «entrenar»: encontrar la mejor recta con los coches de entrenamiento\n\npendiente = modelo.coef_[0]                # m: L/100 km que cambian por cada kg\nintercepto = modelo.intercept_             # b: consumo estimado a 0 kg (solo un punto de partida matemático)\n\nprint(f\"Pendiente (m):   {pendiente:.5f} L/100 km por kg\")\nprint(f\"Por cada 100 kg más: {pendiente*100:.2f} L/100 km\")\nprint(f\"Intercepto (b):  {intercepto:.4f} L/100 km\")\nsigno_b = \"−\" if intercepto < 0 else \"+\"\nprint(f\"Ecuación:  Consumo = {pendiente:.5f} · Peso {signo_b} {abs(intercepto):.4f}\")"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "modelo = LinearRegression()",
+         "Crea el modelo vacío."
+        ],
+        [
+         "modelo.fit(X_train, y_train)",
+         "Lo entrena: encuentra la mejor recta."
+        ],
+        [
+         "modelo.coef_[0]",
+         "La pendiente m."
+        ],
+        [
+         "modelo.intercept_",
+         "El intercepto b."
+        ],
+        [
+         "pendiente * 100",
+         "Cuánto cambia el consumo por cada 100 kg."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/consumo-coche-peso.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 6.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "lo que debe salir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "salida",
+       "x": "Pendiente (m):   0.00902 L/100 km por kg\nPor cada 100 kg más: 0.90 L/100 km\nIntercepto (b):  -0.9581 L/100 km\nEcuación:  Consumo = 0.00902 · Peso − 0.9581"
+      },
+      {
+       "t": "kpis",
+       "items": [
+        {
+         "v": "0,00902",
+         "x": "pendiente m (L/100 km por kg)",
+         "c": "#38bdf8"
+        },
+        {
+         "v": "0,90",
+         "x": "L/100 km más por cada 100 kg",
+         "c": "#4ade80"
+        },
+        {
+         "v": "−0,958",
+         "x": "intercepto b",
+         "c": "#fbbf24"
+        }
+       ]
+      },
+      {
+       "t": "graf",
+       "modo": "anatomia",
+       "x": "Mueve el deslizador: ¿cuánto cambia el consumo si el coche pesa más?"
+      },
+      {
+       "t": "leer",
+       "ver": "La recta con sus dos piezas: el punto de partida b (rosa) y el escalón de la pendiente m (ámbar) al subir el peso.",
+       "leer": "Mueve el deslizador: el escalón horizontal es el aumento de peso y el vertical, lo que sube el consumo (pendiente × aumento).",
+       "dice": "Por cada 100 kg más, el consumo sube unos 0,90 L/100 km. Un coche 500 kg más pesado gasta unos 4,5 L/100 km más.",
+       "ojo": "El intercepto no se interpreta literalmente: es solo el punto donde la recta corta el eje vertical."
+      },
+      {
+       "t": "lab",
+       "modo": "recta",
+       "x": "Mueve la pendiente y el intercepto y mira cómo cambian SSE, R², RMSE y MAE. Pulsa «Ir a la solución del programa»."
+      },
+      {
+       "t": "leer",
+       "ver": "Un laboratorio: tú mueves la recta y el programa calcula cuánto error acumula.",
+       "leer": "Cuanto más baja es el SSE, mejor encaja la recta. La barra se llena cuanto más cerca estás de la solución.",
+       "dice": "La mejor recta es la del programa: pendiente 0,0090 e intercepto −0,96."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Pendiente m",
+         "0.00902"
+        ],
+        [
+         "Por cada 100 kg",
+         "0.90 L/100 km"
+        ],
+        [
+         "Intercepto b",
+         "-0.9581"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "¿Qué método usa LinearRegression para encontrar la recta?",
+      "ok": "Mínimos cuadrados",
+      "mal": [
+       "Adivinar",
+       "Promediar los datos",
+       "Copiar la mediana"
+      ],
+      "exp": "Minimiza la suma de errores al cuadrado."
+     },
+     {
+      "q": "¿Qué significa la pendiente m = 0,00902?",
+      "ok": "Que por cada kilo más, el consumo sube unos 0,009 L/100 km",
+      "mal": [
+       "Que el coche consume 0,009 L/100 km",
+       "Que el peso baja",
+       "Que el modelo acierta el 0,9 %"
+      ],
+      "exp": "m es lo que cambia y por cada unidad de x."
+     },
+     {
+      "q": "Por cada 100 kg más, ¿cuánto sube el consumo?",
+      "ok": "Unos 0,90 L/100 km",
+      "mal": [
+       "Unos 9 L/100 km",
+       "Unos 0,009 L/100 km",
+       "Nada"
+      ],
+      "exp": "0,00902 × 100 = 0,90."
+     },
+     {
+      "q": "Un coche pesa 500 kg más que otro. ¿Cuánto más consume, según la recta?",
+      "ok": "Unos 4,5 L/100 km",
+      "mal": [
+       "Unos 0,9 L/100 km",
+       "Unos 45 L/100 km",
+       "Lo mismo"
+      ],
+      "exp": "0,00902 × 500 = 4,51."
+     },
+     {
+      "q": "¿Qué es el intercepto b?",
+      "ok": "El valor de la recta cuando x = 0",
+      "mal": [
+       "La pendiente",
+       "El error medio",
+       "El peso medio"
+      ],
+      "exp": "Es dónde la recta corta el eje vertical."
+     },
+     {
+      "q": "¿Por qué el intercepto sale negativo (−0,96)?",
+      "ok": "Porque está fuera del rango de datos: a 0 kg no hay coches y la recta solo extrapola",
+      "mal": [
+       "Porque el modelo está mal",
+       "Porque el peso es negativo",
+       "Porque faltan datos"
+      ],
+      "exp": "No hay que interpretar el intercepto literalmente."
+     },
+     {
+      "q": "¿Con qué datos se entrena el modelo?",
+      "ok": "Con los de entrenamiento",
+      "mal": [
+       "Con los de prueba",
+       "Con todos",
+       "Con ninguno"
+      ],
+      "exp": "fit(X_train, y_train)."
+     },
+     {
+      "q": "¿Qué hace modelo.fit(X_train, y_train)?",
+      "ok": "Entrena el modelo: busca la mejor recta",
+      "mal": [
+       "Dibuja el gráfico",
+       "Calcula R²",
+       "Carga los datos"
+      ],
+      "exp": "fit = ajustar."
+     },
+     {
+      "q": "¿Qué es el SSE?",
+      "ok": "La suma de los errores al cuadrado",
+      "mal": [
+       "La pendiente",
+       "El intercepto",
+       "El número de datos"
+      ],
+      "exp": "Cuanto menor, mejor encaja la recta."
+     },
+     {
+      "q": "¿Por qué se elevan los errores al cuadrado?",
+      "ok": "Para que no se cancelen positivos y negativos y se castiguen más los errores grandes",
+      "mal": [
+       "Para que sean más pequeños",
+       "Por tradición",
+       "Para ahorrar cálculos"
+      ],
+      "exp": "Los cuadrados son siempre positivos."
+     },
+     {
+      "q": "En el laboratorio, ¿qué ocurre si mueves la recta lejos de la solución?",
+      "ok": "Que el SSE aumenta y la recta encaja peor",
+      "mal": [
+       "Que el SSE baja",
+       "Que no cambia nada",
+       "Que desaparecen datos"
+      ],
+      "exp": "La mejor recta es la de menor SSE."
+     },
+     {
+      "q": "¿Cuál es la ecuación del modelo?",
+      "ok": "Consumo = 0,00902 · Peso − 0,9581",
+      "mal": [
+       "Consumo = 0,9581 · Peso + 0,00902",
+       "Consumo = Peso / 0,009",
+       "Consumo = −0,00902 · Peso"
+      ],
+      "exp": "Pendiente por peso, más el intercepto."
+     }
+    ]
+   }
+  },
+  "7": {
+   "titulo": "Evaluar con datos nuevos",
+   "fuente": "Cuaderno de Colab · Consumo de un coche según su peso (UCI nº 9, Auto MPG)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Usar la recta para predecir los 80 coches de prueba y medir el error."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "modelo.predict(X_test) da las predicciones; r2_score, mean_squared_error y mean_absolute_error calculan R², RMSE y MAE."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "R² dice cuánto de la variación explica la recta; MAE es el error medio en L/100 km; RMSE es parecido pero castiga más los errores grandes."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Saber si el modelo es fiable y cuánto se equivoca."
+        }
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Cuidado con R²",
+       "x": "R² = 0,81 no significa «acierta el 81 % de las veces». Significa que la recta explica el 81 % de la variación del consumo; el otro 19 % depende de otras cosas (motor, aerodinámica…)."
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "y_pred = modelo.predict(X_test)            # lo que predice la recta para los coches de prueba\n\ncomparacion = pd.DataFrame({\n    \"Peso (kg)\": X_test[\"Peso\"].values.round(0),\n    \"Consumo real\": y_test.values.round(2),\n    \"Consumo predicho\": y_pred.round(2),\n})\nprint(comparacion.head(8))\nprint()\n\nr2 = r2_score(y_test, y_pred)\nrmse = np.sqrt(mean_squared_error(y_test, y_pred))\nmae = mean_absolute_error(y_test, y_pred)\n\nprint(\"RESULTADOS DEL MODELO (coches de prueba)\")\nprint(f\"R²:    {r2:.4f}\")\nprint(f\"RMSE:  {rmse:.3f} L/100 km\")\nprint(f\"MAE:   {mae:.3f} L/100 km\")"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "y_pred = modelo.predict(X_test)",
+         "Predice el consumo de los coches de prueba."
+        ],
+        [
+         "pd.DataFrame({...})",
+         "Pone lado a lado el consumo real y el predicho."
+        ],
+        [
+         "r2_score(y_test, y_pred)",
+         "R²: variación explicada (0 a 1)."
+        ],
+        [
+         "np.sqrt(mean_squared_error(...))",
+         "RMSE: error típico, castiga más los errores grandes."
+        ],
+        [
+         "mean_absolute_error(...)",
+         "MAE: error medio en L/100 km."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/consumo-coche-peso.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 7.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "lo que debe salir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "salida",
+       "x": "   Peso (kg)  Consumo real  Consumo predicho\n0      814.0          7.13              6.38\n1     1191.0          8.40              9.78\n2     1195.0         12.38              9.82\n3     1787.0         18.09             15.16\n4     1922.0         16.80             16.37\n5      953.0          8.71              7.63\n6     1300.0          9.80             10.76\n7     2148.0         18.09             18.41\n\nRESULTADOS DEL MODELO (coches de prueba)\nR²:    0.8050\nRMSE:  1.729 L/100 km\nMAE:   1.249 L/100 km"
+      },
+      {
+       "t": "kpis",
+       "items": [
+        {
+         "v": "0,805",
+         "x": "R² (prueba)",
+         "c": "#38bdf8"
+        },
+        {
+         "v": "1,73",
+         "x": "RMSE (L/100 km)",
+         "c": "#fbbf24"
+        },
+        {
+         "v": "1,25",
+         "x": "MAE (L/100 km)",
+         "c": "#fb7185"
+        }
+       ]
+      },
+      {
+       "t": "tabla",
+       "cab": [
+        "Medida",
+        "Valor",
+        "Cómo se interpreta"
+       ],
+       "filas": [
+        [
+         "R²",
+         "0,805",
+         "La recta explica el 80,5 % de la variación del consumo"
+        ],
+        [
+         "MAE",
+         "1,25 L/100 km",
+         "En promedio, la predicción se equivoca en 1,25 litros cada 100 km"
+        ],
+        [
+         "RMSE",
+         "1,73 L/100 km",
+         "Parecido al MAE, pero más sensible a los errores grandes"
+        ]
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "¿Es mucho o poco error?",
+       "x": "Un MAE de 1,25 sobre un consumo medio de 11,2 es un error del 11 %. Si predijéramos siempre la media (sin usar el peso), el error típico sería de 3,9 L/100 km: la recta lo reduce a menos de la mitad."
+      },
+      {
+       "t": "gauge",
+       "valor": 0.805,
+       "etq": "R² en coches de prueba · explica el 80 % de la variación"
+      },
+      {
+       "t": "graf",
+       "modo": "realpred",
+       "x": "Cada punto es un coche de prueba: consumo predicho (horizontal) frente a real (vertical). Sobre la diagonal, acierto perfecto."
+      },
+      {
+       "t": "leer",
+       "ver": "Cada punto compara lo que predijo la recta con el consumo real. La diagonal es el acierto perfecto; los puntos rojos fallan más que la tolerancia.",
+       "leer": "Cuanto más cerca de la diagonal, mejor. Mueve la tolerancia para ver qué porcentaje de coches cae dentro.",
+       "dice": "Con una tolerancia de ±1,5 L/100 km, unos 7 de cada 10 coches de prueba quedan dentro. Los puntos más alejados son coches con un consumo distinto al que sugiere su peso.",
+       "ojo": "Algunos coches se escapan mucho (hasta 7 L/100 km): el peso no lo explica todo."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "R²",
+         "0.8050"
+        ],
+        [
+         "RMSE",
+         "1.729 L/100 km"
+        ],
+        [
+         "MAE",
+         "1.249 L/100 km"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "¿Qué hace modelo.predict(X_test)?",
+      "ok": "Calcula el consumo estimado de los coches de prueba",
+      "mal": [
+       "Entrena el modelo",
+       "Descarga datos",
+       "Dibuja la nube"
+      ],
+      "exp": "predict aplica la recta."
+     },
+     {
+      "q": "¿Qué mide R²?",
+      "ok": "Cuánta variación del consumo explica la recta",
+      "mal": [
+       "El porcentaje de aciertos",
+       "El número de coches",
+       "El error en litros"
+      ],
+      "exp": "R² es la proporción de variación explicada."
+     },
+     {
+      "q": "R² = 0,805. ¿Qué significa?",
+      "ok": "Que la recta explica el 80,5 % de la variación del consumo",
+      "mal": [
+       "Que acierta el 80,5 % de los coches",
+       "Que el error es del 80,5 %",
+       "Que hay 80 coches"
+      ],
+      "exp": "No es un porcentaje de aciertos."
+     },
+     {
+      "q": "¿Qué es el MAE?",
+      "ok": "El error medio absoluto, en L/100 km",
+      "mal": [
+       "La media de los pesos",
+       "El número de errores",
+       "La pendiente"
+      ],
+      "exp": "Mean Absolute Error."
+     },
+     {
+      "q": "MAE = 1,25 L/100 km. ¿Cómo se interpreta?",
+      "ok": "En promedio, la predicción se equivoca en 1,25 litros cada 100 km",
+      "mal": [
+       "Acierta el 1,25 %",
+       "Consume 1,25 litros",
+       "El peso varía 1,25 kg"
+      ],
+      "exp": "Es el error típico en las unidades de la salida."
+     },
+     {
+      "q": "¿En qué se diferencia el RMSE del MAE?",
+      "ok": "El RMSE castiga más los errores grandes",
+      "mal": [
+       "Son idénticos",
+       "El RMSE no usa unidades",
+       "El MAE usa cuadrados"
+      ],
+      "exp": "RMSE eleva los errores al cuadrado."
+     },
+     {
+      "q": "¿Por qué evaluamos con los coches de prueba?",
+      "ok": "Porque no los ha visto: así el error es honesto",
+      "mal": [
+       "Porque son más fáciles",
+       "Porque son más nuevos",
+       "Porque pesan menos"
+      ],
+      "exp": "Preguntas nuevas = examen justo."
+     },
+     {
+      "q": "¿Qué error tendría el modelo más simple, «predecir siempre la media»?",
+      "ok": "Unos 3,9 L/100 km, bastante peor que el de la recta",
+      "mal": [
+       "Cero",
+       "Unos 0,1",
+       "El mismo"
+      ],
+      "exp": "La recta lo reduce a menos de la mitad."
+     },
+     {
+      "q": "Un MAE de 1,25 sobre un consumo medio de 11,2 L/100 km es un error de…",
+      "ok": "Aproximadamente el 11 %",
+      "mal": [
+       "1,25 %",
+       "50 %",
+       "Casi cero"
+      ],
+      "exp": "1,25 / 11,2 ≈ 0,11."
+     },
+     {
+      "q": "En el gráfico real–predicho, ¿qué significa que un punto esté sobre la diagonal?",
+      "ok": "Que la predicción coincide con el valor real",
+      "mal": [
+       "Que el coche es muy pesado",
+       "Que hay un error",
+       "Que falta dato"
+      ],
+      "exp": "Sobre la diagonal, predicho = real."
+     },
+     {
+      "q": "¿Qué dice el gráfico real–predicho sobre los coches alejados de la diagonal?",
+      "ok": "Que su consumo difiere mucho de lo que sugiere su peso",
+      "mal": [
+       "Que están mal medidos",
+       "Que son los más nuevos",
+       "Que no cuentan"
+      ],
+      "exp": "El peso no lo explica todo."
+     },
+     {
+      "q": "¿Qué puede explicar el 19 % de variación que no explica el peso?",
+      "ok": "Otras variables: motor, aerodinámica, año…",
+      "mal": [
+       "El azar del ordenador",
+       "Nada, es un error del programa",
+       "El color del coche"
+      ],
+      "exp": "La regresión simple deja fuera otras variables."
+     }
+    ]
+   }
+  },
+  "8": {
+   "titulo": "Mirar los errores y poner límites",
+   "fuente": "Cuaderno de Colab · Consumo de un coche según su peso (UCI nº 9, Auto MPG)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Dibujar la recta sobre los datos de prueba y representar los residuos (real − predicho)."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "plt.plot dibuja la recta; plt.scatter(y_pred, residuos) dibuja los errores; axhline marca el error cero."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "Un buen R² no basta. Si los errores forman un patrón (una curva, un abanico), la recta se deja algo sin explicar."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Conocer las limitaciones del modelo antes de fiarnos de él."
+        }
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Explicación sencilla",
+       "x": "Un residuo es la diferencia entre el consumo real y el que predijo la recta. Positivo: el coche consume más de lo previsto. Negativo: menos. Si la recta fuera suficiente, los residuos se repartirían al azar alrededor del cero, sin forma."
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Qué buscamos",
+       "x": "Tres señales de alarma: una curva (la relación no es lineal), un abanico (el error crece con el valor) o grupos separados (hay variables que no estamos usando)."
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "# 1) La recta sobre los coches de prueba\nx_linea = pd.DataFrame({\"Peso\": np.linspace(X[\"Peso\"].min(), X[\"Peso\"].max(), 100)})\ny_linea = modelo.predict(x_linea)\n\nplt.figure(figsize=(9, 5.5))\nplt.scatter(X_test[\"Peso\"], y_test, alpha=0.6, label=\"Datos reales\")\nplt.plot(x_linea[\"Peso\"], y_linea, color=\"red\", linewidth=2, label=\"Recta de regresión\")\nplt.xlabel(\"Peso del coche (kg)\")\nplt.ylabel(\"Consumo (L/100 km)\")\nplt.title(\"Modelo de regresión lineal simple\")\nplt.legend()\nplt.grid(True)\nplt.show()\n\n# 2) Los residuos: lo que se le escapa a la recta\nresiduos = y_test - y_pred\nplt.figure(figsize=(9, 4.5))\nplt.scatter(y_pred, residuos, alpha=0.6)\nplt.axhline(0, color=\"red\", linestyle=\"--\")       # línea de error cero\nplt.xlabel(\"Consumo predicho (L/100 km)\")\nplt.ylabel(\"Residuo (L/100 km)\")\nplt.title(\"Análisis de residuos\")\nplt.grid(True)\nplt.show()"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "x_linea = np.linspace(...)",
+         "100 pesos repartidos entre el mínimo y el máximo, para dibujar la recta."
+        ],
+        [
+         "plt.plot(x_linea, y_linea, color='red')",
+         "Dibuja la recta."
+        ],
+        [
+         "residuos = y_test - y_pred",
+         "Error de cada predicción: real − predicho."
+        ],
+        [
+         "plt.axhline(0, ...)",
+         "Línea de error cero."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/consumo-coche-peso.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 8.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "lo que debe salir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "h",
+       "x": "La recta sobre los datos"
+      },
+      {
+       "t": "lab",
+       "modo": "nube",
+       "rec": true,
+       "titulo": "La recta sobre los datos",
+       "x": "La recta verde es la que calculó el programa. Mira cómo se abren los puntos hacia la derecha."
+      },
+      {
+       "t": "leer",
+       "ver": "Los coches de la muestra y la recta calculada con los de entrenamiento.",
+       "leer": "Cuanto más pegados estén los puntos a la recta, mejor predice. Fíjate en cuánto se separan en cada zona.",
+       "dice": "En los coches ligeros (menos de 1.500 kg) los puntos están cerca de la recta; en los pesados se separan más.",
+       "ojo": "La recta pasa por el centro de los datos, pero hay coches que consumen bastante más o menos de lo que su peso sugiere."
+      },
+      {
+       "t": "h",
+       "x": "Los errores (residuos)"
+      },
+      {
+       "t": "lab",
+       "modo": "residuos",
+       "x": "Cada punto es el error de una predicción en los coches de prueba. La línea roja es error cero; las amarillas marcan donde cae el ≈ 95 % de los errores."
+      },
+      {
+       "t": "leer",
+       "ver": "Cada punto es el error de un coche de prueba (real − predicho) frente a lo que predijo la recta.",
+       "leer": "Si los puntos se reparten al azar alrededor de la línea roja, la recta es suficiente. Una curva o un abanico indican que falta algo.",
+       "dice": "Los errores están centrados en cero (error medio ≈ +0,1) y casi todos caen entre las líneas amarillas, pero se abren algo hacia la derecha: los coches pesados tienen errores mayores.",
+       "ojo": "El error medio en los coches ligeros es de ≈ 1,0 L/100 km y en los pesados, de ≈ 1,6: el modelo es menos preciso cuanto más pesa el coche."
+      },
+      {
+       "t": "graf",
+       "modo": "hist",
+       "var": "r",
+       "titulo": "Histograma de los errores",
+       "x": "Cuántos errores caen en cada tramo. Debería parecerse a una campana centrada en cero."
+      },
+      {
+       "t": "leer",
+       "ver": "Barras que cuentan cuántos errores caen en cada tramo.",
+       "leer": "Una campana centrada en cero y bastante simétrica indica que el modelo no se equivoca siempre en el mismo sentido.",
+       "dice": "La mayoría de los errores es pequeña, con una cola de pocos errores grandes (hasta 7 L/100 km).",
+       "ojo": "Con solo 80 coches de prueba la forma es irregular: no hay que sacar conclusiones demasiado finas."
+      },
+      {
+       "t": "h",
+       "x": "¿Cómo se ve un patrón?"
+      },
+      {
+       "t": "patrones"
+      },
+      {
+       "t": "leer",
+       "ver": "Tres formas típicas de residuos: al azar (bien), en curva (la relación no es una recta) y en abanico (el error crece).",
+       "leer": "Compara con el gráfico de residuos de arriba para ver a cuál se parece más.",
+       "dice": "El nuestro se parece al caso bueno, con un ligero abanico: el error crece algo con el consumo."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Error medio",
+         "≈ +0,11 L/100 km"
+        ],
+        [
+         "Desviación σ",
+         "≈ 1,74 L/100 km"
+        ],
+        [
+         "Error máximo",
+         "7,35 L/100 km"
+        ],
+        [
+         "Forma",
+         "centrada en 0, con ligero abanico hacia los coches pesados"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "¿Qué es un residuo?",
+      "ok": "La diferencia entre el valor real y el predicho",
+      "mal": [
+       "La pendiente",
+       "El peso del coche",
+       "El número de datos"
+      ],
+      "exp": "Residuo = real − predicho."
+     },
+     {
+      "q": "Un residuo positivo significa que…",
+      "ok": "El coche consume más de lo que predijo la recta",
+      "mal": [
+       "Consume menos",
+       "La predicción es perfecta",
+       "El peso es negativo"
+      ],
+      "exp": "Real mayor que predicho."
+     },
+     {
+      "q": "Si la recta fuera suficiente, ¿cómo se verían los residuos?",
+      "ok": "Repartidos al azar alrededor del cero, sin forma",
+      "mal": [
+       "En una curva",
+       "Todos positivos",
+       "En un abanico"
+      ],
+      "exp": "Sin patrón."
+     },
+     {
+      "q": "¿Qué indicaría una curva en los residuos?",
+      "ok": "Que la relación no es lineal",
+      "mal": [
+       "Que los datos son perfectos",
+       "Que sobran datos",
+       "Que R² es 1"
+      ],
+      "exp": "La recta no capta la curvatura."
+     },
+     {
+      "q": "¿Qué indicaría un abanico (los errores crecen hacia un lado)?",
+      "ok": "Que el error depende del valor: el modelo es menos preciso en esa zona",
+      "mal": [
+       "Que el modelo es perfecto",
+       "Que faltan filas",
+       "Que hay que quitar la recta"
+      ],
+      "exp": "Se llama heterocedasticidad."
+     },
+     {
+      "q": "¿Qué observamos en los residuos de este proyecto?",
+      "ok": "Centrados en cero, con errores algo mayores en los coches pesados",
+      "mal": [
+       "Una curva muy marcada",
+       "Todos iguales a cero",
+       "Todos positivos"
+      ],
+      "exp": "Ligero abanico hacia la derecha."
+     },
+     {
+      "q": "¿Qué dibuja la línea roja punteada en el gráfico de residuos?",
+      "ok": "El error cero",
+      "mal": [
+       "La recta de regresión",
+       "El máximo",
+       "La media del peso"
+      ],
+      "exp": "axhline(0)."
+     },
+     {
+      "q": "¿Por qué no basta con un buen R²?",
+      "ok": "Porque el R² puede ser alto y aun así haber patrones en los errores",
+      "mal": [
+       "Porque R² no sirve",
+       "Porque R² siempre es 1",
+       "Porque no se puede calcular"
+      ],
+      "exp": "Hay que mirar también los residuos."
+     },
+     {
+      "q": "¿Qué error máximo tuvo el modelo en los coches de prueba?",
+      "ok": "Unos 7,4 L/100 km",
+      "mal": [
+       "0",
+       "Unos 70 L/100 km",
+       "Unos 0,07"
+      ],
+      "exp": "Un coche se desvió mucho de su predicción."
+     },
+     {
+      "q": "¿Qué forma debería tener el histograma de los errores?",
+      "ok": "Una campana centrada en cero",
+      "mal": [
+       "Una sola barra",
+       "Una escalera",
+       "Una línea recta"
+      ],
+      "exp": "Errores pequeños frecuentes y grandes escasos."
+     },
+     {
+      "q": "¿Cuál es una limitación de este modelo?",
+      "ok": "Usa solo el peso y datos de coches de 1970–1982",
+      "mal": [
+       "Usa demasiados datos",
+       "Usa unidades equivocadas",
+       "Predice el peso"
+      ],
+      "exp": "No representa coches actuales y deja fuera otras variables."
+     },
+     {
+      "q": "¿Por qué no deberíamos usar este modelo para un coche eléctrico actual?",
+      "ok": "Porque los datos son de coches de gasolina antiguos y de otro tipo de motor",
+      "mal": [
+       "Porque pesan menos",
+       "Porque no tienen ruedas",
+       "Porque Python no lo permite"
+      ],
+      "exp": "Fuera del tipo de datos con los que aprendió."
+     }
+    ]
+   }
+  },
+  "9": {
+   "titulo": "Poner un rango a la predicción",
+   "fuente": "Cuaderno de Colab · Consumo de un coche según su peso (UCI nº 9, Auto MPG)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Predecir el consumo de un coche de 1.500 kg y dar un intervalo: «entre tanto y tanto, con un 95 % de confianza»."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "Con statsmodels (sm.OLS), que además de la recta calcula la incertidumbre: get_prediction(...).summary_frame(alpha=0.05)."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "Una predicción sin margen de error parece más segura de lo que es. Y solo debemos predecir dentro del rango de pesos que vimos (paso 3)."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Dar una respuesta honesta."
+        }
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Explicación sencilla",
+       "x": "El intervalo del 95 % dice: «si se probasen muchos coches de este peso, el consumo del 95 % de ellos caería entre estos dos valores». Es ancho porque cada coche tiene su propio motor y su propia aerodinámica."
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Atención",
+       "x": "Predecir fuera del rango de pesos (menos de 732 kg o más de 2.331 kg) es extrapolar: la recta sigue dando un número, pero no hay datos que lo respalden."
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "X_stats = sm.add_constant(X_train)               # statsmodels necesita la columna del intercepto («const»)\nmodelo_stats = sm.OLS(y_train, X_stats).fit()\n\nnueva = pd.DataFrame({\"const\": [1.0], \"Peso\": [1500.0]})            # queremos predecir para 1.500 kg\npred = modelo_stats.get_prediction(nueva).summary_frame(alpha=0.05)  # 95 % de confianza\n\nprint(\"Peso: 1500 kg\")\nprint(f\"Consumo estimado: {pred['mean'].iloc[0]:.1f} L/100 km\")\nprint(f\"Rango del 95 %:   de {pred['obs_ci_lower'].iloc[0]:.1f} a {pred['obs_ci_upper'].iloc[0]:.1f} L/100 km\")\nprint()\nprint(modelo_stats.summary().tables[1])\nprint()\nprint(f\"Rango de pesos con datos: {df['Peso'].min():.0f} a {df['Peso'].max():.0f} kg\")\nprint(\"¿1.500 kg está dentro del rango?\", df['Peso'].min() <= 1500 <= df['Peso'].max())"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "sm.add_constant(X_train)",
+         "Añade la columna del intercepto («const»)."
+        ],
+        [
+         "sm.OLS(y_train, X_stats).fit()",
+         "Ajusta la recta con statsmodels."
+        ],
+        [
+         "get_prediction(nueva)",
+         "Predice para el coche nuevo."
+        ],
+        [
+         "summary_frame(alpha=0.05)",
+         "Da el intervalo del 95 %."
+        ],
+        [
+         "obs_ci_lower / obs_ci_upper",
+         "Límites inferior y superior de un coche individual."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/consumo-coche-peso.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 9.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "lo que debe salir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "salida",
+       "x": "Peso: 1500 kg\nConsumo estimado: 12.6 L/100 km\nRango del 95 %:   de 8.9 a 16.2 L/100 km\n\n==============================================================================\n                 coef    std err          t      P>|t|      [0.025      0.975]\n------------------------------------------------------------------------------\nconst         -0.9581      0.379     -2.527      0.012      -1.704      -0.212\nPeso           0.0090      0.000     33.284      0.000       0.008       0.010\n==============================================================================\n\nRango de pesos con datos: 732 a 2331 kg\n¿1.500 kg está dentro del rango? True"
+      },
+      {
+       "t": "kpis",
+       "items": [
+        {
+         "v": "12,6 L/100 km",
+         "x": "consumo estimado a 1.500 kg",
+         "c": "#4ade80"
+        },
+        {
+         "v": "8,9 L/100 km",
+         "x": "límite inferior (95 %)",
+         "c": "#fbbf24"
+        },
+        {
+         "v": "16,2 L/100 km",
+         "x": "límite superior (95 %)",
+         "c": "#fbbf24"
+        }
+       ]
+      },
+      {
+       "t": "tabla",
+       "cab": [
+        "Dato",
+        "Valor",
+        "Qué significa"
+       ],
+       "filas": [
+        [
+         "Estimación",
+         "12,6 L/100 km",
+         "Lo que da la recta a 1.500 kg"
+        ],
+        [
+         "Rango del 95 %",
+         "8,9 a 16,2 L/100 km",
+         "Margen para un coche concreto"
+        ],
+        [
+         "Pendiente (95 %)",
+         "0,008 a 0,010",
+         "La pendiente es claramente positiva"
+        ],
+        [
+         "Rango de pesos",
+         "732 a 2.331 kg",
+         "1.500 kg está dentro: se puede fiar"
+        ]
+       ]
+      },
+      {
+       "t": "etq",
+       "k": "sencilla",
+       "titulo": "Cómo se lee",
+       "x": "El rango es amplio (±3,6 L/100 km): un coche de 1.500 kg puede consumir desde 9 hasta 16 litros. El peso orienta, pero no decide."
+      },
+      {
+       "t": "graf",
+       "modo": "banda",
+       "x": "Mueve el peso: la predicción es el punto blanco y su rango del 95 %, la barra amarilla. Prueba con 2.400 kg."
+      },
+      {
+       "t": "leer",
+       "ver": "La recta con su banda del 95 % y, sobre ella, un coche de peso elegido por ti.",
+       "leer": "Mueve el deslizador. Dentro del rango de datos, el punto blanco es la predicción y la barra amarilla su margen. Fuera del rango, aparece un aviso.",
+       "dice": "A 1.500 kg: 12,6 L/100 km, entre 8,9 y 16,2. La banda se ensancha en los extremos, donde hay menos coches.",
+       "ojo": "Con 2.400 kg la recta da ≈ 20,7 L/100 km, pero no hay ningún coche tan pesado en los datos: es una extrapolación."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Consumo a 1.500 kg",
+         "12.6 L/100 km"
+        ],
+        [
+         "Rango del 95 %",
+         "8.9 a 16.2 L/100 km"
+        ],
+        [
+         "¿Dentro del rango?",
+         "True"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "¿Qué da el intervalo del 95 %?",
+      "ok": "Un margen en el que cae el consumo del 95 % de los coches de ese peso",
+      "mal": [
+       "Un error del 95 %",
+       "El peso exacto",
+       "La pendiente"
+      ],
+      "exp": "Es un margen de incertidumbre."
+     },
+     {
+      "q": "¿Qué estimó el modelo para 1.500 kg?",
+      "ok": "Unos 12,6 L/100 km",
+      "mal": [
+       "Unos 6 L/100 km",
+       "Unos 20 L/100 km",
+       "Unos 1.500"
+      ],
+      "exp": "Es la predicción puntual."
+     },
+     {
+      "q": "¿Entre qué valores queda el rango del 95 % para 1.500 kg?",
+      "ok": "Entre 8,9 y 16,2 L/100 km",
+      "mal": [
+       "Entre 12 y 13",
+       "Entre 0 y 30",
+       "Entre 11,6 y 13,6"
+      ],
+      "exp": "Es un margen amplio."
+     },
+     {
+      "q": "¿Por qué el intervalo es tan ancho?",
+      "ok": "Porque el peso no explica todo el consumo: el motor y otros factores también influyen",
+      "mal": [
+       "Porque hay un error",
+       "Porque hay pocos decimales",
+       "Porque R² es 1"
+      ],
+      "exp": "Los coches del mismo peso consumen distinto."
+     },
+     {
+      "q": "¿Qué significa predecir fuera del rango de datos?",
+      "ok": "Extrapolar: dar un número sin datos que lo respalden",
+      "mal": [
+       "Predecir mejor",
+       "Aumentar R²",
+       "Usar más datos"
+      ],
+      "exp": "Fuera del rango no hay garantías."
+     },
+     {
+      "q": "¿Es fiable predecir para un coche de 2.500 kg con este modelo?",
+      "ok": "No: está por encima del máximo de datos (2.331 kg)",
+      "mal": [
+       "Sí, siempre",
+       "Sí, es lo más fiable",
+       "Solo si R² es 1"
+      ],
+      "exp": "Es extrapolación."
+     },
+     {
+      "q": "¿Para qué sirve sm.add_constant?",
+      "ok": "Para añadir la columna del intercepto",
+      "mal": [
+       "Para sumar constantes",
+       "Para dibujar",
+       "Para descargar datos"
+      ],
+      "exp": "statsmodels no añade el intercepto por sí solo."
+     },
+     {
+      "q": "¿Por qué se ensancha la banda en los extremos del peso?",
+      "ok": "Porque ahí hay menos datos y más incertidumbre",
+      "mal": [
+       "Por un error gráfico",
+       "Porque hay más datos",
+       "Porque la recta se dobla"
+      ],
+      "exp": "Menos datos, más incertidumbre."
+     },
+     {
+      "q": "¿Qué dice el intervalo de la pendiente (0,008 a 0,010)?",
+      "ok": "Que la pendiente es positiva con claridad: no incluye el cero",
+      "mal": [
+       "Que no hay relación",
+       "Que es negativa",
+       "Que no se puede calcular"
+      ],
+      "exp": "Si incluyera el cero, no habría relación segura."
+     },
+     {
+      "q": "¿Qué es mejor, dar solo 12,6 o dar 12,6 con el rango?",
+      "ok": "Con el rango: es más honesto",
+      "mal": [
+       "Solo 12,6",
+       "Da igual",
+       "Ocultar el rango"
+      ],
+      "exp": "Una predicción sin margen parece más segura de lo que es."
+     },
+     {
+      "q": "¿Qué significa alpha=0.05?",
+      "ok": "Que el intervalo tiene un 95 % de confianza",
+      "mal": [
+       "Que hay un 5 % de datos",
+       "Que R² = 0,05",
+       "Que se usan 5 coches"
+      ],
+      "exp": "1 − 0,05 = 0,95."
+     },
+     {
+      "q": "¿1.500 kg está dentro del rango de datos?",
+      "ok": "Sí, entre 732 y 2.331 kg",
+      "mal": [
+       "No, es demasiado ligero",
+       "No, es demasiado pesado",
+       "No se sabe"
+      ],
+      "exp": "Se puede fiar de la predicción."
+     }
+    ]
+   }
+  },
+  "10": {
+   "titulo": "Contar el resultado en cinco frases",
+   "fuente": "Cuaderno de Colab · Consumo de un coche según su peso (UCI nº 9, Auto MPG)",
+   "intro": "Sigue las seis secciones en orden: entiende, mira el código, ejecútalo en Colab, compara el resultado e interprétalo con el test.",
+   "secciones": [
+    {
+     "icono": "📖",
+     "titulo": "Explicación",
+     "sub": "qué hacemos y por qué",
+     "c": "#38bdf8",
+     "bloques": [
+      {
+       "t": "cards",
+       "items": [
+        {
+         "t": "🎯 Qué hacemos",
+         "x": "Resumir todo el proyecto con una plantilla de 5 frases: pregunta, datos, resultado, limitaciones y conclusión."
+        },
+        {
+         "t": "🔧 Cómo",
+         "x": "El cuaderno rellena la plantilla con tus propios números."
+        },
+        {
+         "t": "💡 Por qué",
+         "x": "Saber contar un resultado a otra persona es tan importante como calcularlo."
+        },
+        {
+         "t": "✅ Para qué",
+         "x": "Copiar este texto en tu informe, en un correo o en la web."
+        }
+       ]
+      },
+      {
+       "t": "tabla",
+       "cab": [
+        "#",
+        "Frase",
+        "Qué debe incluir"
+       ],
+       "filas": [
+        [
+         "1",
+         "Pregunta",
+         "¿qué queríamos saber?"
+        ],
+        [
+         "2",
+         "Datos",
+         "cuántos registros, qué variables y qué rango"
+        ],
+        [
+         "3",
+         "Resultado",
+         "la recta con unidades y el R², explicado"
+        ],
+        [
+         "4",
+         "Limitaciones",
+         "rango de validez y lo que el modelo no sabe"
+        ],
+        [
+         "5",
+         "Conclusión",
+         "respuesta a la pregunta, con cautela"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "💻",
+     "titulo": "Código",
+     "sub": "cada línea comentada",
+     "c": "#a78bfa",
+     "bloques": [
+      {
+       "t": "code",
+       "titulo": "Código Python",
+       "x": "rango_ini, rango_fin = df[\"Peso\"].min(), df[\"Peso\"].max()\nsigno = \"sube\" if pendiente > 0 else \"baja\"\n\nprint(\"1. Pregunta: ¿cuánto consume un coche según su peso?\")\nprint(f\"2. Datos: {len(df)} coches reales de 1970 a 1982, con pesos entre {rango_ini:.0f} y {rango_fin:.0f} kg.\")\nprint(f\"3. Resultado: por cada 100 kg más, el consumo {signo} unos {abs(pendiente)*100:.2f} L/100 km (R² = {r2:.2f}: el peso explica el {r2*100:.0f} % de la variación).\")\nprint(f\"4. Limitaciones: solo es fiable entre {rango_ini:.0f} y {rango_fin:.0f} kg; son coches antiguos y con una sola variable no explica todo (motor, aerodinámica, año...).\")\nprint(f\"5. Conclusión: un coche de 1.500 kg consumiría unos {pred['mean'].iloc[0]:.1f} L/100 km, con un error típico de {mae:.1f} L/100 km (MAE).\")"
+      },
+      {
+       "t": "lineas",
+       "filas": [
+        [
+         "signo = 'sube' if pendiente > 0 else 'baja'",
+         "Elige la palabra correcta según el signo de la pendiente."
+        ],
+        [
+         "f'...{pendiente*100:.2f}...'",
+         "Mete tus números dentro de la frase."
+        ],
+        [
+         "abs(pendiente)",
+         "Valor absoluto: quita el signo."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "▶",
+     "titulo": "Ejecutar",
+     "sub": "en Google Colab",
+     "c": "#fbbf24",
+     "bloques": [
+      {
+       "t": "colab",
+       "url": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/consumo-coche-peso.ipynb",
+       "pasos": [
+        "Abre el cuaderno con el botón. Si Colab te lo pide, pulsa «Abrir» y accede con tu cuenta de Google (es gratis).",
+        "Ejecuta las celdas de arriba abajo con ▶ (o Mayús + Intro): primero la de «Preparación» y después las de cada paso hasta el paso 10.",
+        "Compara lo que sale con el resultado de abajo."
+       ]
+      }
+     ]
+    },
+    {
+     "icono": "📊",
+     "titulo": "Resultado",
+     "sub": "lo que debe salir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "salida",
+       "x": "1. Pregunta: ¿cuánto consume un coche según su peso?\n2. Datos: 398 coches reales de 1970 a 1982, con pesos entre 732 y 2331 kg.\n3. Resultado: por cada 100 kg más, el consumo sube unos 0.90 L/100 km (R² = 0.81: el peso explica el 81 % de la variación).\n4. Limitaciones: solo es fiable entre 732 y 2331 kg; son coches antiguos y con una sola variable no explica todo (motor, aerodinámica, año...).\n5. Conclusión: un coche de 1.500 kg consumiría unos 12.6 L/100 km, con un error típico de 1.2 L/100 km (MAE)."
+      },
+      {
+       "t": "etq",
+       "k": "atencion",
+       "titulo": "Frase que no debes escribir",
+       "x": "«El peso es la única causa del consumo.» La regresión simple muestra una relación, no prueba la causa única."
+      },
+      {
+       "t": "etq",
+       "k": "nota",
+       "titulo": "Retos para consolidar",
+       "x": "1) Básico: cambia 1.500 kg por 1.000, 1.200, 1.800 y 2.000 kg y compara las predicciones. 2) Intermedio: cambia test_size (0.30, 0.10) y mira cómo cambian R², RMSE y MAE. 3) Avanzado: repite el proyecto con millas por galón como salida y compara R² y residuos."
+      },
+      {
+       "t": "gauge",
+       "valor": 0.805,
+       "etq": "R² en coches de prueba · explica el 80 % de la variación"
+      },
+      {
+       "t": "graf",
+       "modo": "banda",
+       "x": "Y la predicción con su rango, como la contarías en la frase 5."
+      }
+     ]
+    },
+    {
+     "icono": "✅",
+     "titulo": "Comprueba tu resultado",
+     "sub": "debe coincidir",
+     "c": "#4ade80",
+     "bloques": [
+      {
+       "t": "esperado",
+       "items": [
+        [
+         "Por cada 100 kg",
+         "+0,90 L/100 km"
+        ],
+        [
+         "R²",
+         "0.81"
+        ],
+        [
+         "A 1.500 kg",
+         "12.6 L/100 km"
+        ],
+        [
+         "Error típico (MAE)",
+         "1.2 L/100 km"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "test": {
+    "aprobado": 70,
+    "cuantas": 10,
+    "preguntas": [
+     {
+      "q": "¿Cuántas frases tiene la plantilla del informe?",
+      "ok": "Cinco",
+      "mal": [
+       "Tres",
+       "Diez",
+       "Una"
+      ],
+      "exp": "Pregunta, datos, resultado, limitaciones y conclusión."
+     },
+     {
+      "q": "¿Cuál es el orden de las cinco frases?",
+      "ok": "Pregunta, datos, resultado, limitaciones, conclusión",
+      "mal": [
+       "Conclusión, datos, pregunta, resultado, limitaciones",
+       "Resultado, pregunta, conclusión, datos, limitaciones",
+       "Datos, conclusión, pregunta, limitaciones, resultado"
+      ],
+      "exp": "Va de lo que queríamos saber a lo que hemos concluido."
+     },
+     {
+      "q": "¿Qué frase de resultado es correcta?",
+      "ok": "«Por cada 100 kg más, el consumo sube unos 0,90 L/100 km (R² = 0,81)»",
+      "mal": [
+       "«El modelo acierta el 81 % de las veces»",
+       "«El peso causa el 81 % del consumo»",
+       "«Por cada litro más, el peso sube 0,9 kg»"
+      ],
+      "exp": "Pendiente con unidades y R² bien explicado."
+     },
+     {
+      "q": "¿Qué debe decir la frase de limitaciones?",
+      "ok": "Que es fiable solo entre ≈ 730 y 2.330 kg, con coches antiguos y una sola variable",
+      "mal": [
+       "Que el modelo es perfecto",
+       "Que no hay limitaciones",
+       "Que hay que usar más pantalla"
+      ],
+      "exp": "Hay que ser honesto con lo que el modelo no sabe."
+     },
+     {
+      "q": "¿Por qué incluir el rango de pesos en el informe?",
+      "ok": "Para que el lector sepa dónde es fiable el modelo",
+      "mal": [
+       "Para rellenar",
+       "Porque lo pide Python",
+       "Para que R² sea mayor"
+      ],
+      "exp": "Fuera del rango no debe usarse."
+     },
+     {
+      "q": "La conclusión debe…",
+      "ok": "Responder a la pregunta inicial, con la cautela debida",
+      "mal": [
+       "Prometer que el modelo es perfecto",
+       "Repetir el código",
+       "Ocultar el error"
+      ],
+      "exp": "Respuesta + honestidad."
+     },
+     {
+      "q": "¿Qué error típico se cita en la conclusión?",
+      "ok": "El MAE: unos 1,2 L/100 km",
+      "mal": [
+       "El R²",
+       "La pendiente",
+       "El número de datos"
+      ],
+      "exp": "El MAE se entiende bien: error medio en las unidades del problema."
+     },
+     {
+      "q": "¿Qué predicción da el informe para 1.500 kg?",
+      "ok": "Unos 12,6 L/100 km",
+      "mal": [
+       "Unos 6 L/100 km",
+       "Unos 25 L/100 km",
+       "Unos 1,2 L/100 km"
+      ],
+      "exp": "Es la predicción puntual del paso 9."
+     },
+     {
+      "q": "¿Qué frase NO deberías escribir en un informe de este proyecto?",
+      "ok": "«El peso es la única causa del consumo»",
+      "mal": [
+       "«Existe una relación positiva y fuerte»",
+       "«El modelo es válido entre 730 y 2.330 kg»",
+       "«A 1.500 kg estimamos unos 12,6 L/100 km»"
+      ],
+      "exp": "Una regresión simple no demuestra causa única."
+     },
+     {
+      "q": "¿Qué reto avanzado se propone?",
+      "ok": "Repetir con millas por galón y comparar R² y residuos",
+      "mal": [
+       "Quitar el peso",
+       "Dibujar más gráficos",
+       "Cambiar de coche"
+      ],
+      "exp": "Así se ve por qué conviene L/100 km."
+     },
+     {
+      "q": "¿Por qué es importante saber contar un resultado?",
+      "ok": "Porque un resultado que nadie entiende no sirve para decidir",
+      "mal": [
+       "Porque Python lo exige",
+       "Porque se ven más datos",
+       "Porque así R² sube"
+      ],
+      "exp": "Comunicar bien es parte del trabajo."
+     },
+     {
+      "q": "Si cambias test_size a 0.30 (reto intermedio), ¿qué esperas ver?",
+      "ok": "Que R², RMSE y MAE cambian un poco al evaluar con otros coches",
+      "mal": [
+       "Que la pendiente se vuelva negativa",
+       "Que desaparezca la correlación",
+       "Que los datos aumenten"
+      ],
+      "exp": "Otro reparto = otros datos de prueba = métricas ligeramente distintas."
+     }
+    ]
+   }
+  }
  }
 }

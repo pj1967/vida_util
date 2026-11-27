@@ -783,37 +783,33 @@
     {
       "id": "consumo-coche-peso",
       "titulo": "Consumo de un coche según su peso",
-      "estado": "idea",
+      "estado": "proximo",
       "nivel": "basico",
       "area": "ingeniería",
       "tipo": "Regresión",
       "tecnica": "Regresión lineal simple",
-      "descripcion": "Estimar el consumo (millas por galón) a partir del peso del vehículo.",
+      "descripcion": "Predecir cuántos litros cada 100 km consume un coche a partir de una sola variable: su peso.",
       "dataset": {
         "nombre": "Auto MPG (UCI)",
         "url": "https://archive.ics.uci.edu/dataset/9/auto+mpg",
-        "verificado": false
+        "verificado": true
       },
-      "objetivo": "Repetir la regresión simple con otro conjunto de datos y aprender a detectar valores raros.",
-      "datos": "Datos reales de coches de los años 70 y 80: consumo, peso, cilindrada, potencia y año.",
+      "objetivo": "Repetir la regresión lineal simple con otro conjunto de datos, aprender a convertir unidades y descubrir por qué el consumo se mide mejor en litros cada 100 km que en millas por galón.",
+      "datos": "398 modelos de coche reales de 1970 a 1982 (EE. UU., Europa y Japón): peso, consumo, cilindrada, potencia, año y procedencia. Aquí usamos solo el peso (entrada, convertido a kg) y el consumo (salida, convertido a litros cada 100 km). Licencia CC BY 4.0.",
       "herramientas": [
         "Python",
         "pandas",
         "matplotlib",
         "scikit-learn"
       ],
-      "metrica": "R², RMSE y MAE.",
-      "esquema": [
-        "Cargar el conjunto y tratar los valores que faltan.",
-        "Dibujar consumo frente a peso.",
-        "Ajustar la recta y evaluar con datos de prueba.",
-        "Probar si una curva ajusta mejor que una recta.",
-        "Anotar los límites del modelo."
-      ],
-      "resultados": "Pendiente.",
-      "limitaciones": "Coches antiguos: no representan los actuales.",
-      "codigo": "",
-      "entrega": {},
+      "metrica": "R² (cuánta variación explica la recta), RMSE y MAE (error medio en litros cada 100 km).",
+      "esquema": null,
+      "resultados": "La recta ajustada es consumo = 0,00902 × peso − 0,958. Por cada 100 kg más, el coche consume unos 0,90 L/100 km más. Con coches de prueba (que el modelo no vio): R² = 0,81 (la recta explica el 81 % de la variación), RMSE = 1,73 L/100 km y MAE = 1,25 L/100 km. Para un coche de 1.500 kg estima 12,6 L/100 km, con un rango del 95 % de 8,9 a 16,2.",
+      "limitaciones": "Son coches de 1970–1982: no representan los actuales (motores, aerodinámica, eléctricos). Usa solo el peso, así que no distingue entre dos coches del mismo peso con motores distintos (el rango de la predicción es amplio, ±3,6 L/100 km). Solo es fiable entre 732 y 2.331 kg, y los errores son algo mayores en los coches más pesados. Son pocos datos (398; 80 de prueba), por lo que las métricas varían un poco si cambia el reparto.",
+      "codigo": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/consumo-coche-peso.ipynb",
+      "entrega": {
+        "notebook": "https://colab.research.google.com/github/pj1967/vida_util/blob/main/consumo-coche-peso.ipynb"
+      },
       "noticias_palabras": [
         "consumo",
         "eficiencia",
@@ -821,7 +817,330 @@
       ],
       "bloque": "regresion",
       "tiempo": "45 min",
-      "dificultad": 2
+      "dificultad": 2,
+      "flujo": {
+        "entrada": [
+          "⚖️",
+          "Peso",
+          "entrada (x) · kg"
+        ],
+        "modelo": [
+          "⚙️",
+          "Recta",
+          "y = m·x + b"
+        ],
+        "salida": [
+          "⛽",
+          "Consumo",
+          "salida (y) · L/100 km"
+        ]
+      },
+      "registros": "398 registros reales · UCI",
+      "conclusion": "El peso por sí solo explica cerca del 81 % de la variación del consumo, con un error típico de 1,25 L/100 km. Para afinar más hay que sumar variables como la potencia o la cilindrada (regresión múltiple).",
+      "graficos_texto": [
+        [
+          "1 · Nube de puntos",
+          "Cada punto es un coche. La nube sube: a más peso, más consumo, y casi en línea recta."
+        ],
+        [
+          "2 · Recta de regresión",
+          "La recta calculada con los coches de entrenamiento y dibujada sobre los de prueba. Cuanto más pegados, mejor predice."
+        ],
+        [
+          "3 · Análisis de residuos",
+          "El error de cada predicción (real − predicho). Se reparte alrededor del cero, pero se abre un poco con los coches pesados."
+        ]
+      ],
+      "pasos": [
+        {
+          "titulo": "Entender qué es una regresión lineal simple",
+          "que": "Saber qué vamos a calcular.",
+          "como": "Buscamos una recta: consumo = pendiente × peso + ordenada. La pendiente dice cuántos litros cada 100 km cambia el consumo por cada kilo; la ordenada es el punto de partida.",
+          "porque": "Es el modelo más sencillo que existe: si una recta basta, no hace falta nada más complicado.",
+          "para": "Tener claro qué significan los dos números que saldrán al final.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 9,
+              "t": "La recta: y = m·x + b"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 10,
+              "t": "Cómo se encuentra la mejor recta"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.2",
+              "p": 9,
+              "t": "¿Por qué «mínimos cuadrados»?"
+            }
+          ]
+        },
+        {
+          "titulo": "Descargar y abrir los datos",
+          "que": "Traer la tabla de coches y quedarnos con peso y consumo.",
+          "como": "Con ucimlrepo se descarga el conjunto nº 9 de UCI. El peso viene en libras y el consumo en millas por galón: los pasamos a kilos y litros cada 100 km.",
+          "porque": "Antes de analizar nada hay que saber con qué se trabaja, y en qué unidades.",
+          "para": "Tener la tabla en Python, lista para usar.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 6,
+              "t": "Qué es un dataset: la tabla de datos"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.3",
+              "p": 5,
+              "t": "El archivo CSV y sus separadores"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.3",
+              "p": 7,
+              "t": "Los «supermercados» de datos y la ficha de un dataset"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.3",
+              "p": 8,
+              "t": "Primera carga y pandas en diez minutos"
+            }
+          ]
+        },
+        {
+          "titulo": "Revisar la tabla",
+          "que": "Mirar nombres, rangos y huecos.",
+          "como": "head() enseña las primeras filas, describe() resume los números e isna() cuenta los huecos. Anota el peso mínimo y máximo.",
+          "porque": "Un modelo solo es fiable dentro del rango de datos con el que aprendió.",
+          "para": "Conocer el rango de pesos (732 a 2.331 kg) y comprobar que no faltan datos.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 6,
+              "t": "Los cinco comandos que usarás siempre"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.3",
+              "p": 9,
+              "t": "EDA en cinco preguntas"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.3",
+              "p": 11,
+              "t": "Valores que faltan"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.3",
+              "p": 13,
+              "t": "Nulos disfrazados"
+            }
+          ]
+        },
+        {
+          "titulo": "Dibujar el diagrama de dispersión",
+          "que": "Ver la relación entre peso y consumo.",
+          "como": "Un punto por coche con plt.scatter, y la correlación como número resumen.",
+          "porque": "Hay que mirar antes de calcular: si la nube no sube en línea más o menos recta, una recta no sirve.",
+          "para": "Comprobar que más peso significa más consumo y que una recta tiene sentido.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 8,
+              "t": "Mirar antes de calcular: el gráfico de dispersión"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 19,
+              "t": "Tus propios gráficos con matplotlib"
+            }
+          ]
+        },
+        {
+          "titulo": "Separar entrenamiento y prueba",
+          "que": "Reservar coches para examinar al modelo.",
+          "como": "train_test_split deja el 80 % para entrenar y el 20 % para probar, al azar y siempre igual (random_state=42).",
+          "porque": "Evaluar con los mismos coches con los que aprendió daría un resultado demasiado optimista.",
+          "para": "Medir con honestidad cuánto se equivoca ante coches que no ha visto.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.8",
+              "p": 8,
+              "t": "Train/test: no te examines con las preguntas que ya viste"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.4",
+              "p": 6,
+              "t": "La división train/test no es neutra (nivel medio)"
+            }
+          ]
+        },
+        {
+          "titulo": "Ajustar la recta",
+          "que": "Calcular la mejor recta.",
+          "como": "LinearRegression().fit() aplica mínimos cuadrados con los coches de entrenamiento.",
+          "porque": "De todas las rectas posibles, la mejor deja el menor error total.",
+          "para": "Obtener la pendiente y el intercepto del modelo.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 13,
+              "t": "Tu primer proyecto completo"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 14,
+              "t": "El código, línea a línea"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.2",
+              "p": 11,
+              "t": "La fórmula de la pendiente y el intercepto, a mano"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.2",
+              "p": 17,
+              "t": "Qué significan m y b"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.3",
+              "p": 14,
+              "t": "Tu primer modelo: una recta"
+            }
+          ]
+        },
+        {
+          "titulo": "Evaluar con datos nuevos",
+          "que": "Medir el error con los coches de prueba.",
+          "como": "predict() da las predicciones y R², RMSE y MAE miden cuánto se equivoca.",
+          "porque": "Un modelo sin evaluar no sirve para decidir nada.",
+          "para": "Saber si el modelo es fiable y cuánto se equivoca.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 12,
+              "t": "R²: ¿cuánto explica la recta?"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.8",
+              "p": 9,
+              "t": "El modelo de referencia («el tonto»)"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.4",
+              "p": 4,
+              "t": "Las métricas, a fondo (nivel medio)"
+            }
+          ]
+        },
+        {
+          "titulo": "Mirar los errores y poner límites",
+          "que": "Estudiar los residuos y las limitaciones.",
+          "como": "Dibujamos la recta sobre los datos y los residuos (real − predicho) frente a la predicción.",
+          "porque": "Un buen R² no basta: si los errores forman un patrón, la recta se deja algo sin explicar.",
+          "para": "Conocer en qué casos no conviene fiarse del modelo.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.5",
+              "p": 4,
+              "t": "¿Por qué diagnosticar? El cuarteto de Anscombe"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.5",
+              "p": 5,
+              "t": "Los 4 gráficos de diagnóstico"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 15,
+              "t": "Interpolar sí, extrapolar con cuidado"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 22,
+              "t": "Los 8 errores típicos del principiante"
+            }
+          ]
+        },
+        {
+          "titulo": "Poner un rango a la predicción",
+          "que": "Dar una predicción honesta, con su margen.",
+          "como": "Con statsmodels se calcula el intervalo del 95 % para un coche de 1.500 kg.",
+          "porque": "Una predicción sin margen parece más segura de lo que es.",
+          "para": "Responder «entre tanto y tanto», dentro del rango de pesos con datos.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.8",
+              "p": 5,
+              "t": "Los dos intervalos en un ejemplo"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.8",
+              "p": 6,
+              "t": "De dónde sale el «+1»"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.9",
+              "p": 5,
+              "t": "Error estándar, t y p-valor"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.9",
+              "p": 7,
+              "t": "El intervalo de confianza"
+            }
+          ]
+        },
+        {
+          "titulo": "Contar el resultado en cinco frases",
+          "que": "Explicar el resultado a otra persona.",
+          "como": "El cuaderno rellena una plantilla de cinco frases: pregunta, datos, resultado, limitaciones y conclusión.",
+          "porque": "Saber contar un resultado es tan importante como calcularlo.",
+          "para": "Tener un texto listo para un informe o para la web.",
+          "ayuda": [
+            {
+              "r": "modulo-1",
+              "s": "1.1",
+              "p": 23,
+              "t": "Cómo contar tus resultados: informe en 5 frases"
+            },
+            {
+              "r": "modulo-1",
+              "s": "1.7",
+              "p": 11,
+              "t": "Qué decir al cliente"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "hormigon-cemento",
