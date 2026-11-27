@@ -853,29 +853,29 @@
       ],
       "pasos": [
         {
-          "titulo": "Entender qué es una regresión lineal simple",
-          "que": "Saber qué vamos a calcular.",
-          "como": "Buscamos una recta: consumo = pendiente × peso + ordenada. La pendiente dice cuántos litros cada 100 km cambia el consumo por cada kilo; la ordenada es el punto de partida.",
-          "porque": "Es el modelo más sencillo que existe: si una recta basta, no hace falta nada más complicado.",
-          "para": "Tener claro qué significan los dos números que saldrán al final.",
+          "titulo": "Repaso, métricas y datos reales: qué vamos a calcular",
+          "que": "Repasar lo esencial y saber cómo se medirá el error.",
+          "como": "Repasamos la recta, R², RMSE y MAE, el ejercicio «peso del coche y consumo» del libro, qué hacer con los datos que faltan y por qué importan las unidades.",
+          "porque": "En datos reales hay huecos, unidades de otro país y relaciones que se curvan: conviene saberlo antes de modelar.",
+          "para": "Llegar al código sabiendo qué vamos a medir y qué problemas pueden aparecer.",
           "ayuda": [
             {
-              "r": "modulo-1",
+              "r": "modulo-1-medio",
               "s": "1.1",
-              "p": 9,
-              "t": "La recta: y = m·x + b"
+              "p": 5,
+              "t": "Objetivos, requisitos y repaso esencial"
             },
             {
-              "r": "modulo-1",
+              "r": "modulo-1-medio",
               "s": "1.1",
-              "p": 10,
-              "t": "Cómo se encuentra la mejor recta"
+              "p": 8,
+              "t": "Ejercicio 2 · Peso del coche y consumo (estilo UCI)"
             },
             {
-              "r": "modulo-1",
-              "s": "1.2",
-              "p": 9,
-              "t": "¿Por qué «mínimos cuadrados»?"
+              "r": "modulo-1-medio",
+              "s": "1.1",
+              "p": 15,
+              "t": "Limpieza de datos: valores que faltan, eliminar o rellenar"
             }
           ]
         },
@@ -887,28 +887,22 @@
           "para": "Tener la tabla en Python, lista para usar.",
           "ayuda": [
             {
-              "r": "modulo-1",
+              "r": "modulo-1-medio",
               "s": "1.1",
-              "p": 6,
-              "t": "Qué es un dataset: la tabla de datos"
-            },
-            {
-              "r": "modulo-1",
-              "s": "1.3",
-              "p": 5,
-              "t": "El archivo CSV y sus separadores"
-            },
-            {
-              "r": "modulo-1",
-              "s": "1.3",
-              "p": 7,
-              "t": "Los «supermercados» de datos y la ficha de un dataset"
-            },
-            {
-              "r": "modulo-1",
-              "s": "1.3",
               "p": 8,
-              "t": "Primera carga y pandas en diez minutos"
+              "t": "Ejercicio 2 · Peso del coche y consumo (estilo UCI)"
+            },
+            {
+              "r": "modulo-1-medio",
+              "s": "1.1",
+              "p": 16,
+              "t": "Unidades y diccionarios de datos: leer el README"
+            },
+            {
+              "r": "modulo-1-medio",
+              "s": "1.3",
+              "p": 13,
+              "t": "Auto MPG: estrategias de limpieza y sus riesgos"
             }
           ]
         },
@@ -920,28 +914,16 @@
           "para": "Conocer el rango de pesos (732 a 2.331 kg) y comprobar que no faltan datos.",
           "ayuda": [
             {
-              "r": "modulo-1",
+              "r": "modulo-1-medio",
               "s": "1.1",
-              "p": 6,
-              "t": "Los cinco comandos que usarás siempre"
+              "p": 15,
+              "t": "Limpieza de datos: valores que faltan, eliminar o rellenar"
             },
             {
-              "r": "modulo-1",
-              "s": "1.3",
-              "p": 9,
-              "t": "EDA en cinco preguntas"
-            },
-            {
-              "r": "modulo-1",
-              "s": "1.3",
-              "p": 11,
-              "t": "Valores que faltan"
-            },
-            {
-              "r": "modulo-1",
+              "r": "modulo-1-medio",
               "s": "1.3",
               "p": 13,
-              "t": "Nulos disfrazados"
+              "t": "Auto MPG: estrategias de limpieza y sus riesgos"
             }
           ]
         },
@@ -953,16 +935,10 @@
           "para": "Comprobar que más peso significa más consumo y que una recta tiene sentido.",
           "ayuda": [
             {
-              "r": "modulo-1",
+              "r": "modulo-1-medio",
               "s": "1.1",
               "p": 8,
-              "t": "Mirar antes de calcular: el gráfico de dispersión"
-            },
-            {
-              "r": "modulo-1",
-              "s": "1.1",
-              "p": 19,
-              "t": "Tus propios gráficos con matplotlib"
+              "t": "Ejercicio 2 · Peso del coche y consumo (estilo UCI)"
             }
           ]
         },
@@ -974,16 +950,10 @@
           "para": "Medir con honestidad cuánto se equivoca ante coches que no ha visto.",
           "ayuda": [
             {
-              "r": "modulo-1",
-              "s": "1.8",
-              "p": 8,
-              "t": "Train/test: no te examines con las preguntas que ya viste"
-            },
-            {
-              "r": "modulo-1",
+              "r": "modulo-1-medio",
               "s": "1.4",
               "p": 6,
-              "t": "La división train/test no es neutra (nivel medio)"
+              "t": "La división train/test no es neutra"
             }
           ]
         },
@@ -995,34 +965,10 @@
           "para": "Obtener la pendiente y el intercepto del modelo.",
           "ayuda": [
             {
-              "r": "modulo-1",
-              "s": "1.1",
-              "p": 13,
-              "t": "Tu primer proyecto completo"
-            },
-            {
-              "r": "modulo-1",
-              "s": "1.1",
-              "p": 14,
-              "t": "El código, línea a línea"
-            },
-            {
-              "r": "modulo-1",
+              "r": "modulo-1-medio",
               "s": "1.2",
-              "p": 11,
-              "t": "La fórmula de la pendiente y el intercepto, a mano"
-            },
-            {
-              "r": "modulo-1",
-              "s": "1.2",
-              "p": 17,
-              "t": "Qué significan m y b"
-            },
-            {
-              "r": "modulo-1",
-              "s": "1.3",
-              "p": 14,
-              "t": "Tu primer modelo: una recta"
+              "p": 12,
+              "t": "La derivación completa de m y b"
             }
           ]
         },
@@ -1034,22 +980,16 @@
           "para": "Saber si el modelo es fiable y cuánto se equivoca.",
           "ayuda": [
             {
-              "r": "modulo-1",
-              "s": "1.1",
-              "p": 12,
-              "t": "R²: ¿cuánto explica la recta?"
-            },
-            {
-              "r": "modulo-1",
-              "s": "1.8",
-              "p": 9,
-              "t": "El modelo de referencia («el tonto»)"
-            },
-            {
-              "r": "modulo-1",
+              "r": "modulo-1-medio",
               "s": "1.4",
               "p": 4,
-              "t": "Las métricas, a fondo (nivel medio)"
+              "t": "Las métricas, a fondo"
+            },
+            {
+              "r": "modulo-1-medio",
+              "s": "1.4",
+              "p": 10,
+              "t": "Qué métrica elegir"
             }
           ]
         },
@@ -1061,28 +1001,22 @@
           "para": "Conocer en qué casos no conviene fiarse del modelo.",
           "ayuda": [
             {
-              "r": "modulo-1",
-              "s": "1.5",
-              "p": 4,
-              "t": "¿Por qué diagnosticar? El cuarteto de Anscombe"
-            },
-            {
-              "r": "modulo-1",
-              "s": "1.5",
-              "p": 5,
-              "t": "Los 4 gráficos de diagnóstico"
-            },
-            {
-              "r": "modulo-1",
+              "r": "modulo-1-medio",
               "s": "1.1",
-              "p": 15,
-              "t": "Interpolar sí, extrapolar con cuidado"
+              "p": 9,
+              "t": "Ejercicio 2 · Peso del coche y consumo (estilo UCI)"
             },
             {
-              "r": "modulo-1",
-              "s": "1.1",
-              "p": 22,
-              "t": "Los 8 errores típicos del principiante"
+              "r": "modulo-1-medio",
+              "s": "1.4",
+              "p": 7,
+              "t": "Residuos: seis patrones con números"
+            },
+            {
+              "r": "modulo-1-medio",
+              "s": "1.6",
+              "p": 6,
+              "t": "Gráfico 1: residuos vs ajustados"
             }
           ]
         },
@@ -1094,28 +1028,10 @@
           "para": "Responder «entre tanto y tanto», dentro del rango de pesos con datos.",
           "ayuda": [
             {
-              "r": "modulo-1",
+              "r": "modulo-1-medio",
               "s": "1.8",
-              "p": 5,
-              "t": "Los dos intervalos en un ejemplo"
-            },
-            {
-              "r": "modulo-1",
-              "s": "1.8",
-              "p": 6,
-              "t": "De dónde sale el «+1»"
-            },
-            {
-              "r": "modulo-1",
-              "s": "1.9",
-              "p": 5,
-              "t": "Error estándar, t y p-valor"
-            },
-            {
-              "r": "modulo-1",
-              "s": "1.9",
-              "p": 7,
-              "t": "El intervalo de confianza"
+              "p": 8,
+              "t": "Extrapolar: la banda no se abre, la cobertura se hunde"
             }
           ]
         },
@@ -1127,16 +1043,10 @@
           "para": "Tener un texto listo para un informe o para la web.",
           "ayuda": [
             {
-              "r": "modulo-1",
-              "s": "1.1",
-              "p": 23,
-              "t": "Cómo contar tus resultados: informe en 5 frases"
-            },
-            {
-              "r": "modulo-1",
-              "s": "1.7",
-              "p": 11,
-              "t": "Qué decir al cliente"
+              "r": "modulo-1-medio",
+              "s": "1.4",
+              "p": 21,
+              "t": "Checklist imprimible"
             }
           ]
         }

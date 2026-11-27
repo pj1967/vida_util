@@ -2877,6 +2877,8 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                           f'<p class="fuente">{esc(d.get("fuente", ""))}</p>']
                 if d.get("intro"):
                     partes.append(f'<p>{esc(d["intro"])}</p>')
+                if d.get("secciones"):
+                    partes.append(self.ayuda_html(pasos[n - 1].get("ayuda"), "../"))
                 cpp = d.get("cpp")
                 if cpp:
                     partes.append('<div class="cpp">'

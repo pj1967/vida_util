@@ -3363,58 +3363,51 @@
  },
  "consumo-coche-peso": {
   "1": {
-   "titulo": "Entender qué es una regresión lineal simple",
-   "fuente": "Libro de consulta · Submódulo 1.1 · págs. 9–12 (secciones 5, 6 y 7)",
-   "intro": "Lee esta página despacio, de arriba abajo, siguiendo el orden del libro. Después haz el test, sube lo que quieras enseñar y marca el paso como completado.",
+   "titulo": "Repaso, métricas y datos reales: qué vamos a calcular",
+   "fuente": "Libro de consulta · Nivel medio · Submódulo 1.1 · págs. 5–9 y 15–16 (secciones 2, 5, 9 y 10)",
+   "intro": "Esta página es el punto de partida del proyecto, tomada del nivel medio del libro: repasa lo esencial, fija cómo se mide el error y avisa de lo que complica los datos reales. Léela despacio y haz el test.",
    "bloques": [
     {
      "t": "sec",
-     "x": "1. La recta: y = m·x + b",
-     "pag": "pág. 9"
+     "x": "2.1 Repaso esencial: lo que se da por sabido",
+     "pag": "pág. 5"
     },
     {
      "t": "p",
-     "x": "La regresión lineal simple busca la recta que mejor resume la nube de puntos: y = m·x + b, donde m es la pendiente y b el intercepto."
-    },
-    {
-     "t": "etq",
-     "k": "sencilla",
-     "titulo": "Explicación sencilla",
-     "x": "Piensa en un taxi. Pagas una cantidad fija al subir (la «bajada de bandera») y luego un precio por cada kilómetro: coste = precio_por_km · km + bajada_de_bandera."
-    },
-    {
-     "t": "ul",
-     "x": [
-      "m (pendiente) = cuánto sube Y cuando X sube 1 unidad. En el taxi, el precio por km.",
-      "b (intercepto) = el valor de Y cuando X vale 0. En el taxi, la bajada de bandera."
-     ]
-    },
-    {
-     "t": "p",
-     "x": "En los salarios del libro, m será «cuántos dólares más por cada año de experiencia». En nuestro proyecto, m será «cuántos litros cada 100 km más consume un coche por cada kilo de peso»."
+     "x": "Este proyecto sigue el nivel medio del libro: ya sabes ajustar una recta, así que aquí repasamos lo esencial en una tabla y pasamos a lo nuevo, que es trabajar con datos reales de una plataforma."
     },
     {
      "t": "tabla",
      "cab": [
-      "Si la pendiente m es…",
-      "La recta…",
-      "Significa"
+      "Concepto",
+      "Fórmula / idea",
+      "Dónde se usa"
      ],
      "filas": [
       [
-       "Positiva",
-       "Sube",
-       "Más X, más Y (experiencia → salario)"
+       "Recta de mínimos cuadrados",
+       "y = m·x + b; m = Sxy / Sxx; b = ȳ − m·x̄",
+       "np.polyfit(x, y, 1) devuelve (m, b)"
       ],
       [
-       "Negativa",
-       "Baja",
-       "Más X, menos Y"
+       "Residuo",
+       "e = y real − y predicho",
+       "Gráfico de residuos"
       ],
       [
-       "Cercana a 0",
-       "Es casi horizontal",
-       "X apenas ayuda a predecir Y"
+       "R²",
+       "1 − SSE / SST; en regresión simple, R² = r²",
+       "Qué parte de la variación de Y explica la recta"
+      ],
+      [
+       "Train / test",
+       "Se ajusta con una parte y se evalúa con otra que el modelo no ha visto",
+       "Medir cómo se comportará con datos nuevos"
+      ],
+      [
+       "Interpolar / extrapolar",
+       "Predecir dentro / fuera del rango de X visto",
+       "Fiabilidad de una predicción"
       ]
      ],
      "pie": null,
@@ -3422,344 +3415,329 @@
     },
     {
      "t": "sec",
-     "x": "2. Cómo se encuentra la mejor recta",
-     "pag": "pág. 10"
-    },
-    {
-     "t": "p",
-     "x": "Hay infinitas rectas posibles. ¿Cuál es «la mejor»? Cada recta se equivoca en cada punto: esa distancia vertical entre el dato real y la recta es el residuo (error)."
-    },
-    {
-     "t": "p",
-     "x": "Para medir el error total se elevan los residuos al cuadrado (así no se cancelan positivos con negativos y se castigan más los errores grandes) y se suman: SSE (suma de errores al cuadrado). La mejor recta es la que tiene el SSE más pequeño: es el método de mínimos cuadrados."
-    },
-    {
-     "t": "fig",
-     "svg": "<svg viewBox=\"0 0 420 250\" role=\"img\" aria-label=\"Cinco puntos, la recta de mínimos cuadrados y los residuos\" class=\"fig-svg\"><line x1=\"44\" y1=\"212\" x2=\"404\" y2=\"212\" stroke=\"#64748b\"/><line x1=\"44\" y1=\"16\" x2=\"44\" y2=\"212\" stroke=\"#64748b\"/><text x=\"80\" y=\"228\" text-anchor=\"middle\" font-size=\"11\" fill=\"#94a3b8\">1</text><text x=\"152\" y=\"228\" text-anchor=\"middle\" font-size=\"11\" fill=\"#94a3b8\">2</text><text x=\"224\" y=\"228\" text-anchor=\"middle\" font-size=\"11\" fill=\"#94a3b8\">3</text><text x=\"296\" y=\"228\" text-anchor=\"middle\" font-size=\"11\" fill=\"#94a3b8\">4</text><text x=\"368\" y=\"228\" text-anchor=\"middle\" font-size=\"11\" fill=\"#94a3b8\">5</text><text x=\"36\" y=\"216\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">1</text><line x1=\"44\" y1=\"212\" x2=\"404\" y2=\"212\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"36\" y=\"177\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">2</text><line x1=\"44\" y1=\"173\" x2=\"404\" y2=\"173\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"36\" y=\"138\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">3</text><line x1=\"44\" y1=\"134\" x2=\"404\" y2=\"134\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"36\" y=\"98\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">4</text><line x1=\"44\" y1=\"94\" x2=\"404\" y2=\"94\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"36\" y=\"59\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">5</text><line x1=\"44\" y1=\"55\" x2=\"404\" y2=\"55\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"36\" y=\"20\" text-anchor=\"end\" font-size=\"11\" fill=\"#94a3b8\">6</text><line x1=\"44\" y1=\"16\" x2=\"404\" y2=\"16\" stroke=\"#334155\" stroke-width=\".5\"/><text x=\"224\" y=\"246\" text-anchor=\"middle\" font-size=\"12\" fill=\"#cbd5e1\">horas de estudio (x)</text><text x=\"12\" y=\"114\" transform=\"rotate(-90 12 114)\" text-anchor=\"middle\" font-size=\"12\" fill=\"#cbd5e1\">nota (y)</text><line x1=\"58\" y1=\"148\" x2=\"390\" y2=\"40\" stroke=\"#38bdf8\" stroke-width=\"2.2\"/><line x1=\"80\" y1=\"173\" x2=\"80\" y2=\"141\" stroke=\"#fb7185\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/><circle cx=\"80\" cy=\"173\" r=\"5\" fill=\"#fbbf24\" stroke=\"#0b1220\"/><line x1=\"152\" y1=\"94\" x2=\"152\" y2=\"118\" stroke=\"#fb7185\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/><circle cx=\"152\" cy=\"94\" r=\"5\" fill=\"#fbbf24\" stroke=\"#0b1220\"/><line x1=\"224\" y1=\"55\" x2=\"224\" y2=\"94\" stroke=\"#fb7185\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/><circle cx=\"224\" cy=\"55\" r=\"5\" fill=\"#fbbf24\" stroke=\"#0b1220\"/><line x1=\"296\" y1=\"94\" x2=\"296\" y2=\"71\" stroke=\"#fb7185\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/><circle cx=\"296\" cy=\"94\" r=\"5\" fill=\"#fbbf24\" stroke=\"#0b1220\"/><line x1=\"368\" y1=\"55\" x2=\"368\" y2=\"47\" stroke=\"#fb7185\" stroke-width=\"2\" stroke-dasharray=\"3 2\"/><circle cx=\"368\" cy=\"55\" r=\"5\" fill=\"#fbbf24\" stroke=\"#0b1220\"/><text x=\"310\" y=\"86\" font-size=\"12\" fill=\"#7dd3fc\">ŷ = 0,6·x + 2,2</text></svg>",
-     "x": "Gráfico del ejemplo del libro (5 estudiantes: horas de estudio → nota). En amarillo los datos; en azul la recta de mínimos cuadrados; en rojo, los residuos. En el libro (Figura 4) se comparan tres rectas posibles: la de mínimos cuadrados es la que tiene el menor SSE."
-    },
-    {
-     "t": "sec",
-     "x": "2.1 Calcularla a mano con 5 datos",
-     "pag": "págs. 10–11"
-    },
-    {
-     "t": "p",
-     "x": "Datos: 5 estudiantes con horas de estudio x = 1, 2, 3, 4, 5 y nota y = 2, 4, 5, 4, 5. Las fórmulas son:"
-    },
-    {
-     "t": "ul",
-     "x": [
-      "m = Sxy / Sxx, donde Sxy = Σ(x − x̄)(y − ȳ) y Sxx = Σ(x − x̄)². Aquí x̄ = media(x) = (1+2+3+4+5)/5 = 3.",
-      "b = ȳ − m·x̄ (la recta siempre pasa por el punto central (x̄, ȳ)). Aquí ȳ = media(y) = (2+4+5+4+5)/5 = 4."
-     ]
+     "x": "2.2 Las métricas de error, en unidades que se entienden",
+     "pag": "pág. 5"
     },
     {
      "t": "tabla",
      "cab": [
-      "x",
-      "y",
-      "x − x̄",
-      "y − ȳ",
-      "(x−x̄)(y−ȳ)",
-      "(x−x̄)²",
-      "ŷ = 0,6x + 2,2",
-      "residuo = y − ŷ"
+      "Métrica",
+      "Fórmula",
+      "Unidad",
+      "Cómo se lee"
      ],
      "filas": [
       [
-       "1",
-       "2",
-       "−2",
-       "−2",
-       "4",
-       "4",
-       "2,8",
-       "−0,8"
+       "R²",
+       "1 − SSE/SST",
+       "Sin unidad (0 a 1; puede ser negativo en test)",
+       "Proporción de variación explicada. Negativo = peor que predecir siempre la media"
       ],
       [
-       "2",
-       "4",
-       "−1",
-       "0",
-       "0",
-       "1",
-       "3,4",
-       "+0,6"
+       "RMSE",
+       "√(media de residuos²)",
+       "La de Y",
+       "Error típico; castiga más los errores grandes"
       ],
       [
-       "3",
-       "5",
-       "0",
-       "1",
-       "0",
-       "0",
-       "4,0",
-       "+1,0"
+       "MAE",
+       "media de |residuos|",
+       "La de Y",
+       "Error medio absoluto; más intuitivo y menos sensible a atípicos"
       ],
       [
-       "4",
-       "4",
-       "1",
-       "0",
-       "0",
-       "1",
-       "4,6",
-       "−0,6"
-      ],
-      [
-       "5",
-       "5",
-       "2",
-       "1",
-       "2",
-       "4",
-       "5,2",
-       "−0,2"
-      ]
-     ],
-     "pie": [
-      "Suma",
-      "",
-      "",
-      "",
-      "Sxy = 6",
-      "Sxx = 10",
-      "",
-      "≈ 0"
-     ],
-     "nota": "m = Sxy ÷ Sxx = 6 ÷ 10 = 0,6  ·  b = 4 − 0,6·3 = 2,2"
-    },
-    {
-     "t": "p",
-     "x": "Medias: x̄ = 3, ȳ = 4. Entonces m = 6/10 = 0,6 y b = 4 − 0,6·3 = 2,2: la recta es nota = 0,6·horas + 2,2. Cada hora de estudio sube la nota esperada 0,6 puntos."
-    },
-    {
-     "t": "code",
-     "titulo": "Código Python (copiar y ejecutar)",
-     "x": "import numpy as np\n# 5 estudiantes: horas de estudio (x) y nota del examen (y)\nx = np.array([1, 2, 3, 4, 5])\ny = np.array([2, 4, 5, 4, 5])\nx_med, y_med = x.mean(), y.mean()          # los \"centros\" de la nube\nSxy = np.sum((x - x_med) * (y - y_med))    # cuánto se mueven JUNTAS x e y\nSxx = np.sum((x - x_med) ** 2)             # cuánto se mueve x por sí sola\nm = Sxy / Sxx                              # pendiente\nb = y_med - m * x_med                      # intercepto: la recta pasa por (x̄, ȳ)\nprint(f\"x̄ = {x_med}, ȳ = {y_med}, Sxy = {Sxy}, Sxx = {Sxx}\")\nprint(f\"Pendiente m = {Sxy}/{Sxx} = {m} | Intercepto b = {y_med} - {m}·{x_med} = {b}\")\ny_pred = m * x + b                         # lo que predice la recta\nresid = y - y_pred                         # lo que se le escapa\nSSE = np.sum(resid ** 2)                   # error de la recta\nSST = np.sum((y - y_med) ** 2)             # error si solo usáramos la media\nprint(\"\\nPredicciones:\", y_pred.round(2), \"| Residuos:\", resid.round(2))\nprint(f\"SSE = {SSE:.2f} | SST = {SST:.2f} | R² = 1 - SSE/SST = {1 - SSE/SST:.2f}\")\nprint(f\"Predicción para 6 horas: {m*6 + b:.1f} puntos\")"
-    },
-    {
-     "t": "salida",
-     "x": "x̄ = 3.0, ȳ = 4.0, Sxy = 6.0, Sxx = 10.0\nPendiente m = 6.0/10.0 = 0.6 | Intercepto b = 4.0 - 0.6·3.0 = 2.2\nPredicciones: [2.8 3.4 4. 4.6 5.2] | Residuos: [-0.8 0.6 1. -0.6 -0.2]\nSSE = 2.40 | SST = 6.00 | R² = 1 - SSE/SST = 0.60\nPredicción para 6 horas: 5.8 puntos"
-    },
-    {
-     "t": "etq",
-     "k": "sencilla",
-     "titulo": "Explicación sencilla",
-     "x": "Los residuos suman ≈ 0 siempre que la recta tenga intercepto: lo que sobra por un lado compensa lo que falta por el otro. SSE = 2,40 es el error total de nuestra recta. ¿Es mucho o poco? Para saberlo necesitamos un punto de comparación: R²."
-    },
-    {
-     "t": "sec",
-     "x": "3. R²: ¿cuánto explica la recta?",
-     "pag": "págs. 12"
-    },
-    {
-     "t": "p",
-     "x": "R² compara dos errores: el de la recta (SSE) y el que tendrías si no usaras X y predijeras siempre la media de Y (SST, suma total de cuadrados). La fórmula es R² = 1 − SSE / SST."
-    },
-    {
-     "t": "p",
-     "x": "Con los datos del ejemplo: SST = 6 (error si solo usamos la media) y SSE = 2,4 (error con la recta). Así R² = 1 − 2,4/6 = 0,60."
-    },
-    {
-     "t": "etq",
-     "k": "sencilla",
-     "titulo": "Explicación sencilla",
-     "x": "R² = 0,60 significa: la recta elimina el 60 % del error que tendrías sin ella; o, dicho de forma habitual, «explica el 60 % de la variación de Y». R² = 1 es un ajuste perfecto; R² = 0, una recta que no mejora a la media."
-    },
-    {
-     "t": "tabla",
-     "cab": [
-      "R²",
-      "Lectura habitual",
-      "Ejemplo del libro"
-     ],
-     "filas": [
-      [
-       "Cerca de 1 (> 0,9)",
-       "Relación muy fuerte",
-       "Años de experiencia → salario: 0,957"
-      ],
-      [
-       "0,5 a 0,9",
-       "Moderada o buena",
-       "Peso del coche → consumo: 0,693"
-      ],
-      [
-       "0,2 a 0,5",
-       "Modesta",
-       "Cuenta → propina: 0,457"
-      ],
-      [
-       "Cerca de 0",
-       "La recta apenas ayuda",
-       "Gasto en periódico → ventas: 0,052"
+       "RMSLE",
+       "√(media de (ln(1+pred) − ln(1+real))²)",
+       "Sin unidad",
+       "Error en términos relativos; para conteos o precios con rangos enormes"
       ]
      ],
      "pie": null,
      "nota": null
+    },
+    {
+     "t": "etq",
+     "k": "sencilla",
+     "titulo": "Explicación sencilla",
+     "x": "Un RMSE de 5.592 $ en salarios significa que, en promedio, nos equivocamos unos 5.600 $ al predecir. Compáralo con la desviación típica de los salarios (27.414 $): sin usar la experiencia, el error típico sería casi cinco veces mayor. En nuestro proyecto haremos la misma comparación con el consumo: ¿cuánto mejora la recta a «predecir siempre la media»?"
+    },
+    {
+     "t": "sec",
+     "x": "5. Ejercicio 2 · Peso del coche y consumo (estilo UCI)",
+     "pag": "págs. 8–9"
+    },
+    {
+     "t": "p",
+     "x": "Es el ejercicio del libro que vamos a convertir en proyecto. Dataset: Auto MPG, 398 coches de los años 70 y 80. Variable objetivo: mpg (millas por galón); predictora: weight (peso en libras). El dataset es famoso por sus datos que faltan: 6 coches no tienen potencia (horsepower)."
     },
     {
      "t": "etq",
      "k": "atencion",
-     "titulo": "Atención",
-     "x": "«Bueno» o «malo» depende del problema: en datos de personas, un R² de 0,3 puede ser útil; en física, uno de 0,9 puede ser insuficiente."
+     "titulo": "Nota sobre el fichero",
+     "x": "En el archivo original de UCI el dato que falta se escribe con «?» y hay que leerlo con na_values=\"?\" (si no, la columna se interpreta como texto). La copia que usa el libro ya trae esos huecos como valores vacíos (NaN); el tratamiento es el mismo."
+    },
+    {
+     "t": "code",
+     "titulo": "Código Python del libro (copiar y ejecutar)",
+     "x": "import numpy as np, pandas as pd\n# Versión espejo con cabecera (misma información que UCI Auto MPG)\nurl = \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/mpg.csv\"\ndf = pd.read_csv(url)\nprint(\"Filas antes de limpiar:\", df.shape[0])\nprint(\"Nulos por columna (solo los que tienen):\")\nprint(df.isnull().sum()[df.isnull().sum() > 0])\ndf = df.dropna()                          # quitamos las 6 filas sin potencia\nprint(\"Filas después de limpiar:\", df.shape[0])\nX, y = df[\"weight\"].values, df[\"mpg\"].values\nr = np.corrcoef(X, y)[0, 1]\nm, b = np.polyfit(X, y, 1)\nprint(f\"Correlación peso-mpg: r = {r:.3f} -> R² = {r**2:.4f}\")\nprint(f\"mpg = {m:.5f} · peso + {b:.2f} (cada 100 lb de más: {100*m:.2f} mpg)\")\n# ¿Los residuos son \"ruido\" o tienen forma? Miramos su media por tramos de peso\nresid = y - (m * X + b)\ntramo = pd.qcut(df[\"weight\"], 4, labels=[\"más ligeros\", \"ligeros-medios\", \"medios-pesados\", \"más pesados\"])\nprint(pd.Series(resid, index=df.index).groupby(tramo, observed=True).mean().round(2))"
+    },
+    {
+     "t": "salida",
+     "x": "Filas antes de limpiar: 398\nNulos por columna (solo los que tienen):\nhorsepower    6\ndtype: int64\nFilas después de limpiar: 392\nCorrelación peso-mpg: r = -0.832 -> R² = 0.6926\nmpg = -0.00765 · peso + 46.22 (cada 100 lb de más: -0.76 mpg)\nmás ligeros       1.60\nligeros-medios   -0.90\nmedios-pesados   -1.33\nmás pesados       0.62"
+    },
+    {
+     "t": "etq",
+     "k": "sencilla",
+     "titulo": "Lectura del libro",
+     "x": "R² = 0,693: el peso explica el 69 % de la variación del consumo. Pero los residuos tienen forma: son positivos en los coches más ligeros y más pesados y negativos en los intermedios. Es una curva en U: la recta se queda corta en los extremos. El libro avanza que en el nivel avanzado se corrige con transformaciones."
     },
     {
      "t": "etq",
      "k": "nota",
-     "titulo": "Nota",
-     "x": "Relación con r: en regresión simple R² = r². Con r = 0,7746, r² = 0,60."
+     "titulo": "Lo que vamos a hacer distinto en el proyecto",
+     "x": "Vamos a probar justo esa corrección: en lugar de millas por galón (mpg) usaremos litros cada 100 km (235,215 / mpg), que es el inverso. Con los mismos 392 coches del libro, R² sube de 0,693 a 0,783 y la U casi desaparece: la media de los residuos por tramos de peso pasa de 1,60, −0,90, −1,33 y 0,62 mpg a solo 0,11, −0,07, −0,20 y 0,17 L/100 km. Lo comprobarás tú mismo en los pasos 4 y 8. Además, como el peso y el consumo no tienen huecos, en el proyecto usaremos los 398 coches (el libro pierde 6 por la potencia, que aquí no usamos)."
+    },
+    {
+     "t": "sec",
+     "x": "9. Limpieza de datos: valores que faltan, eliminar o rellenar",
+     "pag": "pág. 15"
+    },
+    {
+     "t": "p",
+     "x": "Los datos reales casi nunca vienen limpios. Con los huecos (valores que faltan) hay cuatro opciones; cada una tiene un coste."
+    },
+    {
+     "t": "tabla",
+     "cab": [
+      "Opción",
+      "Cómo",
+      "Cuándo conviene",
+      "Riesgo"
+     ],
+     "filas": [
+      [
+       "Eliminar filas",
+       "df.dropna()",
+       "Faltan pocos datos (< 5 %) y al azar",
+       "Pierdes información; sesgo si los que faltan no son aleatorios"
+      ],
+      [
+       "Eliminar la columna",
+       "df.drop(columns=[...])",
+       "Falta casi todo en esa variable",
+       "Pierdes la variable"
+      ],
+      [
+       "Rellenar (imputar)",
+       "fillna(mediana)",
+       "Faltan bastantes y la variable importa",
+       "Aplana la relación: inventa puntos en el centro"
+      ],
+      [
+       "Marcar el hueco",
+       "Columna «falta sí/no»",
+       "La ausencia en sí es informativa",
+       "Más columnas"
+      ]
+     ],
+     "pie": null,
+     "nota": null
+    },
+    {
+     "t": "p",
+     "x": "En Auto MPG faltan 6 potencias (1,5 % de los coches). El libro prueba las dos primeras opciones con la regresión potencia → consumo: eliminar las filas da R² = 0,6059 (n = 392) y rellenar con la mediana (93,5 CV) da R² = 0,5982 (n = 398). Casi igual, pero rellenar con la mediana pone a esos 6 coches en el centro de la nube sin que tengan por qué estar ahí (un Ford Mustang Cobra y un Renault Lecar no se parecen)."
+    },
+    {
+     "t": "etq",
+     "k": "atencion",
+     "titulo": "Regla de oro",
+     "x": "Si faltan pocos y al azar, elimina; si faltan muchos, imputa con cuidado y anótalo en tu informe. Y mira siempre cuántas filas pierdes."
+    },
+    {
+     "t": "sec",
+     "x": "10. Unidades y diccionarios de datos: leer el README",
+     "pag": "pág. 16"
+    },
+    {
+     "t": "p",
+     "x": "Muchos errores de análisis no son de estadística sino de unidades. Los datasets traen una descripción (README o diccionario de datos) que dice cómo se midió cada columna: léela antes de modelar. Un ejemplo del libro: en Bike Sharing la temperatura viene normalizada (dividida por 41) y hay que multiplicarla por 41 para obtener °C."
+    },
+    {
+     "t": "tabla",
+     "cab": [
+      "En nuestro conjunto",
+      "Unidad original (UCI)",
+      "La pasamos a"
+     ],
+     "filas": [
+      [
+       "weight",
+       "libras (lb)",
+       "kilos: × 0,45359237"
+      ],
+      [
+       "mpg",
+       "millas por galón",
+       "litros cada 100 km: 235,215 / mpg"
+      ]
+     ],
+     "pie": null,
+     "nota": null
+    },
+    {
+     "t": "etq",
+     "k": "sencilla",
+     "titulo": "Explicación sencilla",
+     "x": "Antes de calcular, comprueba siempre que los números tienen sentido: un coche de 1.589 kg que consume 13 L/100 km es razonable; si te saliera 1,3 o 130, habrías cambiado mal las unidades."
     }
    ],
    "test": {
     "aprobado": 70,
-    "cuantas": 8,
+    "cuantas": 10,
     "preguntas": [
      {
-      "q": "En la recta y = m·x + b, ¿qué es m?",
-      "ok": "La pendiente: cuánto cambia Y cuando X sube 1 unidad",
+      "q": "En el repaso esencial, ¿qué fórmula da la pendiente de la recta?",
+      "ok": "m = Sxy / Sxx",
       "mal": [
-       "El valor de Y cuando X vale 0",
-       "El error total de la recta",
-       "La media de los datos"
+       "m = ȳ − b·x̄",
+       "m = SSE / SST",
+       "m = r²"
       ],
-      "exp": "m es la pendiente. En el taxi del libro, el precio por kilómetro."
+      "exp": "La pendiente es Sxy dividido entre Sxx; después b = ȳ − m·x̄."
      },
      {
-      "q": "En la recta y = m·x + b, ¿qué es b?",
-      "ok": "El valor de Y cuando X vale 0 (el punto de partida)",
+      "q": "¿Qué mide R² en regresión simple?",
+      "ok": "La proporción de la variación de Y que explica la recta (R² = r²)",
       "mal": [
-       "Cuánto sube Y por cada unidad de X",
-       "La suma de los errores al cuadrado",
-       "El número de datos"
+       "El porcentaje de aciertos",
+       "El error en las unidades de Y",
+       "El número de datos útiles"
       ],
-      "exp": "b es el intercepto. En el taxi, la bajada de bandera."
+      "exp": "R² = 1 − SSE/SST."
      },
      {
-      "q": "Si la pendiente es negativa, la recta…",
-      "ok": "Baja: a más X, menos Y",
+      "q": "¿Puede R² ser negativo?",
+      "ok": "Sí, en test: significa que el modelo es peor que predecir siempre la media",
       "mal": [
-       "Sube: a más X, más Y",
-       "Es horizontal",
-       "No pasa por la media"
+       "No, siempre está entre 0 y 1",
+       "Solo si hay valores que faltan",
+       "Solo con RMSE"
       ],
-      "exp": "Pendiente negativa = recta descendente. Cercana a 0 = casi horizontal (X apenas ayuda)."
+      "exp": "En datos de prueba puede salir negativo."
      },
      {
-      "q": "En el proyecto de la central eléctrica (proyecto 1), la pendiente sale −2 MW/°C. ¿Qué significa?",
-      "ok": "Por cada grado más de temperatura, la potencia baja unos 2 MW",
+      "q": "¿En qué unidades se expresa el RMSE?",
+      "ok": "En las de Y (aquí, L/100 km)",
       "mal": [
-       "Por cada grado más, la potencia sube unos 2 MW",
-       "La central produce −2 MW cuando hace 0 °C",
-       "El error medio es de 2 MW"
+       "Sin unidades",
+       "En porcentaje",
+       "En las de X"
       ],
-      "exp": "La pendiente dice cuánto cambia Y por cada unidad de X. El signo menos indica que baja. (El valor −2 es solo un ejemplo para practicar.)"
+      "exp": "RMSE y MAE se miden en las unidades de la salida."
      },
      {
-      "q": "¿Qué es un residuo?",
-      "ok": "La distancia vertical entre el dato real y la recta",
+      "q": "¿En qué se diferencia el RMSE del MAE?",
+      "ok": "El RMSE castiga más los errores grandes; el MAE es más intuitivo y menos sensible a atípicos",
       "mal": [
-       "La distancia entre dos puntos cualesquiera",
-       "La media de todos los datos",
-       "El valor de la pendiente"
+       "Son iguales",
+       "El MAE usa cuadrados",
+       "El RMSE no usa residuos"
       ],
-      "exp": "El residuo (error) es lo que se le escapa a la recta en cada punto: y − ŷ."
+      "exp": "RMSE eleva los residuos al cuadrado."
      },
      {
-      "q": "¿Por qué se elevan los residuos al cuadrado?",
-      "ok": "Para que no se cancelen positivos con negativos y para castigar más los errores grandes",
+      "q": "Un RMSE de 5.592 $ en salarios con desviación típica de 27.414 $ indica que…",
+      "ok": "Sin la experiencia, el error típico sería casi cinco veces mayor",
       "mal": [
-       "Para que salgan números más pequeños",
-       "Para que la recta pase por el origen",
-       "Porque lo manda Python"
+       "El modelo falla el 20 % de las veces",
+       "La experiencia no sirve",
+       "Los datos son erróneos"
       ],
-      "exp": "Sin elevar al cuadrado, los errores de signo opuesto se compensarían. Además, un error grande pesa mucho más."
+      "exp": "Se compara el error del modelo con el de «predecir la media» (la desviación típica)."
      },
      {
-      "q": "¿Cuál es «la mejor recta» según mínimos cuadrados?",
-      "ok": "La que tiene el SSE (suma de errores al cuadrado) más pequeño",
+      "q": "En el libro, el ajuste peso → mpg da R² = 0,693. ¿Qué forma tienen sus residuos?",
+      "ok": "Una U: positivos en los coches más ligeros y más pesados, negativos en los intermedios",
       "mal": [
-       "La que pasa por más puntos",
-       "La que tiene la pendiente más grande",
-       "La que pasa por el origen"
+       "Un abanico",
+       "Perfectamente al azar",
+       "Una línea recta"
       ],
-      "exp": "Mínimos cuadrados = la recta con la menor suma de errores al cuadrado."
+      "exp": "La recta se queda corta en los extremos."
      },
      {
-      "q": "Con Sxy = 6 y Sxx = 10, ¿cuánto vale la pendiente?",
-      "ok": "0,6",
+      "q": "¿Qué corrección vamos a probar en el proyecto para reducir esa forma en U?",
+      "ok": "Usar litros cada 100 km en lugar de millas por galón",
       "mal": [
-       "60",
-       "1,67",
-       "4"
+       "Eliminar los coches pesados",
+       "Usar más filas",
+       "Quitar el intercepto"
       ],
-      "exp": "m = Sxy / Sxx = 6/10 = 0,6."
+      "exp": "L/100 km es el inverso de mpg y se parece más a una recta frente al peso."
      },
      {
-      "q": "Con x̄ = 3, ȳ = 4 y m = 0,6, ¿cuánto vale el intercepto b?",
-      "ok": "2,2",
+      "q": "En el archivo original de UCI, ¿cómo se escribe un dato que falta en Auto MPG?",
+      "ok": "Con «?» (hay que leerlo con na_values=\"?\")",
       "mal": [
-       "4",
-       "0,6",
-       "1,8"
+       "Con 0",
+       "Con una celda vacía siempre",
+       "Con la palabra «nulo»"
       ],
-      "exp": "b = ȳ − m·x̄ = 4 − 0,6·3 = 2,2. La recta siempre pasa por el punto (x̄, ȳ)."
+      "exp": "Si no se indica, la columna se lee como texto."
      },
      {
-      "q": "Con la recta nota = 0,6·horas + 2,2, ¿qué nota se predice para 6 horas?",
-      "ok": "5,8",
+      "q": "Faltan 6 potencias de 398 (1,5 %). Según el libro, ¿qué conviene hacer si faltan pocos y al azar?",
+      "ok": "Eliminar esas filas",
       "mal": [
-       "3,6",
-       "6,4",
-       "2,8"
+       "Rellenar siempre con la mediana",
+       "Borrar el conjunto entero",
+       "Ignorar el problema"
       ],
-      "exp": "0,6·6 + 2,2 = 3,6 + 2,2 = 5,8."
+      "exp": "Regla práctica: pocos y al azar, elimina."
      },
      {
-      "q": "R² = 0,60 significa que…",
-      "ok": "La recta explica el 60 % de la variación de Y",
+      "q": "¿Qué riesgo tiene rellenar con la mediana?",
+      "ok": "Aplana la relación: inventa puntos en el centro de la nube",
       "mal": [
-       "La recta acierta el 60 % de las veces",
-       "El error es de 0,60 unidades",
-       "La pendiente vale 0,60"
+       "Aumenta el R² siempre",
+       "Elimina filas",
+       "Cambia las unidades"
       ],
-      "exp": "R² es la parte de la variación de Y que explica la recta (1 − SSE/SST)."
+      "exp": "Los coches rellenados quedan en el centro aunque no tengan por qué estar ahí."
      },
      {
-      "q": "¿Qué indica un R² cercano a 0?",
-      "ok": "Que la recta apenas mejora a predecir siempre la media",
+      "q": "¿Por qué hay que leer el README o diccionario de datos antes de modelar?",
+      "ok": "Porque dice las unidades y cómo se midió cada columna; muchos errores son de unidades",
       "mal": [
-       "Que el ajuste es perfecto",
-       "Que la pendiente es negativa",
-       "Que hay demasiados datos"
+       "Porque lo exige Python",
+       "Para ahorrar memoria",
+       "No hace falta"
       ],
-      "exp": "R² = 1 es ajuste perfecto; R² = 0 es una recta que no mejora a la media."
+      "exp": "Un error de unidades invalida el análisis aunque la estadística esté bien."
      },
      {
-      "q": "¿Cómo se calcula R²?",
-      "ok": "R² = 1 − SSE / SST",
+      "q": "¿Cómo se pasa de libras a kilos?",
+      "ok": "Multiplicando por 0,4536",
       "mal": [
-       "R² = SSE · SST",
-       "R² = m / b",
-       "R² = SSE + SST"
+       "Dividiendo entre 10",
+       "Restando 100",
+       "Multiplicando por 2,2"
       ],
-      "exp": "Compara el error de la recta (SSE) con el de predecir siempre la media (SST)."
+      "exp": "1 lb = 0,4536 kg."
      },
      {
-      "q": "En regresión simple, R² es igual a…",
-      "ok": "r² (el coeficiente de correlación al cuadrado)",
+      "q": "¿Qué significa interpolar frente a extrapolar?",
+      "ok": "Predecir dentro o fuera del rango de X visto",
       "mal": [
-       "2·r",
-       "1 − r",
-       "r + b"
+       "Predecir con más o menos datos",
+       "Usar R² o RMSE",
+       "Elegir entre train y test"
       ],
-      "exp": "Relación con r: en regresión simple R² = r². Con r = 0,7746, r² = 0,60."
+      "exp": "Fuera del rango la predicción es menos fiable."
      }
     ]
    },
-   "evidencias": "Aquí puedes enseñar lo que hagas en este paso: el código del cálculo a mano, un gráfico de los 5 puntos con la recta, tus notas…"
+   "evidencias": "Aquí puedes enseñar lo que hagas en este paso: tu repaso de las métricas, el cálculo de la recta del libro, tus notas…"
   },
   "2": {
    "titulo": "Descargar y abrir los datos",
