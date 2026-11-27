@@ -1482,6 +1482,8 @@ class Sitio:
                 for carpeta in (RAIZ, RAIZ / "recursos"):
                     for f in sorted(carpeta.glob("*.pdf")) if carpeta.is_dir() else []:
                         norm = re.sub(r"[^a-z0-9]+", " ", unicodedata.normalize("NFKD", f.name.lower()).encode("ascii", "ignore").decode())
+                        if r.get("palabra") and not re.search(r.get("palabra"), norm):
+                            continue
                         if ("modulo" in norm and "nivel" in norm) or ("regresion" in norm and ("modulo" in norm or "nivel" in norm or "lineal" in norm)):
                             r = dict(r, archivo=f.name)
                             break

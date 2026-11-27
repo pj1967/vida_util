@@ -2581,7 +2581,80 @@
         "Regresion_Lineal_nivel_basico.pdf",
         "Regresion_Lineal__nivel_básico.pdf"
       ],
-      "ayuda_nivel": "regresion-basico"
+      "ayuda_nivel": "regresion-basico",
+      "palabra": "basico|b sico"
+    },
+    {
+      "id": "modulo-1-medio",
+      "titulo": "Módulo 1 · Nivel medio · Regresión lineal simple",
+      "autor": "Book Profesional IA · Edición 2025-2026",
+      "archivo": "Regresion_Lineal_nivel_medio.pdf",
+      "descripcion": "Apuntes de nivel medio: práctica con datasets reales, mínimos cuadrados con derivación, EDA y limpieza, métricas y validación cruzada, diagnóstico formal, intervalos honestos e inferencia. Ayuda para los proyectos de regresión de nivel medio.",
+      "submodulos": [
+        {
+          "n": "1.1",
+          "titulo": "Práctica con datasets reales",
+          "nivel": "medio",
+          "paginas": 26
+        },
+        {
+          "n": "1.2",
+          "titulo": "Matemáticas de la recta: mínimos cuadrados",
+          "nivel": "medio",
+          "paginas": 26
+        },
+        {
+          "n": "1.3",
+          "titulo": "El ecosistema del dato (Kaggle, UCI, OpenML)",
+          "nivel": "medio",
+          "paginas": 24
+        },
+        {
+          "n": "1.4",
+          "titulo": "Evaluación del modelo",
+          "nivel": "medio",
+          "paginas": 22
+        },
+        {
+          "n": "1.5",
+          "titulo": "Diagnóstico de la regresión",
+          "nivel": "medio",
+          "paginas": 16
+        },
+        {
+          "n": "1.6",
+          "titulo": "Guía de los 4 gráficos de diagnóstico",
+          "nivel": "medio",
+          "paginas": 18
+        },
+        {
+          "n": "1.7",
+          "titulo": "Aplicando el diagnóstico al proyecto energético",
+          "nivel": "medio",
+          "paginas": 15
+        },
+        {
+          "n": "1.8",
+          "titulo": "Predecir con honestidad: intervalos y train/test",
+          "nivel": "medio",
+          "paginas": 16
+        },
+        {
+          "n": "1.9",
+          "titulo": "Inferencia en la regresión simple",
+          "nivel": "medio",
+          "paginas": 13
+        }
+      ],
+      "alternativos": [
+        "Regresion_Lineal_nivel_medio.pdf",
+        "Regresion Lineal nivel medio.pdf",
+        "Regresion_Lineal__nivel_medio.pdf",
+        "Modulo 1 nivel medio all.pdf",
+        "Modulo_1_nivel_medio_all.pdf"
+      ],
+      "palabra": "medio",
+      "ayuda_nivel": "regresion-medio"
     }
   ],
   "aprenderas": {
