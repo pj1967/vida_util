@@ -88,6 +88,9 @@
 
   /* ---- laboratorio con datos reales: nube de puntos y recta ---- */
   function fmt(v,d){ return v.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+  var META_DEF={"xl": "Temperatura ambiente (°C)", "yl": "Potencia (MW)", "xu": "°C", "yu": "MW", "xn": "Temperatura", "yn": "Potencia", "xv": "T", "md": 2, "bd": 1, "bst": 0.1, "mstep": 0.01, "mspan": 3, "bspan": 120, "xd": 1, "yd": 0, "yp": 1, "pista": "la pendiente debería ser negativa (más calor, menos potencia)", "bx": [0, 45], "by": [380, 520], "ax": [0, 40], "ay": [400, 505], "ax1": 15, "frase_dentro": "A {x} {xu} esperamos {h} {yu}; el 95 % de las veces el valor real quedará entre {lo} y {hi} {yu}.", "frase_fuera": "⚠ A {x} {xu} no hay datos reales (solo de {tmin} a {tmax} {xu}). La recta da {h} {yu}, pero es una extrapolación: no te fíes.", "frase_sube": "Si x sube {d} {xu}, el valor estimado cambia {c} {yu} (pendiente × {d}).", "tol": [1, 15, 1, 5], "xs": [0, 45, 0.5, 25], "dmax": [1, 10, 1, 5]};
+  function metaDe(D){ var d={}, k, M=D.meta||{}; for(k in META_DEF){ d[k]=META_DEF[k]; } for(k in M){ d[k]=M[k]; } return d; }
+  function plantilla(t,v){ var k; for(k in v){ t=t.split('{'+k+'}').join(v[k]); } return t; }
   var cacheDatos={};
   function cargaDatos(src){
     if(!cacheDatos[src]) cacheDatos[src]=new Promise(function(ok,fail){
@@ -106,6 +109,7 @@
     var src=box.getAttribute('data-src'), modo=box.getAttribute('data-modo')||'recta';
     var cuerpo=$('.labr-cuerpo',box);
     cargaDatos(src).then(function(D){
+      var M=metaDe(D);
       var N=D.t.length, T=D.t, P=D.p, E=D.e;
       var tmin=Math.min.apply(null,T), tmax=Math.max.apply(null,T), pmin=Math.min.apply(null,P), pmax=Math.max.apply(null,P);
       var cv=$('canvas',box), cx=cv.getContext('2d');
@@ -116,9 +120,9 @@
       for(var i=0;i<N;i++){ if(!E[i]){ tr++; xm+=T[i]; ym+=P[i]; } }
       xm/=tr; ym/=tr;
       if(modo==='recta'){
-        sM.min=(mo-3).toFixed(2); sM.max=(mo+3).toFixed(2); sM.step='0.01';
-        sB.min=(bo-120).toFixed(1); sB.max=(bo+120).toFixed(1); sB.step='0.1';
-        sM.value=0; sB.value=ym.toFixed(1);
+        sM.min=(mo-M.mspan).toFixed(4); sM.max=(mo+M.mspan).toFixed(4); sM.step=String(M.mstep);
+        sB.min=(bo-M.bspan).toFixed(3); sB.max=(bo+M.bspan).toFixed(3); sB.step=String(M.bst);
+        sM.value=0; sB.value=ym.toFixed(M.bd);
       }
       var cor=(function(){ var st=0,sp=0,stp=0,stt=0,spp=0,mt=0,mp=0,i; for(i=0;i<N;i++){mt+=T[i];mp+=P[i];} mt/=N; mp/=N;
         for(i=0;i<N;i++){ stp+=(T[i]-mt)*(P[i]-mp); stt+=(T[i]-mt)*(T[i]-mt); spp+=(P[i]-mp)*(P[i]-mp); } return stp/Math.sqrt(stt*spp); })();
@@ -134,15 +138,15 @@
         var W=cv.clientWidth, H=Math.round(W*0.62), dpr=window.devicePixelRatio||1;
         cv.width=W*dpr; cv.height=H*dpr; cv.style.height=H+'px'; cx.setTransform(dpr,0,0,dpr,0,0);
         var L=54,Rr=12,Tt=12,Bb=40;
-        var x0=tmin-1,x1=tmax+1,y0=pmin-6,y1=pmax+6;
+        var gx=(tmax-tmin)*0.03, gy=(pmax-pmin)*0.08, x0=tmin-gx,x1=tmax+gx,y0=pmin-gy,y1=pmax+gy;
         var X=function(x){ return L+(x-x0)*(W-L-Rr)/(x1-x0); }, Y=function(y){ return H-Bb-(y-y0)*(H-Tt-Bb)/(y1-y0); };
         cx.clearRect(0,0,W,H);
         cx.font='11px sans-serif'; cx.fillStyle='#8896ad'; cx.strokeStyle='#1d2b44'; cx.lineWidth=1;
         var k,v;
-        for(k=0;k<=5;k++){ v=y0+(y1-y0)*k/5; cx.beginPath(); cx.moveTo(L,Y(v)); cx.lineTo(W-Rr,Y(v)); cx.stroke(); cx.textAlign='right'; cx.fillText(Math.round(v),L-6,Y(v)+4); }
+        for(k=0;k<=5;k++){ v=y0+(y1-y0)*k/5; cx.beginPath(); cx.moveTo(L,Y(v)); cx.lineTo(W-Rr,Y(v)); cx.stroke(); cx.textAlign='right'; cx.fillText(v.toFixed((y1-y0)<30?1:0),L-6,Y(v)+4); }
         for(k=0;k<=6;k++){ v=x0+(x1-x0)*k/6; cx.textAlign='center'; cx.fillText(Math.round(v),X(v),H-Bb+16); }
-        cx.fillStyle='#cbd5e1'; cx.textAlign='center'; cx.fillText('Temperatura ambiente (°C)',(L+W-Rr)/2,H-6);
-        cx.save(); cx.translate(13,(Tt+H-Bb)/2); cx.rotate(-Math.PI/2); cx.fillText('Potencia (MW)',0,0); cx.restore();
+        cx.fillStyle='#cbd5e1'; cx.textAlign='center'; cx.fillText(M.xl,(L+W-Rr)/2,H-6);
+        cx.save(); cx.translate(13,(Tt+H-Bb)/2); cx.rotate(-Math.PI/2); cx.fillText(M.yl,0,0); cx.restore();
         var i, g=selG?selG.value:'todos';
         for(i=0;i<N;i++){
           var on=sel(i); cx.globalAlpha=on?0.28:0.05;
@@ -171,15 +175,15 @@
         var xs=[],rs=[],i,n=0,sr=0,sq=0,mx=0;
         for(i=0;i<N;i++){ if(!sel(i)) continue; var pr=mo*T[i]+bo, r=P[i]-pr; xs.push(pr); rs.push(r); n++; sr+=r; sq+=r*r; if(Math.abs(r)>mx) mx=Math.abs(r); }
         var media=sr/n, sd=Math.sqrt(sq/n-media*media);
-        var xa=Math.min.apply(null,xs)-4, xb=Math.max.apply(null,xs)+4, ya=-Math.ceil(mx/5)*5-2, yb=Math.ceil(mx/5)*5+2;
+        var rgx=Math.max.apply(null,xs)-Math.min.apply(null,xs), xa=Math.min.apply(null,xs)-rgx*0.05, xb=Math.max.apply(null,xs)+rgx*0.05, st=mx>40?10:(mx>16?5:(mx>7?2:(mx>3?1:0.5))), ya=-Math.ceil(mx/st)*st-st*0.4, yb=Math.ceil(mx/st)*st+st*0.4;
         var L=54,Rr=12,Tt=12,Bb=40;
         var X=function(x){ return L+(x-xa)*(W-L-Rr)/(xb-xa); }, Y=function(y){ return H-Bb-(y-ya)*(H-Tt-Bb)/(yb-ya); };
         cx.clearRect(0,0,W,H); cx.font='11px sans-serif'; cx.strokeStyle='#1d2b44'; cx.lineWidth=1; cx.fillStyle='#8896ad';
         var k,v;
-        for(k=-4;k<=4;k++){ v=k*Math.ceil(mx/20)*5; if(v<ya||v>yb) continue; cx.beginPath(); cx.moveTo(L,Y(v)); cx.lineTo(W-Rr,Y(v)); cx.stroke(); cx.textAlign='right'; cx.fillText(v,L-6,Y(v)+4); }
+        for(k=-8;k<=8;k++){ v=k*st; if(v<ya||v>yb) continue; cx.beginPath(); cx.moveTo(L,Y(v)); cx.lineTo(W-Rr,Y(v)); cx.stroke(); cx.textAlign='right'; cx.fillText(+v.toFixed(1),L-6,Y(v)+4); }
         for(k=0;k<=6;k++){ v=xa+(xb-xa)*k/6; cx.textAlign='center'; cx.fillText(Math.round(v),X(v),H-Bb+16); }
-        cx.fillStyle='#cbd5e1'; cx.textAlign='center'; cx.fillText('Potencia predicha (MW)',(L+W-Rr)/2,H-6);
-        cx.save(); cx.translate(13,(Tt+H-Bb)/2); cx.rotate(-Math.PI/2); cx.fillText('Residuo = real − predicho (MW)',0,0); cx.restore();
+        cx.fillStyle='#cbd5e1'; cx.textAlign='center'; cx.fillText(M.yn+' predicha ('+M.yu+')',(L+W-Rr)/2,H-6);
+        cx.save(); cx.translate(13,(Tt+H-Bb)/2); cx.rotate(-Math.PI/2); cx.fillText('Residuo = real − predicho ('+M.yu+')',0,0); cx.restore();
         cx.globalAlpha=0.3; cx.fillStyle='#38bdf8';
         for(i=0;i<xs.length;i++){ cx.beginPath(); cx.arc(X(xs[i]),Y(rs[i]),2,0,6.2832); cx.fill(); }
         cx.globalAlpha=1; cx.lineWidth=1.4; cx.setLineDash([5,4]); cx.strokeStyle='#fbbf24';
@@ -187,39 +191,39 @@
         cx.fillStyle='#fbbf24'; cx.textAlign='left'; cx.fillText('±1,96·σ (≈95 % de los errores)',L+6,Y(1.96*sd)-5);
         cx.strokeStyle='#fb7185'; cx.lineWidth=2; cx.beginPath(); cx.moveTo(L,Y(0)); cx.lineTo(W-Rr,Y(0)); cx.stroke(); cx.setLineDash([]);
         cx.fillStyle='#fb7185'; cx.fillText('error cero',L+6,Y(0)-5);
-        $('.k-n',box).textContent=fmt(n,0); $('.k-rm',box).textContent=fmt(media,2)+' MW';
-        $('.k-rs',box).textContent=fmt(sd,2)+' MW'; $('.k-rx',box).textContent=fmt(mx,1)+' MW';
+        $('.k-n',box).textContent=fmt(n,0); $('.k-rm',box).textContent=fmt(media,2)+' '+M.yu;
+        $('.k-rs',box).textContent=fmt(sd,2)+' '+M.yu; $('.k-rx',box).textContent=fmt(mx,1)+' '+M.yu;
       }
       function pinta(){ if(modo==='residuos') dibujaRes(); else dibuja(); }
       function refresca(){
         if(modo==='recta'){
           var m=+sM.value, b;
-          if(chkPiv && chkPiv.checked){ b=ym-m*xm; sB.value=b.toFixed(1); } else b=+sB.value;
+          if(chkPiv && chkPiv.checked){ b=ym-m*xm; sB.value=b.toFixed(M.bd+1); } else b=+sB.value;
           sB.disabled=!!(chkPiv && chkPiv.checked);
-          vM.textContent=fmt(m,2); vB.textContent=fmt(b,1);
+          vM.textContent=fmt(m,M.md); vB.textContent=fmt(b,M.bd);
           var c=calc(m,b), o=calc(mo,bo);
-          $('.k-sse',box).textContent=fmt(c.sse,0); $('.k-rmse',box).textContent=fmt(c.rmse,2)+' MW';
-          $('.k-mae',box).textContent=fmt(c.mae,2)+' MW'; $('.k-r2',box).textContent=fmt(c.r2,3);
-          $('.k-eq',box).textContent='Potencia = '+fmt(m,2)+' · T '+(b<0?'− ':'+ ')+fmt(Math.abs(b),1);
+          $('.k-sse',box).textContent=fmt(c.sse,0); $('.k-rmse',box).textContent=fmt(c.rmse,2)+' '+M.yu;
+          $('.k-mae',box).textContent=fmt(c.mae,2)+' '+M.yu; $('.k-r2',box).textContent=fmt(c.r2,3);
+          $('.k-eq',box).textContent=M.yn+' = '+fmt(m,M.md)+' · '+M.xv+' '+(b<0?'− ':'+ ')+fmt(Math.abs(b),M.bd);
           var ratio=c.sse/o.sse, pct=Math.max(4,Math.min(100,100/ratio));
           var bar=$('.labr-barra i',box); bar.style.width=pct+'%'; bar.style.background=ratio<1.02?'#4ade80':(ratio<2?'#fbbf24':'#fb7185');
           $('.k-ratio',box).textContent='Tu error es ×'+fmt(ratio,2)+' el de la recta del programa';
-          var cerca=Math.abs(m-mo)<0.03 && Math.abs(b-bo)<0.8;
+          var cerca=Math.abs(m-mo)<M.mspan*0.01 && Math.abs(b-bo)<M.bspan*0.0067;
           msg.textContent= cerca ? '🏆 ¡Has encontrado la recta de mínimos cuadrados! Coincide con la del programa.' :
-            (ratio>5 ? 'Muy lejos. Los segmentos rojos son los errores: busca que sean lo más cortos posibles. Pista: la pendiente debería ser negativa (más calor, menos potencia).' :
+            (ratio>5 ? 'Muy lejos. Los segmentos rojos son los errores: busca que sean lo más cortos posibles. Pista: '+M.pista+'.' :
              'Cada segmento rojo es un error (residuo). El SSE suma todos al cuadrado. Intenta bajar la barra hasta que llegue al 100 %.');
         } else if(modo==='nube'){
           var cu=calc(mo,bo);
           $('.k-n',box).textContent=fmt(cu.n,0);
           $('.k-cor',box).textContent=fmt(cor,3);
-          $('.k-rt',box).textContent=fmt(tmin,1)+' a '+fmt(tmax,1)+' °C';
-          $('.k-rp',box).textContent=fmt(pmin,0)+' a '+fmt(pmax,0)+' MW';
+          $('.k-rt',box).textContent=fmt(tmin,M.xd)+' a '+fmt(tmax,M.xd)+' '+M.xu;
+          $('.k-rp',box).textContent=fmt(pmin,M.yd)+' a '+fmt(pmax,M.yd)+' '+M.yu;
         }
         pinta();
       }
       [sM,sB,selG,chkPiv,chkRec].forEach(function(el){ if(el){ el.addEventListener('input',refresca); el.addEventListener('change',refresca); } });
-      var bs=$('.b-sol',box); if(bs) bs.addEventListener('click',function(){ if(chkPiv) chkPiv.checked=false; sM.value=mo.toFixed(2); sB.value=bo.toFixed(1); refresca(); });
-      var b0=$('.b-cero',box); if(b0) b0.addEventListener('click',function(){ sM.value=0; sB.value=ym.toFixed(1); if(chkPiv) chkPiv.checked=false; refresca(); });
+      var bs=$('.b-sol',box); if(bs) bs.addEventListener('click',function(){ if(chkPiv) chkPiv.checked=false; sM.value=mo.toFixed(M.md+2); sB.value=bo.toFixed(M.bd+1); refresca(); });
+      var b0=$('.b-cero',box); if(b0) b0.addEventListener('click',function(){ sM.value=0; sB.value=ym.toFixed(M.bd); if(chkPiv) chkPiv.checked=false; refresca(); });
       window.addEventListener('resize',pinta);
       refresca();
     }, function(){
@@ -231,6 +235,7 @@
   function iniciaGraf(box){
     var modo=box.getAttribute('data-modo'), cuerpo=$('.labr-cuerpo',box);
     cargaDatos(box.getAttribute('data-src')).then(function(D){
+      var M=metaDe(D);
       var N=D.t.length, T=D.t, P=D.p, E=D.e, mo=D.m, bo=D.b, cv=$('canvas',box), cx=cv.getContext('2d'), i, k;
       var msg=$('.labr-msg',box), sl=$('.s1',box), sv=$('.v1',box), selG=$('select',box);
       var tmin=Math.min.apply(null,T), tmax=Math.max.apply(null,T), pmin=Math.min.apply(null,P), pmax=Math.max.apply(null,P);
@@ -241,7 +246,7 @@
         var X=function(x){ return l+(x-x0)*(W-l-r)/(x1-x0); }, Y=function(y){ return H-b-(y-y0)*(H-t-b)/(y1-y0); };
         cx.font='11px sans-serif'; cx.strokeStyle='#1d2b44'; cx.lineWidth=1; cx.fillStyle='#8896ad'; cx.setLineDash([]);
         var v;
-        for(k=0;k<=5;k++){ v=y0+(y1-y0)*k/5; cx.beginPath(); cx.moveTo(l,Y(v)); cx.lineTo(W-r,Y(v)); cx.stroke(); cx.textAlign='right'; cx.fillText(Math.round(v),l-6,Y(v)+4); }
+        for(k=0;k<=5;k++){ v=y0+(y1-y0)*k/5; cx.beginPath(); cx.moveTo(l,Y(v)); cx.lineTo(W-r,Y(v)); cx.stroke(); cx.textAlign='right'; cx.fillText((y1-y0)<30?v.toFixed(1):Math.round(v),l-6,Y(v)+4); }
         for(k=0;k<=6;k++){ v=x0+(x1-x0)*k/6; cx.textAlign='center'; cx.fillText(dx?v.toFixed(dx):Math.round(v),X(v),H-b+16); }
         cx.fillStyle='#cbd5e1'; cx.textAlign='center'; cx.fillText(xl,(l+W-r)/2,H-6);
         cx.save(); cx.translate(13,(t+H-b)/2); cx.rotate(-Math.PI/2); cx.fillText(yl,0,0); cx.restore();
@@ -252,12 +257,12 @@
 
       if(modo==='hist'){
         var vr=box.getAttribute('data-var'), vals=[], etx;
-        if(vr==='t'){ vals=T.slice(); etx='Temperatura ambiente (°C)'; }
-        else if(vr==='p'){ vals=P.slice(); etx='Potencia (MW)'; }
-        else { for(i=0;i<N;i++){ if(E[i]) vals.push(P[i]-(mo*T[i]+bo)); } etx='Residuo = real − predicho (MW)'; }
+        if(vr==='t'){ vals=T.slice(); etx=M.xl; }
+        else if(vr==='p'){ vals=P.slice(); etx=M.yl; }
+        else { for(i=0;i<N;i++){ if(E[i]) vals.push(P[i]-(mo*T[i]+bo)); } etx='Residuo = real − predicho ('+M.yu+')'; }
         var n=vals.length, so=vals.slice().sort(function(a,b){ return a-b; }), mn=so[0], mx=so[n-1], me=0, sd=0;
         vals.forEach(function(v){ me+=v; }); me/=n; vals.forEach(function(v){ sd+=(v-me)*(v-me); }); sd=Math.sqrt(sd/n);
-        var med=(n%2)?so[(n-1)/2]:(so[n/2-1]+so[n/2])/2, dec=(mx-mn)>60?0:1;
+        var med=(n%2)?so[(n-1)/2]:(so[n/2-1]+so[n/2])/2, dec=(mx-mn)>60?0:((mx-mn)>6?1:2);
         K('k-n',fmt(n,0)); K('k-me',fmt(me,vr==='r'?2:2)); K('k-md',fmt(med,2)); K('k-sd',fmt(sd,2)); K('k-mn',fmt(mn,2)); K('k-mx',fmt(mx,2));
         pinta=function(){
           var nb=+sl.value; sv.textContent=nb;
@@ -303,16 +308,16 @@
           for(i=0;i<N;i++){ if((g==='train'&&E[i])||(g==='test'&&!E[i])) continue;
             pr=mo*T[i]+bo; e=P[i]-pr; xs.push(pr); ys.push(P[i]); n++; sse+=e*e; sae+=Math.abs(e); sp+=P[i]; if(Math.abs(e)<=tol) dentro++; }
           var pm=sp/n, sst=0; ys.forEach(function(y){ sst+=(y-pm)*(y-pm); });
-          var lo=pmin-8, hi=pmax+8, L=lienzo(0.66), a=ejes(L,lo,hi,lo,hi,'Potencia predicha por la recta (MW)','Potencia real medida (MW)');
+          var gp=(pmax-pmin)*0.1, lo=pmin-gp, hi=pmax+gp, L=lienzo(0.66), a=ejes(L,lo,hi,lo,hi,M.yn+' predicha por la recta ('+M.yu+')',M.yn+' real medida ('+M.yu+')',(hi-lo)<30?1:0);
           for(i=0;i<xs.length;i++){ var ok=Math.abs(ys[i]-xs[i])<=tol; cx.globalAlpha=ok?0.25:0.7; cx.fillStyle=ok?'#38bdf8':'#fb7185';
             cx.beginPath(); cx.arc(a.X(xs[i]),a.Y(ys[i]),1.9,0,6.2832); cx.fill(); }
           cx.globalAlpha=1; cx.setLineDash([5,4]); cx.lineWidth=1.3; cx.strokeStyle='#fbbf24';
           [tol,-tol].forEach(function(d){ cx.beginPath(); cx.moveTo(a.X(lo),a.Y(lo+d)); cx.lineTo(a.X(hi),a.Y(hi+d)); cx.stroke(); });
           cx.setLineDash([8,5]); cx.lineWidth=2.4; cx.strokeStyle='#4ade80'; cx.beginPath(); cx.moveTo(a.X(lo),a.Y(lo)); cx.lineTo(a.X(hi),a.Y(hi)); cx.stroke(); cx.setLineDash([]);
           rotulo('predicción perfecta (real = predicho)',a.X(lo)+8,a.Y(lo+(hi-lo)*0.2)-4,'#4ade80');
-          rotulo('rojo: error mayor que ±'+tol+' MW',a.X(hi)-8,a.Y(lo)-12,'#fb7185','right');
-          K('k-r2',fmt(1-sse/sst,4)); K('k-rmse',fmt(Math.sqrt(sse/n),3)+' MW'); K('k-mae',fmt(sae/n,3)+' MW'); K('k-in',fmt(100*dentro/n,1)+' %');
-          msg.textContent='El '+fmt(100*dentro/n,1)+' % de las predicciones queda a menos de '+tol+' MW del valor real.';
+          rotulo('rojo: error mayor que ±'+tol+' '+M.yu,a.X(hi)-8,a.Y(lo)-12,'#fb7185','right');
+          K('k-r2',fmt(1-sse/sst,4)); K('k-rmse',fmt(Math.sqrt(sse/n),3)+' '+M.yu); K('k-mae',fmt(sae/n,3)+' '+M.yu); K('k-in',fmt(100*dentro/n,1)+' %');
+          msg.textContent='El '+fmt(100*dentro/n,1)+' % de las predicciones queda a menos de '+tol+' '+M.yu+' del valor real.';
         };
         sl.addEventListener('input',pinta); selG.addEventListener('change',pinta);
       }
@@ -325,48 +330,48 @@
         var t0=box.getAttribute('data-t'); if(t0) sl.value=t0;
         var inter=function(x){ var h=mo*x+bo, mg=1.9603*s0*Math.sqrt(1+1/tn+(x-xb0)*(x-xb0)/sx); return {h:h,lo:h-mg,hi:h+mg,mg:mg}; };
         pinta=function(){
-          var x=+sl.value; sv.textContent=fmt(x,1);
-          var L=lienzo(0.62), xa=0, xz=45, a=ejes(L,xa,xz,380,520,'Temperatura ambiente (°C)','Potencia (MW)');
+          var x=+sl.value; sv.textContent=fmt(x,M.xd>0?1:0);
+          var L=lienzo(0.62), xa=M.bx[0], xz=M.bx[1], ya=M.by[0], yz=M.by[1], NS=60, a=ejes(L,xa,xz,ya,yz,M.xl,M.yl);
           cx.fillStyle='rgba(251,113,133,.10)';
-          cx.fillRect(a.X(xa),a.t,a.X(tmin)-a.X(xa),a.Y(380)-a.t); cx.fillRect(a.X(tmax),a.t,a.X(xz)-a.X(tmax),a.Y(380)-a.t);
+          cx.fillRect(a.X(xa),a.t,a.X(tmin)-a.X(xa),a.Y(ya)-a.t); cx.fillRect(a.X(tmax),a.t,a.X(xz)-a.X(tmax),a.Y(ya)-a.t);
           rotulo('sin datos',a.X(xa)+6,a.t+14,'#fb7185'); rotulo('sin datos',a.X(xz)-6,a.t+14,'#fb7185','right');
           cx.globalAlpha=.16; cx.fillStyle='#38bdf8';
           for(i=0;i<N;i++){ if(E[i]) continue; cx.beginPath(); cx.arc(a.X(T[i]),a.Y(P[i]),1.7,0,6.2832); cx.fill(); }
           cx.globalAlpha=1; cx.beginPath();
-          for(k=0;k<=45;k++){ var q=inter(k); if(k===0) cx.moveTo(a.X(k),a.Y(q.hi)); else cx.lineTo(a.X(k),a.Y(q.hi)); }
-          for(k=45;k>=0;k--){ cx.lineTo(a.X(k),a.Y(inter(k).lo)); }
+          for(k=0;k<=NS;k++){ var xk=xa+(xz-xa)*k/NS, q=inter(xk); if(k===0) cx.moveTo(a.X(xk),a.Y(q.hi)); else cx.lineTo(a.X(xk),a.Y(q.hi)); }
+          for(k=NS;k>=0;k--){ var xj=xa+(xz-xa)*k/NS; cx.lineTo(a.X(xj),a.Y(inter(xj).lo)); }
           cx.closePath(); cx.fillStyle='rgba(74,222,128,.17)'; cx.fill(); cx.setLineDash([5,4]); cx.strokeStyle='#4ade80'; cx.lineWidth=1.3; cx.stroke(); cx.setLineDash([]);
           cx.strokeStyle='#38bdf8'; cx.lineWidth=2.6; cx.beginPath(); cx.moveTo(a.X(xa),a.Y(mo*xa+bo)); cx.lineTo(a.X(xz),a.Y(mo*xz+bo)); cx.stroke();
           var q2=inter(x);
-          cx.strokeStyle='rgba(230,237,247,.55)'; cx.setLineDash([3,4]); cx.lineWidth=1; cx.beginPath(); cx.moveTo(a.X(x),a.t); cx.lineTo(a.X(x),a.Y(380)); cx.stroke(); cx.setLineDash([]);
+          cx.strokeStyle='rgba(230,237,247,.55)'; cx.setLineDash([3,4]); cx.lineWidth=1; cx.beginPath(); cx.moveTo(a.X(x),a.t); cx.lineTo(a.X(x),a.Y(ya)); cx.stroke(); cx.setLineDash([]);
           cx.strokeStyle='#fbbf24'; cx.lineWidth=5; cx.lineCap='round'; cx.beginPath(); cx.moveTo(a.X(x),a.Y(q2.lo)); cx.lineTo(a.X(x),a.Y(q2.hi)); cx.stroke(); cx.lineCap='butt';
           cx.fillStyle='#fff'; cx.strokeStyle='#04121f'; cx.lineWidth=2; cx.beginPath(); cx.arc(a.X(x),a.Y(q2.h),6,0,6.2832); cx.fill(); cx.stroke();
           var dentro=(x>=tmin&&x<=tmax);
-          K('k-h',fmt(q2.h,1)+' MW'); K('k-lo',fmt(q2.lo,1)+' MW'); K('k-hi',fmt(q2.hi,1)+' MW'); K('k-es',dentro?'Dentro ✓':'Fuera ⚠');
+          K('k-h',fmt(q2.h,M.yp)+' '+M.yu); K('k-lo',fmt(q2.lo,M.yp)+' '+M.yu); K('k-hi',fmt(q2.hi,M.yp)+' '+M.yu); K('k-es',dentro?'Dentro ✓':'Fuera ⚠');
           var es=$('.k-es',box); if(es) es.style.color=dentro?'#4ade80':'#fb7185';
-          msg.textContent=dentro?('A '+fmt(x,1)+' °C esperamos '+fmt(q2.h,1)+' MW; el 95 % de las veces la potencia real quedará entre '+fmt(q2.lo,1)+' y '+fmt(q2.hi,1)+' MW.')
-            :('⚠ A '+fmt(x,1)+' °C no hay datos reales (solo de '+fmt(tmin,1)+' a '+fmt(tmax,1)+' °C). La recta da '+fmt(q2.h,1)+' MW, pero es una extrapolación: no te fíes.');
+          var vv={x:fmt(x,M.xd),xu:M.xu,yu:M.yu,h:fmt(q2.h,M.yp),lo:fmt(q2.lo,M.yp),hi:fmt(q2.hi,M.yp),tmin:fmt(tmin,M.xd),tmax:fmt(tmax,M.xd)};
+          msg.textContent=dentro?plantilla(M.frase_dentro,vv):plantilla(M.frase_fuera,vv);
         };
         sl.addEventListener('input',pinta);
       }
 
       else if(modo==='anatomia'){
-        K('k-m',fmt(mo,4)+' MW/°C'); K('k-b',fmt(bo,2)+' MW');
+        K('k-m',fmt(mo,M.md+2)+' '+M.yu+'/'+M.xu); K('k-b',fmt(bo,M.bd+1)+' '+M.yu);
         pinta=function(){
           var d=+sl.value; sv.textContent=d;
-          var L=lienzo(0.62), a=ejes(L,0,40,400,505,'Temperatura ambiente (°C)','Potencia (MW)');
+          var L=lienzo(0.62), a=ejes(L,M.ax[0],M.ax[1],M.ay[0],M.ay[1],M.xl,M.yl);
           cx.globalAlpha=.16; cx.fillStyle='#38bdf8';
           for(i=0;i<N;i++){ cx.beginPath(); cx.arc(a.X(T[i]),a.Y(P[i]),1.7,0,6.2832); cx.fill(); }
-          cx.globalAlpha=1; cx.strokeStyle='#38bdf8'; cx.lineWidth=3; cx.beginPath(); cx.moveTo(a.X(0),a.Y(bo)); cx.lineTo(a.X(40),a.Y(mo*40+bo)); cx.stroke();
+          cx.globalAlpha=1; cx.strokeStyle='#38bdf8'; cx.lineWidth=3; cx.beginPath(); cx.moveTo(a.X(M.ax[0]),a.Y(mo*M.ax[0]+bo)); cx.lineTo(a.X(M.ax[1]),a.Y(mo*M.ax[1]+bo)); cx.stroke();
           cx.fillStyle='#fb7185'; cx.beginPath(); cx.arc(a.X(0),a.Y(bo),6,0,6.2832); cx.fill();
-          rotulo('b = '+fmt(bo,1)+' MW  (la recta, a 0 °C)',a.X(0)+10,a.Y(bo)-10,'#fb7185');
-          var x1=15, y1=mo*x1+bo, x2=x1+d, y2=mo*x2+bo;
+          rotulo('b = '+fmt(bo,M.bd)+' '+M.yu+'  (la recta, cuando x = 0)',a.X(0)+10,a.Y(bo)-10,'#fb7185');
+          var x1=M.ax1, y1=mo*x1+bo, x2=x1+d, y2=mo*x2+bo;
           cx.fillStyle='rgba(251,191,36,.18)'; cx.strokeStyle='#fbbf24'; cx.lineWidth=2; cx.setLineDash([5,4]);
           cx.beginPath(); cx.moveTo(a.X(x1),a.Y(y1)); cx.lineTo(a.X(x2),a.Y(y1)); cx.lineTo(a.X(x2),a.Y(y2)); cx.closePath(); cx.fill(); cx.stroke(); cx.setLineDash([]);
-          rotulo('+'+d+' °C',(a.X(x1)+a.X(x2))/2,a.Y(y1)-8,'#fbbf24','center');
-          rotulo(fmt(mo*d,1)+' MW',a.X(x2)+8,(a.Y(y1)+a.Y(y2))/2+4,'#fbbf24');
-          K('k-d',fmt(mo*d,2)+' MW');
-          msg.textContent='Si la temperatura sube '+d+' °C, la potencia estimada cambia '+fmt(mo*d,2)+' MW (pendiente × '+d+').';
+          rotulo('+'+d+' '+M.xu,(a.X(x1)+a.X(x2))/2,a.Y(y1)-8,'#fbbf24','center');
+          rotulo(fmt(mo*d,M.yp)+' '+M.yu,a.X(x2)+8,(a.Y(y1)+a.Y(y2))/2+4,'#fbbf24');
+          K('k-d',fmt(mo*d,M.yp+1)+' '+M.yu);
+          msg.textContent=plantilla(M.frase_sube,{d:d,xu:M.xu,yu:M.yu,c:fmt(mo*d,M.yp+1)});
         };
         sl.addEventListener('input',pinta);
       }
