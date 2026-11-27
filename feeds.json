@@ -2595,55 +2595,762 @@
           "n": "1.1",
           "titulo": "Práctica con datasets reales",
           "nivel": "medio",
-          "paginas": 26
+          "paginas": 26,
+          "sub": "Kaggle, UCI, OpenML y DrivenData: métricas, train/test, baseline, limpieza y ejercicios resueltos",
+          "secciones": [
+            [
+              "1",
+              "Cómo usar este documento",
+              3
+            ],
+            [
+              "2",
+              "Objetivos, requisitos y repaso esencial",
+              5
+            ],
+            [
+              "3",
+              "Plataformas y flujo de una competición",
+              6
+            ],
+            [
+              "4",
+              "Ejercicio 1 · Salario y experiencia (estilo Kaggle)",
+              7
+            ],
+            [
+              "5",
+              "Ejercicio 2 · Peso del coche y consumo (estilo UCI)",
+              8
+            ],
+            [
+              "6",
+              "Ejercicio 3 · Publicidad y ventas (Advertising)",
+              10
+            ],
+            [
+              "7",
+              "Ejercicio 4 · Alquiler de bicicletas y temperatura (Bike Sharing)",
+              12
+            ],
+            [
+              "8",
+              "Ejercicio 5 · Patrón de baseline para una competición",
+              14
+            ],
+            [
+              "9",
+              "Limpieza de datos: valores que faltan, eliminar o rellenar",
+              15
+            ],
+            [
+              "10",
+              "Unidades y diccionarios de datos: leer el README",
+              16
+            ],
+            [
+              "11",
+              "Ejercicios de ampliación resueltos: California y vinos",
+              17
+            ],
+            [
+              "12",
+              "Cuatro datasets adicionales para seguir practicando",
+              19
+            ],
+            [
+              "13",
+              "Ejercicios propuestos con solución",
+              20
+            ],
+            [
+              "14",
+              "Mini-test de 14 preguntas con explicación",
+              22
+            ],
+            [
+              "15",
+              "Chuleta del nivel medio",
+              24
+            ],
+            [
+              "16",
+              "Glosario del nivel",
+              25
+            ],
+            [
+              "17",
+              "Siguiente paso",
+              26
+            ]
+          ]
         },
         {
           "n": "1.2",
           "titulo": "Matemáticas de la recta: mínimos cuadrados",
           "nivel": "medio",
-          "paginas": 26
+          "paginas": 26,
+          "sub": "Del SSE a las fórmulas: derivación completa, propiedades y estimadores",
+          "secciones": [
+            [
+              "1",
+              "Cómo usar este documento",
+              3
+            ],
+            [
+              "2",
+              "Objetivos, requisitos y repaso esencial",
+              5
+            ],
+            [
+              "3",
+              "Varianza y covarianza: n frente a n − 1",
+              6
+            ],
+            [
+              "4",
+              "Residuos, SSE y métricas de error",
+              7
+            ],
+            [
+              "5",
+              "El cuenco SSE en dos dimensiones",
+              8
+            ],
+            [
+              "6",
+              "¿Cuadrado o valor absoluto?",
+              10
+            ],
+            [
+              "7",
+              "La derivación completa de m y b",
+              12
+            ],
+            [
+              "8",
+              "Implementación desde cero y propiedades de la solución",
+              14
+            ],
+            [
+              "9",
+              "Cambios de escala y de unidades",
+              15
+            ],
+            [
+              "10",
+              "Miniproyecto integrador: agricultura de precisión",
+              16
+            ],
+            [
+              "11",
+              "Ejercicio de universidad: el estimador es insesgado",
+              18
+            ],
+            [
+              "12",
+              "Ejercicios propuestos con solución",
+              19
+            ],
+            [
+              "13",
+              "Examen final: 20 preguntas con soluciones razonadas",
+              21
+            ],
+            [
+              "14",
+              "Compendio de fórmulas del submódulo 1.2",
+              24
+            ],
+            [
+              "15",
+              "Glosario del nivel",
+              25
+            ],
+            [
+              "16",
+              "Siguiente paso",
+              26
+            ]
+          ]
         },
         {
           "n": "1.3",
           "titulo": "El ecosistema del dato (Kaggle, UCI, OpenML)",
           "nivel": "medio",
-          "paginas": 24
+          "paginas": 24,
+          "sub": "Plataformas, formatos, EDA y limpieza con datasets reales",
+          "secciones": [
+            [
+              "1",
+              "Cómo usar este documento",
+              3
+            ],
+            [
+              "2",
+              "Objetivos, requisitos y repaso esencial",
+              4
+            ],
+            [
+              "3",
+              "Plataformas y el formato CSV",
+              5
+            ],
+            [
+              "4",
+              "California Housing: EDA completo",
+              7
+            ],
+            [
+              "5",
+              "UCI Wine Quality: el separador oculto",
+              10
+            ],
+            [
+              "6",
+              "Pima Indians Diabetes y OpenML",
+              12
+            ],
+            [
+              "7",
+              "Auto MPG: estrategias de limpieza y sus riesgos",
+              13
+            ],
+            [
+              "8",
+              "Cuatro miniproyectos multisectoriales",
+              14
+            ],
+            [
+              "9",
+              "Bonus: la telemetría HUMS del EF2000 como dataset",
+              17
+            ],
+            [
+              "10",
+              "Ejercicio de universidad: comparativa de R² entre sectores",
+              18
+            ],
+            [
+              "11",
+              "Ejercicios propuestos con solución",
+              19
+            ],
+            [
+              "12",
+              "Examen final: 20 preguntas con soluciones razonadas",
+              20
+            ],
+            [
+              "13",
+              "Compendio: chuleta de plataformas y funciones",
+              23
+            ],
+            [
+              "14",
+              "Glosario del nivel",
+              24
+            ],
+            [
+              "15",
+              "Siguiente paso",
+              24
+            ]
+          ]
         },
         {
           "n": "1.4",
           "titulo": "Evaluación del modelo",
           "nivel": "medio",
-          "paginas": 22
+          "paginas": 22,
+          "sub": "¿Cuánto de bueno es realmente? Métricas, residuos, sobreajuste y validación cruzada",
+          "secciones": [
+            [
+              "1",
+              "Cómo usar este documento",
+              3
+            ],
+            [
+              "2",
+              "Objetivos y repaso esencial",
+              4
+            ],
+            [
+              "3",
+              "Las métricas, a fondo",
+              4
+            ],
+            [
+              "4",
+              "La división train/test no es neutra",
+              6
+            ],
+            [
+              "5",
+              "Residuos: seis patrones con números",
+              7
+            ],
+            [
+              "6",
+              "MAE frente a RMSE como diagnóstico",
+              9
+            ],
+            [
+              "7",
+              "Qué métrica elegir",
+              10
+            ],
+            [
+              "8",
+              "Complejidad del modelo: la curva",
+              11
+            ],
+            [
+              "9",
+              "Validación cruzada bien hecha",
+              12
+            ],
+            [
+              "10",
+              "Miniproyecto: planta solar",
+              13
+            ],
+            [
+              "11",
+              "Integrador: cuatro sectores",
+              15
+            ],
+            [
+              "12",
+              "Ejercicio de universidad: diabetes",
+              16
+            ],
+            [
+              "13",
+              "Ejercicios resueltos",
+              17
+            ],
+            [
+              "14",
+              "Examen (20 preguntas)",
+              18
+            ],
+            [
+              "15",
+              "Compendio de fórmulas y reglas",
+              21
+            ],
+            [
+              "16",
+              "Checklist imprimible",
+              21
+            ],
+            [
+              "17",
+              "Siguiente paso",
+              22
+            ]
+          ]
         },
         {
           "n": "1.5",
           "titulo": "Diagnóstico de la regresión",
           "nivel": "medio",
-          "paginas": 16
+          "paginas": 16,
+          "sub": "¿Puedo fiarme de mi modelo? Tests formales, influencia, remedios y datos reales",
+          "secciones": [
+            [
+              "1",
+              "Cómo usar este documento",
+              3
+            ],
+            [
+              "2",
+              "Objetivos y repaso esencial",
+              4
+            ],
+            [
+              "3",
+              "Qué hace falta que se cumpla, y para qué",
+              4
+            ],
+            [
+              "4",
+              "Los 4 gráficos con números",
+              5
+            ],
+            [
+              "5",
+              "Qué test detecta qué problema",
+              6
+            ],
+            [
+              "6",
+              "Influencia con números: leverage, Cook, DFBETAS, DFFITS",
+              7
+            ],
+            [
+              "7",
+              "Remedios con intervalos de confianza",
+              9
+            ],
+            [
+              "8",
+              "El Teorema Central del Límite, bien entendido",
+              10
+            ],
+            [
+              "9",
+              "Datos reales I: California",
+              11
+            ],
+            [
+              "10",
+              "Datos reales II: Auto MPG",
+              12
+            ],
+            [
+              "11",
+              "Ejercicios resueltos",
+              12
+            ],
+            [
+              "12",
+              "Examen (20 preguntas)",
+              13
+            ],
+            [
+              "13",
+              "Compendio",
+              16
+            ],
+            [
+              "14",
+              "Checklist imprimible",
+              16
+            ],
+            [
+              "15",
+              "Siguiente paso",
+              16
+            ]
+          ]
         },
         {
           "n": "1.6",
-          "titulo": "Guía de los 4 gráficos de diagnóstico",
+          "titulo": "Guía definitiva de los 4 gráficos de diagnóstico",
           "nivel": "medio",
-          "paginas": 18
+          "paginas": 18,
+          "sub": "Cómo leer las entrañas del modelo: firma numérica, remedios comprobados y casos reales",
+          "secciones": [
+            [
+              "1",
+              "Cómo usar este documento",
+              3
+            ],
+            [
+              "2",
+              "Objetivos y repaso esencial",
+              4
+            ],
+            [
+              "3",
+              "La firma numérica de los 12 casos",
+              4
+            ],
+            [
+              "4",
+              "Gráfico 1: residuos vs ajustados",
+              6
+            ],
+            [
+              "5",
+              "Gráfico 2: Q-Q plot",
+              8
+            ],
+            [
+              "6",
+              "Gráfico 3: Scale-Location",
+              10
+            ],
+            [
+              "7",
+              "Gráfico 4: residuos vs leverage",
+              11
+            ],
+            [
+              "8",
+              "Laboratorio corregido",
+              12
+            ],
+            [
+              "9",
+              "Mini-proyecto: cuatro sensores del motor",
+              13
+            ],
+            [
+              "10",
+              "Ejercicios resueltos",
+              14
+            ],
+            [
+              "11",
+              "Examen (20 preguntas)",
+              15
+            ],
+            [
+              "12",
+              "Compendio",
+              18
+            ],
+            [
+              "13",
+              "Checklist imprimible",
+              18
+            ],
+            [
+              "14",
+              "Siguiente paso",
+              18
+            ]
+          ]
         },
         {
           "n": "1.7",
           "titulo": "Aplicando el diagnóstico al proyecto energético",
           "nivel": "medio",
-          "paginas": 15
+          "paginas": 15,
+          "sub": "Firmas numéricas, cuándo funciona el logaritmo, comparación de remedios e informe",
+          "secciones": [
+            [
+              "1",
+              "Cómo usar este documento",
+              3
+            ],
+            [
+              "2",
+              "Objetivos y entorno",
+              3
+            ],
+            [
+              "3",
+              "Las firmas numéricas",
+              4
+            ],
+            [
+              "4",
+              "Cuándo el log sí funciona",
+              6
+            ],
+            [
+              "5",
+              "Comparación de remedios",
+              8
+            ],
+            [
+              "6",
+              "Predecir deshaciendo el log",
+              9
+            ],
+            [
+              "7",
+              "Informe al cliente corregido",
+              10
+            ],
+            [
+              "8",
+              "Mini-proyecto: un segundo caso con error proporcional",
+              10
+            ],
+            [
+              "9",
+              "Ejercicios resueltos",
+              11
+            ],
+            [
+              "10",
+              "Examen de 20 preguntas",
+              11
+            ],
+            [
+              "11",
+              "Checklist imprimible",
+              14
+            ],
+            [
+              "12",
+              "Glosario del nivel",
+              15
+            ],
+            [
+              "13",
+              "Siguiente paso",
+              15
+            ]
+          ]
         },
         {
           "n": "1.8",
-          "titulo": "Predecir con honestidad: intervalos y train/test",
+          "titulo": "Predecir con honestidad: intervalos y validación train/test",
           "nivel": "medio",
-          "paginas": 16
+          "paginas": 16,
+          "sub": "Cobertura medida, variabilidad de la partición, validación cruzada y extrapolación",
+          "secciones": [
+            [
+              "1",
+              "Cómo usar este documento",
+              3
+            ],
+            [
+              "2",
+              "Objetivos y entorno",
+              3
+            ],
+            [
+              "3",
+              "Fórmulas y comprobación",
+              4
+            ],
+            [
+              "4",
+              "Cuánto puede cambiar una sola partición",
+              5
+            ],
+            [
+              "5",
+              "Adelanto del sobreajuste: polinomios",
+              7
+            ],
+            [
+              "6",
+              "Extrapolar: la banda no se abre, la cobertura se hunde",
+              8
+            ],
+            [
+              "7",
+              "Datos con tiempo",
+              9
+            ],
+            [
+              "8",
+              "Proyecto energético con cobertura por tramos",
+              10
+            ],
+            [
+              "9",
+              "Informe al cliente",
+              12
+            ],
+            [
+              "10",
+              "Ejercicios resueltos",
+              12
+            ],
+            [
+              "11",
+              "Mini-proyecto",
+              12
+            ],
+            [
+              "12",
+              "Examen de 20 preguntas",
+              13
+            ],
+            [
+              "13",
+              "Checklist imprimible",
+              16
+            ],
+            [
+              "14",
+              "Glosario del nivel",
+              16
+            ],
+            [
+              "15",
+              "Siguiente paso",
+              16
+            ]
+          ]
         },
         {
           "n": "1.9",
           "titulo": "Inferencia en la regresión simple",
           "nivel": "medio",
-          "paginas": 13
+          "paginas": 13,
+          "sub": "Contrastes, potencia, permutación, bootstrap, comparación de pendientes y múltiples tests",
+          "secciones": [
+            [
+              "1",
+              "Cómo usar este documento",
+              3
+            ],
+            [
+              "2",
+              "Repaso rápido",
+              3
+            ],
+            [
+              "3",
+              "Errores estándar verificados",
+              3
+            ],
+            [
+              "4",
+              "Contrastes de hipótesis distintos de cero",
+              4
+            ],
+            [
+              "5",
+              "Potencia y tamaño de muestra",
+              4
+            ],
+            [
+              "6",
+              "Permutación y bootstrap",
+              6
+            ],
+            [
+              "7",
+              "Comparar pendientes entre grupos",
+              7
+            ],
+            [
+              "8",
+              "Múltiples tests",
+              7
+            ],
+            [
+              "9",
+              "Errores frecuentes",
+              8
+            ],
+            [
+              "10",
+              "Ejercicios resueltos",
+              8
+            ],
+            [
+              "11",
+              "Mini-proyecto",
+              9
+            ],
+            [
+              "12",
+              "Test de autoevaluación (25 preguntas)",
+              9
+            ],
+            [
+              "13",
+              "Checklist",
+              12
+            ],
+            [
+              "14",
+              "Siguiente paso",
+              13
+            ]
+          ]
         }
       ],
       "alternativos": [
@@ -2654,7 +3361,10 @@
         "Modulo_1_nivel_medio_all.pdf"
       ],
       "palabra": "medio",
-      "ayuda_nivel": "regresion-medio"
+      "ayuda_nivel": "regresion-medio",
+      "ayuda_tambien": [
+        "regresion-basico"
+      ]
     }
   ],
   "aprenderas": {

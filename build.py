@@ -238,6 +238,13 @@ footer.pie{border-top:1px solid var(--linea);padding:18px 0 36px;color:var(--sua
 .kg small{display:block;color:var(--suave);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
 .kg strong{font:800 1.3rem ui-monospace,monospace}
 .concl{margin-top:12px;padding:12px 16px;border-radius:12px;border-left:4px solid #4ade80;background:rgba(74,222,128,.09)}
+.sub-sm{color:var(--suave);font-size:.8rem}
+.idx-sm{margin-top:.4rem;font-size:.85rem}
+.idx-sm summary{cursor:pointer;color:#38bdf8}
+.idx-lista{list-style:none;margin:.4rem 0 .2rem .2rem;padding:0;columns:2;column-gap:1.5rem}
+.idx-lista li{break-inside:avoid;margin:.15rem 0}
+.idx-lista .pg{color:var(--suave);font-size:.75rem;white-space:nowrap}
+@media(max-width:700px){.idx-lista{columns:1}}
 .btn-descarga{display:inline-block;padding:10px 18px;border-radius:999px;background:#4ade80;color:#04121f!important;font-weight:800;margin-right:12px}
 .botones-pdf{margin:12px 0}
 .btn-ayuda{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--superficie);border:1px solid #4ade80;border-radius:14px;padding:12px 16px;margin:12px 0}
@@ -1716,20 +1723,22 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                 f'<span class="mas">Ver →</span></section>')
 
     def caja_ayuda_pdf(self, clave_nivel):
-        for r in self.recursos.values():
-            if r.get("ayuda_nivel") == clave_nivel:
-                if r["_existe"]:
-                    href = "../recursos/" + quote(r["archivo"])
-                    txt = "Descargar PDF ↓"
-                    extra = ' download'
-                else:
-                    href = "../biblioteca.html"
-                    txt = "Ver en la Biblioteca →"
-                    extra = ""
-                return (f'<div class="btn-ayuda"><span style="font-size:1.6rem">📘</span><div><b>Ayuda: {esc(r["titulo"])}</b>'
-                        f'<small>Apuntes en PDF para estudiar y consultar mientras haces los proyectos de este nivel.</small></div>'
-                        f'<a href="{href}"{extra}>{txt}</a></div>')
-        return ""
+        rs = [r for r in self.recursos.values() if r.get("ayuda_nivel") == clave_nivel]
+        rs += [r for r in self.recursos.values() if clave_nivel in r.get("ayuda_tambien", []) and r not in rs]
+        out = []
+        for r in rs:
+            if r["_existe"]:
+                href = "../recursos/" + quote(r["archivo"])
+                txt = "Descargar PDF ↓"
+                extra = ' download'
+            else:
+                href = "../biblioteca.html"
+                txt = "Ver en la Biblioteca →"
+                extra = ""
+            out.append(f'<div class="btn-ayuda"><span style="font-size:1.6rem">📘</span><div><b>Ayuda: {esc(r["titulo"])}</b>'
+                       f'<small>{esc(r.get("nota_boton") or "Apuntes en PDF para estudiar y consultar mientras haces los proyectos de este nivel.")}</small></div>'
+                       f'<a href="{href}"{extra}>{txt}</a></div>')
+        return "".join(out)
 
     def categorias_html(self, carpeta):
         out = []
@@ -2931,6 +2940,16 @@ Contenido divulgativo: no sustituye el consejo médico ni profesional.
                 t = esc(sm["titulo"])
                 if r["_existe"]:
                     t = f'<a class="ver-pdf" href="recursos/{quote(r["archivo"])}#page={ini}" target="_blank" rel="noopener noreferrer">{t}</a>'
+                if sm.get("sub"):
+                    t += f'<br><small class="sub-sm">{esc(sm["sub"])}</small>'
+                if sm.get("secciones"):
+                    li = []
+                    for sn, st, sp in sm["secciones"]:
+                        tx = f'{esc(sn)}. {esc(st)}'
+                        if r["_existe"]:
+                            tx = f'<a class="ver-pdf" href="recursos/{quote(r["archivo"])}#page={ini + int(sp) - 1}" target="_blank" rel="noopener noreferrer">{tx}</a>'
+                        li.append(f'<li>{tx} <span class="pg">pág. {sp}</span></li>')
+                    t += f'<details class="idx-sm"><summary>Índice de este submódulo</summary><ol class="idx-lista">{"".join(li)}</ol></details>'
                 filas.append(f'<tr><td>{esc(sm["n"])}</td><td>{t}</td><td>{esc(sm.get("nivel", ""))}</td>'
                              f'<td>{n} págs.</td></tr>')
             u = "recursos/" + quote(r["archivo"]) if r["_existe"] else ""
